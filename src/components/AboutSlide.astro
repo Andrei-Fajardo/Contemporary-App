@@ -1,0 +1,64 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  gradient: string;
+}
+const { id, label, title, gradient } = Astro.props;
+---
+
+<div class="relative w-screen h-screen flex-shrink-0 snap-start overflow-hidden bg-[#faf8f5]">
+  <div class={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+  <div class="art-bg" />
+
+  <div class="relative h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 max-w-5xl mx-auto">
+    <p class="text-sm text-slate-500 tracking-[0.2em] uppercase font-medium mb-1">About</p>
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-10 md:mb-14">{title}</h2>
+
+    <div class="grid md:grid-cols-5 gap-8 md:gap-12 items-center">
+      <div class="md:col-span-2">
+        <div class="aspect-[3/4] rounded-2xl bg-gradient-to-br from-slate-100/80 to-white/80 border border-black/[0.06] flex items-center justify-center shadow-sm backdrop-blur-sm">
+          <span class="text-slate-400 text-sm">Portrait</span>
+        </div>
+      </div>
+      <div class="md:col-span-3 space-y-4">
+        <p class="text-lg md:text-xl font-semibold tracking-tight text-slate-900 leading-snug">Multidisciplinary artist exploring the threshold between material and memory.</p>
+        <div class="text-sm md:text-base text-slate-600 leading-relaxed space-y-3 max-w-[65ch]">
+          <p>
+            Anna Dauyl Rockswell is a New York-based visual artist, researcher, and educator. Her practice spans
+            installation, digital media, and public intervention — often drawing on archival materials and
+            site-specific research to examine how spaces carry collective memory.
+          </p>
+          <p>
+            She holds an MFA from Columbia University and has exhibited at the Museum of Contemporary Art Chicago,
+            the New Museum, and the Barbican Centre. Her work has been supported by grants from the Andy Warhol
+            Foundation and the National Endowment for the Arts.
+          </p>
+          <p>
+            Rockswell currently serves as Assistant Professor of Visual Arts at Pratt Institute, where she leads
+            the graduate seminar on Art and the Archive.
+          </p>
+        </div>
+        <div class="flex gap-8 pt-2 text-sm">
+          <div>
+            <p class="font-medium text-slate-900">Education</p>
+            <p class="text-slate-500">MFA, Columbia University<br />BA, Yale University</p>
+          </div>
+          <div>
+            <p class="font-medium text-slate-900">Selected Grants</p>
+            <p class="text-slate-500">Andy Warhol Foundation<br />NEA Fellowship</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 border-t border-black/[0.04] bg-[#faf8f5]/60 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 h-12 flex items-center justify-between text-xs text-slate-400">
+      <span class="font-mono">{id}</span>
+      <span class="uppercase tracking-widest">{label}</span>
+    </div>
+  </div>
+</div>

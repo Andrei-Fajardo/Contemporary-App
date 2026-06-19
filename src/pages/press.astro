@@ -1,0 +1,20 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { pressItems } from '../data/content';
+---
+
+<PageLayout title="Press" activeSection="Press">
+  <div class="px-8 py-10">
+    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(PRESS)</span>
+
+    <div class="space-y-4">
+      {pressItems.map((item) => (
+        <div class="border border-black/[0.15] p-5">
+          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">{item.outlet}</span>
+          <h3 class="font-sans text-sm font-semibold text-neutral-800 mt-1">{item.title}</h3>
+          <span class="text-[11px] font-mono text-neutral-500 mt-1 block">{item.date}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</PageLayout>

@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const artists = [
+  {
+    name: "Yuna Matsumoto",
+    media: "Installation &amp; New Media",
+    bio: "Tokyo-based artist working at the intersection of generative systems and organic form. Her installations use custom software to produce ever-evolving sculptural environments.",
+    gradient: "from-blue-100 to-purple-100",
+  },
+  {
+    name: "David Okonkwo",
+    media: "Sculpture &amp; Mixed Media",
+    bio: "Lagos-born, London-based sculptor whose work fuses discarded industrial materials with traditional West African textile techniques to explore colonial residue and repair.",
+    gradient: "from-emerald-100 to-teal-100",
+  },
+  {
+    name: "Sofia Reyes",
+    media: "Digital Art &amp; AI",
+    bio: "Mexico City digital artist training custom neural networks on Mesoamerican codices, creating dreamlike video works that reimagine pre-colonial futures.",
+    gradient: "from-rose-100 to-orange-100",
+  },
+  {
+    name: "Marcus Chen",
+    media: "Painting &amp; Textiles",
+    bio: "Singaporean painter weaving silk, linen, and synthetic fibers into large-scale abstract compositions that map the emotional geography of diaspora.",
+    gradient: "from-violet-100 to-indigo-100",
+  },
+  {
+    name: "Aria Winslow",
+    media: "Sound &amp; Performance",
+    bio: "Berlin-based composer and performer creating site-specific sonic installations using contact microphones, field recordings, and hacked electronics.",
+    gradient: "from-yellow-100 to-amber-100",
+  },
+  {
+    name: "Ravi Desai",
+    media: "Photography &amp; Film",
+    bio: "Mumbai filmmaker exploring the poetics of urban infrastructure through long-form documentary and large-format analog photography.",
+    gradient: "from-cyan-100 to-sky-100",
+  },
+];
+---
+
+<Layout title="Artists">
+  <section class="relative overflow-hidden bg-white py-20 md:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-sm text-slate-500 tracking-[0.2em] uppercase font-medium">Collective</p>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] mt-2">Artists</h1>
+      <p class="mt-4 text-base text-slate-600 leading-relaxed max-w-[65ch]">
+        We represent a rotating roster of contemporary artists whose practices challenge medium boundaries
+        and engage with the pressing questions of our time.
+      </p>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden bg-slate-50 py-20 md:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {artists.map((a) => (
+          <article class="bg-white rounded-xl border border-black/[0.06] p-5 md:p-6 shadow-sm group">
+            <div
+              class={`aspect-[4/3] rounded-lg bg-gradient-to-br ${a.gradient} border border-black/[0.06] flex items-center justify-center mb-4`}
+            >
+              <span class="text-slate-400 text-xs">Portrait</span>
+            </div>
+            <h2 class="text-lg md:text-xl font-semibold tracking-tight text-slate-900 group-hover:text-indigo-600 transition-colors">{a.name}</h2>
+            <p class="text-sm text-slate-500 mt-1">{a.media}</p>
+            <p class="text-sm text-slate-600 leading-relaxed mt-3 max-w-[65ch]">{a.bio}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

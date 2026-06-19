@@ -1,0 +1,171 @@
+---
+import SideTabs from './SideTabs.astro';
+import ArtSlide from './ArtSlide.astro';
+import ExhibitionSlide from './ExhibitionSlide.astro';
+import MagazinesSlide from './MagazinesSlide.astro';
+import ResearchSlide from './ResearchSlide.astro';
+import ContactSlide from './ContactSlide.astro';
+import AboutSlide from './AboutSlide.astro';
+import Lightbox from './Lightbox.astro';
+
+interface Artwork {
+  imageUrl: string;
+  title: string;
+  artist: string;
+}
+
+interface Exhibition {
+  title: string;
+  venue: string;
+  date: string;
+  description: string;
+}
+
+interface Magazine {
+  title: string;
+  issue: string;
+  date: string;
+  gradient: string;
+}
+
+interface Paper {
+  title: string;
+  journal: string;
+  year: string;
+  description: string;
+}
+
+type Slide =
+  | { type: "art"; id: string; label: string; title: string; subtitle: string; gradient: string; artworks: Artwork[] }
+  | { type: "exhibition"; id: string; label: string; title: string; gradient: string; exhibitions: Exhibition[] }
+  | { type: "magazines"; id: string; label: string; title: string; gradient: string; magazines: Magazine[] }
+  | { type: "research"; id: string; label: string; title: string; gradient: string; papers: Paper[] }
+  | { type: "contact"; id: string; label: string; title: string; gradient: string }
+  | { type: "about"; id: string; label: string; title: string; gradient: string };
+
+interface Props {
+  slides: Slide[];
+}
+
+const { slides } = Astro.props;
+---
+
+<div
+  id="gallery"
+  class="relative w-full h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth"
+>
+  <SideTabs tabs={slides.map(({ id, label }) => ({ id, label }))} />
+
+  {slides.map((slide) => {
+    switch (slide.type) {
+      case "art":
+        return (
+          <ArtSlide
+            id={slide.id}
+            label={slide.label}
+            title={slide.title}
+            subtitle={slide.subtitle}
+            gradient={slide.gradient}
+            artworks={slide.artworks}
+          />
+        );
+      case "exhibition":
+        return (
+          <ExhibitionSlide
+            id={slide.id}
+            label={slide.label}
+            title={slide.title}
+            gradient={slide.gradient}
+            exhibitions={slide.exhibitions}
+          />
+        );
+      case "magazines":
+        return (
+          <MagazinesSlide
+            id={slide.id}
+            label={slide.label}
+            title={slide.title}
+            gradient={slide.gradient}
+            magazines={slide.magazines}
+          />
+        );
+      case "research":
+        return (
+          <ResearchSlide
+            id={slide.id}
+            label={slide.label}
+            title={slide.title}
+            gradient={slide.gradient}
+            papers={slide.papers}
+          />
+        );
+      case "contact":
+        return (
+          <ContactSlide
+            id={slide.id}
+            label={slide.label}
+            title={slide.title}
+            gradient={slide.gradient}
+          />
+        );
+      case "about":
+        return (
+          <AboutSlide
+            id={slide.id}
+            label={slide.label}
+            title={slide.title}
+            gradient={slide.gradient}
+          />
+        );
+      default:
+        return null;
+    }
+  })}
+</div>
+
+<Lightbox data={null} id="lightbox-slot" />
+
+<script>
+  (window as any).openLightbox = function (imageUrl: string, title: string, artist: string) {
+    const slot = document.getElementById('lightbox-slot');
+    if (slot) {
+      slot.innerHTML = `
+        <div class="lightbox-overlay fixed inset-0 z-[100] flex items-center justify-center bg-[#0b0f19]/80 backdrop-blur-sm"
+             onclick="if(event.target===this)closeLightbox()"
+             onkeydown="if(event.key==='Escape')closeLightbox()">
+          <div class="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center">
+            <button class="absolute -top-12 right-0 text-slate-300 hover:text-white text-2xl leading-none cursor-pointer z-10"
+                    onclick="closeLightbox()">&#x2715;</button>
+            <img class="lightbox-image max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl" loading="lazy"
+                 src="${imageUrl}" alt="${title}" />
+            <div class="mt-4 text-center">
+              <p class="text-white text-lg font-semibold">${title}</p>
+              <p class="text-slate-300 text-sm">${artist}</p>
+            </div>
+          </div>
+        </div>
+      `;
+      document.addEventListener('keydown', lightboxKeydown);
+    }
+  };
+
+  (window as any).closeLightbox = function () {
+    const slot = document.getElementById('lightbox-slot');
+    if (slot) slot.innerHTML = '';
+    document.removeEventListener('keydown', lightboxKeydown);
+  };
+
+  function lightboxKeydown(e: KeyboardEvent) {
+    if (e.key === 'Escape') (window as any).closeLightbox();
+  }
+</script>
+
+<style>
+  #gallery {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #gallery::-webkit-scrollbar {
+    display: none;
+  }
+</style>

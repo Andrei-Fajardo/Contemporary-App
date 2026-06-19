@@ -1,0 +1,60 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  gradient: string;
+}
+const { id, label, title, gradient } = Astro.props;
+---
+
+<div class="relative w-screen h-screen flex-shrink-0 snap-start overflow-hidden bg-[#faf8f5]">
+  <div class={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+  <div class="art-bg" />
+
+  <div class="relative h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 max-w-4xl mx-auto">
+    <p class="text-sm text-slate-500 tracking-[0.2em] uppercase font-medium mb-1">Contact</p>
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-10 md:mb-14">{title}</h2>
+
+    <div class="grid md:grid-cols-2 gap-10 md:gap-16">
+      <div class="space-y-6">
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-widest mb-1">Email</p>
+          <a href="mailto:anna@dauylrockswell.art" class="text-lg text-slate-900 font-medium hover:text-indigo-600 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 rounded-sm">anna@dauylrockswell.art</a>
+        </div>
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-widest mb-1">Studio</p>
+          <p class="text-lg font-medium text-slate-900">42 Wooster Street</p>
+          <p class="text-slate-500">New York, NY 10013</p>
+        </div>
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-widest mb-1">Social</p>
+          <div class="flex gap-4 mt-2">
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 rounded-sm">Instagram</a>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 rounded-sm">Twitter</a>
+            <a href="#" class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 rounded-sm">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-widest mb-2">Send a message</p>
+          <form class="space-y-3" onsubmit="event.preventDefault(); alert('Message sent (demo)');">
+            <input type="text" placeholder="Name" class="w-full px-4 py-2.5 rounded-lg bg-white/70 backdrop-blur-sm border border-black/[0.06] text-slate-900 placeholder:text-slate-400 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" />
+            <input type="email" placeholder="Email" class="w-full px-4 py-2.5 rounded-lg bg-white/70 backdrop-blur-sm border border-black/[0.06] text-slate-900 placeholder:text-slate-400 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" />
+            <textarea rows="3" placeholder="Message" class="w-full px-4 py-2.5 rounded-lg bg-white/70 backdrop-blur-sm border border-black/[0.06] text-slate-900 placeholder:text-slate-400 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 resize-none"></textarea>
+            <button type="submit" class="px-5 py-2.5 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 border-t border-black/[0.04] bg-[#faf8f5]/60 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 h-12 flex items-center justify-between text-xs text-slate-400">
+      <span class="font-mono">{id}</span>
+      <span class="uppercase tracking-widest">{label}</span>
+    </div>
+  </div>
+</div>

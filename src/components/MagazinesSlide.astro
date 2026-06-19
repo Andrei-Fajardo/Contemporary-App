@@ -1,0 +1,48 @@
+---
+interface Magazine {
+  title: string;
+  issue: string;
+  date: string;
+  gradient: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  gradient: string;
+  magazines: Magazine[];
+}
+
+const { id, label, title, gradient, magazines } = Astro.props;
+---
+
+<div class="relative w-screen h-screen flex-shrink-0 snap-start overflow-hidden bg-[#faf8f5]">
+  <div class={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+  <div class="art-bg" />
+
+  <div class="relative h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 max-w-6xl mx-auto">
+    <p class="text-sm text-slate-500 tracking-[0.2em] uppercase font-medium mb-1">Publications</p>
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-10 md:mb-14">{title}</h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      {magazines.map((mag) => (
+        <div class="group cursor-pointer">
+          <div class={`aspect-[3/4] rounded-xl bg-gradient-to-br ${mag.gradient} border border-black/[0.06] shadow-sm flex items-center justify-center overflow-hidden backdrop-blur-sm`}>
+            <span class="text-slate-400/60 text-xs text-center px-4 font-mono">{mag.issue}</span>
+          </div>
+          <p class="text-sm font-medium text-slate-900 mt-3 group-hover:text-indigo-600 transition-colors">{mag.title}</p>
+          <p class="text-sm text-slate-500">{mag.date}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 border-t border-black/[0.04] bg-[#faf8f5]/60 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 h-12 flex items-center justify-between text-xs text-slate-400">
+      <span class="font-mono">{id}</span>
+      <span class="uppercase tracking-widest">{label}</span>
+    </div>
+  </div>
+</div>

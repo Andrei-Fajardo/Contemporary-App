@@ -1,0 +1,49 @@
+---
+interface Exhibition {
+  title: string;
+  venue: string;
+  date: string;
+  description: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  gradient: string;
+  exhibitions: Exhibition[];
+}
+
+const { id, label, title, gradient, exhibitions } = Astro.props;
+---
+
+<div class="relative w-screen h-screen flex-shrink-0 snap-start overflow-hidden bg-[#faf8f5]">
+  <div class={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+  <div class="art-bg" />
+
+  <div class="relative h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 max-w-5xl mx-auto">
+    <p class="text-sm text-slate-500 tracking-[0.2em] uppercase font-medium mb-1">Exhibition</p>
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-10 md:mb-14">{title}</h2>
+
+    <div class="space-y-6 md:space-y-8 max-w-3xl">
+      {exhibitions.map((ex, i) => (
+        <div class="flex gap-4 md:gap-6 items-start group">
+          <span class="text-slate-300 text-sm font-mono w-8 flex-shrink-0 pt-1">{String(i + 1).padStart(2, '0')}</span>
+          <div class="flex-1 border-b border-black/[0.06] pb-5 md:pb-6">
+            <h3 class="text-lg md:text-xl font-semibold tracking-tight text-slate-900 group-hover:text-indigo-600 transition-colors">{ex.title}</h3>
+            <p class="text-sm text-slate-500 mt-1">{ex.venue} — {ex.date}</p>
+            <p class="text-sm text-slate-600 mt-2 leading-relaxed max-w-[65ch]">{ex.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 border-t border-black/[0.04] bg-[#faf8f5]/60 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 h-12 flex items-center justify-between text-xs text-slate-400">
+      <span class="font-mono">{id}</span>
+      <span class="uppercase tracking-widest">{label}</span>
+    </div>
+  </div>
+</div>

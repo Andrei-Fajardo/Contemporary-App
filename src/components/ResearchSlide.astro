@@ -1,0 +1,47 @@
+---
+interface Paper {
+  title: string;
+  journal: string;
+  year: string;
+  description: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  gradient: string;
+  papers: Paper[];
+}
+
+const { id, label, title, gradient, papers } = Astro.props;
+---
+
+<div class="relative w-screen h-screen flex-shrink-0 snap-start overflow-hidden bg-[#faf8f5]">
+  <div class={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+  <div class="art-bg" />
+
+  <div class="relative h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 max-w-5xl mx-auto">
+    <p class="text-sm text-slate-500 tracking-[0.2em] uppercase font-medium mb-1">Academic Research</p>
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-10 md:mb-14">{title}</h2>
+
+    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+      {papers.map((paper) => (
+        <div class="bg-white/70 backdrop-blur-sm rounded-xl border border-black/[0.06] p-5 md:p-6 hover:border-slate-200 transition-colors shadow-sm">
+          <p class="text-xs text-slate-400 font-mono mb-2">{paper.year}</p>
+          <h3 class="text-base md:text-lg font-semibold tracking-tight text-slate-900">{paper.title}</h3>
+          <p class="text-sm text-slate-500 italic mt-1">{paper.journal}</p>
+          <p class="text-sm text-slate-600 leading-relaxed mt-3 max-w-[65ch]">{paper.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 border-t border-black/[0.04] bg-[#faf8f5]/60 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 h-12 flex items-center justify-between text-xs text-slate-400">
+      <span class="font-mono">{id}</span>
+      <span class="uppercase tracking-widest">{label}</span>
+    </div>
+  </div>
+</div>

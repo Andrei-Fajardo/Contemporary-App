@@ -1,0 +1,85 @@
+---
+interface Tab {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  tabs: Tab[];
+}
+
+const { tabs } = Astro.props;
+---
+
+<div class="fixed left-4 sm:left-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-1">
+  <!-- Name header -->
+  <div class="mb-4 pb-4 border-b border-slate-200/60">
+    <p class="text-xs font-medium text-slate-700 leading-tight tracking-tight whitespace-nowrap">
+      Anna Dauyl<br />Rockswell
+    </p>
+  </div>
+
+  {tabs.map((tab, index) => (
+    <button
+      class="side-tab group flex items-center gap-3 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 rounded-sm"
+      data-index={index}
+    >
+      <span class="block w-6 h-px bg-slate-300 group-hover:w-10 group-hover:bg-slate-900 transition-all duration-300" />
+      <span class="text-[10px] font-mono text-slate-400 group-hover:text-slate-900 transition-colors uppercase tracking-wider whitespace-nowrap">
+        {tab.label}
+      </span>
+    </button>
+  ))}
+</div>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.side-tab');
+  const gallery = document.getElementById('gallery')!;
+  const slides = gallery?.querySelectorAll('.snap-start');
+
+  function activateTab(index: number) {
+    tabs.forEach((tab, i) => {
+      const line = tab.querySelector('span:first-child')!;
+      const label = tab.querySelector('span:last-child')!;
+      if (i === index) {
+        line.classList.remove('bg-slate-300', 'w-6');
+        line.classList.add('bg-slate-900', 'w-10');
+        label.classList.remove('text-slate-400');
+        label.classList.add('text-slate-900');
+      } else {
+        line.classList.add('bg-slate-300', 'w-6');
+        line.classList.remove('bg-slate-900', 'w-10');
+        label.classList.add('text-slate-400');
+        label.classList.remove('text-slate-900');
+      }
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const index = Number(tab.dataset.index);
+      activateTab(index);
+      slides?.[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  if (gallery && slides) {
+    gallery.addEventListener('scrollend', () => {
+      let activeIndex = -1;
+      const galleryRect = gallery.getBoundingClientRect();
+      const galleryCenterX = galleryRect.left + galleryRect.width / 2;
+      slides.forEach((slide, i) => {
+        const rect = slide.getBoundingClientRect();
+        const slideCenterX = rect.left + rect.width / 2;
+        if (slideCenterX >= galleryRect.left && slideCenterX <= galleryRect.right) {
+          if (activeIndex === -1 || Math.abs(slideCenterX - galleryCenterX) < Math.abs(slides[activeIndex].getBoundingClientRect().left + slides[activeIndex].getBoundingClientRect().width / 2 - galleryCenterX)) {
+            activeIndex = i;
+          }
+        }
+      });
+      if (activeIndex >= 0) {
+        activateTab(activeIndex);
+      }
+    });
+  }
+</script>

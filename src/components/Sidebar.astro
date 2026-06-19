@@ -1,0 +1,52 @@
+---
+export interface Props {
+  activeSection: string;
+}
+
+const { activeSection } = Astro.props;
+
+const menuItems = [
+  { label: "Art", href: "/" },
+  { label: "Exhibitions", href: "/exhibitions" },
+  { label: "Publications & Writing", href: "/publications-and-writing" },
+  { label: "Magazines", href: "/magazines" },
+  { label: "Academic Research", href: "/academic-research" },
+  { label: "Press", href: "/press" },
+  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/about" },
+];
+---
+
+<aside class="w-[18vw] min-w-[200px] h-screen fixed left-0 top-0 border-r border-black/[0.15] bg-[#E3E2DA] z-40 flex flex-col px-6">
+  <!-- Top Section: Name -->
+  <div class="pt-12">
+    <h1 class="font-serif italic text-2xl tracking-tight text-neutral-800 leading-snug">Anna Dauyl<br />Rockswell</h1>
+    <span class="font-sans text-[10px] uppercase tracking-[0.2em] text-neutral-500 mt-1 block">Writer &amp; Artist</span>
+  </div>
+
+  <!-- Mid Section: Navigation -->
+  <nav class="mt-12">
+    <p class="font-sans text-[9px] uppercase tracking-[0.2em] text-neutral-400 font-bold mb-4">Navigation</p>
+    {menuItems.map((item) => {
+      const isActive = activeSection === item.label;
+      return (
+        <a
+          href={item.href}
+          class={`font-sans text-[13px] py-1.5 block font-medium transition-colors ${
+            isActive
+              ? 'text-neutral-800 underline underline-offset-4 decoration-black/[0.4]'
+              : 'text-neutral-800/70 hover:text-black hover:underline hover:underline-offset-4 hover:decoration-black/[0.2]'
+          }`}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+  </nav>
+
+  <!-- Bottom Section: Location -->
+  <div class="mt-auto pb-12">
+    <span class="font-sans text-[9px] uppercase tracking-[0.2em] text-neutral-400 block mb-1">Based in</span>
+    <span class="font-sans text-[12px] text-neutral-700 font-medium">Seoul &middot; Almaty</span>
+  </div>
+</aside>

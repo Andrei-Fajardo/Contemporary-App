@@ -1,0 +1,64 @@
+---
+interface Artwork {
+  imageUrl: string;
+  title: string;
+  artist: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  subtitle: string;
+  gradient: string;
+  artworks: Artwork[];
+}
+
+const { id, label, title, subtitle, gradient, artworks } = Astro.props;
+---
+
+<div class="relative w-screen h-screen flex-shrink-0 snap-start overflow-hidden bg-[#faf8f5]">
+  <div class={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+  <div class="art-bg" />
+
+  <!-- Header -->
+  <div class="absolute top-16 left-6 sm:left-10 md:left-16 z-10 pointer-events-none">
+    <p class="text-sm text-slate-500 tracking-[0.2em] uppercase font-medium mb-1">
+      {subtitle}
+    </p>
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1]">
+      {title}
+    </h2>
+  </div>
+
+  <!-- Artwork grid -->
+  <div class="absolute inset-0 flex items-center justify-center px-6 sm:px-10 md:px-16">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-6xl">
+      {artworks.slice(0, 6).map((art) => (
+        <button
+          class="group cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 rounded-xl"
+          onclick="openLightbox('{art.imageUrl}', '{art.title}', '{art.artist}')"
+        >
+          <div class="aspect-[3/4] rounded-xl overflow-hidden shadow-sm bg-white/80 border border-black/[0.06] backdrop-blur-sm">
+            <img
+              src={art.imageUrl}
+              alt={art.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <p class="text-sm font-medium text-slate-900 mt-2 truncate">{art.title}</p>
+          <p class="text-sm text-slate-500 truncate">{art.artist}</p>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="absolute bottom-0 left-0 right-0 z-10 border-t border-black/[0.04] bg-[#faf8f5]/60 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 h-12 flex items-center justify-between text-xs text-slate-400">
+      <span class="font-mono">{id}</span>
+      <span class="uppercase tracking-widest">{label}</span>
+    </div>
+  </div>
+</div>

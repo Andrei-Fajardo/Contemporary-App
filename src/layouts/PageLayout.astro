@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
+
+export interface Props {
+  title: string;
+  activeSection: string;
+}
+
+const { title, activeSection } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} — Anna Dauyl Rockswell</title>
+  </head>
+  <body class="font-sans text-neutral-800 antialiased">
+    <div class="flex min-h-screen">
+      <Sidebar activeSection={activeSection} />
+      <div class="fixed top-0 left-[18vw] z-50 w-10 h-10 bg-[#2B2B26] flex items-center justify-center">
+        <span class="text-white text-[9px] font-mono tracking-wider">L</span>
+      </div>
+      <div class="fixed top-4 right-6 z-50 flex items-center gap-2 border border-neutral-800/20 px-2 py-1 text-[11px] font-mono tracking-wider bg-white/20 backdrop-blur-sm">
+        <span class="text-neutral-800 font-semibold">EN</span>
+        <span class="text-neutral-400">KR</span>
+      </div>
+
+      <main class="ml-[18vw] w-[82vw] min-h-screen bg-[#E3E2DA]">
+        <slot />
+        <footer class="px-8 pt-12 pb-24">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8 border-t border-black/[0.15] pt-12">
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Email</span>
+              <a href="mailto:contact@annadauylrockswell.com" class="text-xs font-sans text-neutral-800 underline underline-offset-4">contact@annadauylrockswell.com</a>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Licenses</span>
+              <div class="text-xs font-sans text-neutral-700 space-y-1">
+                <span class="block underline underline-offset-2 decoration-neutral-300">ARS [Artists Rights Society]</span>
+                <span class="block underline underline-offset-2 decoration-neutral-300">ARKO [Arts Council Korea]</span>
+                <span class="block underline underline-offset-2 decoration-neutral-300">DACS</span>
+              </div>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Socials</span>
+              <div class="text-xs font-sans text-neutral-700 space-y-1">
+                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">Instagram</a>
+                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">X</a>
+              </div>
+            </div>
+          </div>
+          <p class="text-[11px] font-mono text-neutral-400 mt-12 text-center">&copy; 2026 Anna Dauyl Rockswell. All rights reserved.</p>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { publications } from '../data/content';
+---
+
+<PageLayout title="Magazines" activeSection="Magazines">
+  <div class="px-8 py-10">
+    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(MAGAZINES)</span>
+
+    <div class="grid grid-cols-3 gap-px bg-black/[0.15]">
+      {publications.slice(0, 6).map((mag) => (
+        <div class="bg-[#E3E2DA] p-6 flex flex-col items-center justify-center min-h-[200px] border border-black/[0.15]">
+          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase text-center">{mag.issue}</span>
+          <h3 class="font-sans text-sm font-semibold text-neutral-800 mt-3 text-center">{mag.title}</h3>
+          <span class="text-[11px] font-mono text-neutral-500 mt-2">{mag.type}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</PageLayout>

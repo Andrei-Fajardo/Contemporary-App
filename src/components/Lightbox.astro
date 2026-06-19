@@ -1,0 +1,43 @@
+---
+export interface LightboxData {
+  imageUrl: string;
+  title: string;
+  artist: string;
+}
+
+interface Props {
+  data?: LightboxData | null;
+}
+
+const { data } = Astro.props;
+---
+
+{
+  data && (
+    <div
+      id="lightbox"
+      class="lightbox-overlay fixed inset-0 z-[100] flex items-center justify-center bg-cream-950/80 backdrop-blur-sm"
+      onclick="closeLightbox(event)"
+      onkeydown="if(event.key==='Escape')closeLightbox()"
+    >
+      <div class="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center">
+        <button
+          class="absolute -top-12 right-0 text-cream-300 hover:text-white text-2xl leading-none cursor-pointer z-10"
+          onclick="closeLightbox()"
+          aria-label="Close"
+        >
+          &#x2715;
+        </button>
+        <img
+          class="lightbox-image max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+          src={data.imageUrl}
+          alt={data.title}
+        />
+        <div class="mt-4 text-center">
+          <p class="text-white text-lg font-semibold">{data.title}</p>
+          <p class="text-cream-300 text-sm">{data.artist}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
