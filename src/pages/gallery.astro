@@ -1,0 +1,68 @@
+---
+/**
+ * Art Gallery Demo Page
+ * Demonstrates the ArtCard component with the global interactive image system
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import ArtCard from '../components/ArtCard.astro';
+
+// Sample artwork data - replace with your actual data source
+const artworks = [
+  {
+    imageUrl: '/images/artwork-1.jpg',
+    title: 'Echoes of Silence',
+    artist: 'Yuna Matsumoto',
+    medium: 'Digital Installation',
+    year: '2026',
+    dimensions: '200 × 150 cm',
+    description: 'An immersive generative installation exploring the interplay between organic form and algorithmic systems. Custom software produces ever-evolving sculptural environments that respond to ambient sound and viewer movement.',
+    slug: 'echoes-of-silence',
+    tags: ['Installation', 'New Media', 'Generative Art']
+  },
+  {
+    imageUrl: '/images/artwork-2.jpg',
+    title: 'Colonial Residue',
+    artist: 'David Okonkwo',
+    medium: 'Mixed Media Sculpture',
+    year: '2025',
+    dimensions: '180 × 120 × 80 cm',
+    description: 'A powerful fusion of discarded industrial materials and traditional West African textile techniques. This work interrogates the lasting impact of colonial extraction while proposing pathways toward cultural repair and reclamation.',
+    slug: 'colonial-residue',
+    tags: ['Sculpture', 'Mixed Media', 'Post-Colonial']
+  },
+  {
+    imageUrl: '/images/artwork-3.jpg',
+    title: 'Codex Dreams',
+    artist: 'Sofia Reyes',
+    medium: 'AI Video Art',
+    year: '2026',
+    dimensions: '4K Video, 12:30 min',
+    description: 'Training custom neural networks on Mesoamerican codices, this dreamlike video work reimagines pre-colonial futures. The algorithm hallucinates alternate histories where indigenous knowledge systems flourished uninterrupted.',
+    slug: 'codex-dreams',
+    tags: ['Digital Art', 'AI', 'Video']
+  }
+];
+---
+
+<PageLayout title="Art Gallery" activeSection="Gallery">
+  <div class="px-8 py-10">
+    <!-- Header -->
+    <header class="mb-12">
+      <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-2 block">(GALLERY)</span>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+        Contemporary Works
+      </h1>
+      <p class="mt-4 text-base text-neutral-600 leading-relaxed max-w-[65ch]">
+        Explore our curated collection of contemporary artworks that challenge boundaries 
+        and engage with the pressing questions of our time.
+      </p>
+    </header>
+
+    <!-- Art Cards Container -->
+    <div class="max-w-6xl">
+      {artworks.map(artwork => (
+        <ArtCard {...artwork} />
+      ))}
+    </div>
+  </div>
+</PageLayout>

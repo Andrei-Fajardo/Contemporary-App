@@ -1,0 +1,122 @@
+---
+/**
+ * ArtCard.astro
+ * Bulletproof Multi-Media Card Grid Component
+ * 
+ * Rigid responsive fraction system prevents text wrapper collapse
+ * and awkward multi-line technical specification blocks
+ */
+
+interface Props {
+  imageUrl: string;
+  title: string;
+  artist: string;
+  medium: string;
+  year: string;
+  dimensions?: string;
+  description: string;
+  slug: string;
+  tags?: string[];
+}
+
+const { 
+  imageUrl, 
+  title, 
+  artist, 
+  medium, 
+  year, 
+  dimensions,
+  description, 
+  slug,
+  tags = []
+} = Astro.props;
+---
+
+<article 
+  class="grid grid-cols-1 md:grid-cols-[45%_1fr] gap-8 md:gap-12 items-start py-12 border-b border-neutral-900/10"
+>
+  <!-- Left Column: Interactive Image Container -->
+  <div class="interactive-image-container aspect-[4/5] rounded-lg bg-neutral-100 shadow-md">
+    <img 
+      src={imageUrl} 
+      alt={`${title} by ${artist}`}
+      loading="lazy"
+      class="rounded-lg"
+    />
+  </div>
+
+  <!-- Right Column: Content Panel -->
+  <div class="flex flex-col gap-6 max-w-[65ch] min-w-0">
+    
+    <!-- Title & Artist -->
+    <header>
+      <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-neutral-900 leading-tight">
+        {title}
+      </h2>
+      <p class="text-base md:text-lg text-neutral-600 mt-2 font-medium">
+        {artist}
+      </p>
+    </header>
+
+    <!-- Technical Specifications Ribbon -->
+    <div class="flex items-center gap-3 text-sm font-mono tracking-wide text-neutral-500 whitespace-nowrap overflow-x-auto scrollbar-none">
+      <span class="inline-flex items-center gap-1.5">
+        <span class="text-neutral-400">Medium:</span>
+        <span class="text-neutral-700">{medium}</span>
+      </span>
+      <span class="text-neutral-300">|</span>
+      <span class="inline-flex items-center gap-1.5">
+        <span class="text-neutral-400">Year:</span>
+        <span class="text-neutral-700">{year}</span>
+      </span>
+      {dimensions && (
+        <>
+          <span class="text-neutral-300">|</span>
+          <span class="inline-flex items-center gap-1.5">
+            <span class="text-neutral-400">Size:</span>
+            <span class="text-neutral-700">{dimensions}</span>
+          </span>
+        </>
+      )}
+    </div>
+
+    <!-- Description -->
+    <p class="text-sm md:text-base text-neutral-600 leading-relaxed">
+      {description}
+    </p>
+
+    <!-- Tags (Optional) -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2">
+        {tags.map(tag => (
+          <span class="px-3 py-1 text-xs font-medium tracking-wide bg-neutral-100 text-neutral-700 rounded-full border border-neutral-200">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- Call to Action Button -->
+    <div class="mt-auto pt-4">
+      <a 
+        href={`/art/${slug}`}
+        class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold tracking-wide text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
+      >
+        <span>View Project Specs</span>
+        <svg 
+          class="w-4 h-4" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+</article>
