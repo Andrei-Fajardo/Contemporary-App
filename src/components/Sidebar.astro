@@ -10,17 +10,14 @@ const { activeSection, locale = 'en' } = Astro.props;
 const l = t[locale];
 
 const menuItems: { key: string; href: string }[] = [
-  { key: "art", href: locale === 'en' ? '/' : `/${locale}` },
-  { key: "exhibitions", href: `${locale === 'en' ? '' : '/' + locale}/exhibitions` },
-  { key: "feature", href: `${locale === 'en' ? '' : '/' + locale}/feature` },
-  { key: "virtual", href: `${locale === 'en' ? '' : '/' + locale}/virtual-exhibitions` },
-  { key: "publications", href: `${locale === 'en' ? '' : '/' + locale}/publications-and-writing` },
-  { key: "magazines", href: `${locale === 'en' ? '' : '/' + locale}/magazines` },
-  { key: "academic", href: `${locale === 'en' ? '' : '/' + locale}/academic-research` },
-  { key: "press", href: `${locale === 'en' ? '' : '/' + locale}/press` },
-  { key: "gallery", href: `${locale === 'en' ? '' : '/' + locale}/gallery` },
-  { key: "contact", href: `${locale === 'en' ? '' : '/' + locale}/contact` },
+  { key: "home", href: locale === 'en' ? '/' : `/${locale}` },
   { key: "about", href: `${locale === 'en' ? '' : '/' + locale}/about` },
+  { key: "art", href: `${locale === 'en' ? '' : '/' + locale}/art` },
+  { key: "exhibitions", href: `${locale === 'en' ? '' : '/' + locale}/exhibitions` },
+  { key: "publications", href: `${locale === 'en' ? '' : '/' + locale}/publications` },
+  { key: "research", href: `${locale === 'en' ? '' : '/' + locale}/research` },
+  { key: "press", href: `${locale === 'en' ? '' : '/' + locale}/press` },
+  { key: "contacts", href: `${locale === 'en' ? '' : '/' + locale}/contacts` },
 ];
 ---
 
