@@ -31,6 +31,7 @@ const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
       {langList.map((lang) => (
         <a
           href={lang === 'en' ? '/' : `/${lang}`}
+          data-lang-btn
           class={`group relative px-2.5 py-1.5 block transition-colors duration-150 ${
             locale === lang ? 'bg-[#111111] text-white' : 'text-[#111111]/50 hover:bg-[#111111] hover:text-white'
           }`}
@@ -40,6 +41,16 @@ const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
           </span>
         </a>
       ))}
+    </div>
+
+    <!-- Language switching overlay -->
+    <div id="lang-overlay" class="fixed inset-0 z-[10000] flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300">
+      <div class="bg-[#111111] px-10 py-6">
+        <div class="flex items-center gap-4">
+          <span class="w-2 h-2 bg-white rounded-full animate-ping" />
+          <span class="font-mono text-[11px] uppercase tracking-[0.3em] text-white" id="lang-label">Loading</span>
+        </div>
+      </div>
     </div>
 
     <!-- Logo Button -->
@@ -96,3 +107,31 @@ const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
     </div>
   </body>
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById("lang-overlay");
+    const label = document.getElementById("lang-label");
+    const labels = { en: "English", kr: "한국어", kk: "Қазақ", zh: "简体中文", ru: "Русский" };
+
+    document.querySelectorAll("[data-lang-btn]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const href = btn.getAttribute("href");
+        const lang = href === "/" ? "en" : href.replace("/", "");
+        label.textContent = labels[lang] || lang;
+
+        overlay.classList.remove("opacity-0");
+        overlay.classList.add("opacity-100");
+
+        setTimeout(() => {
+          overlay.classList.remove("opacity-100");
+          overlay.classList.add("opacity-0");
+          setTimeout(() => {
+            window.location.href = href;
+          }, 250);
+        }, 700);
+      });
+    });
+  });
+</script>
