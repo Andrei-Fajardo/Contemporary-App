@@ -1,27 +1,33 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { t } from '../data/translations';
+const l = t.en;
 ---
 
-<PageLayout title="Contact" activeSection="Contact">
-  <div class="px-8 py-10">
-    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(CONTACT)</span>
-
-    <h2 class="font-serif italic text-6xl md:text-7xl text-neutral-800 tracking-tight mb-16 mt-4 block">Contact Me</h2>
-
-    <form class="max-w-3xl" onsubmit="event.preventDefault(); alert('Message sent (demo)');">
-      <div class="border-b border-black/[0.15] py-6 flex items-center">
-        <span class="font-serif italic text-2xl text-neutral-700 min-w-[120px] inline-block">Name:</span>
-        <input type="text" placeholder="Your name" class="font-sans text-sm text-neutral-400 italic pl-4 w-full bg-transparent focus:outline-none border-none" />
+<PageLayout title="Contact" activeSection="contact" locale="en">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.contactTag}</span>
+      <div class="w-full md:w-3/4 lg:w-1/2">
+        <h1 class="font-forum text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] text-[#111111] mb-16">{l.contactHeading}</h1>
+        <form class="space-y-0" onsubmit="event.preventDefault(); alert('Sent (demo)');">
+          <div class="border-b-2 border-[#111111] py-5">
+            <span class="font-sans text-[10px] tracking-widest text-[#111111]/50 block mb-2">{l.nameLabel}</span>
+            <input type="text" placeholder={l.namePlaceholder} class="w-full bg-transparent rounded-none border-none focus:outline-none font-sans text-xl md:text-2xl text-[#111111]/40 placeholder:text-[#111111]/20 py-1" />
+          </div>
+          <div class="border-b-2 border-[#111111] py-5">
+            <span class="font-sans text-[10px] tracking-widest text-[#111111]/50 block mb-2">{l.emailLabel}</span>
+            <input type="email" placeholder={l.emailPlaceholder} class="w-full bg-transparent rounded-none border-none focus:outline-none font-sans text-xl md:text-2xl text-[#111111]/40 placeholder:text-[#111111]/20 py-1" />
+          </div>
+          <div class="border-b-2 border-[#111111] py-5">
+            <span class="font-sans text-[10px] tracking-widest text-[#111111]/50 block mb-2">{l.messageLabel}</span>
+            <textarea rows="2" placeholder={l.messagePlaceholder} class="w-full bg-transparent rounded-none border-none focus:outline-none font-sans text-xl md:text-2xl text-[#111111]/40 placeholder:text-[#111111]/20 py-1 resize-none"></textarea>
+          </div>
+          <div class="pt-6 text-right">
+            <button type="submit" class="font-sans text-xs uppercase tracking-widest text-[#111111] hover:text-[#111111]/50 font-bold transition-colors cursor-pointer border-none bg-transparent">{l.sendMessage}</button>
+          </div>
+        </form>
       </div>
-      <div class="border-b border-black/[0.15] py-6 flex items-center">
-        <span class="font-serif italic text-2xl text-neutral-700 min-w-[120px] inline-block">Email:</span>
-        <input type="email" placeholder="Your email" class="font-sans text-sm text-neutral-400 italic pl-4 w-full bg-transparent focus:outline-none border-none" />
-      </div>
-      <div class="border-b border-black/[0.15] py-6 flex items-start">
-        <span class="font-serif italic text-2xl text-neutral-700 min-w-[120px] inline-block pt-1">Message:</span>
-        <textarea rows="2" placeholder="Write your message here" class="font-sans text-sm text-neutral-400 italic pl-4 w-full bg-transparent focus:outline-none border-none resize-none"></textarea>
-      </div>
-      <span class="font-mono text-xs uppercase tracking-widest text-neutral-800 hover:text-neutral-500 font-bold transition-colors cursor-pointer text-right block w-full pt-4" onclick="this.closest('form').requestSubmit()">Send message</span>
-    </form>
+    </div>
   </div>
 </PageLayout>

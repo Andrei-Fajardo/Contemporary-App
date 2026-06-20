@@ -1,59 +1,96 @@
 ---
-import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
+import '../styles/global.css';
+import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
   title: string;
   activeSection: string;
+  locale?: LocaleKey;
 }
 
-const { title, activeSection } = Astro.props;
+const { title, activeSection, locale = 'en' } = Astro.props;
+const l = t[locale];
+const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={l.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} — Anna Dauyl Rockswell</title>
+    <title>{title} — {l.siteTitle}</title>
   </head>
-  <body class="font-sans text-neutral-800 antialiased">
+  <body class="font-sans text-[#111111] antialiased bg-[#E3E2DA]">
+    <!-- Film grain overlay -->
+    <div class="grain-overlay" />
+
+    <!-- 5-Language Toggle — magnetic button draw groups -->
+    <div class="fixed top-6 right-6 z-[9999] flex items-stretch border border-[#111111]/30 font-mono text-[10px] font-bold bg-white/20 backdrop-blur-sm">
+      {langList.map((lang) => (
+        <a
+          href={lang === 'en' ? '/' : `/${lang}`}
+          class={`group relative px-2.5 py-1.5 block transition-colors duration-150 ${
+            locale === lang ? 'bg-[#111111] text-white' : 'text-[#111111]/50 hover:bg-[#111111] hover:text-white'
+          }`}
+        >
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">
+            {langLabels[lang]}
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Logo Button -->
+    <div class="fixed top-0 left-[18vw] z-50 group">
+      <a href={l.logoHref} class="w-12 h-12 bg-[#111111] flex items-center justify-center hover:bg-[#333333] transition-colors duration-200 cursor-pointer">
+        <span class="text-white text-[11px] font-forum tracking-widest transition-transform duration-300 ease-out group-hover:translate-x-px">{l.logo}</span>
+      </a>
+      <!-- Underline glide for logo bottom edge -->
+      <span class="block w-full h-[1px] bg-neutral-900/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+    </div>
+
     <div class="flex min-h-screen">
-      <Sidebar activeSection={activeSection} />
-      <div class="fixed top-0 left-[18vw] z-50 w-10 h-10 bg-[#2B2B26] flex items-center justify-center">
-        <span class="text-white text-[9px] font-mono tracking-wider">L</span>
-      </div>
-      <div class="fixed top-4 right-6 z-50 flex items-center gap-2 border border-neutral-800/20 px-2 py-1 text-[11px] font-mono tracking-wider bg-white/20 backdrop-blur-sm">
-        <span class="text-neutral-800 font-semibold">EN</span>
-        <span class="text-neutral-400">KR</span>
-      </div>
+      <Sidebar activeSection={activeSection} locale={locale} />
 
       <main class="ml-[18vw] w-[82vw] min-h-screen bg-[#E3E2DA]">
-        <slot />
-        <footer class="px-8 pt-12 pb-24">
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-8 border-t border-black/[0.15] pt-12">
+        <slot name="content" />
+        <footer class="px-8 pt-16 pb-24">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-8 border-t border-black/10 pt-12">
             <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Email</span>
-              <a href="mailto:contact@annadauylrockswell.com" class="text-xs font-sans text-neutral-800 underline underline-offset-4">contact@annadauylrockswell.com</a>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#111111]/50 block mb-2">{l.email}</span>
+              <a href="mailto:contact@annadauylrockswell.com" class="group text-sm font-sans text-[#111111] underline underline-offset-4">
+                <span class="transition-transform duration-300 ease-out group-hover:translate-x-px">contact@annadauylrockswell.com</span>
+              </a>
             </div>
             <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Licenses</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARS [Artists Rights Society]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARKO [Arts Council Korea]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">DACS</span>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#111111]/50 block mb-2">{l.licenses}</span>
+              <div class="text-xs font-sans text-[#111111]/70 space-y-1.5">
+                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARS</span>
+                </span>
+                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARKO</span>
+                </span>
+                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">DACS</span>
+                </span>
               </div>
             </div>
             <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Socials</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">Instagram</a>
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">X</a>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#111111]/50 block mb-2">{l.socials}</span>
+              <div class="text-xs font-sans text-[#111111]/70 space-y-1.5">
+                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111111]">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">Instagram</span>
+                </a>
+                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111111]">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">X</span>
+                </a>
               </div>
             </div>
           </div>
-          <p class="text-[11px] font-mono text-neutral-400 mt-12 text-center">&copy; 2026 Anna Dauyl Rockswell. All rights reserved.</p>
+          <p class="text-[11px] font-mono text-[#111111]/40 mt-12 text-center tracking-wider">{l.copyright}</p>
         </footer>
       </main>
     </div>

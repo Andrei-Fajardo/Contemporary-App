@@ -3,20 +3,25 @@ import PageLayout from '../layouts/PageLayout.astro';
 import { researchPapers } from '../data/content';
 ---
 
-<PageLayout title="Academic Research" activeSection="Academic Research">
-  <div class="px-8 py-10">
-    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(ACADEMIC RESEARCH)</span>
+<PageLayout title="Academic Research" activeSection="academic">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(ACADEMIC RESEARCH)</span>
+      <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
+        Academic<br />Research
+      </h1>
 
-    <div class="space-y-4">
-      {researchPapers.map((paper) => (
-        <div class="border border-black/[0.15] p-5 flex justify-between items-start">
-          <div>
-            <h3 class="font-sans text-[13px] font-semibold text-neutral-800">{paper.title}</h3>
-            <span class="text-[11px] font-mono text-neutral-500 italic block mt-1">{paper.journal}</span>
+      <div class="space-y-4">
+        {researchPapers.map((paper) => (
+          <div class="border border-neutral-900/20 p-6 flex justify-between items-start">
+            <div>
+              <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{paper.title}</h2>
+              <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{paper.journal}</span>
+            </div>
+            <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{paper.year}</span>
           </div>
-          <span class="border border-neutral-400 px-2 py-0.5 text-[10px] font-mono rounded-full text-neutral-600 flex-shrink-0">{paper.year}</span>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </PageLayout>

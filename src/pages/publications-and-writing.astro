@@ -3,18 +3,23 @@ import PageLayout from '../layouts/PageLayout.astro';
 import { publications } from '../data/content';
 ---
 
-<PageLayout title="Publications &amp; Writing" activeSection="Publications &amp; Writing">
-  <div class="px-8 py-10">
-    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(PUBLICATIONS &amp; WRITING)</span>
+<PageLayout title="Publications" activeSection="publications">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PUBLICATIONS &amp; WRITING)</span>
+      <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
+        Publications<br />&amp; Writing
+      </h1>
 
-    <div class="grid grid-cols-2 gap-6">
-      {publications.map((pub) => (
-        <div class="border border-black/[0.15] p-5">
-          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">{pub.type}</span>
-          <h3 class="font-sans text-sm font-semibold text-neutral-800 mt-2">{pub.title}</h3>
-          <span class="text-[11px] font-mono text-neutral-500 mt-1 block">{pub.issue}</span>
-        </div>
-      ))}
+      <div class="grid md:grid-cols-2 gap-px bg-neutral-900/20">
+        {publications.map((pub) => (
+          <div class="bg-[#E3E2DA] p-8 border border-neutral-900/20">
+            <span class="font-mono text-[9px] tracking-widest text-neutral-500 uppercase block mb-3">{pub.type}</span>
+            <h2 class="font-sans font-black tracking-tighter uppercase text-xl text-neutral-900">{pub.title}</h2>
+            <span class="font-mono text-[10px] text-neutral-500 mt-2 block">{pub.issue}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </PageLayout>
