@@ -24,10 +24,10 @@ const menuItems: { key: string; href: string }[] = [
 ];
 ---
 
-<aside class="w-[18vw] min-w-[200px] h-screen fixed left-0 top-0 border-r border-black/10 bg-[#E3E2DA] z-40 flex flex-col px-6">
-  <div class="pt-12">
-    <h1 class="font-forum text-2xl text-[#111111] leading-none tracking-wide">Anna Dauyl<br />Rockswell</h1>
-    <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#111111]/50 mt-2 block">{l.subtitle}</span>
+<aside class="w-[18vw] min-w-[200px] h-screen fixed left-0 top-0 border-r border-black/10 bg-[#F0EEE9] z-40 flex-col px-6 hidden lg:flex">
+  <div class="pt-12" transition:persist="sidebar-brand">
+    <h1 class="font-forum text-2xl text-[#111] leading-none tracking-wide" transition:persist="sidebar-name">Anna Dauyl<br />Rockswell</h1>
+    <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block" transition:persist="sidebar-subtitle">{l.subtitle}</span>
   </div>
 
   <nav class="mt-10">
@@ -36,15 +36,15 @@ const menuItems: { key: string; href: string }[] = [
       const navKey = item.key as keyof typeof l.nav;
       return (
         <a
-          href={item.href}
-          class={`group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-colors duration-300 ${
-            isActive ? 'text-[#111111]' : 'text-[#111111]/50 hover:text-[#111111]'
-          }`}
-        >
-          {l.nav[navKey]}
+            href={item.href}
+            class={`group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-colors duration-300 ${
+              isActive ? 'text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
+            }`}
+          >
+            {l.nav[navKey]}
           <!-- Underline glide — left-origin scale line -->
           <span
-            class={`absolute bottom-0 left-0 w-full h-[1px] bg-neutral-900 origin-left transition-transform duration-500 ease-out ${
+            class={`absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out ${
               isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
             }`}
           />
@@ -54,7 +54,7 @@ const menuItems: { key: string; href: string }[] = [
   </nav>
 
   <div class="mt-auto pb-12">
-    <span class="font-sans text-[8px] uppercase tracking-[0.25em] text-[#111111]/40 block mb-1">{l.basedIn}</span>
-    <span class="font-sans text-[11px] text-[#111111]/70 font-medium tracking-wide">{l.location}</span>
+    <span class="font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
+    <span class="font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
   </div>
 </aside>
