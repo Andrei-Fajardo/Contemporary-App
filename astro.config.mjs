@@ -8,8 +8,13 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
 
-  adapter: vercel()
+  adapter: vercel(),
+
+  // Inline CSS so global styles always ship with the page (no missed stylesheet)
+  build: {
+    inlineStylesheets: 'always',
+  },
 });

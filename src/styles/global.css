@@ -8,7 +8,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: #111111 transparent;
@@ -30,7 +30,7 @@ body {
   background-color: #F0EEE9 !important;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Global Premium Grain Overlay */
@@ -69,7 +69,7 @@ body {
 /* Interactive Image Wrapper */
 .interactive-image-container {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   width: 100%;
   display: flex;
   align-items: center;
@@ -161,69 +161,117 @@ body {
 
 /* =============================================
    CINEMATIC SCROLL-DRIVEN ANIMATIONS
-   Requires Chrome 115+. Degrades gracefully.
+   Requires Chrome 115+. overflow:clip (not hidden)
+   on html/body is required for view() to work.
    ============================================= */
 
-@keyframes apple-hero-fade {
-  from {
-    opacity: 1;
-    transform: translateY(0);
+@supports (animation-timeline: view()) {
+  @keyframes apple-hero-fade {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-100px);
+    }
   }
-  to {
-    opacity: 0;
-    transform: translateY(-100px);
+
+  .hero-parallax {
+    animation: apple-hero-fade linear both;
+    animation-duration: 1ms;
+    animation-timeline: scroll(root);
+    animation-range: exit 0% exit 100%;
+  }
+
+  /* --- APPLE-STYLE PARALLAX (site-wide) --- */
+  @keyframes apple-mask-reveal {
+    0% { clip-path: inset(15% 15% 15% 15% round 4px); filter: blur(4px); opacity: 0; }
+    100% { clip-path: inset(0% 0% 0% 0% round 0px); filter: blur(0px); opacity: 1; }
+  }
+
+  @keyframes apple-image-scale {
+    0% { transform: scale(1.2) translateY(30px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+
+  .parallax-container,
+  .art-parallax-container {
+    overflow: clip;
+    view-timeline-axis: block;
+    animation: apple-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-duration: 1ms;
+    animation-timeline: view();
+    animation-range: entry 5% cover 35%;
+    will-change: filter, clip-path, opacity;
+  }
+
+  .parallax-container img,
+  .art-parallax-container img {
+    animation: apple-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-duration: 1ms;
+    animation-timeline: view();
+    animation-range: entry 5% cover 35%;
+    will-change: transform;
+  }
+
+  @keyframes apple-text-rise {
+    0% {
+      transform: translateY(80px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .parallax-text,
+  .art-parallax-text {
+    animation: apple-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-duration: 1ms;
+    animation-timeline: view();
+    animation-range: entry 15% cover 40%;
   }
 }
 
-.hero-parallax {
-  animation: apple-hero-fade linear both;
-  animation-timeline: scroll(root);
-  animation-range: exit 0% exit 100%;
-}
-
-/* --- APPLE-STYLE PARALLAX (site-wide) --- */
-@keyframes apple-mask-reveal {
-  0% { clip-path: inset(15% 15% 15% 15% round 4px); filter: blur(4px); opacity: 0; }
-  100% { clip-path: inset(0% 0% 0% 0% round 0px); filter: blur(0px); opacity: 1; }
-}
-
-@keyframes apple-image-scale {
-  0% { transform: scale(1.2) translateY(30px); }
-  100% { transform: scale(1) translateY(0); }
-}
-
+/* JS fallback target — used when view() is unsupported */
 .parallax-container,
 .art-parallax-container {
-  animation: apple-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
-  animation-timeline: view();
-  animation-range: entry 5% cover 35%;
-  will-change: filter, clip-path, opacity;
+  overflow: clip;
 }
 
-.parallax-container img,
-.art-parallax-container img {
-  animation: apple-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
-  animation-timeline: view();
-  animation-range: entry 5% cover 35%;
-  will-change: transform;
-}
-
-@keyframes apple-text-rise {
-  0% {
-    transform: translateY(80px);
-    opacity: 0;
+@supports not (animation-timeline: view()) {
+  .parallax-container:not(.parallax-active),
+  .art-parallax-container:not(.parallax-active) {
+    opacity: 0.4;
+    filter: blur(3px);
+    transform: scale(1.05);
   }
-  100% {
-    transform: translateY(0);
+
+  .parallax-container.parallax-active,
+  .art-parallax-container.parallax-active {
     opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+    transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1),
+      filter 0.9s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
   }
-}
 
-.parallax-text,
-.art-parallax-text {
-  animation: apple-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
-  animation-timeline: view();
-  animation-range: entry 15% cover 40%;
+  .parallax-text:not(.parallax-active),
+  .art-parallax-text:not(.parallax-active) {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+
+  .parallax-text.parallax-active,
+  .art-parallax-text.parallax-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  }
 }
 
 @media (max-width: 1023px) {
