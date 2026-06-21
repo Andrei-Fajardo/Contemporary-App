@@ -531,6 +531,82 @@ html {
   border: none;
   background: transparent;
   font: inherit;
+  cursor: pointer;
+  color: #555;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  border-radius: 0.2rem;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.lang-toggle {
+  position: fixed;
+  z-index: 10060;
+  display: flex;
+  align-items: stretch;
+  gap: 0.2rem;
+  padding: 0.3rem;
+  border: 1.5px solid rgba(17, 17, 17, 0.22);
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 18px rgba(17, 17, 17, 0.08);
+}
+
+.lang-toggle--desktop {
+  top: 1.35rem;
+  right: 1.35rem;
+}
+
+.lang-toggle--mobile {
+  position: relative;
+  top: auto;
+  right: auto;
+  z-index: auto;
+  padding: 0.2rem;
+  gap: 0.15rem;
+}
+
+.lang-toggle--desktop .lang-btn {
+  min-width: 2.65rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.72rem;
+}
+
+.lang-toggle--mobile .lang-btn {
+  min-width: 2.1rem;
+  padding: 0.5rem 0.55rem;
+  font-size: 0.62rem;
+}
+
+.lang-btn__label {
+  display: block;
+}
+
+.lang-btn:hover:not(.lang-btn--active) {
+  background: rgba(17, 17, 17, 0.07);
+  color: #111;
+}
+
+.lang-btn--active {
+  background: #111;
+  color: #f0eee9;
+  box-shadow:
+    inset 0 0 0 1px rgba(240, 238, 233, 0.12),
+    0 2px 8px rgba(17, 17, 17, 0.22);
+}
+
+.lang-btn--active:hover {
+  background: #111;
+  color: #f0eee9;
 }
 
 body.lang-switching {

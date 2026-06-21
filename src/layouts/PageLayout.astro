@@ -148,20 +148,16 @@ const menuItems: { key: string; href: string }[] = [
     </script>
 
     <!-- 5-Language Toggle — desktop (hidden on mobile) -->
-    <div id="lang-toggle-desktop" transition:persist="lang-toggle-desktop" class="fixed top-6 right-6 z-[10060] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden hidden lg:flex">
+    <div id="lang-toggle-desktop" transition:persist="lang-toggle-desktop" class="lang-toggle lang-toggle--desktop hidden lg:flex">
       {langList.map((lang) => (
         <button
           type="button"
-          class={`lang-btn group relative px-2.5 py-1.5 block transition-colors duration-150 cursor-pointer ${
-            isActiveLang(lang) ? 'bg-[#111111] text-white' : 'text-[#555] hover:bg-[#111111] hover:text-white'
-          }`}
+          class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
           data-lang={lang}
           aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
           aria-label={`Switch to ${langLabels[lang]}`}
         >
-          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">
-            {langLabels[lang]}
-          </span>
+          <span class="lang-btn__label">{langLabels[lang]}</span>
         </button>
       ))}
     </div>
@@ -173,17 +169,17 @@ const menuItems: { key: string; href: string }[] = [
       </a>
       <div class="flex items-center gap-3">
         <!-- Mobile language pills -->
-        <div id="lang-toggle-mobile" transition:persist="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 backdrop-blur-sm rounded overflow-hidden">
+        <div id="lang-toggle-mobile" transition:persist="lang-toggle-mobile" class="lang-toggle lang-toggle--mobile">
           {langList.map((lang) => (
             <button
               type="button"
-              class={`lang-btn px-2 py-1.5 transition-colors cursor-pointer ${
-                isActiveLang(lang) ? 'bg-[#111] text-white' : 'text-[#555] hover:bg-[#111] hover:text-white'
-              }`}
+              class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
               data-lang={lang}
               aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
               aria-label={`Switch to ${langLabels[lang]}`}
-            >{langLabels[lang]}</button>
+            >
+              <span class="lang-btn__label">{langLabels[lang]}</span>
+            </button>
           ))}
         </div>
         <!-- Hamburger -->

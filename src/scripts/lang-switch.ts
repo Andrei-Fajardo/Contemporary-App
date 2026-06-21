@@ -41,10 +41,7 @@ export function syncLangToggle(): void {
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     const lang = btn.getAttribute("data-lang");
     const isMatch = lang === active;
-    btn.classList.toggle("bg-[#111111]", isMatch);
-    btn.classList.toggle("bg-[#111]", isMatch);
-    btn.classList.toggle("text-white", isMatch);
-    btn.classList.toggle("text-[#555]", !isMatch);
+    btn.classList.toggle("lang-btn--active", isMatch);
     btn.setAttribute("aria-pressed", isMatch ? "true" : "false");
   });
 }
