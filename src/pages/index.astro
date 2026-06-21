@@ -1,40 +1,11 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import Hero from '../components/Hero.astro';
-import AboutSection from '../components/sections/AboutSection.astro';
-import ArtSection from '../components/sections/ArtSection.astro';
-import ExhibitionsSection from '../components/sections/ExhibitionsSection.astro';
-import PublicationsSection from '../components/sections/PublicationsSection.astro';
-import ResearchSection from '../components/sections/ResearchSection.astro';
-import PressSection from '../components/sections/PressSection.astro';
-import ContactsSection from '../components/sections/ContactsSection.astro';
-import { t, type LocaleKey } from '../data/translations';
+import HomePageContent from '../components/HomePageContent.astro';
+import { t } from '../data/translations';
 
-export interface Props {
-  locale?: LocaleKey;
-}
-
-const { locale = 'en' } = Astro.props;
-const l = t[locale];
+const l = t.en;
 ---
 
-<PageLayout title={locale === "en" ? "Art" : l.siteTitle} locale={locale}>
-  <div slot="content" class="scroll-page">
-    <Hero
-      artTag={l.artTag}
-      selected={l.selected}
-      works={l.works}
-      intro={l.intro}
-      heroDesc={l.heroDesc}
-      heroImage="/media/souls-and-leavings.jpg"
-      heroImageAlt="The Souls of Leavings — Anna Dauyl Rockswell"
-    />
-    <AboutSection locale={locale} />
-    <ArtSection locale={locale} />
-    <ExhibitionsSection locale={locale} />
-    <PublicationsSection locale={locale} />
-    <ResearchSection locale={locale} />
-    <PressSection />
-    <ContactsSection locale={locale} />
-  </div>
+<PageLayout title="Art" locale="en">
+  <HomePageContent slot="content" locale="en" />
 </PageLayout>

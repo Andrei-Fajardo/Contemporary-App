@@ -180,7 +180,7 @@ const menuItems: { key: string; href: string }[] = [
       </aside>
 
       <!-- Right column: main content -->
-      <main class="motion-main min-h-screen bg-[#F0EEE9] pt-16 lg:pt-0">
+      <main transition:animate="fade" class="motion-main min-h-screen bg-[#F0EEE9] pt-16 lg:pt-0">
         <slot name="content" />
         <footer class="px-6 sm:px-8 pt-16 pb-24">
           <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
@@ -222,7 +222,7 @@ const menuItems: { key: string; href: string }[] = [
     </div>
 
     <!-- Mobile content wrapper (<1024px) — stacking below the fixed header -->
-    <div class="motion-main lg:hidden min-h-screen pt-16">
+    <div transition:animate="fade" class="motion-main lg:hidden min-h-screen pt-16">
       <slot name="content" />
       <footer class="px-6 sm:px-8 pt-16 pb-24">
         <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
@@ -315,6 +315,15 @@ const menuItems: { key: string; href: string }[] = [
     });
   }
 
+  function syncLangHrefs() {
+    const hash = window.location.hash || "";
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      const lang = btn.getAttribute("data-lang");
+      const base = lang === "en" ? "/" : `/${lang}`;
+      btn.setAttribute("href", `${base}${hash}`);
+    });
+  }
+
   function syncLangToggle() {
     const path = window.location.pathname;
     const seg = path.split('/')[1];
@@ -333,12 +342,14 @@ const menuItems: { key: string; href: string }[] = [
 
   document.addEventListener("DOMContentLoaded", () => {
     initDrawer();
+    syncLangHrefs();
     syncLangToggle();
     initMotion();
   });
 
   document.addEventListener("astro:page-load", () => {
     initDrawer();
+    syncLangHrefs();
     syncLangToggle();
     initMotion();
   });

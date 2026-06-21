@@ -32,6 +32,9 @@ export function initScrollSpy(): void {
   const hash = window.location.hash.replace("#", "");
   if (hash && document.getElementById(hash)) {
     setActiveNav(hash);
+    requestAnimationFrame(() => {
+      document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });
+    });
   } else {
     setActiveNav(sections[0].id);
   }

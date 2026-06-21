@@ -1,0 +1,37 @@
+---
+import Hero from './Hero.astro';
+import AboutSection from './sections/AboutSection.astro';
+import ArtSection from './sections/ArtSection.astro';
+import ExhibitionsSection from './sections/ExhibitionsSection.astro';
+import PublicationsSection from './sections/PublicationsSection.astro';
+import ResearchSection from './sections/ResearchSection.astro';
+import PressSection from './sections/PressSection.astro';
+import ContactsSection from './sections/ContactsSection.astro';
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale: LocaleKey;
+}
+
+const { locale } = Astro.props;
+const l = t[locale];
+---
+
+<div class="scroll-page">
+  <Hero
+    artTag={l.artTag}
+    selected={l.selected}
+    works={l.works}
+    intro={l.intro}
+    heroDesc={l.heroDesc}
+    heroImage="/media/souls-and-leavings.jpg"
+    heroImageAlt="The Souls of Leavings — Anna Dauyl Rockswell"
+  />
+  <AboutSection locale={locale} />
+  <ArtSection locale={locale} />
+  <ExhibitionsSection locale={locale} />
+  <PublicationsSection locale={locale} />
+  <ResearchSection locale={locale} />
+  <PressSection locale={locale} />
+  <ContactsSection locale={locale} />
+</div>
