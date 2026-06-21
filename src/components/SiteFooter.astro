@@ -1,0 +1,47 @@
+---
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<footer class="px-6 sm:px-8 pt-16 pb-24">
+  <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
+    <div>
+      <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.email}</span>
+      <a href="mailto:contact@annadauylrockswell.com" class="group text-sm font-sans text-[#111] underline underline-offset-4">
+        <span class="transition-transform duration-300 ease-out group-hover:translate-x-px">contact@annadauylrockswell.com</span>
+      </a>
+    </div>
+    <div>
+      <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.licenses}</span>
+      <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
+        <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARS</span>
+        </span>
+        <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARKO</span>
+        </span>
+        <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">DACS</span>
+        </span>
+      </div>
+    </div>
+    <div>
+      <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.socials}</span>
+      <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
+        <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">Instagram</span>
+        </a>
+        <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">X</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <p class="text-[11px] font-mono text-[#555]/40 mt-12 text-center tracking-wider">{l.copyright}</p>
+</footer>

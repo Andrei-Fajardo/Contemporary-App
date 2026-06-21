@@ -107,7 +107,6 @@ html.motion-reduced .parallax-layer {
   position: sticky;
   top: 0;
   z-index: 1;
-  min-height: min(100vh, 920px);
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
@@ -263,6 +262,14 @@ html.motion-reduced .parallax-layer {
 }
 
 /* --- Single-page scroll layout --- */
+.site-shell {
+  min-width: 0;
+}
+
+.site-main-column {
+  overflow-x: clip;
+}
+
 .scroll-page {
   min-width: 0;
 }

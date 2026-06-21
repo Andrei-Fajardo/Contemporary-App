@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import SiteFooter from '../components/SiteFooter.astro';
 import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
@@ -43,9 +44,10 @@ const menuItems: { key: string; href: string }[] = [
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} — {l.siteTitle}</title>
+    <!-- spa-scroll-v2: single-page 8 sections -->
     <ClientRouter />
   </head>
-  <body class="font-sans antialiased bg-[#F0EEE9] text-[#111]">
+  <body class="font-sans antialiased bg-[#F0EEE9] text-[#111]" data-layout="spa-scroll">
     <!-- Film grain overlay -->
     <div class="grain-overlay" />
 
@@ -136,16 +138,15 @@ const menuItems: { key: string; href: string }[] = [
       </div>
     </aside>
 
-    <!-- Desktop: CSS Grid — sidebar column physically allocates space so content can never overlap the brand -->
-    <div class="hidden lg:grid lg:grid-cols-[380px_minmax(0,1fr)] min-h-screen">
-      <!-- Left column: brand stamp + navigation + based-in metadata -->
-      <aside class="sticky-sidebar border-r border-black/10 bg-[#F0EEE9] flex flex-col">
+    <!-- Single shell: one content slot, sticky sidebar on desktop -->
+    <div class="site-shell lg:grid lg:grid-cols-[380px_minmax(0,1fr)] min-h-screen">
+      <aside class="sticky-sidebar hidden lg:flex border-r border-black/10 bg-[#F0EEE9] flex-col">
         <div class="p-8 pr-4">
           <a href={`${homePath}#home`} class="block group">
             <h1 class="font-forum text-3xl font-bold whitespace-nowrap tracking-tight text-[#111] leading-[1.05] pr-4 transition-opacity duration-300 group-hover:opacity-70">
               Anna Dauyl Rockswell
             </h1>
-            <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block">{l.subtitle}</span>
+            <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block" set:html={l.subtitle} />
           </a>
         </div>
         <div class="px-6 flex-1">
@@ -179,87 +180,12 @@ const menuItems: { key: string; href: string }[] = [
         </div>
       </aside>
 
-      <!-- Right column: main content -->
-      <main transition:animate="fade" class="motion-main min-h-screen bg-[#F0EEE9] pt-16 lg:pt-0">
-        <slot name="content" />
-        <footer class="px-6 sm:px-8 pt-16 pb-24">
-          <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.email}</span>
-              <a href="mailto:contact@annadauylrockswell.com" class="group text-sm font-sans text-[#111] underline underline-offset-4">
-                <span class="transition-transform duration-300 ease-out group-hover:translate-x-px">contact@annadauylrockswell.com</span>
-              </a>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.licenses}</span>
-              <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
-                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARS</span>
-                </span>
-                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARKO</span>
-                </span>
-                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">DACS</span>
-                </span>
-              </div>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.socials}</span>
-              <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
-                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">Instagram</span>
-                </a>
-                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">X</span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <p class="text-[11px] font-mono text-[#555]/40 mt-12 text-center tracking-wider">{l.copyright}</p>
-        </footer>
-      </main>
-    </div>
-
-    <!-- Mobile content wrapper (<1024px) — stacking below the fixed header -->
-    <div transition:animate="fade" class="motion-main lg:hidden min-h-screen pt-16">
-      <slot name="content" />
-      <footer class="px-6 sm:px-8 pt-16 pb-24">
-        <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
-          <div>
-            <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.email}</span>
-            <a href="mailto:contact@annadauylrockswell.com" class="group text-sm font-sans text-[#111] underline underline-offset-4">
-              <span class="transition-transform duration-300 ease-out group-hover:translate-x-px">contact@annadauylrockswell.com</span>
-            </a>
-          </div>
-          <div>
-            <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.licenses}</span>
-            <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
-              <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARS</span>
-              </span>
-              <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARKO</span>
-              </span>
-              <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">DACS</span>
-              </span>
-            </div>
-          </div>
-          <div>
-            <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.socials}</span>
-            <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
-              <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
-                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">Instagram</span>
-              </a>
-              <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
-                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">X</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <p class="text-[11px] font-mono text-[#555]/40 mt-12 text-center tracking-wider">{l.copyright}</p>
-      </footer>
+      <div class="site-main-column min-w-0 pt-16 lg:pt-0">
+        <main transition:animate="fade" class="motion-main bg-[#F0EEE9]">
+          <slot name="content" />
+        </main>
+        <SiteFooter locale={locale} />
+      </div>
     </div>
   </body>
 </html>
