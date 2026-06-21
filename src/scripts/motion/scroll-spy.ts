@@ -1,6 +1,8 @@
 let spyBound = false;
 let spyTicking = false;
 let spyScrollHandler: (() => void) | null = null;
+let spyObserver: IntersectionObserver | null = null;
+const sectionRatios = new Map<string, number>();
 
 function setActiveNav(sectionId: string): void {
   document.querySelectorAll<HTMLElement>("[data-nav-key]").forEach((link) => {
@@ -10,23 +12,43 @@ function setActiveNav(sectionId: string): void {
   });
 }
 
+/** Which section is at the viewport focus line (~38% from top). */
 export function resolveActiveSection(): string {
   const sections = Array.from(document.querySelectorAll<HTMLElement>("section[id].scroll-section"));
   if (!sections.length) return "home";
 
-  const marker = window.scrollY + window.innerHeight * 0.33;
-  let active = sections[0].id;
+  const focusLine = window.innerHeight * 0.38;
 
   for (const section of sections) {
-    const top = section.getBoundingClientRect().top + window.scrollY;
-    if (top <= marker + 4) active = section.id;
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= focusLine && rect.bottom > focusLine) {
+      return section.id;
+    }
   }
 
-  return active;
+  let best = sections[0].id;
+  let bestDistance = Infinity;
+
+  for (const section of sections) {
+    const rect = section.getBoundingClientRect();
+    const center = rect.top + rect.height * 0.5;
+    const distance = Math.abs(center - focusLine);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      best = section.id;
+    }
+  }
+
+  return best;
 }
 
 function updateScrollSpy(): void {
-  setActiveNav(resolveActiveSection());
+  const fromObserver = [...sectionRatios.entries()]
+    .filter(([, ratio]) => ratio > 0)
+    .sort((a, b) => b[1] - a[1])[0]?.[0];
+
+  const sectionId = fromObserver ?? resolveActiveSection();
+  setActiveNav(sectionId);
 }
 
 export { updateScrollSpy };
@@ -41,8 +63,34 @@ function onSpyScroll(): void {
   }
 }
 
+function observeSections(): void {
+  const sections = document.querySelectorAll<HTMLElement>("section[id].scroll-section");
+  sectionRatios.clear();
+  spyObserver?.disconnect();
+
+  if (!("IntersectionObserver" in window)) return;
+
+  spyObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = (entry.target as HTMLElement).id;
+        sectionRatios.set(id, entry.isIntersecting ? entry.intersectionRatio : 0);
+      });
+      updateScrollSpy();
+    },
+    { rootMargin: "-32% 0px -48% 0px", threshold: [0, 0.05, 0.1, 0.2, 0.35, 0.5, 0.75, 1] }
+  );
+
+  sections.forEach((section) => spyObserver?.observe(section));
+}
+
 export function initScrollSpy(): void {
-  if (spyBound) return;
+  observeSections();
+
+  if (spyBound) {
+    updateScrollSpy();
+    return;
+  }
   spyBound = true;
 
   spyScrollHandler = onSpyScroll;
@@ -57,6 +105,9 @@ export function resetScrollSpy(): void {
     window.removeEventListener("resize", spyScrollHandler);
     spyScrollHandler = null;
   }
+  spyObserver?.disconnect();
+  spyObserver = null;
+  sectionRatios.clear();
   spyBound = false;
 }
 
@@ -101,5 +152,7 @@ export function initAnchorNav(): void {
         updateScrollSpy();
       });
     }
+  } else {
+    updateScrollSpy();
   }
 }

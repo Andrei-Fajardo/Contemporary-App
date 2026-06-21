@@ -244,22 +244,17 @@ const menuItems: { key: string; href: string }[] = [
         <div class="desktop-sidebar__nav px-5 flex-1">
           <nav class="sidebar-nav">
             {menuItems.map((item) => {
-              const isActive = activeSection === item.key;
               const navKey = item.key as keyof typeof l.nav;
               return (
                 <a
                   href={item.href}
                   data-nav-key={item.key}
-                  aria-current={isActive ? 'true' : 'false'}
-                  class={`sidebar-nav-link group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-all duration-400 ${
-                    isActive ? 'nav-link--active text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
-                  }`}
+                  aria-current="false"
+                  class="sidebar-nav-link group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-all duration-400 text-[#555]/70 hover:text-[#111]"
                 >
                   <span class="sidebar-nav-label">{l.nav[navKey]}</span>
                   <span
-                    class={`nav-underline absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out ${
-                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                    }`}
+                    class="nav-underline absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out scale-x-0 group-hover:scale-x-100"
                   />
                 </a>
               );
