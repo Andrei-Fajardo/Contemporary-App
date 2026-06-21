@@ -1,0 +1,33 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { t } from '../data/translations';
+const l = t.en;
+---
+
+<PageLayout title="Contact" activeSection="contacts" locale="en">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.contactTag}</span>
+      <div class="w-full md:w-3/4 lg:w-1/2">
+        <h1 class="font-forum text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] text-[#111111] mb-16">{l.contactHeading}</h1>
+        <form class="space-y-0" onsubmit="event.preventDefault(); alert('Sent (demo)');">
+          <div class="border-b-2 border-[#111111] py-5">
+            <span class="font-sans text-[10px] tracking-widest text-[#111111]/50 block mb-2">{l.nameLabel}</span>
+            <input type="text" placeholder={l.namePlaceholder} class="w-full bg-transparent rounded-none border-none focus:outline-none font-sans text-xl md:text-2xl text-[#111111]/40 placeholder:text-[#111111]/20 py-1" />
+          </div>
+          <div class="border-b-2 border-[#111111] py-5">
+            <span class="font-sans text-[10px] tracking-widest text-[#111111]/50 block mb-2">{l.emailLabel}</span>
+            <input type="email" placeholder={l.emailPlaceholder} class="w-full bg-transparent rounded-none border-none focus:outline-none font-sans text-xl md:text-2xl text-[#111111]/40 placeholder:text-[#111111]/20 py-1" />
+          </div>
+          <div class="border-b-2 border-[#111111] py-5">
+            <span class="font-sans text-[10px] tracking-widest text-[#111111]/50 block mb-2">{l.messageLabel}</span>
+            <textarea rows="2" placeholder={l.messagePlaceholder} class="w-full bg-transparent rounded-none border-none focus:outline-none font-sans text-xl md:text-2xl text-[#111111]/40 placeholder:text-[#111111]/20 py-1 resize-none"></textarea>
+          </div>
+          <div class="pt-6 text-right">
+            <button type="submit" class="font-sans text-xs uppercase tracking-widest text-[#111111] hover:text-[#111111]/50 font-bold transition-colors cursor-pointer border-none bg-transparent">{l.sendMessage}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</PageLayout>

@@ -1,63 +1,253 @@
 ---
-import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
   title: string;
   activeSection: string;
+  locale?: LocaleKey;
 }
 
-const { title, activeSection } = Astro.props;
+const { title, activeSection, locale = 'en' } = Astro.props;
+const l = t[locale];
+const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
+
+// Derive active language from URL pathname — reliable across all routes and ClientRouter
+const pathSeg = Astro.url.pathname.split('/')[1];
+const activeLang = pathSeg && langList.includes(pathSeg as Lang) ? (pathSeg as Lang) : 'en';
+
+function isActiveLang(lang: string): boolean {
+  if (lang === 'en') return activeLang === 'en';
+  return activeLang === lang;
+}
+
+const menuItems: { key: string; href: string }[] = [
+  { key: "home", href: locale === 'en' ? '/' : `/${locale}` },
+  { key: "about", href: `${locale === 'en' ? '' : '/' + locale}/about` },
+  { key: "art", href: `${locale === 'en' ? '' : '/' + locale}/art` },
+  { key: "exhibitions", href: `${locale === 'en' ? '' : '/' + locale}/exhibitions` },
+  { key: "publications", href: `${locale === 'en' ? '' : '/' + locale}/publications` },
+  { key: "research", href: `${locale === 'en' ? '' : '/' + locale}/research` },
+  { key: "press", href: `${locale === 'en' ? '' : '/' + locale}/press` },
+  { key: "contacts", href: `${locale === 'en' ? '' : '/' + locale}/contacts` },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={l.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} — Anna Dauyl Rockswell</title>
+    <title>{title} — {l.siteTitle}</title>
+    <ClientRouter />
   </head>
-  <body class="font-sans text-neutral-800 antialiased">
-    <!-- Micro-dosed dual blending film grain blanket -->
-    <div class="grain-overlay"></div>
-    <div class="flex min-h-screen">
-      <Sidebar activeSection={activeSection} />
-      <div class="fixed top-0 left-[18vw] z-50 w-10 h-10 bg-[#2B2B26] flex items-center justify-center">
-        <span class="text-white text-[9px] font-mono tracking-wider">L</span>
-      </div>
-      <div class="fixed top-4 right-6 z-50 flex items-center gap-2 border border-neutral-800/20 px-2 py-1 text-[11px] font-mono tracking-wider bg-white/20 backdrop-blur-sm">
-        <span class="text-neutral-800 font-semibold">EN</span>
-        <span class="text-neutral-400">KR</span>
-      </div>
+  <body class="font-sans antialiased bg-[#F0EEE9] text-[#111]">
+    <!-- Film grain overlay -->
+    <div class="grain-overlay" />
 
-      <main class="ml-[18vw] w-[82vw] min-h-screen bg-[#E3E2DA]">
-        <slot />
-        <footer class="px-8 pt-12 pb-24">
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-8 border-t border-black/[0.15] pt-12">
+    <!-- 5-Language Toggle — desktop (hidden on mobile) -->
+    <div id="lang-toggle-desktop" class="fixed top-6 right-6 z-[9999] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md hidden lg:flex" transition:persist="lang-toggle-desktop">
+      {langList.map((lang) => (
+        <a
+          href={lang === 'en' ? '/' : `/${lang}`}
+          class={`lang-btn group relative px-2.5 py-1.5 block transition-colors duration-150 ${
+            isActiveLang(lang) ? 'bg-[#111111] text-white' : 'text-[#555] hover:bg-[#111111] hover:text-white'
+          }`}
+          data-lang={lang}
+        >
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">
+            {langLabels[lang]}
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile header bar (<1024px) -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-[#F0EEE9]/95 backdrop-blur-md border-b border-black/10 flex items-center justify-between px-4" transition:persist="mobile-header">
+      <a href={l.logoHref} class="font-forum text-lg tracking-wide text-[#111]" transition:persist="mobile-header-brand">
+        Anna Dauyl Rockswell
+      </a>
+      <div class="flex items-center gap-2">
+        <!-- Mobile language pills -->
+        <div id="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 rounded overflow-hidden">
+          {langList.map((lang) => (
+            <a
+              href={lang === 'en' ? '/' : `/${lang}`}
+              class={`lang-btn px-2 py-1.5 transition-colors ${
+                isActiveLang(lang) ? 'bg-[#111] text-white' : 'text-[#555] hover:bg-[#111] hover:text-white'
+              }`}
+              data-lang={lang}
+            >{langLabels[lang]}</a>
+          ))}
+        </div>
+        <!-- Hamburger -->
+        <button
+          id="hamburger-btn"
+          class="w-10 h-10 flex items-center justify-center focus:outline-none"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg class="w-5 h-5 text-[#111]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile drawer backdrop -->
+    <div id="drawer-backdrop" class="lg:hidden fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-[400ms] ease-out" />
+
+    <!-- Mobile slide-out drawer (<1024px) -->
+    <aside
+      id="mobile-drawer"
+      class="lg:hidden fixed top-0 right-0 bottom-0 w-[280px] z-50 bg-[#111] border-l border-white/10 translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
+    >
+      <nav class="flex-1 pt-20 px-8 overflow-y-auto">
+        <ul class="space-y-1">
+          {menuItems.map((item) => {
+            const isActive = activeSection === item.key;
+            const navKey = item.key as keyof typeof l.nav;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class={`block py-3.5 px-4 text-sm uppercase tracking-[0.2em] font-light rounded transition-all duration-200 ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-[#666] hover:bg-white/5 hover:text-white'
+                  }`}
+                >
+                  {l.nav[navKey]}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <div class="px-8 py-8 border-t border-white/10">
+        <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-3">{l.basedIn}</span>
+        <span class="font-sans text-[11px] text-[#666] font-medium tracking-wide">{l.location}</span>
+      </div>
+    </aside>
+
+    <!-- Desktop logo button -->
+    <div class="fixed top-0 left-[18vw] z-50 group hidden lg:block" transition:persist="desktop-logo">
+      <a href={l.logoHref} class="w-12 h-12 bg-[#111111] flex items-center justify-center hover:bg-[#333333] transition-colors duration-200 cursor-pointer">
+        <span class="text-white text-[11px] font-forum tracking-widest transition-transform duration-300 ease-out group-hover:translate-x-px">{l.logo}</span>
+      </a>
+      <span class="block w-full h-[1px] bg-neutral-900/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+    </div>
+
+    <div class="flex min-h-screen">
+      <Sidebar activeSection={activeSection} locale={locale} />
+
+      <main class="lg:ml-[18vw] lg:w-[82vw] w-full min-h-screen bg-[#F0EEE9] pt-14 lg:pt-0">
+        <slot name="content" />
+        <footer class="px-6 sm:px-8 pt-16 pb-24">
+          <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
             <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Email</span>
-              <a href="mailto:contact@annadauylrockswell.com" class="text-xs font-sans text-neutral-800 underline underline-offset-4">contact@annadauylrockswell.com</a>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.email}</span>
+              <a href="mailto:contact@annadauylrockswell.com" class="group text-sm font-sans text-[#111] underline underline-offset-4">
+                <span class="transition-transform duration-300 ease-out group-hover:translate-x-px">contact@annadauylrockswell.com</span>
+              </a>
             </div>
             <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Licenses</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARS [Artists Rights Society]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARKO [Arts Council Korea]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">DACS</span>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.licenses}</span>
+              <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
+                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARS</span>
+                </span>
+                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARKO</span>
+                </span>
+                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">DACS</span>
+                </span>
               </div>
             </div>
             <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Socials</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">Instagram</a>
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">X</a>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.socials}</span>
+              <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
+                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">Instagram</span>
+                </a>
+                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
+                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">X</span>
+                </a>
               </div>
             </div>
           </div>
-          <p class="text-[11px] font-mono text-neutral-400 mt-12 text-center">&copy; 2026 Anna Dauyl Rockswell. All rights reserved.</p>
+          <p class="text-[11px] font-mono text-[#555]/40 mt-12 text-center tracking-wider">{l.copyright}</p>
         </footer>
       </main>
     </div>
   </body>
 </html>
+
+<script>
+  function initDrawer() {
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const drawer = document.getElementById("mobile-drawer");
+    const backdrop = document.getElementById("drawer-backdrop");
+    const hamOpen = hamburgerBtn?.querySelector(".ham-open");
+    const hamClose = hamburgerBtn?.querySelector(".ham-close");
+    let isOpen = false;
+
+    const toggleDrawer = () => {
+      isOpen = !isOpen;
+      if (isOpen) {
+        drawer?.classList.remove("translate-x-full");
+        drawer?.classList.add("translate-x-0");
+        backdrop?.classList.remove("bg-black/0", "pointer-events-none");
+        backdrop?.classList.add("bg-black/60");
+        hamOpen?.classList.add("hidden");
+        hamClose?.classList.remove("hidden");
+        hamburgerBtn?.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+      } else {
+        drawer?.classList.remove("translate-x-0");
+        drawer?.classList.add("translate-x-full");
+        backdrop?.classList.remove("bg-black/60");
+        backdrop?.classList.add("bg-black/0", "pointer-events-none");
+        hamOpen?.classList.remove("hidden");
+        hamClose?.classList.add("hidden");
+        hamburgerBtn?.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      }
+    };
+
+    hamburgerBtn?.addEventListener("click", toggleDrawer);
+    backdrop?.addEventListener("click", toggleDrawer);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) toggleDrawer();
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initDrawer);
+  document.addEventListener("astro:page-load", () => {
+    initDrawer();
+    syncLangToggle();
+  });
+
+  function syncLangToggle() {
+    const path = window.location.pathname;
+    const seg = path.split('/')[1];
+    const langs = ['en', 'kr', 'kk', 'zh', 'ru'];
+    const active = seg && langs.includes(seg) ? seg : 'en';
+
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      const lang = btn.getAttribute("data-lang");
+      const isMatch = lang === active;
+      btn.classList.toggle("bg-[#111111]", isMatch);
+      btn.classList.toggle("text-white", isMatch);
+      btn.classList.toggle("bg-[#111]", isMatch);
+      if (!isMatch) {
+        btn.classList.remove("bg-[#111111]", "bg-[#111]", "text-white");
+      }
+    });
+  }
+</script>

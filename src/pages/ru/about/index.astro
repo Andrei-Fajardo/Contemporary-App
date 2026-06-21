@@ -1,0 +1,42 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import { t } from '../../../data/translations';
+
+const l = t.ru;
+---
+
+<PageLayout title="소개" activeSection="about" locale="ru">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">{l.aboutTag}</span>
+      <div class="flex flex-col md:flex-row gap-12 md:gap-16">
+        <div class="w-full md:w-[45%]">
+          <div class="aspect-[3/4] bg-neutral-200 border border-neutral-900/20 flex items-center justify-center overflow-hidden">
+            <img src="/media/exhibitions/luna-1.jpg" alt="Anna Dauyl Rockswell" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+        </div>
+        <div class="w-full md:w-[45%] md:ml-auto flex flex-col justify-center">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="h-px flex-1 bg-neutral-900/20" />
+            <span class="font-mono text-[10px] tracking-widest text-neutral-500">{l.biography}</span>
+          </div>
+          <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl leading-[0.9] text-neutral-900 mb-8">NANA (Anna Dauyl Rockswell) — 서울 기반 카자흐 multidisciplinary 아티스트.</h1>
+          <div class="font-mono text-xs tracking-wider leading-relaxed text-neutral-600 max-w-[45ch] space-y-4">
+            <p>작문, 다크 표현주의, 트랜스그레시브 문학, 반문화 운동, 융 심리학에 깊이 영향을 받은 그녀의 작업은 관습에 도전하는 예술, 내장적 이미지, 여성 경험, 정신 건강의 내면, 그리고 정치·사회적 논평의 경계를 탐구합니다.</p>
+            <p>그녀의 작품은 센시스 국제 아트 페어(Must Museum, Lecce), 컨템포러리 베니스 2026, 헤쳐모예오 아트 페스티벌(뉴욕), KINSHIP × 헤쳐모예오(서울), 더 홀리 아트(런던 & 파리), DIMO × Verger Gallery, Luna Grande Art에서 전시되었으며, Astraea Zine, Hush Magazine, Spellbinder Magazine, Wildsape Literary Journal에 소개되었습니다.</p>
+          </div>
+          <div class="flex gap-12 mt-8 border-t border-neutral-900/20 pt-6">
+            <div>
+              <span class="font-mono text-[9px] tracking-widest text-neutral-500 block mb-1">{l.education}</span>
+              <p class="font-mono text-[11px] text-neutral-800">MFA, Columbia University<br />BA, Yale University</p>
+            </div>
+            <div>
+              <span class="font-mono text-[9px] tracking-widest text-neutral-500 block mb-1">{l.grants}</span>
+              <p class="font-mono text-[11px] text-neutral-800">Andy Warhol Foundation<br />NEA Fellowship</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</PageLayout>

@@ -1,35 +1,51 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import { exhibitions } from '../data/content';
+import { t } from '../data/translations';
+const l = t.en;
+
+const exhibitions = [
+  { image: "/media/exhibitions/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
+  { image: "/media/exhibitions/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
+  { image: "/media/exhibitions/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12 & 13", year: "2024–2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
+  { image: "/media/exhibitions/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
+  { image: "/media/exhibitions/holy-london-1.jpg", title: "The Holy Art – London", year: "2025", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
+  { image: "/media/exhibitions/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2025", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
+  { image: "/media/exhibitions/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ONLINE", subtitle: "FEATURED ARTIST SHOWCASE" },
+  { image: "/media/exhibitions/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
+];
 ---
 
-<PageLayout title="Exhibitions" activeSection="Exhibitions">
-  <div class="px-8 py-10">
-    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(EXHIBITIONS)</span>
-
-    <!-- Filter Pills -->
-    <div class="flex items-center gap-2 mb-8">
-      <span class="bg-[#2B2B26] text-white text-[12px] font-sans px-4 py-1 rounded-full font-medium">All</span>
-      <span class="border border-neutral-400/40 text-neutral-700 text-[12px] font-sans px-4 py-1 rounded-full hover:bg-neutral-200/30 transition-all cursor-pointer">Featured</span>
-      <span class="border border-neutral-400/40 text-neutral-700 text-[12px] font-sans px-4 py-1 rounded-full hover:bg-neutral-200/30 transition-all cursor-pointer">Virtual Exhibit</span>
-      <span class="border border-neutral-400/40 text-neutral-700 text-[12px] font-sans px-4 py-1 rounded-full hover:bg-neutral-200/30 transition-all cursor-pointer">Physical Exhibit</span>
-    </div>
-
-    <!-- 2-Column Grid -->
-    <div class="grid grid-cols-2 border-l border-black/[0.15]">
-      {exhibitions.map((ex) => (
-        <div class="border-r border-b border-black/[0.15] p-6 flex flex-col">
-          <div class="aspect-[4/3] bg-neutral-200 overflow-hidden">
-            <img src={ex.image} alt={ex.title} class="w-full h-full object-cover" loading="lazy" />
+<PageLayout title="Exhibitions" activeSection="exhibitions" locale="en">
+  <div slot="content">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 py-16 md:py-24">
+      <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.exhibitionsTag}</span>
+      <h1 class="font-forum text-5xl md:text-7xl lg:text-8xl leading-[0.9] text-[#111111] mb-16" set:html={l.exhibitionHistory}></h1>
+      <div class="flex items-center gap-3 mb-12 flex-wrap">
+        <span class="bg-[#111111] text-white text-[11px] font-sans px-4 py-1.5 font-medium">{l.all}</span>
+        <span class="border border-black/20 text-[#111111]/60 text-[11px] font-sans px-4 py-1.5 hover:bg-[#111111] hover:text-white transition-colors cursor-pointer">{l.physical}</span>
+        <span class="border border-black/20 text-[#111111]/60 text-[11px] font-sans px-4 py-1.5 hover:bg-[#111111] hover:text-white transition-colors cursor-pointer">{l.virtualFilter}</span>
+        <span class="border border-black/20 text-[#111111]/60 text-[11px] font-sans px-4 py-1.5 hover:bg-[#111111] hover:text-white transition-colors cursor-pointer">{l.featureFilter}</span>
+      </div>
+      {exhibitions.map((ex, i) => (
+        <div class={`flex flex-col md:flex-row border-t border-black/10 py-10 md:py-14 gap-8 lg:gap-16 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+          <div class="w-full md:w-[58%]">
+            <div class="interactive-image-container h-[40vh] md:h-[50vh]">
+              <img src={ex.image} alt={ex.title} loading="lazy" />
+            </div>
           </div>
-          <div class="mt-4 flex items-center justify-between">
-            <h3 class="font-sans text-sm font-semibold tracking-tight text-neutral-800">{ex.title}</h3>
-            <span class="border border-neutral-400 px-2.5 py-0.5 text-[10px] font-mono rounded-full text-neutral-600">{ex.year}</span>
+          <div class="w-full md:w-[42%] flex flex-col justify-center">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[10px] tracking-widest text-[#111111]/40">[{String(i + 1).padStart(3, '0')} // EXHIBITION]</span>
+              <span class="font-mono text-[9px] border border-black/20 px-2 py-0.5 text-[#111111]/60">{ex.year}</span>
+            </div>
+            <h2 class="font-forum text-2xl md:text-3xl leading-[1.1] text-[#111111]">{ex.title}</h2>
+            <span class="meta-label-strip mt-2">{ex.location}</span>
+            <span class="font-sans text-xs uppercase tracking-wider font-semibold text-[#111111]/70 mt-4">{ex.subtitle}</span>
+            <a href="#" class="group font-sans text-[10px] tracking-widest text-[#111111] underline underline-offset-4 mt-4 hover:text-[#111111]/50 transition-colors w-max">
+              <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">{l.viewMore}</span>
+            </a>
           </div>
-          <span class="text-[11px] font-mono tracking-widest text-neutral-400 uppercase mt-0.5 block">{ex.location}</span>
-          <span class="text-[13px] font-sans uppercase tracking-wider font-semibold text-neutral-700 mt-4 block">{ex.subtitle}</span>
-          <p class="text-sm text-neutral-600 leading-relaxed max-w-[55ch] mt-2">{ex.description}</p>
-          <a href="#" class="text-[11px] font-sans font-semibold underline underline-offset-4 tracking-wider text-neutral-800 hover:text-black mt-4 block text-right">View More</a>
         </div>
       ))}
     </div>

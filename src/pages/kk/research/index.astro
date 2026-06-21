@@ -1,0 +1,30 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import { t } from '../../../data/translations';
+const l = t.kk;
+
+const papers = [
+  { title: "Archival Memory in Post-Digital Installation", journal: "Journal of Visual Art Practice", year: "2025" },
+  { title: "Threshold Spaces: Liminality in Contemporary Sculpture", journal: "Sculpture Journal", year: "2024" },
+];
+---
+
+<PageLayout title="학술 연구" activeSection="research" locale="kk">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">{l.academicTag}</span>
+      <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16" set:html={l.academicHeading}></h1>
+      <div class="space-y-4">
+        {papers.map((paper) => (
+          <div class="border border-neutral-900/20 p-6 flex justify-between items-start">
+            <div>
+              <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{paper.title}</h2>
+              <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{paper.journal}</span>
+            </div>
+            <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{paper.year}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</PageLayout>
