@@ -57,6 +57,61 @@ const menuItems: { key: string; href: string }[] = [
         }
       })();
     </script>
+    <script is:inline>
+      (function () {
+        function updateSidebarRail() {
+          var nav = document.querySelector(".desktop-sidebar .sidebar-nav");
+          var thumb = document.getElementById("sidebar-scroll-progress");
+          if (!nav || !thumb) return;
+
+          var links = nav.querySelectorAll(".sidebar-nav-link[data-nav-key]");
+          if (!links.length) return;
+
+          var maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+          var progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+          var navRect = nav.getBoundingClientRect();
+          var first = links[0].getBoundingClientRect();
+          var last = links[links.length - 1].getBoundingClientRect();
+          var startY = first.top - navRect.top + first.height * 0.5;
+          var endY = last.top - navRect.top + last.height * 0.5;
+          var thumbH = 21;
+          var y = startY + (endY - startY) * progress - thumbH * 0.5;
+          thumb.style.transform = "translate3d(0, " + y + "px, 0)";
+
+          var marker = window.scrollY + window.innerHeight * 0.3;
+          var sections = document.querySelectorAll("section[id].scroll-section");
+          var active = sections[0] ? sections[0].id : "home";
+          for (var i = 0; i < sections.length; i++) {
+            var top = sections[i].getBoundingClientRect().top + window.scrollY;
+            if (top <= marker + 4) active = sections[i].id;
+          }
+          for (var j = 0; j < links.length; j++) {
+            var link = links[j];
+            var on = link.getAttribute("data-nav-key") === active;
+            link.classList.toggle("nav-link--active", on);
+            link.setAttribute("aria-current", on ? "true" : "false");
+          }
+        }
+
+        var railTicking = false;
+        function onRailScroll() {
+          if (!railTicking) {
+            railTicking = true;
+            requestAnimationFrame(function () {
+              updateSidebarRail();
+              railTicking = false;
+            });
+          }
+        }
+
+        window.addEventListener("scroll", onRailScroll, { passive: true });
+        window.addEventListener("resize", onRailScroll, { passive: true });
+        document.addEventListener("DOMContentLoaded", updateSidebarRail);
+        document.addEventListener("astro:page-load", updateSidebarRail);
+        document.addEventListener("lang-scroll-restored", updateSidebarRail);
+        if (document.readyState !== "loading") updateSidebarRail();
+      })();
+    </script>
   </head>
   <body class="font-sans antialiased bg-[#F0EEE9] text-[#111]" data-layout="spa-scroll">
     <!-- Film grain overlay -->
@@ -243,6 +298,7 @@ const menuItems: { key: string; href: string }[] = [
         </div>
         <div class="desktop-sidebar__nav px-5 flex-1">
           <nav class="sidebar-nav">
+            <div id="sidebar-scroll-progress" class="sidebar-scroll-progress" aria-hidden="true"></div>
             {menuItems.map((item) => {
               const navKey = item.key as keyof typeof l.nav;
               return (

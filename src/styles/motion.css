@@ -398,7 +398,30 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   background-color: #111;
 }
 
-/* Collapsed rail: show active section marker */
+/* Collapsed rail: tick marks + sliding scroll-progress thumb */
+.sidebar-nav {
+  position: relative;
+}
+
+.sidebar-scroll-progress {
+  display: none;
+}
+
+.desktop-sidebar:not(:hover):not(:focus-within) .sidebar-scroll-progress {
+  display: block;
+  position: absolute;
+  left: 0.2rem;
+  top: 0;
+  width: 2px;
+  height: 1.35rem;
+  border-radius: 1px;
+  background: #111;
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform;
+  transition: transform 0.12s linear;
+}
+
 .desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link::after {
   content: "";
   position: absolute;
@@ -412,8 +435,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 }
 
 .desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link.nav-link--active::after {
-  background: #111;
-  height: 1.35rem;
+  display: none;
 }
 
 .desktop-sidebar:hover .sidebar-nav-link::after,
