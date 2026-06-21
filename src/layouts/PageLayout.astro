@@ -215,6 +215,9 @@ const menuItems: { key: string; href: string }[] = [
       (function () {
         "use strict";
 
+        document.documentElement.classList.add("js-motion");
+        document.documentElement.setAttribute("data-motion", "ready");
+
         var scrollBound = false;
         var motionObserver = null;
 
@@ -304,7 +307,6 @@ const menuItems: { key: string; href: string }[] = [
 
         function initParallax() {
           document.documentElement.classList.add("js-motion");
-          document.documentElement.setAttribute("data-motion", "ready");
           revealInView();
           bindScrollLayers();
 
