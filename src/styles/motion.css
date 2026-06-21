@@ -320,6 +320,112 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   overflow-x: clip;
 }
 
+/* --- Desktop hover-expand sidebar --- */
+.desktop-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 45;
+  width: 4.5rem;
+  height: 100vh;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: #f0eee9;
+  overflow: hidden;
+  transition:
+    width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.desktop-sidebar:hover,
+.desktop-sidebar:focus-within {
+  width: 22rem;
+  box-shadow: 8px 0 32px rgba(17, 17, 17, 0.08);
+}
+
+.desktop-sidebar__inner {
+  width: 22rem;
+  min-width: 22rem;
+}
+
+.desktop-sidebar__title,
+.desktop-sidebar__subtitle,
+.desktop-sidebar__footer-label,
+.desktop-sidebar__footer-text,
+.sidebar-nav-label {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.desktop-sidebar__monogram {
+  display: block;
+  position: absolute;
+  top: 1.65rem;
+  left: 1.35rem;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.desktop-sidebar:hover .desktop-sidebar__title,
+.desktop-sidebar:hover .desktop-sidebar__subtitle,
+.desktop-sidebar:hover .desktop-sidebar__footer-label,
+.desktop-sidebar:hover .desktop-sidebar__footer-text,
+.desktop-sidebar:hover .sidebar-nav-label,
+.desktop-sidebar:focus-within .desktop-sidebar__title,
+.desktop-sidebar:focus-within .desktop-sidebar__subtitle,
+.desktop-sidebar:focus-within .desktop-sidebar__footer-label,
+.desktop-sidebar:focus-within .desktop-sidebar__footer-text,
+.desktop-sidebar:focus-within .sidebar-nav-label {
+  opacity: 1;
+}
+
+.desktop-sidebar:hover .desktop-sidebar__monogram,
+.desktop-sidebar:focus-within .desktop-sidebar__monogram {
+  opacity: 0;
+}
+
+.desktop-sidebar__brand {
+  position: relative;
+  min-height: 5.5rem;
+}
+
+.sidebar-nav-link.nav-link--active {
+  color: #111 !important;
+  font-weight: 700;
+}
+
+.sidebar-nav-link.nav-link--active .nav-underline {
+  transform: scaleX(1);
+  background-color: #111;
+}
+
+/* Collapsed rail: show active section marker */
+.desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 0.75rem;
+  border-radius: 1px;
+  background: rgba(17, 17, 17, 0.12);
+}
+
+.desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link.nav-link--active::after {
+  background: #111;
+  height: 1.35rem;
+}
+
+.desktop-sidebar:hover .sidebar-nav-link::after,
+.desktop-sidebar:focus-within .sidebar-nav-link::after {
+  display: none;
+}
+
+#mobile-drawer .sidebar-nav-link.nav-link--active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
 .scroll-page {
   min-width: 0;
 }
@@ -334,25 +440,8 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   }
 }
 
-.sticky-sidebar {
-  position: sticky;
-  top: 0;
-  align-self: start;
-  height: 100vh;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
 .sidebar-nav-link {
   transition: color 0.4s ease, opacity 0.4s ease;
-}
-
-.sidebar-nav-link.nav-link--active {
-  color: #111;
-}
-
-.sidebar-nav-link.nav-link--active .nav-underline {
-  transform: scaleX(1);
 }
 
 .exhibitions-explore-link {

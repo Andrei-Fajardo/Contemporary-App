@@ -46,6 +46,12 @@ const menuItems: { key: string; href: string }[] = [
     <title>{title} — {l.siteTitle}</title>
     <!-- spa-scroll-v2: single-page 8 sections -->
     <ClientRouter />
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        document.documentElement.classList.add("motion-live");
+      })();
+    </script>
   </head>
   <body class="font-sans antialiased bg-[#F0EEE9] text-[#111]" data-layout="spa-scroll">
     <!-- Film grain overlay -->
@@ -112,18 +118,13 @@ const menuItems: { key: string; href: string }[] = [
       <nav class="flex-1 pt-24 px-6 overflow-y-auto">
         <ul class="space-y-1">
           {menuItems.map((item) => {
-            const isActive = activeSection === item.key;
             const navKey = item.key as keyof typeof l.nav;
             return (
               <li>
                 <a
                   href={item.href}
                   data-nav-key={item.key}
-                  class={`sidebar-nav-link block py-4 px-5 text-sm uppercase tracking-[0.2em] font-medium rounded-md transition-all duration-400 ${
-                    isActive
-                      ? 'nav-link--active bg-white/10 text-white'
-                      : 'text-[#888] hover:bg-white/5 hover:text-white'
-                  }`}
+                  class="sidebar-nav-link block py-4 px-5 text-sm uppercase tracking-[0.2em] font-medium rounded-md transition-all duration-400 text-[#888] hover:bg-white/5 hover:text-white"
                 >
                   {l.nav[navKey]}
                 </a>
@@ -138,18 +139,19 @@ const menuItems: { key: string; href: string }[] = [
       </div>
     </aside>
 
-    <!-- Single shell: one content slot, sticky sidebar on desktop -->
-    <div class="site-shell lg:grid lg:grid-cols-[380px_minmax(0,1fr)] min-h-screen">
-      <aside class="sticky-sidebar hidden lg:flex border-r border-black/10 bg-[#F0EEE9] flex-col">
-        <div class="p-8 pr-4">
+    <!-- Desktop sidebar — collapsed rail, expands on hover -->
+    <aside class="desktop-sidebar hidden lg:flex" aria-label="Site navigation">
+      <div class="desktop-sidebar__inner flex flex-col h-full">
+        <div class="desktop-sidebar__brand p-6">
           <a href={`${homePath}#home`} class="block group">
-            <h1 class="font-forum text-3xl font-bold whitespace-nowrap tracking-tight text-[#111] leading-[1.05] pr-4 transition-opacity duration-300 group-hover:opacity-70">
+            <h1 class="desktop-sidebar__title font-forum text-3xl font-bold tracking-tight text-[#111] leading-[1.05] transition-opacity duration-300 group-hover:opacity-70">
               Anna Dauyl Rockswell
             </h1>
-            <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block" set:html={l.subtitle} />
+            <span class="desktop-sidebar__monogram font-forum text-xl font-bold text-[#111]" aria-hidden="true">A·R</span>
+            <span class="desktop-sidebar__subtitle font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block" set:html={l.subtitle} />
           </a>
         </div>
-        <div class="px-6 flex-1">
+        <div class="desktop-sidebar__nav px-5 flex-1">
           <nav class="sidebar-nav">
             {menuItems.map((item) => {
               const isActive = activeSection === item.key;
@@ -163,7 +165,7 @@ const menuItems: { key: string; href: string }[] = [
                     isActive ? 'nav-link--active text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
                   }`}
                 >
-                  {l.nav[navKey]}
+                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
                   <span
                     class={`nav-underline absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out ${
                       isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
@@ -174,13 +176,15 @@ const menuItems: { key: string; href: string }[] = [
             })}
           </nav>
         </div>
-        <div class="px-6 py-10 mt-auto">
-          <span class="font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
-          <span class="font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
+        <div class="desktop-sidebar__footer px-5 py-8 mt-auto">
+          <span class="desktop-sidebar__footer-label font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
+          <span class="desktop-sidebar__footer-text font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
         </div>
-      </aside>
+      </div>
+    </aside>
 
-      <div class="site-main-column min-w-0 pt-16 lg:pt-0">
+    <div class="site-shell min-h-screen">
+      <div class="site-main-column min-w-0 pt-16 lg:pt-0 lg:pl-[4.5rem]">
         <main transition:animate="fade" class="motion-main bg-[#F0EEE9]">
           <slot name="content" />
         </main>
@@ -279,4 +283,11 @@ const menuItems: { key: string; href: string }[] = [
     syncLangToggle();
     initMotion();
   });
+
+  if (document.readyState !== "loading") {
+    initDrawer();
+    syncLangHrefs();
+    syncLangToggle();
+    initMotion();
+  }
 </script>

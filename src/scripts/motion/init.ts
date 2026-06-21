@@ -2,8 +2,8 @@ import { initLazyMedia } from "./lazy-media";
 import { initParallax, resetParallax } from "./parallax";
 import { initScrollReveal } from "./scroll-reveal";
 import { initScrollVelocity, resetScrollVelocity } from "./scroll-velocity";
-import { initAnchorNav, initScrollSpy } from "./scroll-spy";
-import { updateDepthField } from "./depth-field";
+import { initAnchorNav, initScrollSpy, resetScrollSpy } from "./scroll-spy";
+import { initDepthField, resetDepthField, updateDepthField } from "./depth-field";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -21,6 +21,8 @@ function revealAllFallback(): void {
 export function initMotion(): void {
   resetParallax();
   resetScrollVelocity();
+  resetScrollSpy();
+  resetDepthField();
 
   if (prefersReducedMotion()) {
     document.documentElement.classList.add("motion-reduced");
@@ -34,6 +36,7 @@ export function initMotion(): void {
 
   initScrollReveal();
   initLazyMedia();
+  initDepthField();
   initParallax();
   initScrollVelocity();
   initScrollSpy();

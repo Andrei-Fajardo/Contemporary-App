@@ -1,4 +1,6 @@
-let spyObserver: IntersectionObserver | null = null;
+let spyBound = false;
+let spyTicking = false;
+let spyScrollHandler: (() => void) | null = null;
 
 function setActiveNav(sectionId: string): void {
   document.querySelectorAll<HTMLElement>("[data-nav-key]").forEach((link) => {
@@ -8,40 +10,59 @@ function setActiveNav(sectionId: string): void {
   });
 }
 
-export function initScrollSpy(): void {
-  const sections = document.querySelectorAll<HTMLElement>("section[id].scroll-section");
-  const navLinks = document.querySelectorAll<HTMLElement>("[data-nav-key]");
-  if (!sections.length || !navLinks.length) return;
+function resolveActiveSection(): string {
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("section[id].scroll-section"));
+  if (!sections.length) return "home";
 
-  if (!spyObserver) {
-    spyObserver = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]?.target.id) {
-          setActiveNav(visible[0].target.id);
-        }
-      },
-      { threshold: [0.15, 0.35, 0.55], rootMargin: "-18% 0px -52% 0px" }
-    );
+  const marker = window.scrollY + window.innerHeight * 0.33;
+  let active = sections[0].id;
+
+  for (const section of sections) {
+    const top = section.getBoundingClientRect().top + window.scrollY;
+    if (top <= marker + 4) active = section.id;
   }
 
-  sections.forEach((section) => spyObserver?.observe(section));
+  return active;
+}
 
-  const hash = window.location.hash.replace("#", "");
-  if (hash && document.getElementById(hash)) {
-    setActiveNav(hash);
+function updateScrollSpy(): void {
+  setActiveNav(resolveActiveSection());
+}
+
+function onSpyScroll(): void {
+  if (!spyTicking) {
+    spyTicking = true;
     requestAnimationFrame(() => {
-      document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });
+      updateScrollSpy();
+      spyTicking = false;
     });
-  } else {
-    setActiveNav(sections[0].id);
   }
+}
+
+export function initScrollSpy(): void {
+  if (spyBound) return;
+  spyBound = true;
+
+  spyScrollHandler = onSpyScroll;
+  window.addEventListener("scroll", spyScrollHandler, { passive: true });
+  window.addEventListener("resize", spyScrollHandler, { passive: true });
+  updateScrollSpy();
+}
+
+export function resetScrollSpy(): void {
+  if (spyScrollHandler) {
+    window.removeEventListener("scroll", spyScrollHandler);
+    window.removeEventListener("resize", spyScrollHandler);
+    spyScrollHandler = null;
+  }
+  spyBound = false;
 }
 
 export function initAnchorNav(): void {
   document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((link) => {
+    if (link.dataset.anchorBound === "true") return;
+    link.dataset.anchorBound = "true";
+
     link.addEventListener("click", (event) => {
       const href = link.getAttribute("href");
       if (!href || !href.includes("#")) return;
@@ -63,4 +84,13 @@ export function initAnchorNav(): void {
       }
     });
   });
+
+  const hash = window.location.hash.replace("#", "");
+  if (hash && document.getElementById(hash)) {
+    setActiveNav(hash);
+    requestAnimationFrame(() => {
+      document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });
+      updateScrollSpy();
+    });
+  }
 }
