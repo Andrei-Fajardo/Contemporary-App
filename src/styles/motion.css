@@ -419,7 +419,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   pointer-events: none;
   z-index: 2;
   will-change: transform;
-  transition: transform 0.12s linear;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link::after {
@@ -432,6 +432,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   height: 0.75rem;
   border-radius: 1px;
   background: rgba(17, 17, 17, 0.12);
+  pointer-events: none;
 }
 
 .desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link.nav-link--active::after {

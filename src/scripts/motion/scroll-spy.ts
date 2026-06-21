@@ -2,8 +2,27 @@ let spyBound = false;
 let spyTicking = false;
 let spyScrollHandler: (() => void) | null = null;
 
+const THUMB_HEIGHT = 21;
+const FOCUS_RATIO = 0.22;
+
 function getSectionTop(section: HTMLElement): number {
   return section.getBoundingClientRect().top + window.scrollY;
+}
+
+function getSections(): HTMLElement[] {
+  return Array.from(document.querySelectorAll<HTMLElement>("section[id].scroll-section"));
+}
+
+function getNavLinks(): HTMLElement[] {
+  const nav = document.querySelector<HTMLElement>(".desktop-sidebar .sidebar-nav");
+  if (!nav) return [];
+  return Array.from(nav.querySelectorAll<HTMLElement>(".sidebar-nav-link[data-nav-key]"));
+}
+
+function linkCenterInNav(link: HTMLElement, nav: HTMLElement): number {
+  const navRect = nav.getBoundingClientRect();
+  const linkRect = link.getBoundingClientRect();
+  return linkRect.top - navRect.top + linkRect.height * 0.5 - THUMB_HEIGHT * 0.5;
 }
 
 function setActiveNav(sectionId: string): void {
@@ -14,50 +33,72 @@ function setActiveNav(sectionId: string): void {
   });
 }
 
-/** Section passed by scroll depth (~30% viewport from top). */
+/** Section under the viewport focus line. */
 export function resolveActiveSection(): string {
-  const sections = Array.from(document.querySelectorAll<HTMLElement>("section[id].scroll-section"));
+  const sections = getSections();
   if (!sections.length) return "home";
 
-  const marker = window.scrollY + window.innerHeight * 0.3;
-  let active = sections[0].id;
+  const focusLine = window.innerHeight * FOCUS_RATIO;
 
+  for (const section of sections) {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= focusLine && rect.bottom > focusLine) {
+      return section.id;
+    }
+  }
+
+  const marker = window.scrollY + focusLine;
+  let active = sections[0].id;
   for (const section of sections) {
     if (getSectionTop(section) <= marker + 4) active = section.id;
   }
-
   return active;
 }
 
-function getScrollProgress(): number {
-  const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  return Math.min(1, Math.max(0, window.scrollY / maxScroll));
-}
-
-/** Move the dark rail thumb based on overall page scroll (top → bottom). */
+/** Slide thumb along nav ticks, aligned to section scroll ranges. */
 export function updateSidebarProgressThumb(): void {
   const nav = document.querySelector<HTMLElement>(".desktop-sidebar .sidebar-nav");
   const thumb = document.getElementById("sidebar-scroll-progress");
   if (!nav || !thumb) return;
 
-  const links = Array.from(nav.querySelectorAll<HTMLElement>(".sidebar-nav-link[data-nav-key]"));
-  if (!links.length) return;
+  const sections = getSections();
+  const links = getNavLinks();
+  if (!sections.length || !links.length) return;
 
-  const progress = getScrollProgress();
-  const navRect = nav.getBoundingClientRect();
-  const firstRect = links[0].getBoundingClientRect();
-  const lastRect = links[links.length - 1].getBoundingClientRect();
+  const linkByKey = new Map(links.map((link) => [link.dataset.navKey ?? "", link]));
+  const marker = window.scrollY + window.innerHeight * FOCUS_RATIO;
 
-  const startY = firstRect.top - navRect.top + firstRect.height * 0.5;
-  const endY = lastRect.top - navRect.top + lastRect.height * 0.5;
-  const thumbHeight = 21;
-  const y = startY + (endY - startY) * progress - thumbHeight * 0.5;
+  let sectionIndex = 0;
+  for (let i = 0; i < sections.length; i++) {
+    if (getSectionTop(sections[i]) <= marker + 4) sectionIndex = i;
+  }
+
+  const currentSection = sections[sectionIndex];
+  const nextSection = sections[sectionIndex + 1];
+  const currentLink = linkByKey.get(currentSection.id);
+  if (!currentLink) return;
+
+  let y = linkCenterInNav(currentLink, nav);
+
+  if (nextSection) {
+    const nextLink = linkByKey.get(nextSection.id);
+    if (nextLink) {
+      const start = getSectionTop(currentSection);
+      const end = getSectionTop(nextSection);
+      const span = Math.max(1, end - start);
+      const t = Math.min(1, Math.max(0, (marker - start) / span));
+      const currentY = linkCenterInNav(currentLink, nav);
+      const nextY = linkCenterInNav(nextLink, nav);
+      y = currentY + (nextY - currentY) * t;
+    }
+  }
 
   thumb.style.transform = `translate3d(0, ${y}px, 0)`;
 }
 
 function updateScrollSpy(): void {
-  setActiveNav(resolveActiveSection());
+  const active = resolveActiveSection();
+  setActiveNav(active);
   updateSidebarProgressThumb();
 }
 
