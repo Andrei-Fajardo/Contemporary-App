@@ -5,11 +5,11 @@ import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
   title: string;
-  activeSection: string;
+  activeSection?: string;
   locale?: LocaleKey;
 }
 
-const { title, activeSection, locale = 'en' } = Astro.props;
+const { title, activeSection = '', locale = 'en' } = Astro.props;
 const l = t[locale];
 const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
 
@@ -22,15 +22,17 @@ function isActiveLang(lang: string): boolean {
   return activeLang === lang;
 }
 
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+
 const menuItems: { key: string; href: string }[] = [
-  { key: "home", href: locale === 'en' ? '/' : `/${locale}` },
-  { key: "about", href: `${locale === 'en' ? '' : '/' + locale}/about` },
-  { key: "art", href: `${locale === 'en' ? '' : '/' + locale}/art` },
-  { key: "exhibitions", href: `${locale === 'en' ? '' : '/' + locale}/exhibitions` },
-  { key: "publications", href: `${locale === 'en' ? '' : '/' + locale}/publications` },
-  { key: "research", href: `${locale === 'en' ? '' : '/' + locale}/research` },
-  { key: "press", href: `${locale === 'en' ? '' : '/' + locale}/press` },
-  { key: "contacts", href: `${locale === 'en' ? '' : '/' + locale}/contacts` },
+  { key: "home", href: `${homePath}#home` },
+  { key: "about", href: `${homePath}#about` },
+  { key: "art", href: `${homePath}#art` },
+  { key: "exhibitions", href: `${homePath}#exhibitions` },
+  { key: "publications", href: `${homePath}#publications` },
+  { key: "research", href: `${homePath}#research` },
+  { key: "press", href: `${homePath}#press` },
+  { key: "contacts", href: `${homePath}#contacts` },
 ];
 ---
 
@@ -66,7 +68,7 @@ const menuItems: { key: string; href: string }[] = [
 
     <!-- Mobile header bar (<1024px) -->
     <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-[#F0EEE9]/95 backdrop-blur-md border-b border-black/10 flex items-center justify-between px-5">
-      <a href={l.logoHref} class="font-forum text-xl md:text-2xl font-bold whitespace-nowrap tracking-tight text-[#111] hover:opacity-70 transition-opacity">
+      <a href={`${homePath}#home`} class="font-forum text-xl md:text-2xl font-bold whitespace-nowrap tracking-tight text-[#111] hover:opacity-70 transition-opacity">
         Anna Dauyl Rockswell
       </a>
       <div class="flex items-center gap-3">
@@ -114,9 +116,10 @@ const menuItems: { key: string; href: string }[] = [
               <li>
                 <a
                   href={item.href}
-                  class={`block py-4 px-5 text-sm uppercase tracking-[0.2em] font-medium rounded-md transition-all duration-200 ${
+                  data-nav-key={item.key}
+                  class={`sidebar-nav-link block py-4 px-5 text-sm uppercase tracking-[0.2em] font-medium rounded-md transition-all duration-400 ${
                     isActive
-                      ? 'bg-white/10 text-white'
+                      ? 'nav-link--active bg-white/10 text-white'
                       : 'text-[#888] hover:bg-white/5 hover:text-white'
                   }`}
                 >
@@ -134,11 +137,11 @@ const menuItems: { key: string; href: string }[] = [
     </aside>
 
     <!-- Desktop: CSS Grid — sidebar column physically allocates space so content can never overlap the brand -->
-    <div class="hidden lg:grid lg:grid-cols-[380px_1fr] min-h-screen">
+    <div class="hidden lg:grid lg:grid-cols-[380px_minmax(0,1fr)] min-h-screen">
       <!-- Left column: brand stamp + navigation + based-in metadata -->
-      <aside class="border-r border-black/10 bg-[#F0EEE9] flex flex-col">
+      <aside class="sticky-sidebar border-r border-black/10 bg-[#F0EEE9] flex flex-col">
         <div class="p-8 pr-4">
-          <a href={l.logoHref} class="block group">
+          <a href={`${homePath}#home`} class="block group">
             <h1 class="font-forum text-3xl font-bold whitespace-nowrap tracking-tight text-[#111] leading-[1.05] pr-4 transition-opacity duration-300 group-hover:opacity-70">
               Anna Dauyl Rockswell
             </h1>
@@ -146,20 +149,22 @@ const menuItems: { key: string; href: string }[] = [
           </a>
         </div>
         <div class="px-6 flex-1">
-          <nav>
+          <nav class="sidebar-nav">
             {menuItems.map((item) => {
               const isActive = activeSection === item.key;
               const navKey = item.key as keyof typeof l.nav;
               return (
                 <a
                   href={item.href}
-                  class={`group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-colors duration-300 ${
-                    isActive ? 'text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
+                  data-nav-key={item.key}
+                  aria-current={isActive ? 'true' : 'false'}
+                  class={`sidebar-nav-link group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-all duration-400 ${
+                    isActive ? 'nav-link--active text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
                   }`}
                 >
                   {l.nav[navKey]}
                   <span
-                    class={`absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out ${
+                    class={`nav-underline absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out ${
                       isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />

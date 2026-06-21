@@ -261,3 +261,53 @@ html.motion-reduced .parallax-layer {
     transition-duration: 0.3s;
   }
 }
+
+/* --- Single-page scroll layout --- */
+.scroll-page {
+  min-width: 0;
+}
+
+.scroll-section {
+  scroll-margin-top: 6rem;
+}
+
+@media (min-width: 1024px) {
+  .scroll-section {
+    scroll-margin-top: 1.5rem;
+  }
+}
+
+.sticky-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sidebar-nav-link {
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+.sidebar-nav-link.nav-link--active {
+  color: #111;
+}
+
+.sidebar-nav-link.nav-link--active .nav-underline {
+  transform: scaleX(1);
+}
+
+.exhibitions-explore-link {
+  transition: all 0.4s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -2,6 +2,7 @@ import { initLazyMedia } from "./lazy-media";
 import { initParallax, resetParallax } from "./parallax";
 import { initScrollReveal } from "./scroll-reveal";
 import { initScrollVelocity, resetScrollVelocity } from "./scroll-velocity";
+import { initAnchorNav, initScrollSpy } from "./scroll-spy";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -34,4 +35,6 @@ export function initMotion(): void {
   initLazyMedia();
   initParallax();
   initScrollVelocity();
+  initScrollSpy();
+  initAnchorNav();
 }
