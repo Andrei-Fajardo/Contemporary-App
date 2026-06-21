@@ -125,12 +125,17 @@ const paintings = [
         <p class="font-serif italic text-xl text-neutral-600 max-w-[45ch]">{l.heroDesc}</p>
       </div>
 
-      {paintings.map((p, i) => (
+      {paintings.map((p, i) => {
+        const imageClass = p.contain
+          ? 'w-full h-auto max-h-[80vh] object-contain'
+          : 'w-full h-[50vh] md:h-[65vh] object-cover';
+
+        return (
         <div class="border-b border-neutral-900/20 my-32 md:my-64">
           <div class="flex flex-col md:flex-row">
-            <div class={`w-full md:w-2/3 ${i % 2 === 1 ? 'md:order-2' : ''} overflow-hidden`}>
+            <div class={`w-full md:w-2/3 ${i % 2 === 1 ? 'md:order-2' : ''}`}>
               <div class="relative overflow-hidden group flex items-center justify-center bg-transparent art-parallax-container">
-                <img src={p.image} alt={p.title} class={`w-full ${p.contain ? 'h-auto max-h-[80vh] object-contain' : 'h-[50vh] md:h-[65vh] object-cover'}`} loading="lazy" />
+                <img src={p.image} alt={p.title} class={imageClass} loading="lazy" />
               </div>
             </div>
             <div class={`w-full md:w-1/3 ${i % 2 === 1 ? 'md:order-1' : ''} flex flex-col justify-between p-8 md:p-10 art-parallax-text`}>
@@ -146,7 +151,8 @@ const paintings = [
             </div>
           </div>
         </div>
-      ))}
+        );
+      })}
     </section>
 
     <!-- EXHIBITIONS -->
