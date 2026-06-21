@@ -12,24 +12,77 @@ export const exhibitions = [
   { image: "/media/exhibitions/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
 ];
 
-export const publications = [
-  { title: "Artforum International", issue: "March 2026", type: "Feature Interview" },
-  { title: "Astraea Zine", issue: "Issue Eight", type: "Featured Artist" },
-  { title: "Hush Magazine", issue: "Issue 001", type: "Featured Artist" },
-  { title: "Spellbinder Magazine", issue: "Spring 2026", type: "Featured Artist" },
-  { title: "Wildsape Literary Journal", issue: "Ongoing", type: "Featured Artist" },
-  { title: "The Knot Spectrum", issue: "Glimpse 01", type: "Featured Artist" },
+export interface ExhibitionItem {
+  year: string;
+  title: string;
+  venue: string;
+  city: string;
+  country: string;
+}
+
+export const soloExhibitions: ExhibitionItem[] = [
+  { year: "2025", title: "IM INSA", venue: "Insadong", city: "Seoul", country: "South Korea" },
 ];
 
-export const researchPapers = [
-  { title: "Archival Memory in Post-Digital Installation", journal: "Journal of Visual Art Practice", year: "2025" },
-  { title: "Threshold Spaces: Liminality in Contemporary Sculpture", journal: "Sculpture Journal", year: "2024" },
+export const groupExhibitions: ExhibitionItem[] = [
+  { year: "2026", title: "Contemporary Venice", venue: "Venice", city: "Venice", country: "Italy" },
+  { year: "2025", title: "Senses International Art Fair", venue: "Must Museum", city: "Lecce", country: "Italy" },
+  { year: "2024–2025", title: "Hechyeomoyeo 12 & 13", venue: "New York", city: "New York", country: "USA" },
+  { year: "2025", title: "KINSHIP × Hechyeomoyeo", venue: "Seoul", city: "Seoul", country: "South Korea" },
+  { year: "2025", title: "The Holy Art — London", venue: "London", city: "London", country: "UK" },
+  { year: "2025", title: "The Holy Art — Paris", venue: "Paris", city: "Paris", country: "France" },
+  { year: "2025", title: "DIMO × Verger Gallery", venue: "Verger Gallery", city: "Seoul", country: "South Korea" },
+  { year: "2025", title: "Luna Grande Art", venue: "Online", city: "", country: "" },
 ];
 
-export const pressItems = [
-  { outlet: "Astraea Zine", title: "The Fish and Souls of Leavings — Issue Eight Feature", date: "2025" },
-  { outlet: "Hush Magazine", title: "Souls of Leavings — Issue 001 LOST//FOUND", date: "2025" },
-  { outlet: "Spellbinder Magazine", title: "Souls of Leavings — Spring 2026 Issue", date: "2026" },
-  { outlet: "Wildsape Literary Journal", title: "The Fish — Featured Artwork", date: "2025" },
-  { outlet: "Itaewon Film Festival", title: "Featured Filmmaker / Artist", date: "2025" },
+export interface PublicationItem {
+  type: 'book' | 'essay';
+  author: string;
+  title: string;
+  publisher: string;
+  year: string;
+}
+
+export const publications: PublicationItem[] = [
+  { type: 'book', author: 'Anna Dauyl Rockswell', title: 'The Fish and Other Departures', publisher: 'Void Press', year: '2025' },
+  { type: 'essay', author: 'Anna Dauyl Rockswell', title: 'Threshold Spaces: Liminality in Contemporary Sculpture', publisher: 'Sculpture Journal', year: '2024' },
+  { type: 'essay', author: 'Anna Dauyl Rockswell', title: 'Archival Memory in Post-Digital Installation', publisher: 'Journal of Visual Art Practice', year: '2025' },
+  { type: 'essay', author: 'Anna Dauyl Rockswell', title: 'The Visceral Feminine: Dark Expressionism and the Body', publisher: 'Contemporary Art Review', year: '2025' },
+];
+
+export interface PressItem {
+  author: string;
+  title: string;
+  outlet: string;
+  date: string;
+}
+
+export const pressItems: PressItem[] = [
+  { author: 'Astraea Zine', title: 'The Fish and Souls of Leavings — Issue Eight Feature', outlet: 'Astraea Zine', date: '2025' },
+  { author: 'Hush Magazine', title: 'Souls of Leavings — Issue 001 LOST//FOUND', outlet: 'Hush Magazine', date: '2025' },
+  { author: 'Spellbinder Magazine', title: 'Souls of Leavings — Spring 2026 Issue', outlet: 'Spellbinder Magazine', date: '2026' },
+  { author: 'Wildsape Literary Journal', title: 'The Fish — Featured Artwork', outlet: 'Wildsape Literary Journal', date: '2025' },
+  { author: 'Itaewon Film Festival', title: 'Featured Filmmaker / Artist', outlet: 'Itaewon Film Festival', date: '2025' },
+];
+
+export interface ResearchItem {
+  title: string;
+  journal?: string;
+  year: string;
+}
+
+export const researchPapers: ResearchItem[] = [
+  { title: 'Archival Memory in Post-Digital Installation', journal: 'Journal of Visual Art Practice', year: '2025' },
+  { title: 'Threshold Spaces: Liminality in Contemporary Sculpture', journal: 'Sculpture Journal', year: '2024' },
+];
+
+export const grantsAndFellowships = [
+  { title: 'Andy Warhol Foundation Grant', year: '2024', description: 'Arts Writing and Criticism' },
+  { title: 'NEA Fellowship', year: '2023', description: 'Visual Arts' },
+  { title: 'ARKO Arts Council Grant', year: '2025', description: 'International Exhibition Support' },
+];
+
+export const residencies = [
+  { title: 'Hechyeomoyeo International Artist Residency', location: 'New York, USA', year: '2024' },
+  { title: 'Verger Gallery Studio Residency', location: 'Seoul, South Korea', year: '2025' },
 ];

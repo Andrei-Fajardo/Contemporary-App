@@ -1,53 +1,53 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import { t } from '../data/translations';
+import { soloExhibitions, groupExhibitions } from '../data/content';
 const l = t.en;
-
-const exhibitions = [
-  { image: "/media/exhibitions/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
-  { image: "/media/exhibitions/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12 & 13", year: "2024–2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
-  { image: "/media/exhibitions/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
-  { image: "/media/exhibitions/holy-london-1.jpg", title: "The Holy Art – London", year: "2025", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2025", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ONLINE", subtitle: "FEATURED ARTIST SHOWCASE" },
-  { image: "/media/exhibitions/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
-];
 ---
 
 <PageLayout title="Exhibitions" activeSection="exhibitions" locale="en">
   <div slot="content">
-    <div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-12 md:py-20">
+    <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
       <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.exhibitionsTag}</span>
-      <h1 class="font-forum text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-[#111111] mb-12 md:mb-16" set:html={l.exhibitionHistory}></h1>
-      <div class="flex items-center gap-2 md:gap-3 mb-10 md:mb-12 flex-wrap">
-        <span class="bg-[#111111] text-white text-[11px] font-sans px-4 py-1.5 font-medium">{l.all}</span>
-        <span class="border border-black/20 text-[#111111]/60 text-[11px] font-sans px-4 py-1.5 hover:bg-[#111111] hover:text-white transition-colors cursor-pointer">{l.physical}</span>
-        <span class="border border-black/20 text-[#111111]/60 text-[11px] font-sans px-4 py-1.5 hover:bg-[#111111] hover:text-white transition-colors cursor-pointer">{l.virtualFilter}</span>
-        <span class="border border-black/20 text-[#111111]/60 text-[11px] font-sans px-4 py-1.5 hover:bg-[#111111] hover:text-white transition-colors cursor-pointer">{l.featureFilter}</span>
-      </div>
-      {exhibitions.map((ex, i) => (
-        <div class={`flex flex-col md:flex-row border-t border-black/10 py-8 md:py-14 gap-6 md:gap-8 lg:gap-16 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-          <div class="w-full md:w-[58%]">
-            <div class="interactive-image-container h-[35vh] md:h-[45vh] lg:h-[50vh] rounded overflow-hidden">
-              <img src={ex.image} alt={ex.title} loading="lazy" />
-            </div>
-          </div>
-          <div class="w-full md:w-[42%] flex flex-col justify-center">
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-mono text-[10px] tracking-widest text-[#111111]/40">[{String(i + 1).padStart(3, '0')} // EXHIBITION]</span>
-              <span class="font-mono text-[9px] border border-black/20 px-2 py-0.5 text-[#111111]/60">{ex.year}</span>
-            </div>
-            <h2 class="font-forum text-2xl md:text-3xl leading-[1.1] text-[#111111]">{ex.title}</h2>
-            <span class="meta-label-strip mt-2">{ex.location}</span>
-            <span class="font-sans text-xs uppercase tracking-wider font-semibold text-[#111111]/70 mt-4">{ex.subtitle}</span>
-            <a href="#" class="group font-sans text-[10px] tracking-widest text-[#111111] underline underline-offset-4 mt-4 hover:text-[#111111]/50 transition-colors w-max">
-              <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">{l.viewMore}</span>
-            </a>
-          </div>
+      <h1 class="font-forum text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-[#111111] mb-16" set:html={l.exhibitionHistory}></h1>
+
+      <!-- Solo Exhibitions -->
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="font-sans text-[9px] tracking-widest text-[#111111]/50">{l.soloExhibitions}</span>
+          <div class="h-px flex-1 bg-black/10" />
         </div>
-      ))}
+        <div class="space-y-6">
+          {soloExhibitions.map((ex) => (
+            <div class="flex items-baseline gap-4 font-serif text-sm md:text-base text-[#111111]/70">
+              <span class="font-mono text-[10px] tracking-wider text-[#111111]/40 shrink-0 w-14">{ex.year}</span>
+              <span class="font-serif">—</span>
+              <span>
+                <em>{ex.title}</em>, {ex.venue}, {ex.city}{ex.city && ex.country ? ', ' : ''}{ex.country}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Group Exhibitions -->
+      <div>
+        <div class="flex items-center gap-4 mb-8">
+          <span class="font-sans text-[9px] tracking-widest text-[#111111]/50">{l.groupExhibitions}</span>
+          <div class="h-px flex-1 bg-black/10" />
+        </div>
+        <div class="space-y-6">
+          {groupExhibitions.map((ex) => (
+            <div class="flex items-baseline gap-4 font-serif text-sm md:text-base text-[#111111]/70">
+              <span class="font-mono text-[10px] tracking-wider text-[#111111]/40 shrink-0 w-14">{ex.year}</span>
+              <span class="font-serif">—</span>
+              <span>
+                <em>{ex.title}</em>, {ex.venue}{ex.venue && (ex.city || ex.country) ? ', ' : ''}{ex.city}{ex.city && ex.country ? ', ' : ''}{ex.country}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </PageLayout>
