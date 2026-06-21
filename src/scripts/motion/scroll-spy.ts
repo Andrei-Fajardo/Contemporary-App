@@ -55,7 +55,21 @@ export function resolveActiveSection(): string {
   return active;
 }
 
-/** Slide thumb along nav ticks, aligned to section scroll ranges. */
+function updateSidebarTrack(nav: HTMLElement, links: HTMLElement[]): void {
+  const track = document.getElementById("sidebar-scroll-track");
+  if (!track || links.length < 2) return;
+
+  const navRect = nav.getBoundingClientRect();
+  const firstRect = links[0].getBoundingClientRect();
+  const lastRect = links[links.length - 1].getBoundingClientRect();
+  const top = firstRect.top - navRect.top + firstRect.height * 0.5;
+  const bottom = lastRect.top - navRect.top + lastRect.height * 0.5;
+
+  track.style.top = `${top}px`;
+  track.style.height = `${Math.max(0, bottom - top)}px`;
+}
+
+/** Slide thumb along nav track, aligned to section scroll ranges. */
 export function updateSidebarProgressThumb(): void {
   const nav = document.querySelector<HTMLElement>(".desktop-sidebar .sidebar-nav");
   const thumb = document.getElementById("sidebar-scroll-progress");
@@ -64,6 +78,8 @@ export function updateSidebarProgressThumb(): void {
   const sections = getSections();
   const links = getNavLinks();
   if (!sections.length || !links.length) return;
+
+  updateSidebarTrack(nav, links);
 
   const linkByKey = new Map(links.map((link) => [link.dataset.navKey ?? "", link]));
   const marker = window.scrollY + window.innerHeight * FOCUS_RATIO;

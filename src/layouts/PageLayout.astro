@@ -86,6 +86,18 @@ const menuItems: { key: string; href: string }[] = [
           return active;
         }
 
+        function updateTrack(nav, links) {
+          var track = document.getElementById("sidebar-scroll-track");
+          if (!track || links.length < 2) return;
+          var navRect = nav.getBoundingClientRect();
+          var first = links[0].getBoundingClientRect();
+          var last = links[links.length - 1].getBoundingClientRect();
+          var top = first.top - navRect.top + first.height * 0.5;
+          var bottom = last.top - navRect.top + last.height * 0.5;
+          track.style.top = top + "px";
+          track.style.height = Math.max(0, bottom - top) + "px";
+        }
+
         function updateSidebarRail() {
           var nav = document.querySelector(".desktop-sidebar .sidebar-nav");
           var thumb = document.getElementById("sidebar-scroll-progress");
@@ -94,6 +106,8 @@ const menuItems: { key: string; href: string }[] = [
           var links = nav.querySelectorAll(".sidebar-nav-link[data-nav-key]");
           var sections = document.querySelectorAll("section[id].scroll-section");
           if (!links.length || !sections.length) return;
+
+          updateTrack(nav, links);
 
           var linkMap = {};
           for (var i = 0; i < links.length; i++) {
@@ -338,6 +352,7 @@ const menuItems: { key: string; href: string }[] = [
         </div>
         <div class="desktop-sidebar__nav px-5 flex-1">
           <nav class="sidebar-nav">
+            <div class="sidebar-scroll-track" id="sidebar-scroll-track" aria-hidden="true"></div>
             <div id="sidebar-scroll-progress" class="sidebar-scroll-progress" aria-hidden="true"></div>
             {menuItems.map((item) => {
               const navKey = item.key as keyof typeof l.nav;

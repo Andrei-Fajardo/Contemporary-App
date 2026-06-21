@@ -398,13 +398,27 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   background-color: #111;
 }
 
-/* Collapsed rail: tick marks + sliding scroll-progress thumb */
+/* Collapsed rail: single track line + sliding thumb */
 .sidebar-nav {
   position: relative;
 }
 
+.sidebar-scroll-track,
 .sidebar-scroll-progress {
   display: none;
+}
+
+.desktop-sidebar:not(:hover):not(:focus-within) .sidebar-scroll-track {
+  display: block;
+  position: absolute;
+  left: 0.2rem;
+  top: 0;
+  width: 2px;
+  height: 0;
+  border-radius: 1px;
+  background: rgba(17, 17, 17, 0.14);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .desktop-sidebar:not(:hover):not(:focus-within) .sidebar-scroll-progress {
@@ -422,25 +436,10 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0.2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 0.75rem;
-  border-radius: 1px;
-  background: rgba(17, 17, 17, 0.12);
-  pointer-events: none;
-}
-
-.desktop-sidebar:not(:hover):not(:focus-within) .sidebar-nav-link.nav-link--active::after {
-  display: none;
-}
-
-.desktop-sidebar:hover .sidebar-nav-link::after,
-.desktop-sidebar:focus-within .sidebar-nav-link::after {
+.desktop-sidebar:hover .sidebar-scroll-track,
+.desktop-sidebar:focus-within .sidebar-scroll-track,
+.desktop-sidebar:hover .sidebar-scroll-progress,
+.desktop-sidebar:focus-within .sidebar-scroll-progress {
   display: none;
 }
 
