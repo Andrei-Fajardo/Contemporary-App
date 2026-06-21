@@ -10,6 +10,7 @@ function updateParallax(): void {
 
   layers.forEach((el) => {
     const speed = parseFloat(el.dataset.parallaxSpeed ?? el.getAttribute("data-parallax-speed") ?? "0.35");
+    if (speed <= 0) return;
     const rect = el.getBoundingClientRect();
     const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
     const clamped = Math.max(0, Math.min(1, progress));

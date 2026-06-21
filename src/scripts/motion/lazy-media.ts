@@ -13,10 +13,18 @@ function loadImage(img: HTMLImageElement): void {
     const wrap = img.closest(".lazy-media");
     wrap?.classList.add("is-loaded");
     img.removeEventListener("load", onLoad);
+    img.removeEventListener("error", onError);
     updateDepthField();
   };
 
+  const onError = () => {
+    img.removeEventListener("load", onLoad);
+    img.removeEventListener("error", onError);
+    img.closest(".lazy-media")?.classList.add("is-loaded", "is-error");
+  };
+
   img.addEventListener("load", onLoad);
+  img.addEventListener("error", onError);
   if (img.complete) onLoad();
 }
 

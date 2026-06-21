@@ -7,6 +7,7 @@ interface Props {
   parallaxSpeed?: number;
   contain?: boolean;
   eager?: boolean;
+  depthTarget?: boolean;
 }
 
 const {
@@ -17,12 +18,18 @@ const {
   parallaxSpeed,
   contain = false,
   eager = false,
+  depthTarget = true,
 } = Astro.props;
 ---
 
 <div
-  class:list={["lazy-media", "depth-target", contain && "lazy-media--contain", eager && "is-loaded"]}
-  style={`--lazy-aspect: ${aspectRatio}`}
+  class:list={[
+    "lazy-media",
+    depthTarget && "depth-target",
+    contain && "lazy-media--contain lazy-media--fit",
+    eager && "is-loaded",
+  ]}
+  style={contain ? undefined : `--lazy-aspect: ${aspectRatio}`}
 >
   {eager ? (
     <img

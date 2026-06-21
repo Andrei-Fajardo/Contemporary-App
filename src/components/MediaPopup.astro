@@ -24,19 +24,18 @@ const {
 } = Astro.props;
 ---
 
-<div class="media-card" data-popup-title={title}>
-  <div class="interactive-image-container">
-    <slot name="media">
-      <LazyImage
-        src={imageSrc}
-        alt={imageAlt}
-        aspectRatio={aspectRatio}
-        parallaxSpeed={parallaxSpeed}
-        contain={contain}
-        class={imageClass}
-      />
-    </slot>
-  </div>
+<div class="media-card">
+  <slot name="media">
+    <LazyImage
+      src={imageSrc}
+      alt={imageAlt}
+      aspectRatio={aspectRatio}
+      parallaxSpeed={parallaxSpeed}
+      contain={contain}
+      depthTarget={false}
+      class={imageClass}
+    />
+  </slot>
   <div class="media-card-caption" aria-hidden="true">
     <p class="media-card-title">{title}</p>
     {subtitle && <p class="media-card-subtitle">{subtitle}</p>}

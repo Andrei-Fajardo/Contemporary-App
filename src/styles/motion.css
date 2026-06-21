@@ -51,16 +51,18 @@ html.motion-reduced .parallax-layer {
   }
 }
 
-/* --- Lazy media + depth of field --- */
-.lazy-media,
-.depth-target {
+/* --- Lazy media --- */
+.lazy-media {
   --depth-focus: 0;
   position: relative;
   width: 100%;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.04);
   aspect-ratio: var(--lazy-aspect, 4 / 5);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.depth-target {
+  --depth-focus: 0;
 }
 
 .lazy-media::before {
@@ -94,30 +96,79 @@ html.motion-reduced .parallax-layer {
   object-fit: contain;
 }
 
+/* Fit-to-image: no forced aspect-ratio box (artwork paintings) */
+.lazy-media--fit {
+  aspect-ratio: auto;
+  height: auto;
+  overflow: visible;
+  background-color: transparent;
+}
+
+.lazy-media--fit::before {
+  display: none;
+}
+
+html.motion-live .lazy-media--fit:not(.is-loaded) {
+  min-height: 14rem;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.lazy-media--fit img {
+  height: auto;
+  width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+}
+
 /* Before load: placeholder only */
 html.motion-live .lazy-media:not(.is-loaded) img {
   opacity: 0;
 }
 
-/* Loaded: depth-of-field on image — soft off-center, sharp at viewport center */
-html.motion-live .lazy-media.is-loaded img {
-  opacity: calc(0.5 + var(--depth-focus, 0) * 0.5);
-  filter: blur(calc((1 - var(--depth-focus, 0)) * 6px));
-  transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+html.motion-live .lazy-media:not(.is-loaded):not(.lazy-media--fit) {
+  min-height: 12rem;
 }
 
-html.motion-live .lazy-media.is-loaded.is-focused img {
+/* --- Depth of field (scroll position, not hover) --- */
+html.motion-live .depth-target {
+  --depth-focus: 0;
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.motion-live .art-piece {
+  opacity: calc(0.42 + var(--depth-focus, 0) * 0.58);
+}
+
+html.motion-live .art-piece.is-focused {
+  opacity: 1;
+}
+
+html.motion-live .lazy-media.is-loaded img,
+html.motion-live .art-piece .lazy-media.is-loaded img {
+  opacity: calc(0.5 + var(--depth-focus, 0) * 0.5);
+  filter: blur(calc((1 - var(--depth-focus, 0)) * 10px));
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.motion-live .lazy-media.is-loaded.is-focused img,
+html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   opacity: 1;
   filter: blur(0);
 }
 
 @media (max-width: 1023px) {
-  html.motion-live .lazy-media.is-loaded img {
+  html.motion-live .art-piece {
     opacity: 1;
-    filter: none;
+  }
+
+  html.motion-live .lazy-media.is-loaded img,
+  html.motion-live .art-piece .lazy-media.is-loaded img {
+    opacity: calc(0.65 + var(--depth-focus, 0) * 0.35);
+    filter: blur(calc((1 - var(--depth-focus, 0)) * 5px));
   }
 }
 
@@ -190,9 +241,10 @@ html.motion-live .lazy-media.is-loaded.is-focused img {
   z-index: 1;
 }
 
-/* --- Media card caption (no image blur on hover) --- */
+/* --- Media card (artwork hover caption) --- */
 .media-card {
   position: relative;
+  display: block;
 }
 
 .media-card-caption {
@@ -240,15 +292,6 @@ html.motion-live .lazy-media.is-loaded.is-focused img {
 .media-card.media-card--peek .media-card-caption {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* Media cards: caption on hover only — no image scale/blur side-effects */
-.media-card .interactive-image-container::after {
-  display: none;
-}
-
-.media-card .interactive-image-container:hover img {
-  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
