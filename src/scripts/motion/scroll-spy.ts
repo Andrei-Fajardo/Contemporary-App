@@ -10,7 +10,7 @@ function setActiveNav(sectionId: string): void {
   });
 }
 
-function resolveActiveSection(): string {
+export function resolveActiveSection(): string {
   const sections = Array.from(document.querySelectorAll<HTMLElement>("section[id].scroll-section"));
   if (!sections.length) return "home";
 
@@ -28,6 +28,8 @@ function resolveActiveSection(): string {
 function updateScrollSpy(): void {
   setActiveNav(resolveActiveSection());
 }
+
+export { updateScrollSpy };
 
 function onSpyScroll(): void {
   if (!spyTicking) {
@@ -86,7 +88,7 @@ export function initAnchorNav(): void {
   });
 
   const hash = window.location.hash.replace("#", "");
-  if (hash && document.getElementById(hash)) {
+  if (hash && document.getElementById(hash) && sessionStorage.getItem("lang-preserve-scroll") === null) {
     setActiveNav(hash);
     requestAnimationFrame(() => {
       document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });

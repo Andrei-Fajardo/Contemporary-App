@@ -57,6 +57,18 @@ const menuItems: { key: string; href: string }[] = [
     <!-- Film grain overlay -->
     <div class="grain-overlay" />
 
+    <!-- Language switch transition -->
+    <div id="lang-transition-overlay" class="lang-transition-overlay" aria-hidden="true" aria-live="polite">
+      <div class="lang-transition-overlay__panel">
+        <span class="lang-transition-overlay__eyebrow font-mono text-[10px] tracking-[0.35em] uppercase text-[#555]/70">Language</span>
+        <p class="lang-transition-overlay__code font-forum text-6xl md:text-7xl text-[#111] leading-none" data-lang-code>EN</p>
+        <p class="lang-transition-overlay__name font-serif italic text-xl md:text-2xl text-[#555] mt-3" data-lang-name>English</p>
+        <div class="lang-transition-overlay__bar" aria-hidden="true">
+          <span class="lang-transition-overlay__bar-fill"></span>
+        </div>
+      </div>
+    </div>
+
     <!-- 5-Language Toggle — desktop (hidden on mobile) -->
     <div id="lang-toggle-desktop" class="fixed top-6 right-6 z-[9999] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden hidden lg:flex">
       {langList.map((lang) => (
@@ -196,6 +208,8 @@ const menuItems: { key: string; href: string }[] = [
 
 <script>
   import { initMotion } from "../scripts/motion/init";
+  import { initLangSwitch, restoreLangScroll, syncLangHrefs, syncLangToggle } from "../scripts/lang-switch";
+  import { updateScrollSpy, resolveActiveSection } from "../scripts/motion/scroll-spy";
 
   function initDrawer() {
     const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -245,49 +259,26 @@ const menuItems: { key: string; href: string }[] = [
     });
   }
 
-  function syncLangHrefs() {
-    const hash = window.location.hash || "";
-    document.querySelectorAll(".lang-btn").forEach((btn) => {
-      const lang = btn.getAttribute("data-lang");
-      const base = lang === "en" ? "/" : `/${lang}`;
-      btn.setAttribute("href", `${base}${hash}`);
-    });
-  }
-
-  function syncLangToggle() {
-    const path = window.location.pathname;
-    const seg = path.split('/')[1];
-    const langs = ['en', 'kr', 'kk', 'zh', 'ru'];
-    const active = seg && langs.includes(seg) ? seg : 'en';
-
-    document.querySelectorAll(".lang-btn").forEach((btn) => {
-      const lang = btn.getAttribute("data-lang");
-      const isMatch = lang === active;
-      btn.classList.toggle("bg-[#111111]", isMatch);
-      btn.classList.toggle("bg-[#111]", isMatch);
-      btn.classList.toggle("text-white", isMatch);
-      btn.classList.toggle("text-[#555]", !isMatch);
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
+  function bootPageScripts() {
     initDrawer();
     syncLangHrefs();
     syncLangToggle();
+    initLangSwitch();
     initMotion();
+    restoreLangScroll();
+  }
+
+  document.addEventListener("lang-scroll-restored", () => {
+    updateScrollSpy();
+    const section = resolveActiveSection();
+    history.replaceState(null, "", `${window.location.pathname}#${section}`);
   });
 
-  document.addEventListener("astro:page-load", () => {
-    initDrawer();
-    syncLangHrefs();
-    syncLangToggle();
-    initMotion();
-  });
+  document.addEventListener("DOMContentLoaded", bootPageScripts);
+
+  document.addEventListener("astro:page-load", bootPageScripts);
 
   if (document.readyState !== "loading") {
-    initDrawer();
-    syncLangHrefs();
-    syncLangToggle();
-    initMotion();
+    bootPageScripts();
   }
 </script>
