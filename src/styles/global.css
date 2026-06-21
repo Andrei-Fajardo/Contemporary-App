@@ -157,19 +157,27 @@ body {
 }
 
 /* =============================================
-   SCROLL MOTION — JavaScript-driven (no packages)
-   Classes start hidden; .is-visible triggers reveal.
-   Scroll layers use [data-parallax-speed] attribute.
+   SCROLL MOTION — content stays visible without JS
+   JS adds .motion-live + .is-visible for reveal FX
    ============================================= */
 
 .hero-parallax {
   will-change: opacity, transform;
 }
 
-/* Motion only applies after JS adds .js-motion to <html> */
-html.js-motion .fade-up,
-html.js-motion .parallax-text,
-html.js-motion .art-parallax-text {
+.parallax-text,
+.art-parallax-text,
+.fade-up,
+.parallax-container,
+.art-parallax-container {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+html.motion-live .parallax-text:not(.is-visible),
+html.motion-live .art-parallax-text:not(.is-visible),
+html.motion-live .fade-up:not(.is-visible) {
   opacity: 0;
   transform: translateY(3rem);
   transition:
@@ -177,15 +185,15 @@ html.js-motion .art-parallax-text {
     transform 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-html.js-motion .fade-up.is-visible,
-html.js-motion .parallax-text.is-visible,
-html.js-motion .art-parallax-text.is-visible {
+html.motion-live .parallax-text.is-visible,
+html.motion-live .art-parallax-text.is-visible,
+html.motion-live .fade-up.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-html.js-motion .parallax-container,
-html.js-motion .art-parallax-container {
+html.motion-live .parallax-container:not(.is-visible),
+html.motion-live .art-parallax-container:not(.is-visible) {
   opacity: 0;
   filter: blur(6px);
   transform: scale(1.08);
@@ -195,8 +203,8 @@ html.js-motion .art-parallax-container {
     transform 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-html.js-motion .parallax-container.is-visible,
-html.js-motion .art-parallax-container.is-visible {
+html.motion-live .parallax-container.is-visible,
+html.motion-live .art-parallax-container.is-visible {
   opacity: 1;
   filter: blur(0);
   transform: scale(1);
