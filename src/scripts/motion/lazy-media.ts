@@ -1,3 +1,5 @@
+import { updateDepthField } from "./depth-field";
+
 let lazyObserver: IntersectionObserver | null = null;
 
 function loadImage(img: HTMLImageElement): void {
@@ -8,8 +10,10 @@ function loadImage(img: HTMLImageElement): void {
   img.removeAttribute("data-src");
 
   const onLoad = () => {
-    img.closest(".lazy-media")?.classList.add("is-loaded");
+    const wrap = img.closest(".lazy-media");
+    wrap?.classList.add("is-loaded");
     img.removeEventListener("load", onLoad);
+    updateDepthField();
   };
 
   img.addEventListener("load", onLoad);
@@ -17,8 +21,16 @@ function loadImage(img: HTMLImageElement): void {
 }
 
 export function initLazyMedia(): void {
+  document.querySelectorAll<HTMLImageElement>(".lazy-media img[src]:not([data-src])").forEach((img) => {
+    const wrap = img.closest(".lazy-media");
+    wrap?.classList.add("is-loaded", "is-visible");
+  });
+
   const images = document.querySelectorAll<HTMLImageElement>(".lazy-media img[data-src]");
-  if (!images.length) return;
+  if (!images.length) {
+    updateDepthField();
+    return;
+  }
 
   if (!("IntersectionObserver" in window)) {
     images.forEach(loadImage);
@@ -31,11 +43,12 @@ export function initLazyMedia(): void {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             loadImage(entry.target as HTMLImageElement);
+            entry.target.closest(".lazy-media")?.classList.add("is-visible");
             lazyObserver?.unobserve(entry.target);
           }
         });
       },
-      { rootMargin: "240px 0px", threshold: 0.01 }
+      { rootMargin: "40% 0px", threshold: 0.01 }
     );
   }
 

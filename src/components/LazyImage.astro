@@ -6,6 +6,7 @@ interface Props {
   aspectRatio?: string;
   parallaxSpeed?: number;
   contain?: boolean;
+  eager?: boolean;
 }
 
 const {
@@ -15,19 +16,31 @@ const {
   aspectRatio = "4 / 5",
   parallaxSpeed,
   contain = false,
+  eager = false,
 } = Astro.props;
 ---
 
 <div
-  class:list={["lazy-media", contain && "lazy-media--contain"]}
+  class:list={["lazy-media", "depth-target", contain && "lazy-media--contain", eager && "is-loaded"]}
   style={`--lazy-aspect: ${aspectRatio}`}
 >
-  <img
-    data-src={src}
-    alt={alt}
-    class={className}
-    data-parallax-speed={parallaxSpeed}
-    decoding="async"
-    loading="lazy"
-  />
+  {eager ? (
+    <img
+      src={src}
+      alt={alt}
+      class={className}
+      data-parallax-speed={parallaxSpeed}
+      decoding="async"
+      fetchpriority="high"
+    />
+  ) : (
+    <img
+      data-src={src}
+      alt={alt}
+      class={className}
+      data-parallax-speed={parallaxSpeed}
+      decoding="async"
+      loading="lazy"
+    />
+  )}
 </div>

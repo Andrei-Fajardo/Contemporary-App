@@ -3,6 +3,7 @@ import { initParallax, resetParallax } from "./parallax";
 import { initScrollReveal } from "./scroll-reveal";
 import { initScrollVelocity, resetScrollVelocity } from "./scroll-velocity";
 import { initAnchorNav, initScrollSpy } from "./scroll-spy";
+import { updateDepthField } from "./depth-field";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -37,4 +38,5 @@ export function initMotion(): void {
   initScrollVelocity();
   initScrollSpy();
   initAnchorNav();
+  updateDepthField();
 }

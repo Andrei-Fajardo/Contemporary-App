@@ -15,7 +15,7 @@ function clearVelocityPopup(): void {
     velocityTimer = null;
   }
   if (activeHost) {
-    activeHost.classList.remove("media-popup--open");
+    activeHost.classList.remove("media-card--peek");
     activeHost = null;
   }
 }
@@ -23,12 +23,12 @@ function clearVelocityPopup(): void {
 function openVelocityPopup(host: HTMLElement): void {
   clearVelocityPopup();
   activeHost = host;
-  host.classList.add("media-popup--open");
+  host.classList.add("media-card--peek");
   velocityTimer = setTimeout(clearVelocityPopup, POPUP_DURATION_MS);
 }
 
 function findPopupHostInView(): HTMLElement | null {
-  const hosts = document.querySelectorAll<HTMLElement>(".media-popup-host");
+  const hosts = document.querySelectorAll<HTMLElement>(".media-card");
   const midline = window.innerHeight * 0.5;
 
   for (const host of hosts) {

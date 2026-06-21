@@ -24,7 +24,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="media-popup-host" data-popup-title={title}>
+<div class="media-card" data-popup-title={title}>
   <div class="interactive-image-container">
     <slot name="media">
       <LazyImage
@@ -37,10 +37,8 @@ const {
       />
     </slot>
   </div>
-  <div class="media-popup-overlay" aria-hidden="true">
-    <div class="media-popup-panel">
-      <p class="media-popup-title">{title}</p>
-      {subtitle && <p class="media-popup-subtitle">{subtitle}</p>}
-    </div>
+  <div class="media-card-caption" aria-hidden="true">
+    <p class="media-card-title">{title}</p>
+    {subtitle && <p class="media-card-subtitle">{subtitle}</p>}
   </div>
 </div>

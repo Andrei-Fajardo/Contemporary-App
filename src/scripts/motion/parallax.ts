@@ -1,10 +1,11 @@
-import { isMobileViewport, prefersReducedMotion } from "./utils";
+import { prefersReducedMotion } from "./utils";
+import { updateDepthField } from "./depth-field";
 
 let scrollBound = false;
 let ticking = false;
+let onScrollHandler: (() => void) | null = null;
 
 function updateParallax(): void {
-  const scrollY = window.scrollY;
   const layers = document.querySelectorAll<HTMLElement>("[data-parallax-speed], .parallax-layer");
 
   layers.forEach((el) => {
@@ -25,6 +26,7 @@ function updateParallax(): void {
     heroLayer.style.transform = `translate3d(0, ${drift}px, 0)`;
   }
 
+  updateDepthField();
   ticking = false;
 }
 
@@ -36,14 +38,21 @@ function onScroll(): void {
 }
 
 export function initParallax(): void {
-  if (scrollBound || prefersReducedMotion() || isMobileViewport()) return;
+  if (scrollBound || prefersReducedMotion()) return;
   scrollBound = true;
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll, { passive: true });
+  onScrollHandler = onScroll;
+  window.addEventListener("scroll", onScrollHandler, { passive: true });
+  window.addEventListener("resize", onScrollHandler, { passive: true });
   updateParallax();
+  updateDepthField();
 }
 
 export function resetParallax(): void {
+  if (onScrollHandler) {
+    window.removeEventListener("scroll", onScrollHandler);
+    window.removeEventListener("resize", onScrollHandler);
+    onScrollHandler = null;
+  }
   scrollBound = false;
 }
