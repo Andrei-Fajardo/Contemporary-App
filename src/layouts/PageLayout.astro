@@ -284,29 +284,15 @@ const menuItems: { key: string; href: string }[] = [
     sections.forEach(s => observer.observe(s));
   }
 
-  function initScrollParallax() {
-    const targets = document.querySelectorAll(
-      ".parallax-container, .art-parallax-container, .parallax-text, .art-parallax-text"
-    );
-    if (!targets.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("parallax-active");
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -5% 0px" }
-    );
-
-    targets.forEach((el) => observer.observe(el));
-  }
-
   document.addEventListener("DOMContentLoaded", () => {
     initDrawer();
     initScrollSpy();
-    initScrollParallax();
   });
+</script>
+
+<script>
+  import { initParallax } from "../scripts/parallax.ts";
+
+  initParallax();
+  document.addEventListener("astro:page-load", initParallax);
 </script>

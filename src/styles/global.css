@@ -1,6 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Forum&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+/* Tailwind v4 theme — brand palette + fluid type scale */
+@theme {
+  --color-brand-primary: #111111;
+  --color-brand-secondary: #8b7355;
+  --color-brand-cream: #f0eee9;
+
+  --font-size-fluid-1: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
+  --font-size-fluid-2: clamp(1.2rem, 0.7vw + 1.2rem, 1.5rem);
+  --font-size-fluid-3: clamp(1.44rem, 1.1vw + 1.3rem, 1.88rem);
+  --font-size-fluid-4: clamp(1.73rem, 1.6vw + 1.5rem, 2.34rem);
+}
+
 :root {
   --font-forum: "Forum", serif;
   --font-serif: "Cormorant Garamond", "Georgia", serif;
@@ -130,21 +142,6 @@ body {
 .stagger-delay-3 { --stagger-order: 3; }
 .stagger-delay-4 { --stagger-order: 4; }
 
-@keyframes fade-up {
-  0% {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-up {
-  animation: fade-up 600ms ease-out forwards;
-}
-
 .meta-label-strip {
   font-family: var(--font-mono, monospace);
   font-size: 11px;
@@ -160,117 +157,79 @@ body {
 }
 
 /* =============================================
-   CINEMATIC SCROLL-DRIVEN ANIMATIONS
-   Requires Chrome 115+. overflow:clip (not hidden)
-   on html/body is required for view() to work.
+   SCROLL MOTION — JavaScript-driven (no packages)
+   Classes start hidden; .is-visible triggers reveal.
+   Scroll layers use [data-parallax-speed] attribute.
    ============================================= */
 
-@supports (animation-timeline: view()) {
-  @keyframes apple-hero-fade {
-    from {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateY(-100px);
-    }
-  }
-
-  .hero-parallax {
-    animation: apple-hero-fade linear both;
-    animation-duration: 1ms;
-    animation-timeline: scroll(root);
-    animation-range: exit 0% exit 100%;
-  }
-
-  /* --- APPLE-STYLE PARALLAX (site-wide) --- */
-  @keyframes apple-mask-reveal {
-    0% { clip-path: inset(15% 15% 15% 15% round 4px); filter: blur(4px); opacity: 0; }
-    100% { clip-path: inset(0% 0% 0% 0% round 0px); filter: blur(0px); opacity: 1; }
-  }
-
-  @keyframes apple-image-scale {
-    0% { transform: scale(1.2) translateY(30px); }
-    100% { transform: scale(1) translateY(0); }
-  }
-
-  .parallax-container,
-  .art-parallax-container {
-    overflow: clip;
-    view-timeline-axis: block;
-    animation: apple-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
-    animation-duration: 1ms;
-    animation-timeline: view();
-    animation-range: entry 5% cover 35%;
-    will-change: filter, clip-path, opacity;
-  }
-
-  .parallax-container img,
-  .art-parallax-container img {
-    animation: apple-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
-    animation-duration: 1ms;
-    animation-timeline: view();
-    animation-range: entry 5% cover 35%;
-    will-change: transform;
-  }
-
-  @keyframes apple-text-rise {
-    0% {
-      transform: translateY(80px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .parallax-text,
-  .art-parallax-text {
-    animation: apple-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
-    animation-duration: 1ms;
-    animation-timeline: view();
-    animation-range: entry 15% cover 40%;
-  }
+.hero-parallax {
+  will-change: opacity, transform;
 }
 
-/* JS fallback target — used when view() is unsupported */
+.fade-up,
+.parallax-text,
+.art-parallax-text {
+  opacity: 0;
+  transform: translateY(2.5rem);
+  transition:
+    opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fade-up.is-visible,
+.parallax-text.is-visible,
+.art-parallax-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .parallax-container,
 .art-parallax-container {
   overflow: clip;
+  opacity: 0;
+  filter: blur(4px);
+  transform: scale(1.05);
+  transition:
+    opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.9s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@supports not (animation-timeline: view()) {
-  .parallax-container:not(.parallax-active),
-  .art-parallax-container:not(.parallax-active) {
-    opacity: 0.4;
-    filter: blur(3px);
-    transform: scale(1.05);
-  }
+.parallax-container.is-visible,
+.art-parallax-container.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
 
-  .parallax-container.parallax-active,
-  .art-parallax-container.parallax-active {
+.parallax-container img,
+.art-parallax-container img {
+  will-change: transform;
+}
+
+[data-parallax-speed] {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .parallax-text,
+  .art-parallax-text,
+  .parallax-container,
+  .art-parallax-container {
     opacity: 1;
-    filter: blur(0);
-    transform: scale(1);
-    transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-      filter 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-      transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+    filter: none;
+    transform: none;
+    transition: none;
   }
 
-  .parallax-text:not(.parallax-active),
-  .art-parallax-text:not(.parallax-active) {
-    opacity: 0;
-    transform: translateY(60px);
+  .hero-parallax {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
-  .parallax-text.parallax-active,
-  .art-parallax-text.parallax-active {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-      transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  [data-parallax-speed] {
+    transform: none !important;
   }
 }
 
