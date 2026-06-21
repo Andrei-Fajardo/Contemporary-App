@@ -1,25 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Forum&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
-/* Forum for hero titles, Cormorant Garamond for serif body, Inter for UI */
 :root {
   --font-forum: "Forum", serif;
   --font-serif: "Cormorant Garamond", "Georgia", serif;
   --font-sans: "Inter", "Helvetica", "Arial", sans-serif;
 }
 
-/* Warm editorial canvas background */
 body {
-  background-color: #F0EEE9 !important; /* Pantone 11-4201 TCX Cloud Dancer — light warm off-white */
+  background-color: #F0EEE9 !important;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-/* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
+/* Global Premium Grain Overlay Blanket */
 .grain-overlay {
   position: fixed;
   top: 0;
@@ -29,8 +28,6 @@ html {
   pointer-events: none;
   z-index: 9999;
 }
-
-/* Layer 1: Micro-Dark Grit — ultra-subtle so the paper tone stays clean */
 .grain-overlay::before {
   content: "";
   position: absolute;
@@ -41,8 +38,6 @@ html {
   opacity: 0.03;
   mix-blend-mode: multiply;
 }
-
-/* Layer 2: Soft Micro-Highlighting */
 .grain-overlay::after {
   content: "";
   position: absolute;
@@ -54,7 +49,7 @@ html {
   mix-blend-mode: overlay;
 }
 
-/* === Global Premium Image Interactive Wrapper === */
+/* === Interactive Image Wrapper === */
 .interactive-image-container {
   position: relative;
   overflow: hidden;
@@ -64,14 +59,12 @@ html {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.04);
 }
-
 .interactive-image-container img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .interactive-image-container::after {
   content: "";
   position: absolute;
@@ -82,17 +75,15 @@ html {
   mix-blend-mode: difference;
   transition: opacity 600ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .interactive-image-container:hover img {
   transform: scale(1.015);
 }
-
 .interactive-image-container:hover::after {
   opacity: 0.12;
   transform: translate(6px, 4px) scale(1.015);
 }
 
-/* Afterimage blur effect (for exhibition/feature pages) */
+/* Afterimage blur effect */
 .afterimage-trail {
   transition: filter 0.1s ease-out, transform 0.1s ease-out, opacity 0.1s ease-out;
 }
@@ -123,7 +114,6 @@ html {
 .stagger-delay-3 { --stagger-order: 3; }
 .stagger-delay-4 { --stagger-order: 4; }
 
-/* Fade-up for detail grid images */
 @keyframes fade-up {
   0% { opacity: 0; transform: translateY(1rem); }
   100% { opacity: 1; transform: translateY(0); }
@@ -132,7 +122,6 @@ html {
   animation: fade-up 600ms ease-out forwards;
 }
 
-/* Universal meta-label strip — locks tech specs to a single elegant line */
 .meta-label-strip {
   font-family: var(--font-mono, monospace);
   font-size: 11px;
@@ -147,6 +136,80 @@ html {
   padding-bottom: 1rem;
 }
 
+/* =============================================
+   CINEMATIC CSS SCROLL-DRIVEN ANIMATIONS
+   Requires Chrome 115+. Degrades gracefully.
+   ============================================= */
+
+/* A. Hero section drift & fade — dissolves as it scrolls out of view */
+@keyframes apple-hero-fade {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-100px); }
+}
+.hero-parallax {
+  animation: apple-hero-fade linear both;
+  animation-timeline: scroll(root);
+  animation-range: exit 0% exit 100%;
+}
+
+/* B. Cinematic image reveal — container crops, image zooms */
+@keyframes apple-mask-reveal {
+  0% { clip-path: inset(15% 15% 15% 15% round 4px); filter: blur(4px); opacity: 0; }
+  100% { clip-path: inset(0% 0% 0% 0% round 0px); filter: blur(0px); opacity: 1; }
+}
+
+@keyframes apple-image-scale {
+  0% { transform: scale(1.2) translateY(30px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.art-parallax-container {
+  animation: apple-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 35%;
+  will-change: filter, clip-path, opacity;
+}
+
+.art-parallax-container img {
+  animation: apple-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
+  animation-timeline: view();
+  animation-range: entry 5% cover 35%;
+  will-change: transform;
+}
+
+/* C. Staggered text metadata rise */
+@keyframes apple-text-rise {
+  0% { transform: translateY(80px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.art-parallax-text {
+  animation: apple-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
+  animation-timeline: view();
+  animation-range: entry 15% cover 40%;
+}
+
+/* =============================================
+   LEGACY PARALLAX — preserved for cross-ref
+   ============================================= */
+@keyframes parallax-bg {
+  from { transform: translateY(0); }
+  to { transform: translateY(-30%); }
+}
+.bg-layer-parallax {
+  animation: parallax-bg linear both;
+  animation-timeline: view();
+  animation-range: entry 0% exit 120%;
+}
+@keyframes parallax-fg-fast {
+  from { transform: translateY(15%); }
+  to { transform: translateY(-15%); }
+}
+.fg-layer-parallax {
+  animation: parallax-fg-fast linear both;
+  animation-timeline: view();
+  animation-range: entry 0% exit 120%;
+}
+
 /* Thin scrollbar */
 html {
   scrollbar-width: thin;
@@ -156,9 +219,7 @@ html::-webkit-scrollbar { width: 4px; }
 html::-webkit-scrollbar-track { background: transparent; }
 html::-webkit-scrollbar-thumb { background: #111111; }
 
-/* Mobile-specific improvements */
 @media (max-width: 1023px) {
-  /* Ensure touch targets are at least 44x44px */
   button, a {
     min-height: 44px;
     min-width: 44px;
@@ -166,32 +227,24 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     align-items: center;
     justify-content: center;
   }
-  
-  /* Smooth scrolling on mobile */
   html {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
   }
-  
-  /* Prevent text size adjustment on mobile */
   body {
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
-  
-  /* Improve tap highlight */
   * {
     -webkit-tap-highlight-color: rgba(17, 17, 17, 0.1);
   }
 }
 
-/* Disable hover effects on touch devices */
 @media (hover: none) {
   .interactive-image-container:hover img {
     transform: scale(1);
   }
-  
   .interactive-image-container:hover::after {
     opacity: 0;
     transform: none;

@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import { ClientRouter } from 'astro:transitions';
 import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
@@ -13,7 +12,6 @@ const { title, activeSection, locale = 'en' } = Astro.props;
 const l = t[locale];
 const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
 
-// Derive active language from URL pathname — reliable across all routes and ClientRouter
 const pathSeg = Astro.url.pathname.split('/')[1];
 const activeLang = pathSeg && langList.includes(pathSeg as Lang) ? (pathSeg as Lang) : 'en';
 
@@ -23,14 +21,14 @@ function isActiveLang(lang: string): boolean {
 }
 
 const menuItems: { key: string; href: string }[] = [
-  { key: "home", href: locale === 'en' ? '/' : `/${locale}` },
-  { key: "about", href: `${locale === 'en' ? '' : '/' + locale}/about` },
-  { key: "art", href: `${locale === 'en' ? '' : '/' + locale}/art` },
-  { key: "exhibitions", href: `${locale === 'en' ? '' : '/' + locale}/exhibitions` },
-  { key: "publications", href: `${locale === 'en' ? '' : '/' + locale}/publications` },
-  { key: "research", href: `${locale === 'en' ? '' : '/' + locale}/research` },
-  { key: "press", href: `${locale === 'en' ? '' : '/' + locale}/press` },
-  { key: "contacts", href: `${locale === 'en' ? '' : '/' + locale}/contacts` },
+  { key: "home", href: "#home" },
+  { key: "about", href: "#about" },
+  { key: "art", href: "#art" },
+  { key: "exhibitions", href: "#exhibitions" },
+  { key: "publications", href: "#publications" },
+  { key: "research", href: "#research" },
+  { key: "press", href: "#press" },
+  { key: "contacts", href: "#contacts" },
 ];
 ---
 
@@ -41,13 +39,11 @@ const menuItems: { key: string; href: string }[] = [
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} — {l.siteTitle}</title>
-    <ClientRouter />
   </head>
   <body class="font-sans antialiased bg-[#F0EEE9] text-[#111]">
-    <!-- Film grain overlay -->
     <div class="grain-overlay" />
 
-    <!-- 5-Language Toggle — desktop (hidden on mobile) -->
+    <!-- Desktop language toggle -->
     <div id="lang-toggle-desktop" class="fixed top-6 right-6 z-[9999] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden hidden lg:flex">
       {langList.map((lang) => (
         <a
@@ -66,11 +62,10 @@ const menuItems: { key: string; href: string }[] = [
 
     <!-- Mobile header bar (<1024px) -->
     <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-[#F0EEE9]/95 backdrop-blur-md border-b border-black/10 flex items-center justify-between px-5">
-      <a href={l.logoHref} class="font-forum text-xl md:text-2xl font-bold whitespace-nowrap tracking-tight text-[#111] hover:opacity-70 transition-opacity">
+      <a href="#home" class="font-forum text-xl md:text-2xl font-bold whitespace-nowrap tracking-tight text-[#111] hover:opacity-70 transition-opacity">
         Anna Dauyl Rockswell
       </a>
       <div class="flex items-center gap-3">
-        <!-- Mobile language pills -->
         <div id="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 backdrop-blur-sm rounded overflow-hidden">
           {langList.map((lang) => (
             <a
@@ -82,7 +77,6 @@ const menuItems: { key: string; href: string }[] = [
             >{langLabels[lang]}</a>
           ))}
         </div>
-        <!-- Hamburger -->
         <button
           id="hamburger-btn"
           class="w-11 h-11 flex items-center justify-center focus:outline-none active:scale-95 transition-transform"
@@ -133,92 +127,52 @@ const menuItems: { key: string; href: string }[] = [
       </div>
     </aside>
 
-    <!-- Desktop: CSS Grid — sidebar column physically allocates space so content can never overlap the brand -->
-    <div class="hidden lg:grid lg:grid-cols-[380px_1fr] min-h-screen">
-      <!-- Left column: brand stamp + navigation + based-in metadata -->
-      <aside class="border-r border-black/10 bg-[#F0EEE9] flex flex-col">
-        <div class="p-8 pr-4">
-          <a href={l.logoHref} class="block group">
-            <h1 class="font-forum text-3xl font-bold whitespace-nowrap tracking-tight text-[#111] leading-[1.05] pr-4 transition-opacity duration-300 group-hover:opacity-70">
-              Anna Dauyl Rockswell
-            </h1>
-            <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block">{l.subtitle}</span>
-          </a>
-        </div>
-        <div class="px-6 flex-1">
-          <nav>
+    <!-- HOVER-EXPANDING SIDEBAR OVERLAY — Apple-tier float above content -->
+    <aside class="hidden lg:block group fixed left-0 top-0 h-screen z-[100] w-3 hover:w-80 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[#F0EEE9]/95 backdrop-blur-xl border-r border-black/5 shadow-2xl overflow-hidden">
+      <!-- Wide invisible hit area for easy hover capture on the left edge -->
+      <div class="absolute inset-0 w-14 cursor-pointer" />
+
+      <!-- Slide-in content panel — starts offscreen-left, slides in on hover -->
+      <div class="absolute inset-0 w-80 p-8 translate-x-[-20px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] delay-100 pointer-events-none group-hover:pointer-events-auto">
+        <div class="flex flex-col h-full">
+          <div class="shrink-0">
+            <a href="#home" class="block">
+              <h1 class="font-forum text-3xl font-bold whitespace-nowrap tracking-tight text-[#111] leading-[1.05] pr-4">
+                Anna Dauyl Rockswell
+              </h1>
+              <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block">{l.subtitle}</span>
+            </a>
+          </div>
+          <nav class="sidebar-nav mt-10 flex-1">
             {menuItems.map((item) => {
               const isActive = activeSection === item.key;
               const navKey = item.key as keyof typeof l.nav;
               return (
                 <a
                   href={item.href}
-                  class={`group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-colors duration-300 ${
+                  class={`group/link relative font-sans text-[11px] uppercase tracking-wider py-2.5 block font-medium transition-colors duration-300 ${
                     isActive ? 'text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
                   }`}
                 >
                   {l.nav[navKey]}
-                  <span
-                    class={`absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out ${
-                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                    }`}
-                  />
+                  <span class="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left scale-x-0 group-hover/link:scale-x-100 transition-transform duration-500 ease-out" />
                 </a>
               );
             })}
           </nav>
-        </div>
-        <div class="px-6 py-10 mt-auto">
-          <span class="font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
-          <span class="font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
-        </div>
-      </aside>
-
-      <!-- Right column: main content -->
-      <main class="min-h-screen bg-[#F0EEE9] pt-16 lg:pt-0">
-        <slot name="content" />
-        <footer class="px-6 sm:px-8 pt-16 pb-24">
-          <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.email}</span>
-              <a href="mailto:contact@annadauylrockswell.com" class="group text-sm font-sans text-[#111] underline underline-offset-4">
-                <span class="transition-transform duration-300 ease-out group-hover:translate-x-px">contact@annadauylrockswell.com</span>
-              </a>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.licenses}</span>
-              <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
-                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARS</span>
-                </span>
-                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARKO</span>
-                </span>
-                <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">DACS</span>
-                </span>
-              </div>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.socials}</span>
-              <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
-                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">Instagram</span>
-                </a>
-                <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
-                  <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">X</span>
-                </a>
-              </div>
-            </div>
+          <div class="shrink-0 mt-auto pb-8">
+            <span class="font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
+            <span class="font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
           </div>
-          <p class="text-[11px] font-mono text-[#555]/40 mt-12 text-center tracking-wider">{l.copyright}</p>
-        </footer>
-      </main>
-    </div>
+        </div>
+      </div>
+    </aside>
 
-    <!-- Mobile content wrapper (<1024px) — stacking below the fixed header -->
-    <div class="lg:hidden min-h-screen pt-16">
-      <slot name="content" />
+    <!-- FULL-VIEWPORT MAIN CONTENT — no sidebar margin, artwork spans edge to edge -->
+    <div class="min-h-screen bg-[#F0EEE9]">
+      <main>
+        <slot name="content" />
+      </main>
       <footer class="px-6 sm:px-8 pt-16 pb-24">
         <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
           <div>
@@ -293,7 +247,6 @@ const menuItems: { key: string; href: string }[] = [
       }
     };
 
-    // Close drawer on navigation link click
     const navLinks = drawer?.querySelectorAll("a");
     navLinks?.forEach(link => {
       link.addEventListener("click", () => {
@@ -308,29 +261,31 @@ const menuItems: { key: string; href: string }[] = [
     });
   }
 
-  function syncLangToggle() {
-    const path = window.location.pathname;
-    const seg = path.split('/')[1];
-    const langs = ['en', 'kr', 'kk', 'zh', 'ru'];
-    const active = seg && langs.includes(seg) ? seg : 'en';
-
-    document.querySelectorAll(".lang-btn").forEach((btn) => {
-      const lang = btn.getAttribute("data-lang");
-      const isMatch = lang === active;
-      btn.classList.toggle("bg-[#111111]", isMatch);
-      btn.classList.toggle("bg-[#111]", isMatch);
-      btn.classList.toggle("text-white", isMatch);
-      btn.classList.toggle("text-[#555]", !isMatch);
+  function initScrollSpy() {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = new Map();
+    document.querySelectorAll(".sidebar-nav a").forEach(a => {
+      const href = a.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        navLinks.set(href.slice(1), a);
+      }
     });
+    if (!sections.length || !navLinks.size) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((link, id) => {
+            link.classList.toggle("text-[#111]", id === entry.target.id);
+            link.classList.toggle("text-[#555]/70", id !== entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.3, rootMargin: "-80px 0px 0px 0px" });
+    sections.forEach(s => observer.observe(s));
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     initDrawer();
-    syncLangToggle();
-  });
-
-  document.addEventListener("astro:page-load", () => {
-    initDrawer();
-    syncLangToggle();
+    initScrollSpy();
   });
 </script>
