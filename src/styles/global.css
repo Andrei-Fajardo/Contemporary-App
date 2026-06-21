@@ -166,40 +166,45 @@ body {
   will-change: opacity, transform;
 }
 
-.fade-up,
-.parallax-text,
-.art-parallax-text {
+/* Motion only applies after JS adds .js-motion to <html> */
+html.js-motion .fade-up,
+html.js-motion .parallax-text,
+html.js-motion .art-parallax-text {
   opacity: 0;
-  transform: translateY(2.5rem);
+  transform: translateY(3rem);
   transition:
     opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
     transform 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.fade-up.is-visible,
-.parallax-text.is-visible,
-.art-parallax-text.is-visible {
+html.js-motion .fade-up.is-visible,
+html.js-motion .parallax-text.is-visible,
+html.js-motion .art-parallax-text.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+html.js-motion .parallax-container,
+html.js-motion .art-parallax-container {
+  opacity: 0;
+  filter: blur(6px);
+  transform: scale(1.08);
+  transition:
+    opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 1s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html.js-motion .parallax-container.is-visible,
+html.js-motion .art-parallax-container.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
 }
 
 .parallax-container,
 .art-parallax-container {
   overflow: clip;
-  opacity: 0;
-  filter: blur(4px);
-  transform: scale(1.05);
-  transition:
-    opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    filter 0.9s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.parallax-container.is-visible,
-.art-parallax-container.is-visible {
-  opacity: 1;
-  filter: blur(0);
-  transform: scale(1);
 }
 
 .parallax-container img,

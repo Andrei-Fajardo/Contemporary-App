@@ -291,8 +291,9 @@ const menuItems: { key: string; href: string }[] = [
 </script>
 
 <script>
-  import { initParallax } from "../scripts/parallax.ts";
+  import { bootParallax, initParallax } from "../scripts/parallax.ts";
 
-  initParallax();
-  document.addEventListener("astro:page-load", initParallax);
+  bootParallax();
+  window.addEventListener("hashchange", () => setTimeout(initParallax, 50));
+  document.addEventListener("astro:page-load", () => setTimeout(initParallax, 50));
 </script>
