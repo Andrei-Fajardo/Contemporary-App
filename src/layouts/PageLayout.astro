@@ -175,7 +175,7 @@ const menuItems: { key: string; href: string }[] = [
       </aside>
 
       <!-- Right column: main content -->
-      <main class="min-h-screen bg-[#F0EEE9] pt-16 lg:pt-0">
+      <main class="motion-main min-h-screen bg-[#F0EEE9] pt-16 lg:pt-0">
         <slot name="content" />
         <footer class="px-6 sm:px-8 pt-16 pb-24">
           <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
@@ -217,7 +217,7 @@ const menuItems: { key: string; href: string }[] = [
     </div>
 
     <!-- Mobile content wrapper (<1024px) — stacking below the fixed header -->
-    <div class="lg:hidden min-h-screen pt-16">
+    <div class="motion-main lg:hidden min-h-screen pt-16">
       <slot name="content" />
       <footer class="px-6 sm:px-8 pt-16 pb-24">
         <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
@@ -260,6 +260,8 @@ const menuItems: { key: string; href: string }[] = [
 </html>
 
 <script>
+  import { initMotion } from "../scripts/motion/init";
+
   function initDrawer() {
     const hamburgerBtn = document.getElementById("hamburger-btn");
     const drawer = document.getElementById("mobile-drawer");
@@ -327,10 +329,12 @@ const menuItems: { key: string; href: string }[] = [
   document.addEventListener("DOMContentLoaded", () => {
     initDrawer();
     syncLangToggle();
+    initMotion();
   });
 
   document.addEventListener("astro:page-load", () => {
     initDrawer();
     syncLangToggle();
+    initMotion();
   });
 </script>

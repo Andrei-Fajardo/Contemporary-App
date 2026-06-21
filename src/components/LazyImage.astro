@@ -1,0 +1,33 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  aspectRatio?: string;
+  parallaxSpeed?: number;
+  contain?: boolean;
+}
+
+const {
+  src,
+  alt,
+  class: className = "",
+  aspectRatio = "4 / 5",
+  parallaxSpeed,
+  contain = false,
+} = Astro.props;
+---
+
+<div
+  class:list={["lazy-media", contain && "lazy-media--contain"]}
+  style={`--lazy-aspect: ${aspectRatio}`}
+>
+  <img
+    data-src={src}
+    alt={alt}
+    class={className}
+    data-parallax-speed={parallaxSpeed}
+    decoding="async"
+    loading="lazy"
+  />
+</div>

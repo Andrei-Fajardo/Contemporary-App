@@ -1,0 +1,49 @@
+import { isMobileViewport, prefersReducedMotion } from "./utils";
+
+let scrollBound = false;
+let ticking = false;
+
+function updateParallax(): void {
+  const scrollY = window.scrollY;
+  const layers = document.querySelectorAll<HTMLElement>("[data-parallax-speed], .parallax-layer");
+
+  layers.forEach((el) => {
+    const speed = parseFloat(el.dataset.parallaxSpeed ?? el.getAttribute("data-parallax-speed") ?? "0.35");
+    const rect = el.getBoundingClientRect();
+    const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+    const clamped = Math.max(0, Math.min(1, progress));
+    const y = (clamped - 0.5) * 120 * speed;
+    const scale = 1 + (1 - clamped) * 0.06 * speed;
+    el.style.transform = `translate3d(0, ${y}px, 0) scale(${scale})`;
+  });
+
+  const heroLayer = document.querySelector<HTMLElement>(".hero-parallax-layer");
+  if (heroLayer) {
+    const heroSection = heroLayer.closest(".hero-section");
+    const heroTop = heroSection?.getBoundingClientRect().top ?? 0;
+    const drift = Math.max(0, -heroTop) * 0.18;
+    heroLayer.style.transform = `translate3d(0, ${drift}px, 0)`;
+  }
+
+  ticking = false;
+}
+
+function onScroll(): void {
+  if (!ticking) {
+    ticking = true;
+    requestAnimationFrame(updateParallax);
+  }
+}
+
+export function initParallax(): void {
+  if (scrollBound || prefersReducedMotion() || isMobileViewport()) return;
+  scrollBound = true;
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  updateParallax();
+}
+
+export function resetParallax(): void {
+  scrollBound = false;
+}

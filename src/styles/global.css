@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Forum&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
+@import "./motion.css";
 
 /* Forum for hero titles, Cormorant Garamond for serif body, Inter for UI */
 :root {
@@ -13,10 +14,10 @@ body {
   background-color: #F0EEE9 !important; /* Pantone 11-4201 TCX Cloud Dancer — light warm off-white */
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 }
 html {
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 /* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
