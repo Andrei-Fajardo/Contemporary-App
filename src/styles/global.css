@@ -181,7 +181,7 @@ body {
   animation-range: exit 0% exit 100%;
 }
 
-/* --- APPLE-STYLE PARALLAX --- */
+/* --- APPLE-STYLE PARALLAX (site-wide) --- */
 @keyframes apple-mask-reveal {
   0% { clip-path: inset(15% 15% 15% 15% round 4px); filter: blur(4px); opacity: 0; }
   100% { clip-path: inset(0% 0% 0% 0% round 0px); filter: blur(0px); opacity: 1; }
@@ -192,6 +192,7 @@ body {
   100% { transform: scale(1) translateY(0); }
 }
 
+.parallax-container,
 .art-parallax-container {
   animation: apple-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
   animation-timeline: view();
@@ -199,6 +200,7 @@ body {
   will-change: filter, clip-path, opacity;
 }
 
+.parallax-container img,
 .art-parallax-container img {
   animation: apple-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
   animation-timeline: view();
@@ -217,6 +219,7 @@ body {
   }
 }
 
+.parallax-text,
 .art-parallax-text {
   animation: apple-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
   animation-timeline: view();

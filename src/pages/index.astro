@@ -38,8 +38,8 @@ const paintings = [
 <PageLayout title={locale === "en" ? "Art" : l.siteTitle} activeSection="home" locale={locale}>
   <div slot="content">
     <!-- HOME -->
-    <section id="home" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen hero-parallax">
-      <div class="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8">
+    <section id="home" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64 hero-parallax">
+      <div class="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-8 parallax-text">
         <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">{l.artTag}</span>
         <div class="space-y-0">
           <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[9rem] leading-[0.85] text-neutral-900">
@@ -62,16 +62,16 @@ const paintings = [
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
+    <section id="about" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
-        <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.aboutTag}</span>
+        <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6 parallax-text">{l.aboutTag}</span>
         <div class="flex flex-col md:flex-row gap-10 md:gap-12 lg:gap-16">
           <div class="w-full md:w-[45%]">
-            <div class="aspect-[3/4] bg-neutral-200 border border-black/10 flex items-center justify-center overflow-hidden rounded">
-              <img src="/media/exhibitions/luna-1.jpg" alt="Anna Dauyl Rockswell" class="w-full h-full object-cover" loading="lazy" />
+            <div class="relative overflow-hidden group flex items-center justify-center bg-transparent parallax-container aspect-[3/4] border border-black/10 rounded">
+              <img src="/media/exhibitions/luna-1.jpg" alt="Anna Dauyl Rockswell" class="w-full h-full max-h-[80vh] object-cover" loading="lazy" />
             </div>
           </div>
-          <div class="w-full md:w-[45%] md:ml-auto flex flex-col justify-center">
+          <div class="w-full md:w-[45%] md:ml-auto flex flex-col justify-center parallax-text">
             <div class="flex items-center gap-4 mb-6 md:mb-8">
               <div class="h-px flex-1 bg-black/10" />
               <span class="font-mono text-[10px] tracking-widest text-[#111111]/40">{l.biography}</span>
@@ -116,8 +116,8 @@ const paintings = [
     </section>
 
     <!-- ART -->
-    <section id="art" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
-      <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
+    <section id="art" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64">
+      <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 parallax-text">
         <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(ARTWORK)</span>
         <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-4">
           Paintings
@@ -134,11 +134,11 @@ const paintings = [
         <div class="border-b border-neutral-900/20 my-32 md:my-64">
           <div class="flex flex-col md:flex-row">
             <div class={`w-full md:w-2/3 ${i % 2 === 1 ? 'md:order-2' : ''}`}>
-              <div class="relative overflow-hidden group flex items-center justify-center bg-transparent art-parallax-container">
+              <div class="relative overflow-hidden group flex items-center justify-center bg-transparent parallax-container">
                 <img src={p.image} alt={p.title} class={imageClass} loading="lazy" />
               </div>
             </div>
-            <div class={`w-full md:w-1/3 ${i % 2 === 1 ? 'md:order-1' : ''} flex flex-col justify-between p-8 md:p-10 art-parallax-text`}>
+            <div class={`w-full md:w-1/3 ${i % 2 === 1 ? 'md:order-1' : ''} flex flex-col justify-between p-8 md:p-10 parallax-text`}>
               <div>
                 <div class="flex items-center justify-between mb-6">
                   <span class="font-mono text-[10px] tracking-widest text-neutral-400">{String(i + 1).padStart(3, '0')}</span>
@@ -156,10 +156,10 @@ const paintings = [
     </section>
 
     <!-- EXHIBITIONS -->
-    <section id="exhibitions" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
+    <section id="exhibitions" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
-        <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.exhibitionsTag}</span>
-        <h1 class="font-forum text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-[#111111] mb-16" set:html={l.exhibitionHistory}></h1>
+        <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6 parallax-text">{l.exhibitionsTag}</span>
+        <h1 class="font-forum text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-[#111111] mb-16 parallax-text" set:html={l.exhibitionHistory}></h1>
 
         <!-- Solo Exhibitions -->
         <div class="mb-16">
@@ -169,7 +169,7 @@ const paintings = [
           </div>
           <div class="space-y-6">
             {soloExhibitions.map((ex) => (
-              <div class="flex items-baseline gap-4 font-serif text-sm md:text-base text-[#111111]/70">
+              <div class="flex items-baseline gap-4 font-serif text-sm md:text-base text-[#111111]/70 parallax-text">
                 <span class="font-mono text-[10px] tracking-wider text-[#111111]/40 shrink-0 w-14">{ex.year}</span>
                 <span class="font-serif">—</span>
                 <span>
@@ -188,7 +188,7 @@ const paintings = [
           </div>
           <div class="space-y-6">
             {groupExhibitions.map((ex) => (
-              <div class="flex items-baseline gap-4 font-serif text-sm md:text-base text-[#111111]/70">
+              <div class="flex items-baseline gap-4 font-serif text-sm md:text-base text-[#111111]/70 parallax-text">
                 <span class="font-mono text-[10px] tracking-wider text-[#111111]/40 shrink-0 w-14">{ex.year}</span>
                 <span class="font-serif">—</span>
                 <span>
@@ -202,10 +202,10 @@ const paintings = [
     </section>
 
     <!-- PUBLICATIONS -->
-    <section id="publications" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
+    <section id="publications" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
-        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PUBLICATIONS &amp; WRITING)</span>
-        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
+        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6 parallax-text">(PUBLICATIONS &amp; WRITING)</span>
+        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16 parallax-text">
           Publications &amp; Writing
         </h1>
 
@@ -217,7 +217,7 @@ const paintings = [
           </div>
           <div class="space-y-6">
             {books.map((pub) => (
-              <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed">
+              <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed parallax-text">
                 {pub.author}, <em>{pub.title}</em>, {pub.publisher}, {pub.year}.
               </div>
             ))}
@@ -232,7 +232,7 @@ const paintings = [
           </div>
           <div class="space-y-6">
             {essays.map((pub) => (
-              <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed">
+              <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed parallax-text">
                 {pub.author}, &ldquo;{pub.title},&rdquo; <em>{pub.publisher}</em>, {pub.year}.
               </div>
             ))}
@@ -242,10 +242,10 @@ const paintings = [
     </section>
 
     <!-- RESEARCH -->
-    <section id="research" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
+    <section id="research" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
-        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(ACADEMIC RESEARCH)</span>
-        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
+        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6 parallax-text">(ACADEMIC RESEARCH)</span>
+        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16 parallax-text">
           Academic Research
         </h1>
 
@@ -257,7 +257,7 @@ const paintings = [
           </div>
           <div class="space-y-4">
             {researchPapers.map((paper) => (
-              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
+              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded parallax-text">
                 <div>
                   <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{paper.title}</h2>
                   <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{paper.journal}</span>
@@ -276,7 +276,7 @@ const paintings = [
           </div>
           <div class="space-y-4">
             {grantsAndFellowships.map((grant) => (
-              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
+              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded parallax-text">
                 <div>
                   <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{grant.title}</h2>
                   <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{grant.description}</span>
@@ -295,7 +295,7 @@ const paintings = [
           </div>
           <div class="space-y-4">
             {residencies.map((res) => (
-              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
+              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded parallax-text">
                 <div>
                   <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{res.title}</h2>
                   <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{res.location}</span>
@@ -309,15 +309,15 @@ const paintings = [
     </section>
 
     <!-- PRESS -->
-    <section id="press" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
+    <section id="press" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
-        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PRESS)</span>
-        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
+        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6 parallax-text">(PRESS)</span>
+        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16 parallax-text">
           Press
         </h1>
         <div class="space-y-8">
           {pressItems.map((item) => (
-            <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed border-b border-black/10 pb-6 last:border-b-0">
+            <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed border-b border-black/10 pb-6 last:border-b-0 parallax-text">
               {item.author}, &ldquo;{item.title},&rdquo; <em>{item.outlet}</em>, {item.date}.
             </div>
           ))}
@@ -326,14 +326,14 @@ const paintings = [
     </section>
 
     <!-- CONTACTS -->
-    <section id="contacts" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
+    <section id="contacts" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen my-32 md:my-64">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
-        <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.contactTag}</span>
-        <h1 class="font-forum text-4xl md:text-6xl lg:text-[9rem] leading-[0.9] text-[#111111] mb-10 md:mb-16">{l.contactHeading}</h1>
+        <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6 parallax-text">{l.contactTag}</span>
+        <h1 class="font-forum text-4xl md:text-6xl lg:text-[9rem] leading-[0.9] text-[#111111] mb-10 md:mb-16 parallax-text">{l.contactHeading}</h1>
 
         <div class="flex flex-col md:flex-row gap-12 md:gap-16 lg:gap-24">
           <!-- Left Column: Info -->
-          <div class="w-full md:w-[35%] space-y-8">
+          <div class="w-full md:w-[35%] space-y-8 parallax-text">
             <div>
               <span class="font-sans text-[9px] tracking-widest text-[#111111]/50 block mb-2">{l.email}</span>
               <a href="mailto:contact@annadauylrockswell.com" class="font-serif text-base md:text-lg text-[#111111] underline underline-offset-4 decoration-black/30 hover:decoration-black transition-all">
@@ -351,7 +351,7 @@ const paintings = [
           </div>
 
           <!-- Right Column: Form -->
-          <div class="w-full md:w-[55%]">
+          <div class="w-full md:w-[55%] parallax-text">
             <form class="space-y-0" onsubmit="event.preventDefault(); alert('Sent (demo)');">
               <div class="border-b-2 border-[#111111] py-4 md:py-5">
                 <span class="font-sans text-[10px] tracking-widest text-[#111111]/50 block mb-2">{l.nameLabel}</span>
