@@ -50,6 +50,11 @@ const menuItems: { key: string; href: string }[] = [
       (function () {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         document.documentElement.classList.add("motion-live");
+        var y = sessionStorage.getItem("lang-preserve-scroll");
+        if (y !== null) {
+          var top = parseInt(y, 10);
+          if (!Number.isNaN(top)) window.scrollTo(0, top);
+        }
       })();
     </script>
   </head>
@@ -57,8 +62,8 @@ const menuItems: { key: string; href: string }[] = [
     <!-- Film grain overlay -->
     <div class="grain-overlay" />
 
-    <!-- Language switch transition -->
-    <div id="lang-transition-overlay" class="lang-transition-overlay" aria-hidden="true" aria-live="polite">
+    <!-- Language switch transition (persists across ClientRouter swaps) -->
+    <div id="lang-transition-overlay" class="lang-transition-overlay" transition:persist="lang-overlay" aria-hidden="true" aria-live="polite">
       <div class="lang-transition-overlay__panel">
         <span class="lang-transition-overlay__eyebrow font-mono text-[10px] tracking-[0.35em] uppercase text-[#555]/70">Language</span>
         <p class="lang-transition-overlay__code font-forum text-6xl md:text-7xl text-[#111] leading-none" data-lang-code>EN</p>
@@ -69,20 +74,95 @@ const menuItems: { key: string; href: string }[] = [
       </div>
     </div>
 
+    <script is:inline>
+      (function () {
+        var LANG = {
+          en: { code: "EN", name: "English" },
+          kr: { code: "KR", name: "한국어" },
+          kk: { code: "KK", name: "Қазақша" },
+          zh: { code: "简", name: "中文" },
+          ru: { code: "RU", name: "Русский" },
+        };
+        var switching = false;
+
+        function currentLang() {
+          var seg = location.pathname.split("/")[1];
+          var langs = ["kr", "kk", "zh", "ru"];
+          return langs.indexOf(seg) >= 0 ? seg : "en";
+        }
+
+        function showOverlay(lang) {
+          var overlay = document.getElementById("lang-transition-overlay");
+          var display = LANG[lang] || { code: lang.toUpperCase(), name: lang };
+          var codeEl = overlay && overlay.querySelector("[data-lang-code]");
+          var nameEl = overlay && overlay.querySelector("[data-lang-name]");
+          var barFill = overlay && overlay.querySelector(".lang-transition-overlay__bar-fill");
+          if (codeEl) codeEl.textContent = display.code;
+          if (nameEl) nameEl.textContent = display.name;
+          if (barFill) {
+            barFill.style.animation = "none";
+            void barFill.offsetWidth;
+            barFill.style.animation = "";
+          }
+          if (overlay) {
+            overlay.classList.add("is-active");
+            overlay.setAttribute("aria-hidden", "false");
+          }
+          document.documentElement.classList.add("lang-switching");
+          document.body.classList.add("lang-switching");
+        }
+
+        window.__showLangOverlay = showOverlay;
+
+        document.addEventListener(
+          "click",
+          function (e) {
+            var btn = e.target && e.target.closest ? e.target.closest(".lang-btn") : null;
+            if (!btn) return;
+            var lang = btn.getAttribute("data-lang");
+            if (!lang || lang === currentLang()) {
+              e.preventDefault();
+              return;
+            }
+            if (switching) {
+              e.preventDefault();
+              return;
+            }
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            switching = true;
+
+            var href = lang === "en" ? "/" : "/" + lang;
+            sessionStorage.setItem("lang-preserve-scroll", String(window.scrollY));
+            sessionStorage.setItem("lang-switching", "1");
+            showOverlay(lang);
+
+            setTimeout(function () {
+              window.location.assign(href);
+            }, 1500);
+          },
+          true
+        );
+      })();
+    </script>
+
     <!-- 5-Language Toggle — desktop (hidden on mobile) -->
-    <div id="lang-toggle-desktop" class="fixed top-6 right-6 z-[9999] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden hidden lg:flex">
+    <div id="lang-toggle-desktop" transition:persist="lang-toggle-desktop" class="fixed top-6 right-6 z-[10060] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden hidden lg:flex">
       {langList.map((lang) => (
-        <a
-          href={lang === 'en' ? '/' : `/${lang}`}
-          class={`lang-btn group relative px-2.5 py-1.5 block transition-colors duration-150 ${
+        <button
+          type="button"
+          class={`lang-btn group relative px-2.5 py-1.5 block transition-colors duration-150 cursor-pointer ${
             isActiveLang(lang) ? 'bg-[#111111] text-white' : 'text-[#555] hover:bg-[#111111] hover:text-white'
           }`}
           data-lang={lang}
+          aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
+          aria-label={`Switch to ${langLabels[lang]}`}
         >
           <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">
             {langLabels[lang]}
           </span>
-        </a>
+        </button>
       ))}
     </div>
 
@@ -93,15 +173,17 @@ const menuItems: { key: string; href: string }[] = [
       </a>
       <div class="flex items-center gap-3">
         <!-- Mobile language pills -->
-        <div id="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 backdrop-blur-sm rounded overflow-hidden">
+        <div id="lang-toggle-mobile" transition:persist="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 backdrop-blur-sm rounded overflow-hidden">
           {langList.map((lang) => (
-            <a
-              href={lang === 'en' ? '/' : `/${lang}`}
-              class={`lang-btn px-2 py-1.5 transition-colors ${
+            <button
+              type="button"
+              class={`lang-btn px-2 py-1.5 transition-colors cursor-pointer ${
                 isActiveLang(lang) ? 'bg-[#111] text-white' : 'text-[#555] hover:bg-[#111] hover:text-white'
               }`}
               data-lang={lang}
-            >{langLabels[lang]}</a>
+              aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
+              aria-label={`Switch to ${langLabels[lang]}`}
+            >{langLabels[lang]}</button>
           ))}
         </div>
         <!-- Hamburger -->
@@ -209,7 +291,7 @@ const menuItems: { key: string; href: string }[] = [
 <script>
   import { initMotion } from "../scripts/motion/init";
   import { initLangSwitch, restoreLangScroll, syncLangHrefs, syncLangToggle } from "../scripts/lang-switch";
-  import { updateScrollSpy, resolveActiveSection } from "../scripts/motion/scroll-spy";
+  import { updateScrollSpy } from "../scripts/motion/scroll-spy";
 
   function initDrawer() {
     const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -270,8 +352,10 @@ const menuItems: { key: string; href: string }[] = [
 
   document.addEventListener("lang-scroll-restored", () => {
     updateScrollSpy();
-    const section = resolveActiveSection();
-    history.replaceState(null, "", `${window.location.pathname}#${section}`);
+  });
+
+  document.addEventListener("astro:after-swap", () => {
+    restoreLangScroll();
   });
 
   document.addEventListener("DOMContentLoaded", bootPageScripts);

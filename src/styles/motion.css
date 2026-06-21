@@ -527,6 +527,12 @@ html {
   }
 }
 
+.lang-btn {
+  border: none;
+  background: transparent;
+  font: inherit;
+}
+
 body.lang-switching {
   overflow: hidden;
 }

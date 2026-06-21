@@ -88,11 +88,18 @@ export function initAnchorNav(): void {
   });
 
   const hash = window.location.hash.replace("#", "");
-  if (hash && document.getElementById(hash) && sessionStorage.getItem("lang-preserve-scroll") === null) {
+  if (hash && document.getElementById(hash)) {
     setActiveNav(hash);
-    requestAnimationFrame(() => {
-      document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });
-      updateScrollSpy();
-    });
+    updateScrollSpy();
+
+    if (
+      sessionStorage.getItem("lang-preserve-scroll") === null &&
+      sessionStorage.getItem("lang-switching") === null
+    ) {
+      requestAnimationFrame(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });
+        updateScrollSpy();
+      });
+    }
   }
 }
