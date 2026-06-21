@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 /* Forum for hero titles, Cormorant Garamond for serif body, Inter for UI */
-@theme {
+:root {
   --font-forum: "Forum", serif;
   --font-serif: "Cormorant Garamond", "Georgia", serif;
   --font-sans: "Inter", "Helvetica", "Arial", sans-serif;
@@ -155,3 +155,45 @@ html {
 html::-webkit-scrollbar { width: 4px; }
 html::-webkit-scrollbar-track { background: transparent; }
 html::-webkit-scrollbar-thumb { background: #111111; }
+
+/* Mobile-specific improvements */
+@media (max-width: 1023px) {
+  /* Ensure touch targets are at least 44x44px */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Smooth scrolling on mobile */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent text size adjustment on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Improve tap highlight */
+  * {
+    -webkit-tap-highlight-color: rgba(17, 17, 17, 0.1);
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .interactive-image-container:hover img {
+    transform: scale(1);
+  }
+  
+  .interactive-image-container:hover::after {
+    opacity: 0;
+    transform: none;
+  }
+}

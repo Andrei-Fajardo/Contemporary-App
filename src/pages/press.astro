@@ -3,17 +3,17 @@ import PageLayout from '../layouts/PageLayout.astro';
 import { pressItems } from '../data/content';
 ---
 
-<PageLayout title="Press" activeSection="press">
+<PageLayout title="Press" activeSection="press" locale="en">
   <div slot="content">
-    <div class="px-8 py-16 md:py-24">
+    <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
       <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PRESS)</span>
-      <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
+      <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-12 md:mb-16">
         Press
       </h1>
 
-      <div class="space-y-4">
+      <div class="space-y-3 md:space-y-4">
         {pressItems.map((item) => (
-          <div class="border border-neutral-900/20 p-6">
+          <div class="border border-neutral-900/20 p-5 md:p-6 rounded">
             <span class="font-mono text-[9px] tracking-widest text-neutral-500 uppercase block mb-2">{item.outlet}</span>
             <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{item.title}</h2>
             <span class="font-mono text-[10px] text-neutral-500 mt-2 block">{item.date}</span>

@@ -49,7 +49,7 @@ const menuItems: { key: string; href: string }[] = [
     <div class="grain-overlay" />
 
     <!-- 5-Language Toggle — desktop (hidden on mobile) -->
-    <div id="lang-toggle-desktop" class="fixed top-6 right-6 z-[9999] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md hidden lg:flex" transition:persist="lang-toggle-desktop">
+    <div id="lang-toggle-desktop" class="fixed top-6 right-6 z-[9999] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden hidden lg:flex">
       {langList.map((lang) => (
         <a
           href={lang === 'en' ? '/' : `/${lang}`}
@@ -66,13 +66,13 @@ const menuItems: { key: string; href: string }[] = [
     </div>
 
     <!-- Mobile header bar (<1024px) -->
-    <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-[#F0EEE9]/95 backdrop-blur-md border-b border-black/10 flex items-center justify-between px-4" transition:persist="mobile-header">
-      <a href={l.logoHref} class="font-forum text-lg tracking-wide text-[#111]" transition:persist="mobile-header-brand">
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-[#F0EEE9]/95 backdrop-blur-md border-b border-black/10 flex items-center justify-between px-5">
+      <a href={l.logoHref} class="font-forum text-xl tracking-wide text-[#111] hover:opacity-70 transition-opacity">
         Anna Dauyl Rockswell
       </a>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
         <!-- Mobile language pills -->
-        <div id="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 rounded overflow-hidden">
+        <div id="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 backdrop-blur-sm rounded overflow-hidden">
           {langList.map((lang) => (
             <a
               href={lang === 'en' ? '/' : `/${lang}`}
@@ -86,13 +86,13 @@ const menuItems: { key: string; href: string }[] = [
         <!-- Hamburger -->
         <button
           id="hamburger-btn"
-          class="w-10 h-10 flex items-center justify-center focus:outline-none"
+          class="w-11 h-11 flex items-center justify-center focus:outline-none active:scale-95 transition-transform"
           aria-label="Toggle menu"
           aria-expanded="false"
         >
-          <svg class="w-5 h-5 text-[#111]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
-            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+          <svg class="w-6 h-6 text-[#111]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -104,9 +104,9 @@ const menuItems: { key: string; href: string }[] = [
     <!-- Mobile slide-out drawer (<1024px) -->
     <aside
       id="mobile-drawer"
-      class="lg:hidden fixed top-0 right-0 bottom-0 w-[280px] z-50 bg-[#111] border-l border-white/10 translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
+      class="lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] z-50 bg-[#111] border-l border-white/10 translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
     >
-      <nav class="flex-1 pt-20 px-8 overflow-y-auto">
+      <nav class="flex-1 pt-24 px-6 overflow-y-auto">
         <ul class="space-y-1">
           {menuItems.map((item) => {
             const isActive = activeSection === item.key;
@@ -115,10 +115,10 @@ const menuItems: { key: string; href: string }[] = [
               <li>
                 <a
                   href={item.href}
-                  class={`block py-3.5 px-4 text-sm uppercase tracking-[0.2em] font-light rounded transition-all duration-200 ${
+                  class={`block py-4 px-5 text-sm uppercase tracking-[0.2em] font-medium rounded-md transition-all duration-200 ${
                     isActive
                       ? 'bg-white/10 text-white'
-                      : 'text-[#666] hover:bg-white/5 hover:text-white'
+                      : 'text-[#888] hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   {l.nav[navKey]}
@@ -128,14 +128,14 @@ const menuItems: { key: string; href: string }[] = [
           })}
         </ul>
       </nav>
-      <div class="px-8 py-8 border-t border-white/10">
+      <div class="px-6 py-10 border-t border-white/10">
         <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-3">{l.basedIn}</span>
-        <span class="font-sans text-[11px] text-[#666] font-medium tracking-wide">{l.location}</span>
+        <span class="font-sans text-xs text-[#888] font-medium tracking-wide">{l.location}</span>
       </div>
     </aside>
 
     <!-- Desktop logo button -->
-    <div class="fixed top-0 left-[18vw] z-50 group hidden lg:block" transition:persist="desktop-logo">
+    <div class="fixed top-0 left-[18vw] z-50 group hidden lg:block">
       <a href={l.logoHref} class="w-12 h-12 bg-[#111111] flex items-center justify-center hover:bg-[#333333] transition-colors duration-200 cursor-pointer">
         <span class="text-white text-[11px] font-forum tracking-widest transition-transform duration-300 ease-out group-hover:translate-x-px">{l.logo}</span>
       </a>
@@ -145,7 +145,7 @@ const menuItems: { key: string; href: string }[] = [
     <div class="flex min-h-screen">
       <Sidebar activeSection={activeSection} locale={locale} />
 
-      <main class="lg:ml-[18vw] lg:w-[82vw] w-full min-h-screen bg-[#F0EEE9] pt-14 lg:pt-0">
+      <main class="lg:ml-[18vw] lg:w-[82vw] w-full min-h-screen bg-[#F0EEE9] pt-16 lg:pt-0">
         <slot name="content" />
         <footer class="px-6 sm:px-8 pt-16 pb-24">
           <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
@@ -197,13 +197,15 @@ const menuItems: { key: string; href: string }[] = [
     const hamClose = hamburgerBtn?.querySelector(".ham-close");
     let isOpen = false;
 
-    const toggleDrawer = () => {
-      isOpen = !isOpen;
+    const toggleDrawer = (forceClose = false) => {
+      if (forceClose && !isOpen) return;
+      isOpen = forceClose ? false : !isOpen;
+      
       if (isOpen) {
         drawer?.classList.remove("translate-x-full");
         drawer?.classList.add("translate-x-0");
         backdrop?.classList.remove("bg-black/0", "pointer-events-none");
-        backdrop?.classList.add("bg-black/60");
+        backdrop?.classList.add("bg-black/60", "pointer-events-auto");
         hamOpen?.classList.add("hidden");
         hamClose?.classList.remove("hidden");
         hamburgerBtn?.setAttribute("aria-expanded", "true");
@@ -211,7 +213,7 @@ const menuItems: { key: string; href: string }[] = [
       } else {
         drawer?.classList.remove("translate-x-0");
         drawer?.classList.add("translate-x-full");
-        backdrop?.classList.remove("bg-black/60");
+        backdrop?.classList.remove("bg-black/60", "pointer-events-auto");
         backdrop?.classList.add("bg-black/0", "pointer-events-none");
         hamOpen?.classList.remove("hidden");
         hamClose?.classList.add("hidden");
@@ -220,18 +222,20 @@ const menuItems: { key: string; href: string }[] = [
       }
     };
 
-    hamburgerBtn?.addEventListener("click", toggleDrawer);
-    backdrop?.addEventListener("click", toggleDrawer);
+    // Close drawer on navigation link click
+    const navLinks = drawer?.querySelectorAll("a");
+    navLinks?.forEach(link => {
+      link.addEventListener("click", () => {
+        setTimeout(() => toggleDrawer(true), 150);
+      });
+    });
+
+    hamburgerBtn?.addEventListener("click", () => toggleDrawer());
+    backdrop?.addEventListener("click", () => toggleDrawer());
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isOpen) toggleDrawer();
     });
   }
-
-  document.addEventListener("DOMContentLoaded", initDrawer);
-  document.addEventListener("astro:page-load", () => {
-    initDrawer();
-    syncLangToggle();
-  });
 
   function syncLangToggle() {
     const path = window.location.pathname;
@@ -243,11 +247,22 @@ const menuItems: { key: string; href: string }[] = [
       const lang = btn.getAttribute("data-lang");
       const isMatch = lang === active;
       btn.classList.toggle("bg-[#111111]", isMatch);
-      btn.classList.toggle("text-white", isMatch);
       btn.classList.toggle("bg-[#111]", isMatch);
-      if (!isMatch) {
-        btn.classList.remove("bg-[#111111]", "bg-[#111]", "text-white");
-      }
+      btn.classList.toggle("text-white", isMatch);
+      btn.classList.toggle("text-[#555]", !isMatch);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initDrawer();
+    syncLangToggle();
+  });
+  
+  document.addEventListener("astro:page-load", () => {
+    initDrawer();
+    syncLangToggle();
+  });
+</script>
     });
   }
 </script>
