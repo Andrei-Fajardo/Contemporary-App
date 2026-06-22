@@ -32,18 +32,18 @@ const paintings = [
 ---
 
 <section id="art" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide mb-10 md:mb-14">
+  <div class="section-shell section-shell--wide mb-12 md:mb-16 lg:mb-20">
     <p class="scroll-reveal section-eyebrow">{l.artTag}</p>
-    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-[#111] mb-4">
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-ink mb-6">
       {l.nav.art}
     </h2>
-    <p class="scroll-reveal content-prose italic text-[#111]/60 max-w-[65ch]">{l.heroDesc}</p>
+    <p class="scroll-reveal content-prose italic text-ink-60 max-w-[65ch]">{l.heroDesc}</p>
   </div>
 
   {paintings.map((p, i) => (
     <article class="art-piece depth-target" data-popup-title={p.title}>
-      <div class="section-shell section-shell--wide py-8 md:py-12 lg:py-14">
-        <div class="grid md:grid-cols-2 gap-8 lg:gap-14 xl:gap-20 items-center">
+      <div class="section-shell section-shell--wide py-10 md:py-14 lg:py-16">
+        <div class={`grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-24 items-center`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
             <MediaPopup
               imageSrc={p.image}
@@ -51,16 +51,16 @@ const paintings = [
               title={p.title}
               subtitle={`${p.medium} // ${p.year}`}
               aspectRatio={p.contain ? "auto" : "3 / 2"}
-              parallaxSpeed={0}
+              parallaxSpeed={0.18}
               contain={p.contain}
               imageClass={p.contain ? "w-full h-auto max-h-[72vh] object-contain mx-auto" : "w-full h-[50vh] md:h-[60vh] object-cover"}
             />
           </div>
-          <div class={`scroll-reveal min-w-0 flex flex-col gap-5 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
+          <div class={`scroll-reveal min-w-0 flex flex-col gap-6 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
             <p class="section-eyebrow mb-0">{String(i + 1).padStart(2, '0')} · {p.year}</p>
-            <h3 class="font-forum text-3xl md:text-4xl leading-[1.05] text-[#111]">{p.title}</h3>
-            <p class="content-prose--sans text-[#111]/55">{p.medium}</p>
-            <p class="content-prose text-[#111]/70 max-w-[58ch]">{p.description}</p>
+            <h3 class="font-forum text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.05] text-ink">{p.title}</h3>
+            <p class="content-prose--sans text-ink-55">{p.medium}</p>
+            <p class="content-prose text-ink-70 max-w-[58ch]">{p.description}</p>
           </div>
         </div>
       </div>

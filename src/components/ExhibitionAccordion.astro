@@ -10,8 +10,8 @@ interface Props {
 const { entries, expandLabel = 'View materials' } = Astro.props;
 ---
 
-<div class="exhibition-accordion space-y-2">
-  {entries.map((entry, i) => (
+<div class="exhibition-accordion editorial-divider-list">
+  {entries.map((entry) => (
     <details class="exhibition-accordion__item scroll-reveal group">
       <summary class="exhibition-accordion__summary">
         <span class="exhibition-accordion__year">{entry.year}</span>
@@ -24,19 +24,19 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
       </summary>
       <div class="exhibition-accordion__panel">
         {entry.note && (
-          <p class="content-prose text-[#111]/60 mb-4">{entry.note}</p>
+          <p class="content-prose text-ink-60 mb-6">{entry.note}</p>
         )}
         {entry.images.length > 0 && (
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             {entry.images.map((src) => (
-              <div class="overflow-clip rounded-sm">
+              <div class="overflow-clip border border-subtle">
                 <LazyImage
                   src={src}
                   alt={entry.title}
                   aspectRatio="4 / 3"
                   parallaxSpeed={0}
                   depthTarget={false}
-                  class="grayscale hover:grayscale-0 transition-[filter] duration-500"
+                  class="grayscale hover:grayscale-0 transition-[filter] duration-700"
                 />
               </div>
             ))}
@@ -50,9 +50,7 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 
 <style>
   .exhibition-accordion__item {
-    border: 1px solid rgba(17, 17, 17, 0.1);
-    border-radius: 0.25rem;
-    background: rgba(255, 255, 255, 0.35);
+    background: transparent;
     overflow: clip;
   }
 
@@ -60,11 +58,16 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     display: grid;
     grid-template-columns: 4.5rem 1fr auto;
     grid-template-rows: auto auto;
-    gap: 0.15rem 1rem;
+    gap: 0.2rem 1.25rem;
     align-items: center;
-    padding: 1rem 1.25rem;
+    padding: 1.25rem 0;
     cursor: pointer;
     list-style: none;
+    transition: opacity 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover {
+    opacity: 0.72;
   }
 
   .exhibition-accordion__summary::-webkit-details-marker {
@@ -73,16 +76,16 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 
   .exhibition-accordion__year {
     grid-row: 1 / 3;
-    font-family: ui-monospace, monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.08em;
-    color: rgba(17, 17, 17, 0.45);
+    color: var(--ink-45);
   }
 
   .exhibition-accordion__title {
     font-family: var(--font-forum);
     font-size: clamp(1.125rem, 1.5vw, 1.375rem);
-    color: #111;
+    color: var(--ink);
     line-height: 1.2;
   }
 
@@ -90,7 +93,7 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     grid-column: 2;
     font-family: var(--font-serif);
     font-size: clamp(0.9375rem, 1vw, 1.0625rem);
-    color: rgba(17, 17, 17, 0.55);
+    color: var(--ink-55);
     font-style: italic;
   }
 
@@ -100,8 +103,8 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-family: var(--font-forum);
     font-size: 1.25rem;
     line-height: 1;
-    color: rgba(17, 17, 17, 0.35);
-    transition: transform 0.25s ease;
+    color: var(--ink-35);
+    transition: transform 0.25s var(--ease-editorial);
   }
 
   .exhibition-accordion__item[open] .exhibition-accordion__chevron {
@@ -109,17 +112,16 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
   }
 
   .exhibition-accordion__panel {
-    padding: 0 1.25rem 1.25rem;
-    border-top: 1px solid rgba(17, 17, 17, 0.06);
+    padding: 0 0 1.5rem 4.5rem;
   }
 
   .exhibition-accordion__kind {
     display: inline-block;
-    margin-top: 0.75rem;
+    margin-top: 1rem;
     font-size: 0.625rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(17, 17, 17, 0.4);
+    color: var(--ink-45);
   }
 
   .exhibition-accordion__badge {
@@ -128,9 +130,9 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-size: 0.5625rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(17, 17, 17, 0.55);
-    border: 1px solid rgba(17, 17, 17, 0.15);
+    color: var(--ink-55);
+    border: 1px solid var(--border-subtle);
     padding: 0.15rem 0.45rem;
-    border-radius: 0.15rem;
+    border-radius: var(--radius-lang-btn);
   }
 </style>

@@ -13,31 +13,31 @@ const l = t[locale];
 <section id="about" class="scroll-section section-gap">
   <div class="section-shell section-shell--wide">
     <p class="scroll-reveal section-eyebrow">{l.aboutTag}</p>
-    <div class="grid md:grid-cols-2 gap-10 md:gap-14 lg:gap-20 items-start">
-      <div class="scroll-reveal">
+    <div class="grid md:grid-cols-[0.92fr_1.08fr] gap-12 md:gap-16 lg:gap-24 items-start">
+      <div class="scroll-reveal md:pt-6">
         <LazyImage
           src="/media/the-fish.png"
           alt="The Fish — selected painting"
           aspectRatio="3 / 4"
-          parallaxSpeed={0}
+          parallaxSpeed={0.2}
           depthTarget={false}
           contain={true}
           class="w-full h-auto max-h-[70vh] object-contain"
         />
       </div>
-      <div class="scroll-reveal flex flex-col justify-center gap-8">
+      <div class="scroll-reveal flex flex-col justify-center gap-10 md:gap-12">
         <div>
-          <h2 class="font-forum text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-[#111] mb-6">
+          <h2 class="font-forum text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-ink mb-8">
             NANA (Anna Dauyl Rockswell)
           </h2>
-          <p class="content-prose--sans text-[#111]/55 mb-6">{l.intro}</p>
-          <div class="content-prose space-y-5">
+          <p class="content-prose--sans text-ink-55 mb-8">{l.intro}</p>
+          <div class="content-prose space-y-6">
             <p>{l.bio}</p>
           </div>
         </div>
-        <div>
-          <p class="section-eyebrow mb-4">{l.artistStatement}</p>
-          <p class="content-prose italic text-[#111]/75">
+        <div class="pt-4 border-t border-subtle">
+          <p class="section-eyebrow mb-5">{l.artistStatement}</p>
+          <p class="content-prose italic text-ink-70 max-w-[58ch]">
             My work occupies the threshold between the visceral and the conceptual — where the body becomes a site of memory, loss, and transformation. Drawing from Jungian archetypes and the raw materiality of dark expressionism, I explore how feminine experience is inscribed, erased, and reinscribed across personal and collective histories.
           </p>
         </div>

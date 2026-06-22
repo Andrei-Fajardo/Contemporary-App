@@ -1,20 +1,29 @@
 ---
+import Hero from './Hero.astro';
 import AboutSection from './sections/AboutSection.astro';
 import ArtSection from './sections/ArtSection.astro';
 import ExhibitionsSection from './sections/ExhibitionsSection.astro';
 import MagazinesSection from './sections/MagazinesSection.astro';
 import PressSection from './sections/PressSection.astro';
 import ContactsSection from './sections/ContactsSection.astro';
-import type { LocaleKey } from '../data/translations';
+import { t, type LocaleKey } from '../data/translations';
 
 interface Props {
   locale: LocaleKey;
 }
 
 const { locale } = Astro.props;
+const l = t[locale];
 ---
 
 <div class="scroll-page">
+  <Hero
+    artTag={l.artTag}
+    selected={l.selected}
+    works={l.works}
+    intro={l.intro}
+    heroDesc={l.heroDesc}
+  />
   <AboutSection locale={locale} />
   <ArtSection locale={locale} />
   <ExhibitionsSection locale={locale} />

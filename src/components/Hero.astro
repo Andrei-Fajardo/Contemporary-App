@@ -24,27 +24,27 @@ const {
 } = Astro.props;
 ---
 
-<section id="home" class="hero-section scroll-section border-b border-neutral-900/20">
+<section id="home" class="hero-section scroll-section">
   <div class="hero-sticky">
-    <div class="hero-parallax-layer space-y-0">
-      <span class="scroll-reveal font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">{artTag}</span>
-      <div class="space-y-0">
-        <h1 class="scroll-reveal font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[9rem] leading-[0.85] text-neutral-900">
+    <div class="hero-parallax-layer">
+      <p class="scroll-reveal section-eyebrow mb-0">{artTag}</p>
+      <div class="mt-6 md:mt-8">
+        <h1 class="scroll-reveal font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[9rem] leading-[0.85] text-ink">
           {selected}
         </h1>
-        <div class="scroll-reveal flex items-center gap-4 md:gap-8 my-2">
-          <div class="h-px flex-1 bg-neutral-900/20" />
-          <span class="font-mono text-[10px] tracking-widest text-neutral-500">[001]</span>
+        <div class="scroll-reveal flex items-center gap-4 md:gap-8 my-3 md:my-4">
+          <div class="h-px flex-1 bg-[var(--border-section)]" />
+          <span class="font-mono text-[10px] tracking-widest text-ink-45">[001]</span>
         </div>
-        <div class="scroll-reveal flex">
-          <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[9rem] leading-[0.85] text-neutral-900">
+        <div class="scroll-reveal flex flex-wrap items-baseline gap-x-2 md:gap-x-4">
+          <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[9rem] leading-[0.85] text-ink">
             {works}
           </h1>
-          <span class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[9rem] leading-[0.85] text-outline ml-2 md:ml-4">{year}</span>
+          <span class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[9rem] leading-[0.85] text-outline">{year}</span>
         </div>
       </div>
-      <p class="scroll-reveal content-prose italic text-neutral-800 mt-8 md:mt-10 max-w-[62ch]">{intro}</p>
-      <p class="scroll-reveal content-prose--mono uppercase tracking-widest text-neutral-600 mt-4 md:mt-6 max-w-[58ch]">{heroDesc}</p>
+      <p class="scroll-reveal content-prose italic mt-10 md:mt-12 max-w-[62ch]">{intro}</p>
+      <p class="scroll-reveal content-prose--mono uppercase tracking-widest mt-5 md:mt-6 max-w-[58ch]">{heroDesc}</p>
     </div>
 
     <div class="hero-media-frame scroll-reveal">
@@ -52,7 +52,7 @@ const {
         src={heroImage}
         alt={heroImageAlt}
         aspectRatio="4 / 5"
-        parallaxSpeed={0.55}
+        parallaxSpeed={0.35}
         depthTarget={false}
         eager={true}
         class="w-full h-full object-cover"

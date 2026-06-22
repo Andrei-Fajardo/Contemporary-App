@@ -12,41 +12,34 @@ const l = t[locale];
 ---
 
 <section id="magazines" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide py-12 md:py-20 lg:py-24">
+  <div class="section-shell section-shell--wide">
     <p class="scroll-reveal section-eyebrow">{l.magazinesTag}</p>
-    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-[#111] mb-10 md:mb-14">
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-ink mb-12 md:mb-16">
       {l.magazineHeading}
     </h2>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+    <div class="editorial-magazine-grid">
       {magazines.map((mag) => (
-        <article class="scroll-reveal magazine-card">
+        <article class="scroll-reveal magazine-editorial-item">
           {mag.image && (
-            <div class="magazine-card__image overflow-clip mb-4">
+            <div class="magazine-editorial-item__image">
               <LazyImage
                 src={mag.image}
                 alt={mag.title}
                 aspectRatio="3 / 4"
                 parallaxSpeed={0}
                 depthTarget={false}
-                class="grayscale hover:grayscale-0 transition-[filter] duration-500"
+                class="grayscale hover:grayscale-0 transition-[filter] duration-700 view-parallax-media"
               />
             </div>
           )}
-          <p class="section-eyebrow mb-2">{mag.issue}</p>
-          <h3 class="font-forum text-xl md:text-2xl text-[#111]">{mag.title}</h3>
-          <p class="content-prose mt-2 text-[#111]/65">{mag.feature}</p>
+          <div>
+            <p class="section-eyebrow mb-3">{mag.issue}</p>
+            <h3 class="font-forum text-xl md:text-2xl text-ink leading-tight">{mag.title}</h3>
+            <p class="content-prose mt-3 text-ink-60">{mag.feature}</p>
+          </div>
         </article>
       ))}
     </div>
   </div>
 </section>
-
-<style>
-  .magazine-card {
-    padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(17, 17, 17, 0.08);
-    border-radius: 0.25rem;
-  }
-</style>
