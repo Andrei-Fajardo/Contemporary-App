@@ -90,7 +90,7 @@ if (!painting) {
 
           <!-- Title + Year row -->
           <div class="w-full flex justify-between items-baseline border-b border-neutral-900/10 pb-3 min-w-0">
-            <h1 class="font-serif italic text-3xl md:text-4xl text-neutral-900 tracking-tight leading-none truncate pr-4">
+            <h1 class="font-heading text-3xl md:text-4xl text-neutral-900 tracking-tight leading-none truncate pr-4">
               {painting.title}
             </h1>
             <span class="font-mono text-xs text-neutral-400 shrink-0 select-none">
@@ -106,7 +106,7 @@ if (!painting) {
           </div>
 
           <!-- Description paragraphs -->
-          <div class="font-sans text-sm text-neutral-600 leading-relaxed max-w-[55ch] pt-2 space-y-4">
+          <div class="font-body text-sm text-neutral-600 leading-relaxed max-w-[55ch] pt-2 space-y-4">
             {painting.paragraphs.map((para) => (
               <p>{para}</p>
             ))}

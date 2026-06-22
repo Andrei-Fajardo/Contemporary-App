@@ -1,13 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
 
-/* Forum for hero titles, Cormorant Garamond for serif body, Inter for UI */
+/* Editorial Sophistication — Playfair / Montserrat / Inter */
 :root {
-  --font-forum: "Forum", serif;
-  --font-serif: "Cormorant Garamond", "Georgia", serif;
-  --font-sans: "Inter", "Helvetica", "Arial", sans-serif;
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-subheading: "Montserrat", "Helvetica Neue", Helvetica, sans-serif;
+  --font-body: "Inter", "Helvetica", Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Legacy aliases */
+  --font-forum: var(--font-heading);
+  --font-serif: var(--font-body);
+  --font-sans: var(--font-subheading);
 
   /* color.canvas / color.ink — ux-guidelines.md */
   --canvas: #F0EEE9;
@@ -43,6 +48,7 @@ body {
   background-color: var(--canvas) !important;
   margin: 0;
   padding: 0;
+  font-family: var(--font-body);
 }
 html {
   margin: 0;
@@ -154,6 +160,10 @@ html {
 .border-section { border-color: var(--border-section); }
 .bg-canvas { background-color: var(--canvas); }
 
+.font-heading { font-family: var(--font-heading); }
+.font-subheading { font-family: var(--font-subheading); }
+.font-body { font-family: var(--font-body); }
+
 /* Staggered fade-in reveal */
 @keyframes stagger-in {
   0% { opacity: 0; transform: translateY(1.5rem); }
@@ -215,7 +225,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
 /* Body copy — larger; section titles / H1–H2 unchanged */
 .content-prose {
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   font-size: clamp(1.0625rem, 1.15vw + 0.65rem, 1.3125rem);
   line-height: 1.72;
   color: var(--ink-75);
@@ -230,7 +240,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .content-prose--sans {
-  font-family: var(--font-sans);
+  font-family: var(--font-subheading);
   font-size: clamp(1rem, 0.85vw + 0.7rem, 1.1875rem);
   line-height: 1.65;
   color: var(--ink-75);
@@ -243,7 +253,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .section-eyebrow {
-  font-family: var(--font-sans);
+  font-family: var(--font-subheading);
   font-size: clamp(0.5625rem, 0.45vw + 0.4rem, 0.6875rem);
   letter-spacing: 0.28em;
   text-transform: uppercase;
