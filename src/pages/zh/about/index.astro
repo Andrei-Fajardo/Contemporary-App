@@ -1,0 +1,58 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import { t } from '../../../data/translations';
+const l = t.zh;
+---
+
+<PageLayout title="关于" activeSection="about" locale="zh">
+  <div slot="content">
+    <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
+      <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.aboutTag}</span>
+      <div class="flex flex-col md:flex-row gap-10 md:gap-12 lg:gap-16">
+        <div class="w-full md:w-[45%]">
+          <div class="aspect-[3/4] bg-neutral-200 border border-black/10 flex items-center justify-center overflow-hidden rounded">
+            <img src="/media/exhibitions/luna-1.jpg" alt="Anna Dauyl Rockswell" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+        </div>
+        <div class="w-full md:w-[45%] md:ml-auto flex flex-col justify-center">
+          <div class="flex items-center gap-4 mb-6 md:mb-8">
+            <div class="h-px flex-1 bg-black/10" />
+            <span class="font-mono text-[10px] tracking-widest text-[#111111]/40">{l.biography}</span>
+          </div>
+          <h1 class="font-forum text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-[#111111] mb-6 md:mb-8">NANA (Anna Dauyl Rockswell) — 常驻首尔的哈萨克斯坦跨学科艺术家。</h1>
+          <div class="font-serif text-sm md:text-base text-[#111111]/70 leading-relaxed max-w-[55ch] space-y-4">
+            <p>受写作、黑暗表现主义、越界文学、反文化运动和荣格精神分析的深刻影响，她的主题常常围绕反传统艺术、 visceral 意象、女性经验、心理健康内部性以及原始政治与社会评论的边缘。</p>
+            <p>她的作品曾在感官国际艺术展（Must Museum, Lecce）、当代威尼斯2026、赫哲摩耶艺术节（纽约）、KINSHIP × 赫哲摩耶（首尔）、圣艺（伦敦与巴黎）、DIMO × Verger Gallery、Luna Grande Art 展出，并登上 Astraea Zine、Hush Magazine、Spellbinder Magazine 和 Wildsape Literary Journal。</p>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-black/10">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="h-px flex-1 bg-black/10" />
+              <span class="font-mono text-[10px] tracking-widest text-[#111111]/40">{l.artistStatement}</span>
+            </div>
+            <p class="font-serif italic text-sm md:text-base text-[#111111]/70 leading-relaxed max-w-[55ch]">
+              我的作品处于生理感知与概念之间的门槛上——身体成为记忆、失落和转化的场域。从荣格原型和黑暗表现主义的原始物质性出发，我探索女性经验如何在个人与集体历史中被铭刻、抹除和重写。
+            </p>
+          </div>
+
+          <div class="flex gap-12 mt-8 border-t border-black/10 pt-6">
+            <div>
+              <span class="font-sans text-[9px] tracking-widest text-[#111111]/50 block mb-1">{l.education}</span>
+              <p class="font-sans text-[11px] text-[#111111]/70">MFA, Columbia University<br />BA, Yale University</p>
+            </div>
+            <div>
+              <span class="font-sans text-[9px] tracking-widest text-[#111111]/50 block mb-1">{l.grants}</span>
+              <p class="font-sans text-[11px] text-[#111111]/70">Andy Warhol Foundation<br />NEA Fellowship</p>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-black/10">
+            <a href="#" class="group font-sans text-[11px] tracking-widest text-[#111111] underline underline-offset-4 decoration-black/40 hover:decoration-black transition-all w-max">
+              <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">{l.downloadCV}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</PageLayout>

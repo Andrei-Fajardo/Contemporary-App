@@ -1,0 +1,32 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import { t } from '../../../data/translations';
+const l = t.zh;
+
+const magazines = [
+  { title: "Astraea Zine", issue: "Issue Eight — Dreamscape", type: "FEATURED: The Fish & Souls of Leavings" },
+  { title: "Hush Magazine", issue: "Issue 001 — LOST//FOUND", type: "FEATURED: Souls of Leavings" },
+  { title: "Spellbinder Magazine", issue: "Spring 2026", type: "FEATURED: Souls of Leavings" },
+  { title: "The Knot Spectrum", issue: "Glimpse 01", type: "FEATURED: Souls of Leavings" },
+  { title: "Wildsape Literary Journal", issue: "Ongoing", type: "FEATURED: The Fish" },
+  { title: "Onart Magazine", issue: "TBD", type: "FEATURED" },
+];
+---
+
+<PageLayout title="매거진" activeSection="magazines" locale="zh">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">{l.magazinesTag}</span>
+      <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16" set:html={l.magazineHeading}></h1>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-900/20">
+        {magazines.map((mag) => (
+          <div class="bg-transparent p-8 border border-neutral-900/20 flex flex-col items-center justify-center min-h-[220px]">
+            <span class="font-mono text-[9px] tracking-widest text-neutral-400 uppercase text-center">{mag.issue}</span>
+            <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900 mt-4 text-center">{mag.title}</h2>
+            <span class="font-mono text-[10px] text-neutral-500 mt-2 text-center">{mag.type}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</PageLayout>

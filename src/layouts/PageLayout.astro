@@ -1,61 +1,322 @@
 ---
 import '../styles/global.css';
-import Sidebar from '../components/Sidebar.astro';
+import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
   title: string;
   activeSection: string;
+  locale?: LocaleKey;
 }
 
-const { title, activeSection } = Astro.props;
+const { title, activeSection, locale = 'en' } = Astro.props;
+const l = t[locale];
+const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
+
+const pathSeg = Astro.url.pathname.split('/')[1];
+const activeLang = pathSeg && langList.includes(pathSeg as Lang) ? (pathSeg as Lang) : 'en';
+
+function isActiveLang(lang: string): boolean {
+  if (lang === 'en') return activeLang === 'en';
+  return activeLang === lang;
+}
+
+const menuItems: { key: string; href: string }[] = [
+  { key: "home", href: "#home" },
+  { key: "about", href: "#about" },
+  { key: "art", href: "#art" },
+  { key: "exhibitions", href: "#exhibitions" },
+  { key: "publications", href: "#publications" },
+  { key: "research", href: "#research" },
+  { key: "press", href: "#press" },
+  { key: "contacts", href: "#contacts" },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={l.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} — Anna Dauyl Rockswell</title>
+    <title>{title} — {l.siteTitle}</title>
   </head>
-  <body class="font-sans text-neutral-800 antialiased">
-    <div class="flex min-h-screen">
-      <Sidebar activeSection={activeSection} />
-      <div class="fixed top-0 left-[18vw] z-50 w-10 h-10 bg-[#2B2B26] flex items-center justify-center">
-        <span class="text-white text-[9px] font-mono tracking-wider">L</span>
-      </div>
-      <div class="fixed top-4 right-6 z-50 flex items-center gap-2 border border-neutral-800/20 px-2 py-1 text-[11px] font-mono tracking-wider bg-white/20 backdrop-blur-sm">
-        <span class="text-neutral-800 font-semibold">EN</span>
-        <span class="text-neutral-400">KR</span>
-      </div>
+  <body class="font-sans antialiased bg-[#F0EEE9] text-[#111]">
+    <div class="grain-overlay" />
 
-      <main class="ml-[18vw] w-[82vw] min-h-screen bg-[#E3E2DA]">
-        <slot />
-        <footer class="px-8 pt-12 pb-24">
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-8 border-t border-black/[0.15] pt-12">
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Email</span>
-              <a href="mailto:contact@annadauylrockswell.com" class="text-xs font-sans text-neutral-800 underline underline-offset-4">contact@annadauylrockswell.com</a>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Licenses</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARS [Artists Rights Society]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARKO [Arts Council Korea]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">DACS</span>
-              </div>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Socials</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">Instagram</a>
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">X</a>
-              </div>
+    <!-- Desktop language toggle -->
+    <div id="lang-toggle-desktop" class="fixed top-6 right-6 z-[9999] items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden hidden lg:flex">
+      {langList.map((lang) => (
+        <a
+          href={lang === 'en' ? '/' : `/${lang}`}
+          class={`lang-btn group relative px-2.5 py-1.5 block transition-colors duration-150 ${
+            isActiveLang(lang) ? 'bg-[#111111] text-white' : 'text-[#555] hover:bg-[#111111] hover:text-white'
+          }`}
+          data-lang={lang}
+        >
+          <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">
+            {langLabels[lang]}
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile header bar (<1024px) -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-[#F0EEE9]/95 backdrop-blur-md border-b border-black/10 flex items-center justify-between px-5">
+      <a href="#home" class="font-forum text-xl md:text-2xl font-bold whitespace-nowrap tracking-tight text-[#111] hover:opacity-70 transition-opacity">
+        Anna Dauyl Rockswell
+      </a>
+      <div class="flex items-center gap-3">
+        <div id="lang-toggle-mobile" class="flex items-stretch border border-black/20 font-mono text-[9px] font-bold bg-white/40 backdrop-blur-sm rounded overflow-hidden">
+          {langList.map((lang) => (
+            <a
+              href={lang === 'en' ? '/' : `/${lang}`}
+              class={`lang-btn px-2 py-1.5 transition-colors ${
+                isActiveLang(lang) ? 'bg-[#111] text-white' : 'text-[#555] hover:bg-[#111] hover:text-white'
+              }`}
+              data-lang={lang}
+            >{langLabels[lang]}</a>
+          ))}
+        </div>
+        <button
+          id="hamburger-btn"
+          class="w-11 h-11 flex items-center justify-center focus:outline-none active:scale-95 transition-transform"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg class="w-6 h-6 text-[#111]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile drawer backdrop -->
+    <div id="drawer-backdrop" class="lg:hidden fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-[400ms] ease-out" />
+
+    <!-- Mobile slide-out drawer (<1024px) -->
+    <aside
+      id="mobile-drawer"
+      class="lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] z-50 bg-[#111] border-l border-white/10 translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
+    >
+      <nav class="flex-1 pt-24 px-6 overflow-y-auto">
+        <ul class="space-y-1">
+          {menuItems.map((item) => {
+            const isActive = activeSection === item.key;
+            const navKey = item.key as keyof typeof l.nav;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  class={`block py-4 px-5 text-sm uppercase tracking-[0.2em] font-medium rounded-md transition-all duration-200 ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-[#888] hover:bg-white/5 hover:text-white'
+                  }`}
+                >
+                  {l.nav[navKey]}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <div class="px-6 py-10 border-t border-white/10">
+        <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-3">{l.basedIn}</span>
+        <span class="font-sans text-xs text-[#888] font-medium tracking-wide">{l.location}</span>
+      </div>
+    </aside>
+
+    <!-- HOVER-EXPANDING SIDEBAR OVERLAY — Apple-tier float above content -->
+    <aside class="hidden lg:block group fixed left-0 top-0 h-screen z-[100] w-3 hover:w-80 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[#F0EEE9]/95 backdrop-blur-xl border-r border-black/5 shadow-2xl overflow-hidden">
+      <!-- Wide invisible hit area for easy hover capture on the left edge -->
+      <div class="absolute inset-0 w-14 cursor-pointer" />
+
+      <!-- Slide-in content panel — starts offscreen-left, slides in on hover -->
+      <div class="absolute inset-0 w-80 p-8 translate-x-[-20px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] delay-100 pointer-events-none group-hover:pointer-events-auto">
+        <div class="flex flex-col h-full">
+          <div class="shrink-0">
+            <a href="#home" class="block">
+              <h1 class="font-forum text-3xl font-bold whitespace-nowrap tracking-tight text-[#111] leading-[1.05] pr-4">
+                Anna Dauyl Rockswell
+              </h1>
+              <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555]/70 mt-2 block">{l.subtitle}</span>
+            </a>
+          </div>
+          <nav class="sidebar-nav mt-10 flex-1">
+            {menuItems.map((item) => {
+              const isActive = activeSection === item.key;
+              const navKey = item.key as keyof typeof l.nav;
+              return (
+                <a
+                  href={item.href}
+                  class={`group/link relative font-sans text-[11px] uppercase tracking-wider py-2.5 block font-medium transition-colors duration-300 ${
+                    isActive ? 'text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
+                  }`}
+                >
+                  {l.nav[navKey]}
+                  <span class="absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left scale-x-0 group-hover/link:scale-x-100 transition-transform duration-500 ease-out" />
+                </a>
+              );
+            })}
+          </nav>
+          <div class="shrink-0 mt-auto pb-8">
+            <span class="font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
+            <span class="font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- FULL-VIEWPORT MAIN CONTENT — no sidebar margin, artwork spans edge to edge -->
+    <div class="min-h-screen bg-[#F0EEE9]">
+      <main>
+        <slot name="content" />
+      </main>
+      <footer class="px-6 sm:px-8 pt-16 pb-24">
+        <div class="flex flex-col gap-8 border-t border-black/10 pt-12 md:grid md:grid-cols-3">
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.email}</span>
+            <a href="mailto:contact@annadauylrockswell.com" class="group text-sm font-sans text-[#111] underline underline-offset-4">
+              <span class="transition-transform duration-300 ease-out group-hover:translate-x-px">contact@annadauylrockswell.com</span>
+            </a>
+          </div>
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.licenses}</span>
+            <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
+              <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARS</span>
+              </span>
+              <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">ARKO</span>
+              </span>
+              <span class="group block underline underline-offset-2 decoration-black/30 cursor-default w-max">
+                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">DACS</span>
+              </span>
             </div>
           </div>
-          <p class="text-[11px] font-mono text-neutral-400 mt-12 text-center">&copy; 2026 Anna Dauyl Rockswell. All rights reserved.</p>
-        </footer>
-      </main>
+          <div>
+            <span class="text-[10px] font-mono uppercase tracking-widest text-[#555]/60 block mb-2">{l.socials}</span>
+            <div class="flex flex-wrap gap-3 md:flex-col md:gap-1.5 text-xs font-sans text-[#555]/70">
+              <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
+                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">Instagram</span>
+              </a>
+              <a href="#" class="group block underline underline-offset-2 decoration-black/30 hover:text-[#111]">
+                <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">X</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <p class="text-[11px] font-mono text-[#555]/40 mt-12 text-center tracking-wider">{l.copyright}</p>
+      </footer>
     </div>
   </body>
 </html>
+
+<script>
+  function initDrawer() {
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const drawer = document.getElementById("mobile-drawer");
+    const backdrop = document.getElementById("drawer-backdrop");
+    const hamOpen = hamburgerBtn?.querySelector(".ham-open");
+    const hamClose = hamburgerBtn?.querySelector(".ham-close");
+    let isOpen = false;
+
+    const toggleDrawer = (forceClose = false) => {
+      if (forceClose && !isOpen) return;
+      isOpen = forceClose ? false : !isOpen;
+
+      if (isOpen) {
+        drawer?.classList.remove("translate-x-full");
+        drawer?.classList.add("translate-x-0");
+        backdrop?.classList.remove("bg-black/0", "pointer-events-none");
+        backdrop?.classList.add("bg-black/60", "pointer-events-auto");
+        hamOpen?.classList.add("hidden");
+        hamClose?.classList.remove("hidden");
+        hamburgerBtn?.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+      } else {
+        drawer?.classList.remove("translate-x-0");
+        drawer?.classList.add("translate-x-full");
+        backdrop?.classList.remove("bg-black/60", "pointer-events-auto");
+        backdrop?.classList.add("bg-black/0", "pointer-events-none");
+        hamOpen?.classList.remove("hidden");
+        hamClose?.classList.add("hidden");
+        hamburgerBtn?.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      }
+    };
+
+    const navLinks = drawer?.querySelectorAll("a");
+    navLinks?.forEach(link => {
+      link.addEventListener("click", () => {
+        setTimeout(() => toggleDrawer(true), 150);
+      });
+    });
+
+    hamburgerBtn?.addEventListener("click", () => toggleDrawer());
+    backdrop?.addEventListener("click", () => toggleDrawer());
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) toggleDrawer();
+    });
+  }
+
+  function initScrollSpy() {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = new Map();
+    document.querySelectorAll(".sidebar-nav a").forEach(a => {
+      const href = a.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        navLinks.set(href.slice(1), a);
+      }
+    });
+    if (!sections.length || !navLinks.size) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((link, id) => {
+            link.classList.toggle("text-[#111]", id === entry.target.id);
+            link.classList.toggle("text-[#555]/70", id !== entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.3, rootMargin: "-80px 0px 0px 0px" });
+    sections.forEach(s => observer.observe(s));
+  }
+
+  function initScrollAnimations() {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const supportsScrollTimeline = CSS.supports("(animation-timeline: view()) and (animation-range: 0% 100%)");
+
+    if (!supportsScrollTimeline) {
+      document.documentElement.classList.add("no-scroll-timeline");
+
+      const revealEls = document.querySelectorAll<HTMLElement>(
+        ".art-parallax-container, .art-parallax-text"
+      );
+
+      if (revealEls.length && "IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-revealed");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -5% 0px" }
+        );
+        revealEls.forEach((el) => revealObserver.observe(el));
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initDrawer();
+    initScrollSpy();
+    initScrollAnimations();
+  });
+</script>

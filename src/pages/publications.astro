@@ -1,0 +1,19 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ComingSoon from '../components/ComingSoon.astro';
+import { t } from '../data/translations';
+const l = t.en;
+---
+
+<PageLayout title="Publications" activeSection="publications" locale="en">
+  <div slot="content">
+    <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
+      <ComingSoon
+        label="(PUBLICATIONS &amp; WRITING)"
+        heading="Publications &amp; Writing"
+        message={l.comingSoonMessage}
+        note={l.comingSoonNote}
+      />
+    </div>
+  </div>
+</PageLayout>

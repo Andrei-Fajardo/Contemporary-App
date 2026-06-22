@@ -1,20 +1,25 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { t } from '../data/translations';
 import { pressItems } from '../data/content';
+const l = t.en;
 ---
 
-<PageLayout title="Press" activeSection="Press">
-  <div class="px-8 py-10">
-    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(PRESS)</span>
+<PageLayout title="Press" activeSection="press" locale="en">
+  <div slot="content">
+    <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PRESS)</span>
+      <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
+        Press
+      </h1>
 
-    <div class="space-y-4">
-      {pressItems.map((item) => (
-        <div class="border border-black/[0.15] p-5">
-          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">{item.outlet}</span>
-          <h3 class="font-sans text-sm font-semibold text-neutral-800 mt-1">{item.title}</h3>
-          <span class="text-[11px] font-mono text-neutral-500 mt-1 block">{item.date}</span>
-        </div>
-      ))}
+      <div class="space-y-8">
+        {pressItems.map((item) => (
+          <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed border-b border-black/10 pb-6 last:border-b-0">
+            {item.author}, &ldquo;{item.title},&rdquo; <em>{item.outlet}</em>, {item.date}.
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </PageLayout>

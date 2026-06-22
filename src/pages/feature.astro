@@ -1,0 +1,39 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="Feature" activeSection="home" locale="en">
+  <div slot="content">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 py-16 md:py-24">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(FEATURES)</span>
+      <h1 class="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-8">
+        Featured
+      </h1>
+
+      <div class="flex flex-col md:flex-row border-t border-neutral-900/20 py-10 md:py-14 gap-8 lg:gap-16">
+        <div class="w-full md:w-[58%] pr-0">
+          <div class="interactive-image-container h-[50vh] md:h-[60vh]">
+            <img src="/media/feature/itaewon-film-fest.jpg" alt="Itaewon Film Festival" loading="lazy" />
+          </div>
+        </div>
+        <div class="w-full md:w-[42%] flex flex-col justify-center">
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-mono text-[10px] tracking-widest text-neutral-400">[001 // FEATURE]</span>
+            <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500">2025</span>
+          </div>
+          <h2 class="font-sans font-black tracking-tighter uppercase text-2xl md:text-3xl leading-[0.9] text-neutral-900">Itaewon Film Festival</h2>
+          <span class="meta-label-strip mt-2">ITAEWON, SEOUL</span>
+          <p class="font-sans text-sm text-neutral-600 leading-relaxed mt-4 max-w-[65ch]">Featured filmmaker and artist at the Itaewon Film Festival, presenting works at the intersection of film and visual art.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-900/20 mt-8">
+        {["itaewon-1.jpg", "itaewon-2.jpg"].map((img) => (
+          <div class="interactive-image-container aspect-[4/3]">
+            <img src={`/media/feature/${img}`} alt="Itaewon Film Festival" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</PageLayout>
