@@ -1,71 +1,19 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import ComingSoon from '../../components/ComingSoon.astro';
 import { t } from '../../data/translations';
-import { researchPapers, grantsAndFellowships, residencies } from '../../data/content';
 const l = t.kr;
 ---
 
 <PageLayout title="학술 연구" activeSection="research" locale="kr">
   <div slot="content">
     <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
-      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(ACADEMIC RESEARCH)</span>
-      <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
-        Academic<br />Research
-      </h1>
-
-      <div class="mb-16">
-        <div class="flex items-center gap-4 mb-8">
-          <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.academicPapers}</span>
-          <div class="h-px flex-1 bg-black/10" />
-        </div>
-        <div class="space-y-4">
-          {researchPapers.map((paper) => (
-            <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
-              <div>
-                <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{paper.title}</h2>
-                <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{paper.journal}</span>
-              </div>
-              <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{paper.year}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="mb-16">
-        <div class="flex items-center gap-4 mb-8">
-          <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.grants}</span>
-          <div class="h-px flex-1 bg-black/10" />
-        </div>
-        <div class="space-y-4">
-          {grantsAndFellowships.map((grant) => (
-            <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
-              <div>
-                <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{grant.title}</h2>
-                <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{grant.description}</span>
-              </div>
-              <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{grant.year}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <div class="flex items-center gap-4 mb-8">
-          <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.residencies}</span>
-          <div class="h-px flex-1 bg-black/10" />
-        </div>
-        <div class="space-y-4">
-          {residencies.map((res) => (
-            <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
-              <div>
-                <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{res.title}</h2>
-                <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{res.location}</span>
-              </div>
-              <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{res.year}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ComingSoon
+        label="(학술 연구)"
+        heading="학술 연구"
+        message={l.comingSoonMessage}
+        note={l.comingSoonNote}
+      />
     </div>
   </div>
 </PageLayout>

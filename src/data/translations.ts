@@ -32,6 +32,9 @@ export const t = {
     publicationsTag: "(PUBLICATIONS)", publicationsHeading: "Publications & Books",
     academicTag: "(ACADEMIC RESEARCH)", academicHeading: "Academic Research",
     pressTag: "(PRESS)",
+    comingSoon: "Coming Soon",
+    comingSoonMessage: "This section is currently in development. For press coverage and features, please visit the Press section.",
+    comingSoonNote: "Content forthcoming",
   },
   kr: {
     locale: "kr", lang: "ko", siteTitle: "안나 다우일 록스웰",
@@ -65,6 +68,9 @@ export const t = {
     publicationsTag: "(출판)", publicationsHeading: "출판 및 서적",
     academicTag: "(학술 연구)", academicHeading: "학술 연구",
     pressTag: "(프레스)",
+    comingSoon: "준비 중",
+    comingSoonMessage: "이 섹션은 현재 준비 중입니다. 언론 보도 및 피처는 프레스 섹션을 참고해 주세요.",
+    comingSoonNote: "콘텐츠 예정",
   },
   kk: {
     locale: "kk", lang: "kk", siteTitle: "Анна Дауыл Роксвелл",
@@ -98,6 +104,9 @@ export const t = {
     publicationsTag: "(БАСЫЛЫМДАР)", publicationsHeading: "Басылымдар мен кітаптар",
     academicTag: "(АКАДЕМИЯЛЫҚ ЗЕРТТЕУ)", academicHeading: "Академиялық зерттеу",
     pressTag: "(БАСПАСӨЗ)",
+    comingSoon: "Жақында",
+    comingSoonMessage: "Бұл бөлім әзірленуде. Баспасөз материалдары мен фичерлер үшін Баспасөз бөлімін қараңыз.",
+    comingSoonNote: "Мазмұн жақында",
   },
   zh: {
     locale: "zh", lang: "zh-CN", siteTitle: "安娜·道伊尔·罗克斯韦尔",
@@ -131,6 +140,9 @@ export const t = {
     publicationsTag: "(出版物)", publicationsHeading: "出版物与书籍",
     academicTag: "(学术研究)", academicHeading: "学术研究",
     pressTag: "(新闻)",
+    comingSoon: "即将推出",
+    comingSoonMessage: "此版块正在建设中。如需了解媒体报道与专题，请访问新闻版块。",
+    comingSoonNote: "内容即将发布",
   },
   ru: {
     locale: "ru", lang: "ru", siteTitle: "Анна Дауыл Роксвелл",
@@ -164,6 +176,9 @@ export const t = {
     publicationsTag: "(ПУБЛИКАЦИИ)", publicationsHeading: "Публикации и книги",
     academicTag: "(АКАДЕМИЧЕСКИЕ ИССЛЕДОВАНИЯ)", academicHeading: "Академические исследования",
     pressTag: "(ПРЕССА)",
+    comingSoon: "Скоро",
+    comingSoonMessage: "Этот раздел находится в разработке. Для прессы и публикаций посетите раздел «Пресса».",
+    comingSoonNote: "Контент скоро появится",
   },
 };
 

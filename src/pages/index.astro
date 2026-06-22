@@ -1,7 +1,8 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import ComingSoon from '../components/ComingSoon.astro';
 import { t, type LocaleKey } from '../data/translations';
-import { soloExhibitions, groupExhibitions, publications, pressItems, researchPapers, grantsAndFellowships, residencies } from '../data/content';
+import { soloExhibitions, groupExhibitions, exhibitions, pressItems } from '../data/content';
 
 export interface Props {
   locale?: LocaleKey;
@@ -10,8 +11,13 @@ export interface Props {
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
 
-const books = publications.filter(p => p.type === 'book');
-const essays = publications.filter(p => p.type === 'essay');
+const pressImages: Record<string, string> = {
+  'Astraea Zine': '/media/posters/poster-1.jpg',
+  'Hush Magazine': '/media/posters/nana-nyc.jpg',
+  'Spellbinder Magazine': '/media/posters/paris-poster.png',
+  'Wildsape Literary Journal': '/media/the-fish.png',
+  'Itaewon Film Festival': '/media/feature/itaewon-film-fest.jpg',
+};
 
 const paintings = [
   {
@@ -67,7 +73,7 @@ const paintings = [
         <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.aboutTag}</span>
         <div class="flex flex-col md:flex-row gap-10 md:gap-12 lg:gap-16">
           <div class="w-full md:w-[45%]">
-            <div class="aspect-[3/4] bg-neutral-200 border border-black/10 flex items-center justify-center overflow-hidden rounded">
+            <div class="aspect-[3/4] bg-neutral-200 border border-black/10 overflow-clip rounded art-parallax-container">
               <img src="/media/exhibitions/luna-1.jpg" alt="Anna Dauyl Rockswell" class="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
@@ -128,8 +134,8 @@ const paintings = [
       {paintings.map((p, i) => (
         <div class="border-b border-neutral-900/20 my-32 md:my-64">
           <div class="flex flex-col md:flex-row">
-            <div class={`w-full md:w-2/3 ${i % 2 === 1 ? 'md:order-2' : ''} overflow-hidden`}>
-              <div class="relative overflow-hidden group flex items-center justify-center bg-transparent art-parallax-container">
+            <div class={`w-full md:w-2/3 ${i % 2 === 1 ? 'md:order-2' : ''} overflow-clip`}>
+              <div class="relative group flex items-center justify-center bg-transparent art-parallax-container">
                 <img src={p.image} alt={p.title} class={`w-full ${p.contain ? 'h-auto max-h-[80vh] object-contain' : 'h-[50vh] md:h-[65vh] object-cover'}`} loading="lazy" />
               </div>
             </div>
@@ -151,10 +157,22 @@ const paintings = [
 
     <!-- EXHIBITIONS -->
     <section id="exhibitions" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
-      <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
+      <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
         <span class="font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.exhibitionsTag}</span>
         <h1 class="font-forum text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-[#111111] mb-16" set:html={l.exhibitionHistory}></h1>
 
+        <!-- Featured exhibition imagery -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-px bg-black/10 mb-20">
+          {exhibitions.slice(0, 6).map((ex, i) => (
+            <div class={`overflow-clip art-parallax-container ${i === 0 ? 'col-span-2 row-span-2' : ''}`}>
+              <div class={`interactive-image-container ${i === 0 ? 'aspect-[16/10]' : 'aspect-square'}`}>
+                <img src={ex.image} alt={ex.title} loading="lazy" class="grayscale hover:grayscale-0 transition-all duration-700" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="max-w-4xl">
         <!-- Solo Exhibitions -->
         <div class="mb-16">
           <div class="flex items-center gap-4 mb-8">
@@ -192,127 +210,57 @@ const paintings = [
             ))}
           </div>
         </div>
+        </div>
       </div>
     </section>
 
     <!-- PUBLICATIONS -->
     <section id="publications" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
-        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PUBLICATIONS &amp; WRITING)</span>
-        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
-          Publications &amp; Writing
-        </h1>
-
-        <!-- Books & Monographs -->
-        <div class="mb-16">
-          <div class="flex items-center gap-4 mb-8">
-            <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.booksMonographs}</span>
-            <div class="h-px flex-1 bg-black/10" />
-          </div>
-          <div class="space-y-6">
-            {books.map((pub) => (
-              <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed">
-                {pub.author}, <em>{pub.title}</em>, {pub.publisher}, {pub.year}.
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- Essays & Critical Writing -->
-        <div>
-          <div class="flex items-center gap-4 mb-8">
-            <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.essaysWriting}</span>
-            <div class="h-px flex-1 bg-black/10" />
-          </div>
-          <div class="space-y-6">
-            {essays.map((pub) => (
-              <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed">
-                {pub.author}, &ldquo;{pub.title},&rdquo; <em>{pub.publisher}</em>, {pub.year}.
-              </div>
-            ))}
-          </div>
-        </div>
+        <ComingSoon
+          label="(PUBLICATIONS &amp; WRITING)"
+          heading="Publications &amp; Writing"
+          message={l.comingSoonMessage}
+          note={l.comingSoonNote}
+        />
       </div>
     </section>
 
     <!-- RESEARCH -->
     <section id="research" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
       <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
-        <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(ACADEMIC RESEARCH)</span>
-        <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
-          Academic Research
-        </h1>
-
-        <!-- Academic Papers -->
-        <div class="mb-16">
-          <div class="flex items-center gap-4 mb-8">
-            <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.academicPapers}</span>
-            <div class="h-px flex-1 bg-black/10" />
-          </div>
-          <div class="space-y-4">
-            {researchPapers.map((paper) => (
-              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
-                <div>
-                  <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{paper.title}</h2>
-                  <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{paper.journal}</span>
-                </div>
-                <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{paper.year}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- Grants & Fellowships -->
-        <div class="mb-16">
-          <div class="flex items-center gap-4 mb-8">
-            <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.grants}</span>
-            <div class="h-px flex-1 bg-black/10" />
-          </div>
-          <div class="space-y-4">
-            {grantsAndFellowships.map((grant) => (
-              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
-                <div>
-                  <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{grant.title}</h2>
-                  <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{grant.description}</span>
-                </div>
-                <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{grant.year}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- Residencies -->
-        <div>
-          <div class="flex items-center gap-4 mb-8">
-            <span class="font-mono text-[9px] tracking-widest text-neutral-500">{l.residencies}</span>
-            <div class="h-px flex-1 bg-black/10" />
-          </div>
-          <div class="space-y-4">
-            {residencies.map((res) => (
-              <div class="border border-neutral-900/20 p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4 rounded">
-                <div>
-                  <h2 class="font-sans font-black tracking-tighter uppercase text-sm text-neutral-900">{res.title}</h2>
-                  <span class="font-mono text-[10px] text-neutral-500 italic block mt-2">{res.location}</span>
-                </div>
-                <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500 flex-shrink-0">{res.year}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ComingSoon
+          label="(ACADEMIC RESEARCH)"
+          heading="Academic Research"
+          message={l.comingSoonMessage}
+          note={l.comingSoonNote}
+        />
       </div>
     </section>
 
     <!-- PRESS -->
     <section id="press" class="scroll-mt-24 border-b border-neutral-900/20 min-h-screen">
-      <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20 max-w-4xl">
+      <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
         <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PRESS)</span>
         <h1 class="font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-16">
           Press
         </h1>
-        <div class="space-y-8">
-          {pressItems.map((item) => (
-            <div class="font-serif text-sm md:text-base text-neutral-700 leading-relaxed border-b border-black/10 pb-6 last:border-b-0">
-              {item.author}, &ldquo;{item.title},&rdquo; <em>{item.outlet}</em>, {item.date}.
+        <div class="space-y-16 max-w-5xl">
+          {pressItems.map((item, i) => (
+            <div class={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-12 items-center border-b border-black/10 pb-16 last:border-b-0`}>
+              {pressImages[item.outlet] && (
+                <div class="w-full md:w-[40%] overflow-clip art-parallax-container">
+                  <div class="interactive-image-container aspect-[3/4]">
+                    <img src={pressImages[item.outlet]} alt={item.outlet} loading="lazy" class="grayscale hover:grayscale-0 transition-all duration-700" />
+                  </div>
+                </div>
+              )}
+              <div class="w-full md:w-[55%] art-parallax-text">
+                <span class="font-mono text-[9px] tracking-widest text-neutral-400 uppercase block mb-3">{item.outlet}</span>
+                <p class="font-serif text-base md:text-lg text-neutral-700 leading-relaxed">
+                  {item.author}, &ldquo;{item.title},&rdquo; <em>{item.outlet}</em>, {item.date}.
+                </p>
+              </div>
             </div>
           ))}
         </div>

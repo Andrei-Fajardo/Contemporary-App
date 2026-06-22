@@ -284,8 +284,39 @@ const menuItems: { key: string; href: string }[] = [
     sections.forEach(s => observer.observe(s));
   }
 
+  function initScrollAnimations() {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const supportsScrollTimeline = CSS.supports("(animation-timeline: view()) and (animation-range: 0% 100%)");
+
+    if (!supportsScrollTimeline) {
+      document.documentElement.classList.add("no-scroll-timeline");
+
+      const revealEls = document.querySelectorAll<HTMLElement>(
+        ".art-parallax-container, .art-parallax-text"
+      );
+
+      if (revealEls.length && "IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-revealed");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -5% 0px" }
+        );
+        revealEls.forEach((el) => revealObserver.observe(el));
+      }
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     initDrawer();
     initScrollSpy();
+    initScrollAnimations();
   });
 </script>

@@ -11,10 +11,10 @@ body {
   background-color: #F0EEE9 !important;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   scroll-behavior: smooth;
 }
 
@@ -52,7 +52,7 @@ html {
 /* === Interactive Image Wrapper === */
 .interactive-image-container {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   width: 100%;
   display: flex;
   align-items: center;
@@ -138,21 +138,16 @@ html {
 
 /* =============================================
    CINEMATIC CSS SCROLL-DRIVEN ANIMATIONS
-   Requires Chrome 115+. Degrades gracefully.
+   Requires Chrome 115+ / Safari 17+. JS fallback below.
    ============================================= */
 
-/* A. Hero section drift & fade — dissolves as it scrolls out of view */
+/* A. Hero section drift & fade */
 @keyframes apple-hero-fade {
   from { opacity: 1; transform: translateY(0); }
   to { opacity: 0; transform: translateY(-100px); }
 }
-.hero-parallax {
-  animation: apple-hero-fade linear both;
-  animation-timeline: scroll(root);
-  animation-range: exit 0% exit 100%;
-}
 
-/* B. Cinematic image reveal — container crops, image zooms */
+/* B. Cinematic image reveal */
 @keyframes apple-mask-reveal {
   0% { clip-path: inset(15% 15% 15% 15% round 4px); filter: blur(4px); opacity: 0; }
   100% { clip-path: inset(0% 0% 0% 0% round 0px); filter: blur(0px); opacity: 1; }
@@ -163,29 +158,88 @@ html {
   100% { transform: scale(1) translateY(0); }
 }
 
-.art-parallax-container {
-  animation: apple-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
-  animation-timeline: view();
-  animation-range: entry 5% cover 35%;
-  will-change: filter, clip-path, opacity;
-}
-
-.art-parallax-container img {
-  animation: apple-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
-  animation-timeline: view();
-  animation-range: entry 5% cover 35%;
-  will-change: transform;
-}
-
 /* C. Staggered text metadata rise */
 @keyframes apple-text-rise {
   0% { transform: translateY(80px); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
 }
-.art-parallax-text {
-  animation: apple-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
-  animation-timeline: view();
-  animation-range: entry 15% cover 40%;
+
+/* JS fallback: initial hidden state before intersection */
+.no-scroll-timeline .art-parallax-container {
+  opacity: 0;
+  clip-path: inset(10% 10% 10% 10% round 4px);
+  filter: blur(3px);
+  transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1),
+              clip-path 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+              filter 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.no-scroll-timeline .art-parallax-container img {
+  transform: scale(1.15) translateY(20px);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.no-scroll-timeline .art-parallax-container.is-revealed {
+  opacity: 1;
+  clip-path: inset(0% 0% 0% 0% round 0px);
+  filter: blur(0px);
+}
+.no-scroll-timeline .art-parallax-container.is-revealed img {
+  transform: scale(1) translateY(0);
+}
+
+.no-scroll-timeline .art-parallax-text {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.no-scroll-timeline .art-parallax-text.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.no-scroll-timeline .hero-parallax {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Native scroll-driven animations — only when fully supported */
+@supports ((animation-timeline: view()) and (animation-range: 0% 100%)) {
+  .hero-parallax {
+    animation: apple-hero-fade linear both;
+    animation-timeline: scroll(root);
+    animation-range: exit 0% exit 100%;
+  }
+
+  .art-parallax-container {
+    animation: apple-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 35%;
+    will-change: filter, clip-path, opacity;
+  }
+
+  .art-parallax-container img {
+    animation: apple-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 35%;
+    will-change: transform;
+  }
+
+  .art-parallax-text {
+    animation: apple-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-timeline: view();
+    animation-range: entry 15% cover 40%;
+  }
+
+  .bg-layer-parallax {
+    animation: parallax-bg linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 120%;
+  }
+
+  .fg-layer-parallax {
+    animation: parallax-fg-fast linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 120%;
+  }
 }
 
 /* =============================================
@@ -195,19 +249,32 @@ html {
   from { transform: translateY(0); }
   to { transform: translateY(-30%); }
 }
-.bg-layer-parallax {
-  animation: parallax-bg linear both;
-  animation-timeline: view();
-  animation-range: entry 0% exit 120%;
-}
 @keyframes parallax-fg-fast {
   from { transform: translateY(15%); }
   to { transform: translateY(-15%); }
 }
-.fg-layer-parallax {
-  animation: parallax-fg-fast linear both;
-  animation-timeline: view();
-  animation-range: entry 0% exit 120%;
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .hero-parallax,
+  .art-parallax-container,
+  .art-parallax-container img,
+  .art-parallax-text,
+  .bg-layer-parallax,
+  .fg-layer-parallax {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+  .no-scroll-timeline .art-parallax-container,
+  .no-scroll-timeline .art-parallax-text {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: none;
+  }
 }
 
 /* Thin scrollbar */
