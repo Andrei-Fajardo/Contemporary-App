@@ -30,19 +30,19 @@ export function initMotion(): void {
     document.documentElement.classList.add("motion-reduced");
     document.documentElement.classList.remove("motion-live");
     revealAllFallback();
-    return;
+  } else {
+    document.documentElement.classList.add("motion-live");
+    document.documentElement.classList.remove("motion-reduced");
+
+    initScrollReveal();
+    initLazyMedia();
+    initDepthField();
+    initParallax();
+    initScrollVelocity();
+    updateDepthField();
   }
 
-  document.documentElement.classList.add("motion-live");
-  document.documentElement.classList.remove("motion-reduced");
-
-  initScrollReveal();
-  initLazyMedia();
-  initDepthField();
-  initParallax();
-  initScrollVelocity();
   initScrollSpy();
   initAnchorNav();
   initExhibitionCarousels();
-  updateDepthField();
 }

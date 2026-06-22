@@ -1,185 +1,202 @@
-import { prefersReducedMotion } from "./utils";
+/**
+ * Exhibition carousel — self-contained, works inside <details> accordions.
+ * Supports: auto-scroll, drag, arrow buttons, touch swipe.
+ */
 
-const AUTO_SPEED = 0.6;
-const RESUME_DELAY_MS = 3500;
+const AUTO_SPEED = 0.55;
+const RESUME_MS = 3000;
 
-interface CarouselState {
+type CarouselState = {
   root: HTMLElement;
-  viewport: HTMLElement;
-  track: HTMLElement;
-  rafId: number | null;
+  viewport: HTMLDivElement;
+  track: HTMLDivElement;
+  raf: number;
   resumeTimer: ReturnType<typeof setTimeout> | null;
   paused: boolean;
   userPaused: boolean;
-  programmaticScroll: boolean;
   open: boolean;
-  slideStep: number;
+  dragging: boolean;
+  dragStartX: number;
+  dragStartScroll: number;
+  programmatic: boolean;
+};
+
+const states = new WeakMap<HTMLElement, CarouselState>();
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-const carousels = new Map<HTMLElement, CarouselState>();
-
-function measureSlideStep(state: CarouselState): number {
+function slideStep(state: CarouselState): number {
   const slide = state.track.querySelector<HTMLElement>(".exhibition-carousel__slide");
-  if (!slide) return 300;
+  if (!slide) return 280;
   const gap = parseFloat(getComputedStyle(state.track).gap) || 16;
-  return slide.offsetWidth + gap;
+  return slide.getBoundingClientRect().width + gap;
 }
 
-function pauseCarousel(state: CarouselState, userInitiated = false): void {
+function loopWidth(state: CarouselState): number {
+  return state.track.scrollWidth / 2;
+}
+
+function pause(state: CarouselState, byUser = false): void {
   state.paused = true;
-  if (userInitiated) state.userPaused = true;
-  if (state.resumeTimer) {
-    clearTimeout(state.resumeTimer);
-    state.resumeTimer = null;
-  }
+  if (byUser) state.userPaused = true;
+  if (state.resumeTimer) clearTimeout(state.resumeTimer);
 }
 
-function resumeCarousel(state: CarouselState): void {
-  if (!state.open || state.userPaused) return;
-  state.paused = false;
+function resume(state: CarouselState): void {
+  if (state.open && !state.userPaused) state.paused = false;
 }
 
 function scheduleResume(state: CarouselState): void {
   if (state.resumeTimer) clearTimeout(state.resumeTimer);
   state.resumeTimer = setTimeout(() => {
     state.userPaused = false;
-    resumeCarousel(state);
-  }, RESUME_DELAY_MS);
+    resume(state);
+  }, RESUME_MS);
 }
 
-function setScrollLeft(state: CarouselState, value: number): void {
-  state.programmaticScroll = true;
-  state.viewport.scrollLeft = value;
+function scrollTo(state: CarouselState, left: number, smooth = false): void {
+  state.programmatic = true;
+  state.viewport.style.scrollBehavior = smooth ? "smooth" : "auto";
+  const half = loopWidth(state);
+  let target = left;
+  if (half > 0) {
+    while (target < 0) target += half;
+    while (target >= half) target -= half;
+  }
+  state.viewport.scrollLeft = target;
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      state.programmaticScroll = false;
+      state.programmatic = false;
     });
   });
 }
 
-function tick(state: CarouselState): void {
-  state.rafId = requestAnimationFrame(() => tick(state));
-
-  if (!state.open || state.paused || prefersReducedMotion()) return;
-
-  state.slideStep = measureSlideStep(state);
-  const halfWidth = state.track.scrollWidth / 2;
-  if (halfWidth <= state.viewport.clientWidth + 4) return;
-
-  const next = state.viewport.scrollLeft + AUTO_SPEED;
-  if (next >= halfWidth) {
-    setScrollLeft(state, next - halfWidth);
-  } else {
-    setScrollLeft(state, next);
-  }
-}
-
-function scrollBySlide(state: CarouselState, direction: -1 | 1): void {
-  state.slideStep = measureSlideStep(state);
-  const halfWidth = state.track.scrollWidth / 2;
-  let next = state.viewport.scrollLeft + direction * state.slideStep;
-
-  if (next < 0) next = halfWidth + next;
-  if (next >= halfWidth) next -= halfWidth;
-
-  pauseCarousel(state, true);
-  state.viewport.scrollTo({ left: next, behavior: "smooth" });
+function nudge(state: CarouselState, direction: -1 | 1): void {
+  pause(state, true);
+  scrollTo(state, state.viewport.scrollLeft + direction * slideStep(state), true);
   scheduleResume(state);
 }
 
-function onDetailsToggle(state: CarouselState, details: HTMLDetailsElement): void {
-  state.open = details.open;
-  if (state.open) {
-    state.userPaused = false;
-    state.paused = false;
-    setScrollLeft(state, 0);
-    state.slideStep = measureSlideStep(state);
-    requestAnimationFrame(() => {
-      state.slideStep = measureSlideStep(state);
-    });
-  } else {
-    pauseCarousel(state);
-  }
+function tick(state: CarouselState): void {
+  state.raf = requestAnimationFrame(() => tick(state));
+  if (!state.open || state.paused || state.dragging || prefersReducedMotion()) return;
+
+  const half = loopWidth(state);
+  if (half <= state.viewport.clientWidth + 8) return;
+
+  scrollTo(state, state.viewport.scrollLeft + AUTO_SPEED);
+}
+
+function activate(state: CarouselState): void {
+  state.open = true;
+  state.userPaused = false;
+  state.paused = false;
+  scrollTo(state, 0);
+  requestAnimationFrame(() => scrollTo(state, 0));
+}
+
+function deactivate(state: CarouselState): void {
+  state.open = false;
+  pause(state);
 }
 
 function bindCarousel(root: HTMLElement): void {
-  if (carousels.has(root)) return;
+  if (root.dataset.carouselBound === "true") return;
 
-  const viewport = root.querySelector<HTMLElement>(".exhibition-carousel__viewport");
-  const track = root.querySelector<HTMLElement>(".exhibition-carousel__track");
+  const viewport = root.querySelector<HTMLDivElement>(".exhibition-carousel__viewport");
+  const track = root.querySelector<HTMLDivElement>(".exhibition-carousel__track");
   if (!viewport || !track) return;
+
+  root.dataset.carouselBound = "true";
 
   const state: CarouselState = {
     root,
     viewport,
     track,
-    rafId: null,
+    raf: 0,
     resumeTimer: null,
     paused: true,
     userPaused: false,
-    programmaticScroll: false,
     open: false,
-    slideStep: 300,
+    dragging: false,
+    dragStartX: 0,
+    dragStartScroll: 0,
+    programmatic: false,
   };
-  carousels.set(root, state);
+  states.set(root, state);
 
-  const prev = root.querySelector<HTMLButtonElement>(".exhibition-carousel__btn--prev");
-  const next = root.querySelector<HTMLButtonElement>(".exhibition-carousel__btn--next");
-
-  prev?.addEventListener("click", (e) => {
+  root.querySelector(".exhibition-carousel__btn--prev")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    scrollBySlide(state, -1);
+    nudge(state, -1);
   });
 
-  next?.addEventListener("click", (e) => {
+  root.querySelector(".exhibition-carousel__btn--next")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    scrollBySlide(state, 1);
+    nudge(state, 1);
   });
 
-  let dragging = false;
-  viewport.addEventListener("pointerdown", () => {
-    dragging = true;
-    pauseCarousel(state, true);
+  viewport.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    state.dragging = true;
+    state.dragStartX = e.clientX;
+    state.dragStartScroll = viewport.scrollLeft;
+    pause(state, true);
+    viewport.style.scrollBehavior = "auto";
+    viewport.setPointerCapture(e.pointerId);
+    viewport.classList.add("is-dragging");
   });
-  window.addEventListener("pointerup", () => {
-    if (!dragging) return;
-    dragging = false;
+
+  viewport.addEventListener("pointermove", (e) => {
+    if (!state.dragging) return;
+    const dx = e.clientX - state.dragStartX;
+    viewport.scrollLeft = state.dragStartScroll - dx;
+  });
+
+  const endDrag = () => {
+    if (!state.dragging) return;
+    state.dragging = false;
+    viewport.style.scrollBehavior = "smooth";
+    viewport.classList.remove("is-dragging");
     scheduleResume(state);
-  });
+  };
 
-  viewport.addEventListener("wheel", () => pauseCarousel(state, true), { passive: true });
-  viewport.addEventListener("touchstart", () => pauseCarousel(state, true), { passive: true });
+  viewport.addEventListener("pointerup", endDrag);
+  viewport.addEventListener("pointercancel", endDrag);
+  viewport.addEventListener("lostpointercapture", endDrag);
+
+  viewport.addEventListener(
+    "wheel",
+    () => {
+      pause(state, true);
+      scheduleResume(state);
+    },
+    { passive: true }
+  );
 
   viewport.addEventListener("scroll", () => {
-    if (state.programmaticScroll || dragging) return;
-    pauseCarousel(state, true);
+    if (state.programmatic || state.dragging) return;
+    pause(state, true);
     scheduleResume(state);
   });
 
   const details = root.closest("details");
   if (details) {
-    details.addEventListener("toggle", () => onDetailsToggle(state, details));
-    onDetailsToggle(state, details);
+    const sync = () => (details.open ? activate(state) : deactivate(state));
+    details.addEventListener("toggle", sync);
+    if (details.open) activate(state);
   } else {
-    state.open = true;
-    state.paused = false;
+    activate(state);
   }
 
-  const resizeObserver = new ResizeObserver(() => {
-    state.slideStep = measureSlideStep(state);
-  });
-  resizeObserver.observe(track);
+  new ResizeObserver(() => {
+    if (state.open) scrollTo(state, state.viewport.scrollLeft);
+  }).observe(track);
 
-  track.querySelectorAll("img").forEach((img) => {
-    if (img.complete) return;
-    img.addEventListener("load", () => {
-      state.slideStep = measureSlideStep(state);
-    });
-  });
-
-  state.rafId = requestAnimationFrame(() => tick(state));
+  tick(state);
 }
 
 export function initExhibitionCarousels(): void {
@@ -187,9 +204,20 @@ export function initExhibitionCarousels(): void {
 }
 
 export function resetExhibitionCarousels(): void {
-  carousels.forEach((state) => {
-    if (state.rafId) cancelAnimationFrame(state.rafId);
-    if (state.resumeTimer) clearTimeout(state.resumeTimer);
+  document.querySelectorAll<HTMLElement>("[data-exhibition-carousel]").forEach((root) => {
+    const state = states.get(root);
+    if (state?.raf) cancelAnimationFrame(state.raf);
+    delete root.dataset.carouselBound;
   });
-  carousels.clear();
+}
+
+// Self-boot when imported as a module (PageLayout + direct import)
+if (typeof document !== "undefined") {
+  const boot = () => initExhibitionCarousels();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+  document.addEventListener("astro:page-load", boot);
 }

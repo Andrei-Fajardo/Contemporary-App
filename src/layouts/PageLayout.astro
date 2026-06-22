@@ -390,8 +390,10 @@ const menuItems: { key: string; href: string }[] = [
     const hamburgerBtn = document.getElementById("hamburger-btn");
     const drawer = document.getElementById("mobile-drawer");
     const backdrop = document.getElementById("drawer-backdrop");
-    const hamOpen = hamburgerBtn?.querySelector(".ham-open");
-    const hamClose = hamburgerBtn?.querySelector(".ham-close");
+    if (!hamburgerBtn || !drawer || hamburgerBtn.dataset.drawerBound === "true") return;
+    hamburgerBtn.dataset.drawerBound = "true";
+    const hamOpen = hamburgerBtn.querySelector(".ham-open");
+    const hamClose = hamburgerBtn.querySelector(".ham-close");
     let isOpen = false;
 
     const toggleDrawer = (forceClose = false) => {
@@ -435,6 +437,7 @@ const menuItems: { key: string; href: string }[] = [
   }
 
   function bootPageScripts() {
+    document.documentElement.classList.add("motion-live");
     initDrawer();
     syncLangHrefs();
     syncLangToggle();
@@ -448,7 +451,13 @@ const menuItems: { key: string; href: string }[] = [
   });
 
   document.addEventListener("astro:after-swap", () => {
-    restoreLangScroll();
+    document.querySelectorAll("[data-drawer-bound]").forEach((el) => {
+      delete (el as HTMLElement).dataset.drawerBound;
+    });
+    document.querySelectorAll("[data-carousel-bound]").forEach((el) => {
+      delete (el as HTMLElement).dataset.carouselBound;
+    });
+    bootPageScripts();
   });
 
   document.addEventListener("DOMContentLoaded", bootPageScripts);

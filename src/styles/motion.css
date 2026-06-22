@@ -22,13 +22,15 @@ html.motion-live .scroll-reveal:not(.is-visible) {
   opacity: 0;
   transform: translateY(1.75rem);
   transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 html.motion-live .scroll-reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 /* --- Parallax layers (transform applied by JS) --- */
@@ -222,6 +224,22 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 
 .hero-parallax-layer {
   will-change: transform;
+}
+
+@keyframes hero-fade-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+html.motion-live .hero-section .scroll-reveal.is-visible {
+  animation: hero-fade-rise 0.9s var(--ease-editorial) both;
+  animation-delay: var(--reveal-delay, 0ms);
 }
 
 .hero-media-frame {
@@ -557,20 +575,24 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   position: relative;
   z-index: 1;
   min-width: 0;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: var(--ink-35) transparent;
-  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent);
   padding-block: 0.25rem;
   cursor: grab;
+  user-select: none;
 }
 
-.exhibition-carousel__viewport:active {
+.exhibition-carousel__viewport.is-dragging {
   cursor: grabbing;
+  scroll-snap-type: none;
 }
 
 .exhibition-carousel__viewport::-webkit-scrollbar {

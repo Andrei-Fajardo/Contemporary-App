@@ -42,7 +42,12 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 <style>
   .exhibition-accordion__item {
     background: transparent;
-    overflow: clip;
+    overflow: visible;
+  }
+
+  .exhibition-accordion__panel {
+    padding: 0 0 1.5rem 4.5rem;
+    overflow: visible;
   }
 
   .exhibition-accordion__summary {
@@ -100,10 +105,6 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 
   .exhibition-accordion__item[open] .exhibition-accordion__chevron {
     transform: rotate(45deg);
-  }
-
-  .exhibition-accordion__panel {
-    padding: 0 0 1.5rem 4.5rem;
   }
 
   .exhibition-accordion__kind {

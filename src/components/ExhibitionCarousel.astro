@@ -58,3 +58,9 @@ const loopSlides = slides.length > 1 ? [...slides, ...slides] : slides;
     )}
   </div>
 )}
+
+<script>
+  import { initExhibitionCarousels } from "../scripts/motion/exhibition-carousel";
+  initExhibitionCarousels();
+  document.addEventListener("astro:page-load", initExhibitionCarousels);
+</script>
