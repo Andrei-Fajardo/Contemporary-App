@@ -157,6 +157,47 @@ html::-webkit-scrollbar { width: 4px; }
 html::-webkit-scrollbar-track { background: transparent; }
 html::-webkit-scrollbar-thumb { background: #111111; }
 
+/* --- Editorial layout: wide, centered, balanced negative space --- */
+.section-shell {
+  width: 100%;
+  max-width: min(90rem, calc(100vw - clamp(1.5rem, 5vw, 4rem)));
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
+}
+
+.section-shell--wide {
+  max-width: min(96rem, calc(100vw - clamp(1rem, 4vw, 3rem)));
+}
+
+/* Body copy — larger; section titles / H1–H2 unchanged */
+.content-prose {
+  font-family: var(--font-serif);
+  font-size: clamp(1.0625rem, 1.15vw + 0.65rem, 1.3125rem);
+  line-height: 1.72;
+  color: rgba(17, 17, 17, 0.78);
+}
+
+.content-prose--mono {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: clamp(0.9375rem, 0.55vw + 0.72rem, 1.0625rem);
+  line-height: 1.75;
+  letter-spacing: 0.025em;
+  color: rgba(17, 17, 17, 0.72);
+}
+
+.content-prose--sans {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 0.85vw + 0.7rem, 1.1875rem);
+  line-height: 1.65;
+  color: rgba(17, 17, 17, 0.78);
+}
+
+.section-divider-label {
+  font-size: clamp(0.5625rem, 0.45vw + 0.4rem, 0.6875rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
 /* Mobile-specific improvements */
 @media (max-width: 1023px) {
   /* Ensure touch targets are at least 44x44px */
