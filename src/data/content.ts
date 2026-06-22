@@ -1,3 +1,109 @@
+export interface ExhibitionEntry {
+  id: string;
+  year: string;
+  title: string;
+  gallery: string;
+  place: string;
+  kind: 'solo' | 'group' | 'museum';
+  images: string[];
+  note?: string;
+}
+
+/** Chronological exhibition list — posters & venue imagery only (no personal portraits). */
+export const exhibitionEntries: ExhibitionEntry[] = [
+  {
+    id: 'senses',
+    year: '2025',
+    title: 'Senses International Art Fair',
+    gallery: 'MUST Museum',
+    place: 'Lecce, Italy',
+    kind: 'museum',
+    images: ['/media/exhibitions/senses-main.jpg', '/media/exhibitions/senses-1.jpg', '/media/exhibitions/senses-2.jpg'],
+    note: 'The only museum presentation in the exhibition record.',
+  },
+  {
+    id: 'im-insa',
+    year: '2025',
+    title: 'IM INSA',
+    gallery: 'Insadong',
+    place: 'Seoul, South Korea',
+    kind: 'solo',
+    images: ['/media/exhibitions/im-insa.jpg'],
+  },
+  {
+    id: 'hechyeomoyeo-nyc',
+    year: '2024–2025',
+    title: 'Hechyeomoyeo 12 & 13',
+    gallery: 'Hechyeomoyeo',
+    place: 'New York, USA',
+    kind: 'group',
+    images: ['/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg'],
+  },
+  {
+    id: 'kinship',
+    year: '2025',
+    title: 'KINSHIP × Hechyeomoyeo',
+    gallery: 'Collaborative Exhibition',
+    place: 'Seoul, South Korea',
+    kind: 'group',
+    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg'],
+  },
+  {
+    id: 'dimo',
+    year: '2025',
+    title: 'DIMO × Verger Gallery',
+    gallery: 'Verger Gallery',
+    place: 'Seoul, South Korea',
+    kind: 'group',
+    images: ['/media/exhibitions/dimo-main.jpg', '/media/exhibitions/dimo-1.jpg', '/media/exhibitions/dimo-2.jpg'],
+  },
+  {
+    id: 'holy-paris',
+    year: '2025',
+    title: 'The Holy Art — Paris',
+    gallery: 'The Holy Art',
+    place: 'Paris, France',
+    kind: 'group',
+    images: ['/media/posters/paris-poster.png', '/media/exhibitions/holy-paris-main.jpg', '/media/exhibitions/holy-paris-1.webp'],
+  },
+  {
+    id: 'holy-london',
+    year: '2025',
+    title: 'The Holy Art — London',
+    gallery: 'The Holy Art',
+    place: 'London, UK',
+    kind: 'group',
+    images: ['/media/exhibitions/holy-london-1.jpg', '/media/exhibitions/holy-london-2.jpg'],
+    note: 'Exhibition documentation & promotional materials.',
+  },
+  {
+    id: 'luna',
+    year: '2025',
+    title: 'Luna Grande Art',
+    gallery: 'Luna Grande Art',
+    place: 'Online',
+    kind: 'group',
+    images: ['/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-2.jpg'],
+  },
+  {
+    id: 'venice',
+    year: '2026',
+    title: 'Contemporary Venice',
+    gallery: 'Contemporary Venice',
+    place: 'Venice, Italy',
+    kind: 'group',
+    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg'],
+  },
+];
+
+export const magazines = [
+  { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls of Leavings', image: '/media/posters/poster-1.jpg' },
+  { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/posters/nana-nyc.jpg' },
+  { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/posters/paris-poster.png' },
+  { title: 'Wildsape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
+  { title: 'Onart Magazine', issue: 'TBD', feature: 'Featured', image: '' },
+];
+
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
 
 export const exhibitions = [

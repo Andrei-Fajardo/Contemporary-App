@@ -31,18 +31,18 @@ const paintings = [
 ];
 ---
 
-<section id="art" class="scroll-section border-b border-neutral-900/20">
-  <div class="section-shell py-10 md:py-14 border-b border-neutral-900/20">
-    <span class="scroll-reveal font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-4">(ARTWORK)</span>
-    <h2 class="scroll-reveal font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-3">
-      Paintings
+<section id="art" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide mb-10 md:mb-14">
+    <p class="scroll-reveal section-eyebrow">{l.artTag}</p>
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-[#111] mb-4">
+      {l.nav.art}
     </h2>
-    <p class="scroll-reveal content-prose italic text-neutral-600 max-w-[65ch]">{l.heroDesc}</p>
+    <p class="scroll-reveal content-prose italic text-[#111]/60 max-w-[65ch]">{l.heroDesc}</p>
   </div>
 
   {paintings.map((p, i) => (
-    <article class="art-piece depth-target border-b border-neutral-900/20" data-popup-title={p.title}>
-      <div class="section-shell py-10 md:py-14 lg:py-16">
+    <article class="art-piece depth-target" data-popup-title={p.title}>
+      <div class="section-shell section-shell--wide py-8 md:py-12 lg:py-14">
         <div class="grid md:grid-cols-2 gap-8 lg:gap-14 xl:gap-20 items-center">
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
             <MediaPopup
@@ -56,16 +56,11 @@ const paintings = [
               imageClass={p.contain ? "w-full h-auto max-h-[72vh] object-contain mx-auto" : "w-full h-[50vh] md:h-[60vh] object-cover"}
             />
           </div>
-          <div class={`scroll-reveal min-w-0 flex flex-col gap-6 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="font-mono text-[11px] tracking-widest text-neutral-400">{String(i + 1).padStart(3, '0')}</span>
-                <span class="font-mono text-[10px] border border-neutral-400 px-2 py-0.5 text-neutral-500">{p.year}</span>
-              </div>
-              <h3 class="font-sans font-black tracking-tighter uppercase text-3xl md:text-4xl leading-[0.9] text-neutral-900">{p.title}</h3>
-              <span class="section-divider-label font-mono text-neutral-500 block mt-3">{p.medium}</span>
-            </div>
-            <p class="content-prose--mono text-neutral-600 max-w-[58ch]">{p.description}</p>
+          <div class={`scroll-reveal min-w-0 flex flex-col gap-5 ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
+            <p class="section-eyebrow mb-0">{String(i + 1).padStart(2, '0')} · {p.year}</p>
+            <h3 class="font-forum text-3xl md:text-4xl leading-[1.05] text-[#111]">{p.title}</h3>
+            <p class="content-prose--sans text-[#111]/55">{p.medium}</p>
+            <p class="content-prose text-[#111]/70 max-w-[58ch]">{p.description}</p>
           </div>
         </div>
       </div>

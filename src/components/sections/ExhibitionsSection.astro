@@ -1,7 +1,7 @@
 ---
-import LazyImage from '../LazyImage.astro';
+import ExhibitionAccordion from '../ExhibitionAccordion.astro';
 import { t, type LocaleKey } from '../../data/translations';
-import { soloExhibitions, groupExhibitions, exhibitions } from '../../data/content';
+import { exhibitionEntries } from '../../data/content';
 
 interface Props {
   locale?: LocaleKey;
@@ -9,94 +9,16 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-const routePrefix = locale === 'en' ? '' : `/${locale}`;
-
-const exploreLinks = [
-  { href: `${routePrefix}/gallery`, label: l.all, desc: "Full image archive" },
-  { href: `${routePrefix}/feature`, label: l.featureFilter, desc: "Featured projects" },
-  { href: `${routePrefix}/magazines`, label: l.magazinesTag.replace(/[()]/g, ''), desc: l.magazineHeading },
-  { href: `${routePrefix}/virtual-exhibitions`, label: l.virtualFilter, desc: l.virtualHeading },
-];
 ---
 
-<section id="exhibitions" class="scroll-section border-b border-neutral-900/20">
+<section id="exhibitions" class="scroll-section section-gap">
   <div class="section-shell section-shell--wide py-12 md:py-20 lg:py-24">
-    <span class="scroll-reveal font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.exhibitionsTag}</span>
-    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-[#111111] mb-10 md:mb-14 lg:mb-16" set:html={l.exhibitionHistory}></h2>
+    <p class="scroll-reveal section-eyebrow">{l.exhibitionsTag}</p>
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-[#111] mb-4 md:mb-6" set:html={l.exhibitionHistory}></h2>
+    <p class="scroll-reveal content-prose text-[#111]/60 max-w-[62ch] mb-10 md:mb-14">
+      Chronological record of physical exhibitions — tap each entry to view posters and documentation.
+    </p>
 
-    <!-- Featured exhibition gallery — full section width -->
-    <div class="scroll-reveal grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 mb-14 md:mb-20 lg:mb-24">
-      {exhibitions.slice(0, 8).map((ex, i) => (
-        <div class={`overflow-clip ${i === 0 ? 'col-span-2 row-span-2 md:col-span-2 md:row-span-2' : ''}`}>
-          <LazyImage
-            src={ex.image}
-            alt={ex.title}
-            aspectRatio={i === 0 ? '4 / 3' : '1 / 1'}
-            parallaxSpeed={0.15}
-            depthTarget={false}
-            class="grayscale hover:grayscale-0 transition-[filter] duration-700"
-          />
-        </div>
-      ))}
-    </div>
-
-    <div class="scroll-reveal exhibitions-explore mb-14 md:mb-16">
-      <div class="flex items-center gap-4 mb-6">
-        <span class="section-divider-label font-sans text-[#111111]/50">{l.physical}</span>
-        <div class="h-px flex-1 bg-black/10" />
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {exploreLinks.map((link) => (
-          <a
-            href={link.href}
-            class="group exhibitions-explore-link flex flex-col justify-between min-h-[96px] p-5 border border-black/10 rounded bg-white/30 hover:bg-white/60 hover:border-black/20 transition-all duration-400"
-          >
-            <span class="section-divider-label font-sans text-[#111111]/50">{link.desc}</span>
-            <span class="content-prose--mono uppercase tracking-widest text-[#111111] mt-4 flex items-center justify-between">
-              {link.label}
-              <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </span>
-          </a>
-        ))}
-      </div>
-    </div>
-
-    <div class="scroll-reveal grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20">
-      <div>
-        <div class="flex items-center gap-4 mb-8">
-          <span class="section-divider-label font-sans text-[#111111]/50">{l.soloExhibitions}</span>
-          <div class="h-px flex-1 bg-black/10" />
-        </div>
-        <div class="space-y-6">
-          {soloExhibitions.map((ex) => (
-            <div class="flex items-baseline gap-4 content-prose text-[#111111]/75">
-              <span class="font-mono text-[11px] tracking-wider text-[#111111]/40 shrink-0 w-16">{ex.year}</span>
-              <span class="font-serif">—</span>
-              <span>
-                <em>{ex.title}</em>, {ex.venue}, {ex.city}{ex.city && ex.country ? ', ' : ''}{ex.country}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <div class="flex items-center gap-4 mb-8">
-          <span class="section-divider-label font-sans text-[#111111]/50">{l.groupExhibitions}</span>
-          <div class="h-px flex-1 bg-black/10" />
-        </div>
-        <div class="space-y-6">
-          {groupExhibitions.map((ex) => (
-            <div class="flex items-baseline gap-4 content-prose text-[#111111]/75">
-              <span class="font-mono text-[11px] tracking-wider text-[#111111]/40 shrink-0 w-16">{ex.year}</span>
-              <span class="font-serif">—</span>
-              <span>
-                <em>{ex.title}</em>, {ex.venue}{ex.venue && (ex.city || ex.country) ? ', ' : ''}{ex.city}{ex.city && ex.country ? ', ' : ''}{ex.country}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <ExhibitionAccordion entries={exhibitionEntries} />
   </div>
 </section>

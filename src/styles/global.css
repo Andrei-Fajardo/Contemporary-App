@@ -7,11 +7,13 @@
   --font-forum: "Forum", serif;
   --font-serif: "Cormorant Garamond", "Georgia", serif;
   --font-sans: "Inter", "Helvetica", "Arial", sans-serif;
+  --canvas: #F7F5F0; /* ivory white — Pantone 11-4201 Cloud Dancer */
+  --ink: #111111;
 }
 
 /* Warm editorial canvas background */
 body {
-  background-color: #F0EEE9 !important; /* Pantone 11-4201 TCX Cloud Dancer — light warm off-white */
+  background-color: var(--canvas) !important;
   margin: 0;
   padding: 0;
 }
@@ -196,6 +198,43 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   font-size: clamp(0.5625rem, 0.45vw + 0.4rem, 0.6875rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+.section-eyebrow {
+  font-family: var(--font-sans);
+  font-size: clamp(0.5625rem, 0.45vw + 0.4rem, 0.6875rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.45);
+  margin-bottom: 1.5rem;
+}
+
+.section-gap {
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.section-gap + .section-gap {
+  margin-top: 0;
+}
+
+/* Inverted contact panel */
+.section-inverted {
+  background: var(--ink);
+  color: #f7f5f0;
+}
+
+.section-inverted .section-eyebrow,
+.section-inverted .section-divider-label {
+  color: rgba(247, 245, 240, 0.5);
+}
+
+.section-inverted .content-prose,
+.section-inverted .content-prose--sans {
+  color: rgba(247, 245, 240, 0.78);
+}
+
+.section-inverted a {
+  color: #f7f5f0;
 }
 
 /* Mobile-specific improvements */

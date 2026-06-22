@@ -1,4 +1,5 @@
 ---
+import LazyImage from '../LazyImage.astro';
 import { t, type LocaleKey } from '../../data/translations';
 
 interface Props {
@@ -9,48 +10,36 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="about" class="scroll-section border-b border-neutral-900/20">
-  <div class="section-shell section-shell--wide py-12 md:py-20 lg:py-24">
-    <span class="scroll-reveal font-sans text-[10px] tracking-[0.3em] text-[#111111]/50 block mb-6">{l.aboutTag}</span>
-    <div class="grid md:grid-cols-2 gap-10 md:gap-12 lg:gap-16 xl:gap-20 items-start">
+<section id="about" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.aboutTag}</p>
+    <div class="grid md:grid-cols-2 gap-10 md:gap-14 lg:gap-20 items-start">
       <div class="scroll-reveal">
-        <div class="aspect-[3/4] bg-neutral-200 border border-black/10 flex items-center justify-center overflow-clip rounded">
-          <img src="/media/exhibitions/luna-1.jpg" alt="Anna Dauyl Rockswell" class="w-full h-full object-cover" loading="lazy" decoding="async" />
-        </div>
+        <LazyImage
+          src="/media/the-fish.png"
+          alt="The Fish — selected painting"
+          aspectRatio="3 / 4"
+          parallaxSpeed={0}
+          depthTarget={false}
+          contain={true}
+          class="w-full h-auto max-h-[70vh] object-contain"
+        />
       </div>
-      <div class="scroll-reveal flex flex-col justify-center">
-        <div class="flex items-center gap-4 mb-6 md:mb-8">
-          <div class="h-px flex-1 bg-black/10" />
-          <span class="font-mono text-[10px] tracking-widest text-[#111111]/40">{l.biography}</span>
-        </div>
-        <h2 class="font-forum text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-[#111111] mb-6 md:mb-8">NANA (Anna Dauyl Rockswell) — Kazakh multidisciplinary artist based in Seoul.</h2>
-        <div class="content-prose space-y-5">
-          <p>Heavily influenced by a background in writing, dark expressionism, transgressive literature, counterculture movements, and Jungian psychoanalysis, her themes often circle the edges of contrarian art, visceral imagery, feminine experience, mental health interiority, and raw political & social commentary.</p>
-          <p>Her works have been exhibited at Senses International Art Fair (Must Museum, Lecce), Contemporary Venice 2026, Hechyeomoyeo Art Festival (New York), KINSHIP × Hechyeomoyeo (Seoul), The Holy Art (London & Paris), DIMO × Verger Gallery, Luna Grande Art, and featured in Astraea Zine, Hush Magazine, Spellbinder Magazine, and Wildsape Literary Journal.</p>
-        </div>
-        <div class="scroll-reveal mt-8 pt-6 border-t border-black/10">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="h-px flex-1 bg-black/10" />
-            <span class="font-mono text-[10px] tracking-widest text-[#111111]/40">{l.artistStatement}</span>
+      <div class="scroll-reveal flex flex-col justify-center gap-8">
+        <div>
+          <h2 class="font-forum text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-[#111] mb-6">
+            NANA (Anna Dauyl Rockswell)
+          </h2>
+          <p class="content-prose--sans text-[#111]/55 mb-6">{l.intro}</p>
+          <div class="content-prose space-y-5">
+            <p>{l.bio}</p>
           </div>
-          <p class="content-prose italic text-[#111111]/75">
+        </div>
+        <div>
+          <p class="section-eyebrow mb-4">{l.artistStatement}</p>
+          <p class="content-prose italic text-[#111]/75">
             My work occupies the threshold between the visceral and the conceptual — where the body becomes a site of memory, loss, and transformation. Drawing from Jungian archetypes and the raw materiality of dark expressionism, I explore how feminine experience is inscribed, erased, and reinscribed across personal and collective histories.
           </p>
-        </div>
-        <div class="scroll-reveal flex flex-wrap gap-12 mt-8 border-t border-black/10 pt-6">
-          <div>
-            <span class="section-divider-label font-sans text-[#111111]/50 block mb-2">{l.education}</span>
-            <p class="content-prose--sans text-[#111111]/75">MFA, Columbia University<br />BA, Yale University</p>
-          </div>
-          <div>
-            <span class="section-divider-label font-sans text-[#111111]/50 block mb-2">{l.grants}</span>
-            <p class="content-prose--sans text-[#111111]/75">Andy Warhol Foundation<br />NEA Fellowship</p>
-          </div>
-        </div>
-        <div class="scroll-reveal mt-8 pt-6 border-t border-black/10">
-          <a href="#" class="group content-prose--mono text-[#111111] underline underline-offset-4 decoration-black/40 hover:decoration-black transition-all w-max">
-            <span class="block transition-transform duration-300 ease-out group-hover:translate-x-px">{l.downloadCV}</span>
-          </a>
         </div>
       </div>
     </div>

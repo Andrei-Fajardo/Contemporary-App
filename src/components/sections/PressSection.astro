@@ -1,13 +1,14 @@
 ---
 import LazyImage from '../LazyImage.astro';
 import { pressItems } from '../../data/content';
-import type { LocaleKey } from '../../data/translations';
+import { t, type LocaleKey } from '../../data/translations';
 
 interface Props {
   locale?: LocaleKey;
 }
 
-const {} = Astro.props;
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
 
 const pressImages: Record<string, string> = {
   'Astraea Zine': '/media/posters/poster-1.jpg',
@@ -18,31 +19,31 @@ const pressImages: Record<string, string> = {
 };
 ---
 
-<section id="press" class="scroll-section border-b border-neutral-900/20">
-  <div class="section-shell section-shell--wide py-12 md:py-20 lg:py-24">
-    <span class="scroll-reveal font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(PRESS)</span>
-    <h2 class="scroll-reveal font-sans font-black tracking-tighter uppercase text-4xl md:text-6xl lg:text-[8rem] leading-[0.85] text-neutral-900 mb-12 md:mb-16">
-      Press
+<section id="press" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.pressTag}</p>
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-[#111] mb-10 md:mb-14">
+      {l.nav.press}
     </h2>
 
-    <div class="space-y-14 md:space-y-20">
+    <div class="space-y-12 md:space-y-16">
       {pressItems.map((item, i) => (
-        <div class="scroll-reveal grid md:grid-cols-2 gap-8 lg:gap-14 xl:gap-20 items-center border-b border-black/10 pb-14 md:pb-20 last:border-b-0">
+        <div class="scroll-reveal grid md:grid-cols-2 gap-8 lg:gap-14 xl:gap-20 items-center">
           {pressImages[item.outlet] && (
             <div class={`overflow-clip w-full max-w-lg mx-auto md:mx-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
               <LazyImage
                 src={pressImages[item.outlet]}
                 alt={item.outlet}
                 aspectRatio="3 / 4"
-                parallaxSpeed={0.12}
+                parallaxSpeed={0}
                 depthTarget={false}
                 class="grayscale hover:grayscale-0 transition-[filter] duration-700"
               />
             </div>
           )}
           <div class={`${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
-            <span class="section-divider-label font-mono text-neutral-400 block mb-4">{item.outlet}</span>
-            <p class="content-prose text-neutral-700">
+            <p class="section-eyebrow mb-3">{item.outlet}</p>
+            <p class="content-prose text-[#111]/75">
               {item.author}, &ldquo;{item.title},&rdquo; <em>{item.outlet}</em>, {item.date}.
             </p>
           </div>
