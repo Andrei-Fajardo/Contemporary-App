@@ -56,14 +56,26 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     grid-template-rows: auto auto;
     gap: 0.2rem 1.25rem;
     align-items: center;
-    padding: 1.25rem 0;
+    margin-inline: -0.75rem;
+    padding: 1.25rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-default);
     cursor: pointer;
     list-style: none;
-    transition: opacity 0.3s var(--ease-editorial);
+    transition: box-shadow 0.35s var(--ease-editorial);
   }
 
   .exhibition-accordion__summary:hover {
-    opacity: 0.72;
+    box-shadow: inset 3px 0 0 var(--ink);
+  }
+
+  .exhibition-accordion__summary:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .exhibition-accordion__item[open] .exhibition-accordion__summary {
+    box-shadow: inset 3px 0 0 var(--ink);
   }
 
   .exhibition-accordion__summary::-webkit-details-marker {
@@ -76,6 +88,12 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     color: var(--ink-45);
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__year,
+  .exhibition-accordion__item[open] .exhibition-accordion__year {
+    color: var(--ink-70);
   }
 
   .exhibition-accordion__title {
@@ -83,6 +101,11 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-size: clamp(1.125rem, 1.5vw, 1.375rem);
     color: var(--ink);
     line-height: 1.2;
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__title {
+    color: var(--ink);
   }
 
   .exhibition-accordion__meta {
@@ -91,6 +114,11 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-size: clamp(0.9375rem, 1vw, 1.0625rem);
     color: var(--ink-55);
     font-style: italic;
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__meta {
+    color: var(--ink-65);
   }
 
   .exhibition-accordion__chevron {
@@ -100,11 +128,16 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-size: 1.25rem;
     line-height: 1;
     color: var(--ink-35);
-    transition: transform 0.25s var(--ease-editorial);
+    transition: transform 0.25s var(--ease-editorial), color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__chevron {
+    color: var(--ink);
   }
 
   .exhibition-accordion__item[open] .exhibition-accordion__chevron {
     transform: rotate(45deg);
+    color: var(--ink);
   }
 
   .exhibition-accordion__kind {
@@ -126,5 +159,19 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     border: 1px solid var(--border-subtle);
     padding: 0.15rem 0.45rem;
     border-radius: var(--radius-lang-btn);
+    transition:
+      border-color 0.3s var(--ease-editorial),
+      background 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__badge {
+    border-color: var(--border-section);
+    background: rgba(17, 17, 17, 0.04);
   }
 </style>
+
+<script>
+  import { initExhibitionAccordion } from "../scripts/motion/exhibition-accordion";
+  initExhibitionAccordion();
+  document.addEventListener("astro:page-load", initExhibitionAccordion);
+</script>

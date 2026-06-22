@@ -580,8 +580,8 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   overscroll-behavior-x: contain;
   touch-action: pan-x;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
   scrollbar-width: thin;
   scrollbar-color: var(--ink-35) transparent;
   mask-image: linear-gradient(to right, transparent, #000 2%, #000 98%, transparent);
@@ -592,7 +592,6 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 .exhibition-carousel__viewport.is-dragging {
   cursor: grabbing;
-  scroll-snap-type: none;
 }
 
 .exhibition-carousel__viewport::-webkit-scrollbar {
@@ -613,7 +612,6 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 .exhibition-carousel__slide {
   flex: 0 0 auto;
-  scroll-snap-align: start;
   margin: 0;
   height: clamp(14rem, 36vw, 22rem);
   border: 1px solid var(--border-subtle);

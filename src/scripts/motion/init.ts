@@ -5,6 +5,7 @@ import { initScrollVelocity, resetScrollVelocity } from "./scroll-velocity";
 import { initAnchorNav, initScrollSpy, resetScrollSpy } from "./scroll-spy";
 import { initDepthField, resetDepthField, updateDepthField } from "./depth-field";
 import { initExhibitionCarousels, resetExhibitionCarousels } from "./exhibition-carousel";
+import { initExhibitionAccordion, resetExhibitionAccordion } from "./exhibition-accordion";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -25,6 +26,7 @@ export function initMotion(): void {
   resetScrollSpy();
   resetDepthField();
   resetExhibitionCarousels();
+  resetExhibitionAccordion();
 
   if (prefersReducedMotion()) {
     document.documentElement.classList.add("motion-reduced");
@@ -45,4 +47,5 @@ export function initMotion(): void {
   initScrollSpy();
   initAnchorNav();
   initExhibitionCarousels();
+  initExhibitionAccordion();
 }

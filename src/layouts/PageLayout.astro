@@ -457,6 +457,9 @@ const menuItems: { key: string; href: string }[] = [
     document.querySelectorAll("[data-carousel-bound]").forEach((el) => {
       delete (el as HTMLElement).dataset.carouselBound;
     });
+    document.querySelectorAll("[data-accordion-motion]").forEach((el) => {
+      delete (el as HTMLElement).dataset.accordionMotion;
+    });
     bootPageScripts();
   });
 

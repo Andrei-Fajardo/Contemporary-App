@@ -20,6 +20,7 @@
   --ink-70: rgba(17, 17, 17, 0.7);
   --ink-60: rgba(17, 17, 17, 0.6);
   --ink-55: rgba(17, 17, 17, 0.55);
+  --ink-65: rgba(17, 17, 17, 0.65);
   --ink-50: rgba(17, 17, 17, 0.5);
   --ink-45: rgba(17, 17, 17, 0.45);
   --ink-35: rgba(17, 17, 17, 0.35);
@@ -144,6 +145,7 @@ html {
 .text-ink-70 { color: var(--ink-70); }
 .text-ink-60 { color: var(--ink-60); }
 .text-ink-55 { color: var(--ink-55); }
+.text-ink-65 { color: var(--ink-65); }
 .text-ink-50 { color: var(--ink-50); }
 .text-ink-45 { color: var(--ink-45); }
 .text-ink-35 { color: var(--ink-35); }
