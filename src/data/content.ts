@@ -37,7 +37,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Hechyeomoyeo',
     place: 'New York, USA',
     kind: 'group',
-    images: ['/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg'],
+    images: ['/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg', '/media/exhibitions/hech-3.jpg', '/media/exhibitions/hech-4.jpg'],
   },
   {
     id: 'kinship',
@@ -46,7 +46,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Collaborative Exhibition',
     place: 'Seoul, South Korea',
     kind: 'group',
-    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg'],
+    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg', '/media/exhibitions/kinship-3.jpg'],
   },
   {
     id: 'dimo',
@@ -83,7 +83,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Luna Grande Art',
     place: 'Online',
     kind: 'group',
-    images: ['/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-2.jpg'],
+    images: ['/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-1.jpg', '/media/exhibitions/luna-2.jpg'],
   },
   {
     id: 'venice',
@@ -92,7 +92,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Contemporary Venice',
     place: 'Venice, Italy',
     kind: 'group',
-    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg'],
+    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
   },
 ];
 

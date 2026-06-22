@@ -1,0 +1,59 @@
+---
+interface Props {
+  images: string[];
+  alt: string;
+  id: string;
+}
+
+const { images, alt, id } = Astro.props;
+const slides = images.length > 0 ? images : [];
+const loopSlides = slides.length > 1 ? [...slides, ...slides] : slides;
+---
+
+{slides.length > 0 && (
+  <div
+    class="exhibition-carousel"
+    data-exhibition-carousel
+    data-carousel-id={id}
+    aria-roledescription="carousel"
+    aria-label={`${alt} exhibition photos`}
+  >
+    <button
+      type="button"
+      class="exhibition-carousel__btn exhibition-carousel__btn--prev"
+      aria-label="Previous image"
+    >
+      <span aria-hidden="true">←</span>
+    </button>
+
+    <div class="exhibition-carousel__viewport" tabindex="0">
+      <div class="exhibition-carousel__track">
+        {loopSlides.map((src, i) => (
+          <figure class="exhibition-carousel__slide">
+            <img
+              src={src}
+              alt={`${alt} — photo ${(i % slides.length) + 1}`}
+              loading={i < 3 ? "eager" : "lazy"}
+              decoding="async"
+              draggable="false"
+            />
+          </figure>
+        ))}
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="exhibition-carousel__btn exhibition-carousel__btn--next"
+      aria-label="Next image"
+    >
+      <span aria-hidden="true">→</span>
+    </button>
+
+    {slides.length > 1 && (
+      <p class="exhibition-carousel__hint font-mono text-[9px] tracking-[0.2em] uppercase text-ink-35">
+        Auto-scroll · drag or use arrows
+      </p>
+    )}
+  </div>
+)}

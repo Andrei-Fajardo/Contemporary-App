@@ -1,5 +1,5 @@
 ---
-import LazyImage from './LazyImage.astro';
+import ExhibitionCarousel from './ExhibitionCarousel.astro';
 import type { ExhibitionEntry } from '../data/content';
 
 interface Props {
@@ -27,20 +27,11 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
           <p class="content-prose text-ink-60 mb-6">{entry.note}</p>
         )}
         {entry.images.length > 0 && (
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-            {entry.images.map((src) => (
-              <div class="overflow-clip border border-subtle">
-                <LazyImage
-                  src={src}
-                  alt={entry.title}
-                  aspectRatio="4 / 3"
-                  parallaxSpeed={0}
-                  depthTarget={false}
-                  class="grayscale hover:grayscale-0 transition-[filter] duration-700"
-                />
-              </div>
-            ))}
-          </div>
+          <ExhibitionCarousel
+            id={entry.id}
+            images={entry.images}
+            alt={entry.title}
+          />
         )}
         <span class="exhibition-accordion__kind">{entry.kind}</span>
       </div>
