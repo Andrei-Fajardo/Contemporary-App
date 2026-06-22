@@ -6,16 +6,17 @@ let ticking = false;
 let onScrollHandler: (() => void) | null = null;
 
 function updateParallax(): void {
-  const layers = document.querySelectorAll<HTMLElement>("[data-parallax-speed], .parallax-layer");
+  const layers = document.querySelectorAll<HTMLElement>(".parallax-layer, [data-parallax-speed]");
 
   layers.forEach((el) => {
+    if (el.tagName === "IMG") return;
     const speed = parseFloat(el.dataset.parallaxSpeed ?? el.getAttribute("data-parallax-speed") ?? "0.35");
     if (speed <= 0) return;
     const rect = el.getBoundingClientRect();
     const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
     const clamped = Math.max(0, Math.min(1, progress));
-    const y = (clamped - 0.5) * 120 * speed;
-    const scale = 1 + (1 - clamped) * 0.06 * speed;
+    const y = (clamped - 0.5) * 140 * speed;
+    const scale = 1 + (1 - clamped) * 0.08 * speed;
     el.style.transform = `translate3d(0, ${y}px, 0) scale(${scale})`;
   });
 

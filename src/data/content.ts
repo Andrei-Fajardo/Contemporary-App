@@ -43,12 +43,7 @@ export interface PublicationItem {
   year: string;
 }
 
-export const publications: PublicationItem[] = [
-  { type: 'book', author: 'Anna Dauyl Rockswell', title: 'The Fish and Other Departures', publisher: 'Void Press', year: '2025' },
-  { type: 'essay', author: 'Anna Dauyl Rockswell', title: 'Threshold Spaces: Liminality in Contemporary Sculpture', publisher: 'Sculpture Journal', year: '2024' },
-  { type: 'essay', author: 'Anna Dauyl Rockswell', title: 'Archival Memory in Post-Digital Installation', publisher: 'Journal of Visual Art Practice', year: '2025' },
-  { type: 'essay', author: 'Anna Dauyl Rockswell', title: 'The Visceral Feminine: Dark Expressionism and the Body', publisher: 'Contemporary Art Review', year: '2025' },
-];
+export const publications: PublicationItem[] = [];
 
 export interface PressItem {
   author: string;
@@ -71,18 +66,8 @@ export interface ResearchItem {
   year: string;
 }
 
-export const researchPapers: ResearchItem[] = [
-  { title: 'Archival Memory in Post-Digital Installation', journal: 'Journal of Visual Art Practice', year: '2025' },
-  { title: 'Threshold Spaces: Liminality in Contemporary Sculpture', journal: 'Sculpture Journal', year: '2024' },
-];
+export const researchPapers: ResearchItem[] = [];
 
-export const grantsAndFellowships = [
-  { title: 'Andy Warhol Foundation Grant', year: '2024', description: 'Arts Writing and Criticism' },
-  { title: 'NEA Fellowship', year: '2023', description: 'Visual Arts' },
-  { title: 'ARKO Arts Council Grant', year: '2025', description: 'International Exhibition Support' },
-];
+export const grantsAndFellowships: { title: string; year: string; description: string }[] = [];
 
-export const residencies = [
-  { title: 'Hechyeomoyeo International Artist Residency', location: 'New York, USA', year: '2024' },
-  { title: 'Verger Gallery Studio Residency', location: 'Seoul, South Korea', year: '2025' },
-];
+export const residencies: { title: string; location: string; year: string }[] = [];

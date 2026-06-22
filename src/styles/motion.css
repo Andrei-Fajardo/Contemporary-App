@@ -56,9 +56,27 @@ html.motion-reduced .parallax-layer {
   --depth-focus: 0;
   position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow: clip;
   background-color: rgba(0, 0, 0, 0.04);
   aspect-ratio: var(--lazy-aspect, 4 / 5);
+}
+
+.lazy-media--parallax {
+  overflow: clip;
+}
+
+.lazy-media__parallax {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.lazy-media__parallax img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
 }
 
 .depth-target {
@@ -213,6 +231,11 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 .hero-media-frame .lazy-media {
   aspect-ratio: auto;
   height: 100%;
+}
+
+.hero-media-frame .lazy-media__parallax {
+  height: 115%;
+  margin-top: -7.5%;
 }
 
 /* --- Sticky sections --- */

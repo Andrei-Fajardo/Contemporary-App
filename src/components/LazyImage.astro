@@ -20,6 +20,8 @@ const {
   eager = false,
   depthTarget = true,
 } = Astro.props;
+
+const hasParallax = parallaxSpeed !== undefined && parallaxSpeed > 0;
 ---
 
 <div
@@ -28,15 +30,35 @@ const {
     depthTarget && "depth-target",
     contain && "lazy-media--contain lazy-media--fit",
     eager && "is-loaded",
+    hasParallax && "lazy-media--parallax",
   ]}
   style={contain ? undefined : `--lazy-aspect: ${aspectRatio}`}
 >
-  {eager ? (
+  {hasParallax ? (
+    <div class="parallax-layer lazy-media__parallax" data-parallax-speed={parallaxSpeed}>
+      {eager ? (
+        <img
+          src={src}
+          alt={alt}
+          class={className}
+          decoding="async"
+          fetchpriority="high"
+        />
+      ) : (
+        <img
+          data-src={src}
+          alt={alt}
+          class={className}
+          decoding="async"
+          loading="lazy"
+        />
+      )}
+    </div>
+  ) : eager ? (
     <img
       src={src}
       alt={alt}
       class={className}
-      data-parallax-speed={parallaxSpeed}
       decoding="async"
       fetchpriority="high"
     />
@@ -45,7 +67,6 @@ const {
       data-src={src}
       alt={alt}
       class={className}
-      data-parallax-speed={parallaxSpeed}
       decoding="async"
       loading="lazy"
     />
