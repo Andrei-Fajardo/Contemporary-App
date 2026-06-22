@@ -554,9 +554,12 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 .exhibition-carousel__viewport {
   grid-column: 2;
   grid-row: 1;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
@@ -590,7 +593,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   flex: 0 0 auto;
   scroll-snap-align: start;
   margin: 0;
-  height: clamp(11rem, 28vw, 16rem);
+  height: clamp(14rem, 36vw, 22rem);
   border: 1px solid var(--border-subtle);
   overflow: clip;
   background: var(--surface-placeholder);
@@ -601,23 +604,21 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   height: 100%;
   width: auto;
   max-width: none;
+  min-width: 12rem;
   object-fit: cover;
-  filter: grayscale(1);
-  transition: filter 0.7s var(--ease-editorial);
-}
-
-.exhibition-carousel__slide:hover img,
-.exhibition-carousel__slide:focus-within img {
-  filter: grayscale(0);
+  image-rendering: auto;
 }
 
 .exhibition-carousel__btn {
-  z-index: 2;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  pointer-events: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-default);
   background: color-mix(in srgb, var(--canvas) 88%, transparent);
@@ -662,7 +663,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   }
 
   .exhibition-carousel__slide {
-    height: clamp(9rem, 40vw, 12rem);
+    height: clamp(12rem, 42vw, 16rem);
   }
 }
 

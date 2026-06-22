@@ -33,8 +33,9 @@ const loopSlides = slides.length > 1 ? [...slides, ...slides] : slides;
             <img
               src={src}
               alt={`${alt} — photo ${(i % slides.length) + 1}`}
-              loading={i < 3 ? "eager" : "lazy"}
+              loading="eager"
               decoding="async"
+              fetchpriority={i < 2 ? "high" : "auto"}
               draggable="false"
             />
           </figure>
