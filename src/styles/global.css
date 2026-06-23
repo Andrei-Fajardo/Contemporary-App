@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Forum&family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
 
-/* Editorial Sophistication — Playfair / Montserrat / Inter */
+/* Editorial typography — Forum (heads) + Inter (body) */
 :root {
-  --font-heading: "Playfair Display", Georgia, serif;
-  --font-subheading: "Montserrat", "Helvetica Neue", Helvetica, sans-serif;
-  --font-body: "Inter", "Helvetica", Arial, sans-serif;
+  --font-heading: "Forum", Georgia, "Times New Roman", serif;
+  --font-subheading: "Forum", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --heading-track: 0.1em;
 
   /* Legacy aliases */
   --font-forum: var(--font-heading);
   --font-serif: var(--font-body);
-  --font-sans: var(--font-subheading);
+  --font-sans: var(--font-body);
 
   /* color.canvas / color.ink — ux-guidelines.md */
   --canvas: #F0EEE9;
@@ -163,6 +164,31 @@ html {
 .font-heading { font-family: var(--font-heading); }
 .font-subheading { font-family: var(--font-subheading); }
 .font-body { font-family: var(--font-body); }
+.font-forum { font-family: var(--font-forum); }
+
+/* Forum heading — ALL CAPS + tracked */
+.type-heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--heading-track);
+  line-height: 1.05;
+}
+
+/* Forum sub-heading — Title Case, no extra tracking */
+.type-subheading {
+  font-family: var(--font-subheading);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.15;
+}
+
+/* Inter body — regular weight */
+.type-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.62;
+}
 
 /* Staggered fade-in reveal */
 @keyframes stagger-in {
@@ -226,6 +252,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 /* Body copy — larger; section titles / H1–H2 unchanged */
 .content-prose {
   font-family: var(--font-body);
+  font-weight: 400;
   font-size: clamp(1.0625rem, 1.15vw + 0.65rem, 1.3125rem);
   line-height: 1.72;
   color: var(--ink-75);
@@ -240,7 +267,8 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .content-prose--sans {
-  font-family: var(--font-subheading);
+  font-family: var(--font-body);
+  font-weight: 400;
   font-size: clamp(1rem, 0.85vw + 0.7rem, 1.1875rem);
   line-height: 1.65;
   color: var(--ink-75);
@@ -253,9 +281,10 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .section-eyebrow {
-  font-family: var(--font-subheading);
+  font-family: var(--font-heading);
   font-size: clamp(0.5625rem, 0.45vw + 0.4rem, 0.6875rem);
-  letter-spacing: 0.28em;
+  font-weight: 400;
+  letter-spacing: var(--heading-track);
   text-transform: uppercase;
   color: var(--ink-45);
   margin-bottom: 1.5rem;
@@ -306,8 +335,8 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   max-width: min(88rem, calc(100vw - clamp(1.25rem, 3.5vw, 2.75rem)));
 }
 
-.editorial-dense .font-forum.text-4xl,
-.editorial-dense .font-forum.text-3xl,
+.editorial-dense .type-heading.text-3xl,
+.editorial-dense .type-subheading.text-2xl,
 .editorial-dense h2 {
   line-height: var(--heading-tight);
   letter-spacing: -0.028em;

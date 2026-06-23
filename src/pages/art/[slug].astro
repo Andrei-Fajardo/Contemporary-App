@@ -44,33 +44,30 @@ const additionalMedia: Record<string, string[]> = {
         <img src={painting.image} alt={painting.title} loading="lazy" />
       </div>
 
-      <div class="w-full flex flex-col justify-between h-full min-w-0">
+      <div class="w-full flex flex-col justify-between h-full min-w-0 art-wall-label">
         <div class="w-full flex flex-col space-y-6">
-          <div class="w-full flex justify-between items-baseline border-b border-neutral-900/10 pb-3 min-w-0">
-            <h1 class="font-heading text-3xl md:text-4xl text-neutral-900 tracking-tight leading-none truncate pr-4">
-              {painting.title}
-            </h1>
-            <span class="font-mono text-xs text-neutral-400 shrink-0 select-none">
-              // {painting.year}
-            </span>
-          </div>
+          <h1 class="type-subheading text-3xl md:text-4xl text-neutral-900 leading-none">
+            {painting.title}
+          </h1>
 
-          <div class="w-full block overflow-x-auto scrollbar-none pb-1">
-            <p class="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-neutral-500 uppercase whitespace-nowrap">
-              {painting.dimensions} <span class="text-neutral-300 mx-2">|</span> {painting.medium}
-            </p>
-          </div>
+          <p class="type-subheading text-lg text-neutral-600">{painting.dimensions}</p>
+          <p class="type-body text-neutral-600 text-sm">By Artist NANA (Anna Dauyl Rockswell)</p>
 
-          <p class="content-prose text-neutral-600 text-sm">By Artist NANA (Anna Dauyl Rockswell)</p>
-
-          <div class="font-body text-sm text-neutral-600 leading-relaxed max-w-[55ch] pt-2 space-y-4">
-            <p>{painting.about}</p>
+          <div class="pt-2">
+            <p class="type-heading text-[0.6875rem] text-neutral-400 mb-4">About</p>
+            <div class="space-y-4 max-w-[55ch]">
+              {painting.aboutParagraphs.map((para) => (
+                <p class="content-prose text-neutral-600">{para}</p>
+              ))}
+            </div>
           </div>
 
           <div class="pt-4 border-t border-neutral-900/10">
-            <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-3">Artist Bio</p>
-            <p class="text-sm text-neutral-600 leading-relaxed max-w-[55ch]">{painting.artistBio}</p>
+            <p class="type-heading text-[0.6875rem] text-neutral-400 mb-3">Artist Bio</p>
+            <p class="content-prose text-neutral-600 max-w-[55ch]">{painting.artistBio}</p>
           </div>
+
+          <p class="type-body text-neutral-500 text-sm">Contacts: {painting.contact}</p>
         </div>
 
         <div class="pt-8">
