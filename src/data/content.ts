@@ -172,18 +172,80 @@ export interface PublicationItem {
 export const publications: PublicationItem[] = [];
 
 export interface PressItem {
-  author: string;
+  id: string;
   title: string;
-  outlet: string;
+  venue: string;
+  place: string;
   date: string;
+  image: string;
 }
 
+/** Exhibition press & promotional posters — one image per entry, no duplicates. */
 export const pressItems: PressItem[] = [
-  { author: 'Astraea Zine', title: 'The Fish and Souls of Leavings — Issue Eight Feature', outlet: 'Astraea Zine', date: '2025' },
-  { author: 'Hush Magazine', title: 'Souls of Leavings — Issue 001 LOST//FOUND', outlet: 'Hush Magazine', date: '2025' },
-  { author: 'Spellbinder Magazine', title: 'Souls of Leavings — Spring 2026 Issue', outlet: 'Spellbinder Magazine', date: '2026' },
-  { author: 'Wildsape Literary Journal', title: 'The Fish — Featured Artwork', outlet: 'Wildsape Literary Journal', date: '2025' },
-  { author: 'Itaewon Film Festival', title: 'Featured Filmmaker / Artist', outlet: 'Itaewon Film Festival', date: '2025' },
+  {
+    id: 'istanbul-art-show',
+    title: 'Istanbul Art Show',
+    venue: 'Luna Grande Art',
+    place: 'Kadıköy, Istanbul, Turkey',
+    date: 'November 15–21, 2025',
+    image: '/media/press/istanbul-art-show.jpg',
+  },
+  {
+    id: 'light-that-remains',
+    title: 'Light that Remains',
+    venue: 'D.I.M.O × Verger Gallery',
+    place: 'Yeonnam-dong, Seoul, South Korea',
+    date: 'December 14, 2025 – January 10, 2026',
+    image: '/media/press/light-that-remains.jpg',
+  },
+  {
+    id: 'petit-masterpiece',
+    title: 'PETIT Masterpiece',
+    venue: 'Ahmad Shariff Art Gallery',
+    place: 'Claremont, California, USA',
+    date: 'December 6, 2025',
+    image: '/media/press/petit-masterpiece.jpg',
+  },
+  {
+    id: 'with-iam-insa',
+    title: 'With IAM Insa — The Fish',
+    venue: 'Annyeong Insa-dong',
+    place: 'Seoul, South Korea',
+    date: 'September 11–14, 2024',
+    image: '/media/exhibitions/im-insa.jpg',
+  },
+  {
+    id: 'itaewon-film-festival',
+    title: 'Itaewon Film Festival 2025',
+    venue: 'Bokwang Theater',
+    place: 'Seoul, South Korea',
+    date: 'November 13–16, 2025',
+    image: '/media/posters/itaewon-poster.png',
+  },
+  {
+    id: 'nyc-hcmy',
+    title: 'New York Art Exhibition — HCMY #12',
+    venue: 'The Living Gallery',
+    place: 'Bushwick, Brooklyn, New York, USA',
+    date: 'October 11–26, 2025',
+    image: '/media/posters/nana-nyc.jpg',
+  },
+  {
+    id: 'paris-vandals',
+    title: 'Paris Art Exhibition 2025 — The Vandals',
+    venue: 'Of Nazareth Gallery',
+    place: 'Le Marais, Paris, France',
+    date: 'October 17–20, 2025',
+    image: '/media/posters/paris-poster.png',
+  },
+  {
+    id: 'vandals-edge-of-now',
+    title: 'The Vandals — Edge of Now',
+    venue: 'The Koppel Project',
+    place: 'Camden Town, London, UK',
+    date: 'October 23–26, 2025',
+    image: '/media/press/vandals-edge-of-now.jpg',
+  },
 ];
 
 export interface ResearchItem {
