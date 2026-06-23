@@ -36,86 +36,43 @@
 
 .chaos-splash {
   position: absolute;
+  left: 0;
+  top: 0;
   border-radius: 50% 40% 60% 30%;
   filter: blur(0.5px);
   opacity: 0.72;
   mix-blend-mode: multiply;
   will-change: transform;
   transform-origin: center center;
+  /* Position + drift driven by inline rAF script in Hero.astro */
+  animation: none !important;
 }
 
 .chaos-splash--1 {
   width: clamp(4rem, 12vw, 9rem);
   height: clamp(3rem, 8vw, 6rem);
   background: var(--accent-red);
-  top: 8%;
-  right: 6%;
   opacity: 0.55;
-  animation: leaf-drift-1 14s ease-in-out infinite;
 }
 
 .chaos-splash--2 {
   width: clamp(2rem, 5vw, 4rem);
   height: clamp(1.5rem, 4vw, 3rem);
   background: var(--accent-red-bright);
-  bottom: 22%;
-  left: 4%;
   opacity: 0.38;
-  animation: leaf-drift-2 18s ease-in-out infinite;
 }
 
 .chaos-splash--3 {
   width: clamp(1.25rem, 3vw, 2.5rem);
   height: clamp(0.75rem, 2vw, 1.5rem);
   background: var(--accent-red);
-  top: 42%;
-  left: 38%;
   opacity: 0.28;
-  animation: leaf-drift-3 11s ease-in-out infinite;
 }
 
-@keyframes leaf-drift-1 {
-  0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(-18deg) scale(1);
-  }
-  25% {
-    transform: translate3d(-90px, 55px, 0) rotate(-34deg) scale(1.06);
-  }
-  50% {
-    transform: translate3d(-160px, 20px, 0) rotate(-10deg) scale(0.95);
-  }
-  75% {
-    transform: translate3d(-70px, -45px, 0) rotate(-26deg) scale(1.03);
-  }
-}
-
-@keyframes leaf-drift-2 {
-  0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(32deg) scale(1);
-  }
-  25% {
-    transform: translate3d(110px, -40px, 0) rotate(18deg) scale(1.08);
-  }
-  50% {
-    transform: translate3d(180px, 35px, 0) rotate(44deg) scale(0.92);
-  }
-  75% {
-    transform: translate3d(60px, 70px, 0) rotate(24deg) scale(1.04);
-  }
-}
-
-@keyframes leaf-drift-3 {
-  0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(-42deg) scale(1);
-  }
-  25% {
-    transform: translate3d(-50px, 75px, 0) rotate(-28deg) scale(1.14);
-  }
-  50% {
-    transform: translate3d(95px, 110px, 0) rotate(-58deg) scale(0.88);
-  }
-  75% {
-    transform: translate3d(35px, 30px, 0) rotate(-36deg) scale(1.06);
+@media (prefers-reduced-motion: reduce) {
+  .hero-chaos__ghost,
+  .about-chaos__list li {
+    transform: none !important;
   }
 }
 
@@ -456,24 +413,4 @@
   height: 3px;
   background: var(--accent-red);
   transform: skewX(-12deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-chaos__ghost,
-  .about-chaos__list li {
-    transform: none !important;
-  }
-
-  /* Decorative petals: slow drift instead of frozen (Windows often sets reduce) */
-  .chaos-splash--1 {
-    animation-duration: 42s;
-  }
-
-  .chaos-splash--2 {
-    animation-duration: 52s;
-  }
-
-  .chaos-splash--3 {
-    animation-duration: 36s;
-  }
 }
