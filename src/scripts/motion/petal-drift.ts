@@ -1,4 +1,4 @@
-/** Smooth petal drift via requestAnimationFrame — hero + site-wide layers */
+/** Smooth petal drift via requestAnimationFrame — hero + site-wide layers, cursor-reactive */
 
 export type PetalSpec = {
   sel: string;
@@ -16,6 +16,15 @@ export type PetalGroup = {
   rootSelector: string;
   petals: PetalSpec[];
   isActive?: () => boolean;
+};
+
+type PetalPhysics = {
+  ox: number;
+  oy: number;
+  vx: number;
+  vy: number;
+  rot: number;
+  rotV: number;
 };
 
 const GLOBAL_PETALS: PetalSpec[] = [
@@ -41,6 +50,19 @@ const HERO_PETALS: PetalSpec[] = [
   { sel: ".chaos-splash--7", ox: 0.86, oy: 0.62, ax: 55, ay: 45, rot: 18, rs: 9, sp: 0.52, ph: 4.2 },
 ];
 
+const GENTLE_RADIUS = 130;
+const GENTLE_STRENGTH = 52;
+const SWIPE_RADIUS = 320;
+const SWIPE_VEL_THRESHOLD = 280;
+const SWIPE_STRENGTH = 0.14;
+const SWIPE_MAX_SPEED = 3200;
+const DAMPING = 0.9;
+const SPRING = 0.065;
+const MAX_OFFSET = 260;
+const ROT_SWIPE_FACTOR = 0.022;
+const ROT_DAMPING = 0.86;
+const ROT_SPRING = 0.08;
+
 function isHeroVisible(): boolean {
   const hero = document.querySelector(".hero-chaos");
   if (!hero) return false;
@@ -58,9 +80,36 @@ const GROUPS: PetalGroup[] = [
   },
 ];
 
+const physics = new Map<HTMLElement, PetalPhysics>();
+const cursor = { x: -9999, y: -9999, vx: 0, vy: 0, active: false };
+const lastMove = { x: 0, y: 0, t: 0 };
+
 let rafId = 0;
 let running = false;
 let tabListenerBound = false;
+let pointerListenerBound = false;
+let lastFrameT = 0;
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+function hypot(x: number, y: number): number {
+  return Math.sqrt(x * x + y * y);
+}
+
+function getPhysics(el: HTMLElement): PetalPhysics {
+  let state = physics.get(el);
+  if (!state) {
+    state = { ox: 0, oy: 0, vx: 0, vy: 0, rot: 0, rotV: 0 };
+    physics.set(el, state);
+  }
+  return state;
+}
+
+function clearPhysics(): void {
+  physics.clear();
+}
 
 function prepPetalElements(): void {
   document.querySelectorAll(".chaos-splash, .floating-petal").forEach((el) => {
@@ -69,11 +118,82 @@ function prepPetalElements(): void {
   });
 }
 
+function applyCursorForces(
+  state: PetalPhysics,
+  centerX: number,
+  centerY: number,
+  dt: number,
+  react: number,
+): void {
+  if (!cursor.active || react <= 0) return;
+
+  const dx = centerX - cursor.x;
+  const dy = centerY - cursor.y;
+  const dist = hypot(dx, dy);
+  if (dist < 1) return;
+
+  const nx = dx / dist;
+  const ny = dy / dist;
+
+  if (dist < GENTLE_RADIUS) {
+    const proximity = 1 - dist / GENTLE_RADIUS;
+    const gentle = GENTLE_STRENGTH * proximity * proximity * react;
+    state.vx += nx * gentle * dt;
+    state.vy += ny * gentle * dt;
+  }
+
+  const speed = hypot(cursor.vx, cursor.vy);
+  if (speed > SWIPE_VEL_THRESHOLD && dist < SWIPE_RADIUS) {
+    const proximity = 1 - dist / SWIPE_RADIUS;
+    const capped = Math.min(speed, SWIPE_MAX_SPEED);
+    const swipe = capped * SWIPE_STRENGTH * proximity * proximity * react;
+    const invSpeed = 1 / speed;
+    state.vx += cursor.vx * invSpeed * swipe * dt;
+    state.vy += cursor.vy * invSpeed * swipe * dt;
+    const rotImpulse = (cursor.vx * ny - cursor.vy * nx) * ROT_SWIPE_FACTOR * proximity * proximity * react;
+    state.rotV += rotImpulse * dt * 60;
+  }
+}
+
+function integratePhysics(state: PetalPhysics, dt: number): void {
+  const damp = Math.pow(DAMPING, dt * 60);
+  state.vx *= damp;
+  state.vy *= damp;
+  state.vx += -state.ox * SPRING * dt * 60;
+  state.vy += -state.oy * SPRING * dt * 60;
+  state.ox += state.vx * dt;
+  state.oy += state.vy * dt;
+  state.ox = clamp(state.ox, -MAX_OFFSET, MAX_OFFSET);
+  state.oy = clamp(state.oy, -MAX_OFFSET, MAX_OFFSET);
+
+  const rotDamp = Math.pow(ROT_DAMPING, dt * 60);
+  state.rotV *= rotDamp;
+  state.rotV += -state.rot * ROT_SPRING * dt * 60;
+  state.rot += state.rotV * dt;
+  state.rot = clamp(state.rot, -45, 45);
+}
+
+function decayCursorVelocity(now: number): void {
+  const idle = (now - lastMove.t) / 1000;
+  if (idle > 0.04) {
+    const decay = Math.pow(0.82, idle * 60);
+    cursor.vx *= decay;
+    cursor.vy *= decay;
+  }
+}
+
 function tick(now: number): void {
   if (!running) return;
 
+  const dt = lastFrameT ? clamp((now - lastFrameT) / 1000, 0.001, 0.05) : 1 / 60;
+  lastFrameT = now;
+
   const t = now / 1000;
-  const slow = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0.35 : 1;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const slow = reduced ? 0.35 : 1;
+  const react = reduced ? 0.3 : 1;
+
+  decayCursorVelocity(now);
 
   GROUPS.forEach((group) => {
     if (group.isActive && !group.isActive()) return;
@@ -81,6 +201,7 @@ function tick(now: number): void {
     const root = document.querySelector<HTMLElement>(group.rootSelector);
     if (!root) return;
 
+    const rootRect = root.getBoundingClientRect();
     const w = root.clientWidth || window.innerWidth;
     const h = root.clientHeight || window.innerHeight;
 
@@ -89,9 +210,18 @@ function tick(now: number): void {
       if (!el) return;
 
       const phase = t * p.sp * slow + p.ph;
-      const x = p.ox * w + Math.sin(phase) * p.ax * slow;
-      const y = p.oy * h + Math.cos(phase * 0.85 + p.ph) * p.ay * slow;
-      const rot = p.rot + Math.sin(phase * 1.1) * p.rs * slow;
+      const baseX = p.ox * w + Math.sin(phase) * p.ax * slow;
+      const baseY = p.oy * h + Math.cos(phase * 0.85 + p.ph) * p.ay * slow;
+
+      const state = getPhysics(el);
+      const centerX = rootRect.left + baseX + el.offsetWidth * 0.5;
+      const centerY = rootRect.top + baseY + el.offsetHeight * 0.5;
+      applyCursorForces(state, centerX, centerY, dt, react);
+      integratePhysics(state, dt);
+
+      const x = baseX + state.ox;
+      const y = baseY + state.oy;
+      const rot = p.rot + Math.sin(phase * 1.1) * p.rs * slow + state.rot;
       const scale = 1 + Math.sin(phase * 0.7) * 0.06 * slow;
       el.style.transform = `translate3d(${x}px,${y}px,0) rotate(${rot}deg) scale(${scale})`;
     });
@@ -100,9 +230,54 @@ function tick(now: number): void {
   rafId = requestAnimationFrame(tick);
 }
 
+function onPointerMove(event: PointerEvent): void {
+  const now = performance.now();
+
+  if (!lastMove.t) {
+    lastMove.x = event.clientX;
+    lastMove.y = event.clientY;
+    lastMove.t = now;
+    cursor.x = event.clientX;
+    cursor.y = event.clientY;
+    cursor.active = true;
+    return;
+  }
+
+  const dt = Math.max(0.001, (now - lastMove.t) / 1000);
+  const rawVx = (event.clientX - lastMove.x) / dt;
+  const rawVy = (event.clientY - lastMove.y) / dt;
+
+  cursor.vx = cursor.vx * 0.45 + rawVx * 0.55;
+  cursor.vy = cursor.vy * 0.45 + rawVy * 0.55;
+  cursor.x = event.clientX;
+  cursor.y = event.clientY;
+  cursor.active = true;
+
+  lastMove.x = event.clientX;
+  lastMove.y = event.clientY;
+  lastMove.t = now;
+}
+
+function onPointerEnd(): void {
+  cursor.active = false;
+}
+
+export function bindPetalPointerListener(): void {
+  if (pointerListenerBound) return;
+  pointerListenerBound = true;
+
+  window.addEventListener("pointermove", onPointerMove, { passive: true });
+  window.addEventListener("pointerdown", onPointerMove, { passive: true });
+  window.addEventListener("pointerup", onPointerEnd, { passive: true });
+  window.addEventListener("pointercancel", onPointerEnd, { passive: true });
+  window.addEventListener("blur", onPointerEnd);
+  document.documentElement.addEventListener("mouseleave", onPointerEnd);
+}
+
 export function startPetalDrift(): void {
   if (running) return;
   running = true;
+  lastFrameT = 0;
   document.documentElement.classList.add("petals-live");
   prepPetalElements();
   cancelAnimationFrame(rafId);
@@ -116,6 +291,11 @@ export function stopPetalDrift(): void {
 
 export function resetPetalDrift(): void {
   stopPetalDrift();
+  clearPhysics();
+  cursor.active = false;
+  cursor.vx = 0;
+  cursor.vy = 0;
+  lastMove.t = 0;
   document.documentElement.classList.remove("petals-live");
 }
 
@@ -124,6 +304,7 @@ export function initPetalDrift(): void {
     document.querySelector(".floating-petals") || document.querySelector(".hero-chaos .chaos-splash");
   if (!hasPetals) return;
 
+  bindPetalPointerListener();
   prepPetalElements();
   startPetalDrift();
 }
