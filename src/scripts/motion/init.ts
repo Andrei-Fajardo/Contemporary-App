@@ -8,7 +8,7 @@ import { initExhibitionCarousels, resetExhibitionCarousels } from "./exhibition-
 import { initExhibitionAccordion, resetExhibitionAccordion } from "./exhibition-accordion";
 import { initNavHover, resetNavHover } from "./nav-hover";
 import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
-import { initHeroLeaves, resetHeroLeaves, bindHeroLeavesTabListener } from "./hero-leaves";
+import { initPetalDrift, resetPetalDrift, bindPetalDriftTabListener } from "./petal-drift";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -32,7 +32,7 @@ export function initMotion(): void {
   resetExhibitionAccordion();
   resetNavHover();
   resetGlobalLightbox();
-  resetHeroLeaves();
+  resetPetalDrift();
 
   if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
     document.documentElement.classList.add("motion-reduced");
@@ -60,6 +60,6 @@ export function initMotion(): void {
   initExhibitionAccordion();
   initNavHover();
   initGlobalLightbox();
-  bindHeroLeavesTabListener();
-  initHeroLeaves();
+  bindPetalDriftTabListener();
+  initPetalDrift();
 }

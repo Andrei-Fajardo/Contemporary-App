@@ -102,6 +102,137 @@
   border-radius: 60% 40% 50% 50%;
 }
 
+/* --- Site-wide floating petals (every page) --- */
+.floating-petals {
+  position: fixed;
+  top: 4rem;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (min-width: 1024px) {
+  .floating-petals {
+    top: 0;
+    left: 15rem;
+  }
+}
+
+.floating-petals--full {
+  top: 0;
+  left: 0;
+}
+
+@media (min-width: 1024px) {
+  .floating-petals--full {
+    left: 0;
+  }
+}
+
+.floating-petal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50% 40% 60% 30%;
+  filter: blur(0.5px);
+  mix-blend-mode: multiply;
+  will-change: transform;
+  transform-origin: center center;
+  animation: none !important;
+}
+
+.floating-petal--1 {
+  width: clamp(3.5rem, 10vw, 7.5rem);
+  height: clamp(2.5rem, 7vw, 5.5rem);
+  background: var(--accent-red);
+  opacity: 0.38;
+}
+
+.floating-petal--2 {
+  width: clamp(2.5rem, 6vw, 5rem);
+  height: clamp(1.75rem, 4.5vw, 3.5rem);
+  background: var(--accent-red-bright);
+  opacity: 0.32;
+  border-radius: 55% 35% 60% 40%;
+}
+
+.floating-petal--3 {
+  width: clamp(2rem, 5vw, 4rem);
+  height: clamp(1.5rem, 3.5vw, 3rem);
+  background: var(--accent-red);
+  opacity: 0.28;
+  border-radius: 40% 60% 45% 55%;
+}
+
+.floating-petal--4 {
+  width: clamp(2.75rem, 7vw, 5.5rem);
+  height: clamp(2rem, 5vw, 4rem);
+  background: var(--accent-red-bright);
+  opacity: 0.34;
+  border-radius: 45% 55% 50% 35%;
+}
+
+.floating-petal--5 {
+  width: clamp(1.5rem, 4vw, 3rem);
+  height: clamp(1rem, 2.5vw, 2rem);
+  background: var(--accent-red);
+  opacity: 0.24;
+  border-radius: 60% 40% 50% 50%;
+}
+
+.floating-petal--6 {
+  width: clamp(3rem, 8vw, 6rem);
+  height: clamp(2.25rem, 6vw, 4.5rem);
+  background: var(--accent-red);
+  opacity: 0.36;
+  border-radius: 50% 35% 55% 40%;
+}
+
+.floating-petal--7 {
+  width: clamp(2.25rem, 5.5vw, 4.5rem);
+  height: clamp(1.5rem, 4vw, 3rem);
+  background: var(--accent-red-bright);
+  opacity: 0.3;
+  border-radius: 42% 58% 48% 52%;
+}
+
+.floating-petal--8 {
+  width: clamp(2rem, 5vw, 4rem);
+  height: clamp(1.5rem, 3.5vw, 3rem);
+  background: var(--accent-red);
+  opacity: 0.26;
+  border-radius: 55% 45% 60% 35%;
+}
+
+.floating-petal--9 {
+  width: clamp(1.75rem, 4vw, 3.25rem);
+  height: clamp(1.25rem, 3vw, 2.25rem);
+  background: var(--accent-red-bright);
+  opacity: 0.22;
+  border-radius: 48% 52% 42% 58%;
+}
+
+.floating-petal--10 {
+  width: clamp(1.25rem, 3vw, 2.5rem);
+  height: clamp(0.875rem, 2vw, 1.75rem);
+  background: var(--accent-red);
+  opacity: 0.2;
+  border-radius: 60% 40% 55% 45%;
+}
+
+.site-main-column {
+  position: relative;
+}
+
+.site-main-column .tabular-main,
+.site-main-column > main {
+  position: relative;
+  z-index: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-chaos__ghost,
   .about-chaos__list li {

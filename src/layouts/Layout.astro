@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import FloatingPetals from '../components/FloatingPetals.astro';
 export interface Props {
   title: string;
 }
@@ -29,6 +30,7 @@ const currentLang = Astro.url.pathname.split('/')[1] || 'en';
   <body class="font-body text-neutral-800 antialiased bg-[#F0EEE9]">
     <!-- Film Grain Overlay -->
     <div class="grain-overlay" />
+    <FloatingPetals fullBleed />
 
     <!-- 5-Language Toggle — with active state detection -->
     <div id="lang-toggle" class="fixed top-6 right-6 z-50 flex items-stretch border border-black/20 font-mono text-[10px] font-bold bg-white/60 backdrop-blur-md rounded overflow-hidden">
@@ -50,11 +52,19 @@ const currentLang = Astro.url.pathname.split('/')[1] || 'en';
 </html>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  import { initPetalDrift, resetPetalDrift, bindPetalDriftTabListener } from "../scripts/motion/petal-drift";
+
+  function bootPetals() {
+    resetPetalDrift();
+    bindPetalDriftTabListener();
+    initPetalDrift();
+  }
+
+  function syncLangToggle() {
     const path = window.location.pathname;
-    const seg = path.split('/')[1];
-    const codes = ['en', 'kr', 'kk', 'zh', 'ru'];
-    const active = seg && codes.includes(seg) ? seg : 'en';
+    const seg = path.split("/")[1];
+    const codes = ["en", "kr", "kk", "zh", "ru"];
+    const active = seg && codes.includes(seg) ? seg : "en";
 
     document.querySelectorAll("#lang-toggle .lang-btn").forEach((btn) => {
       const lang = btn.getAttribute("data-lang");
@@ -65,5 +75,18 @@ const currentLang = Astro.url.pathname.split('/')[1] || 'en';
         btn.classList.remove("bg-[#111111]", "bg-[#111]", "text-white");
       }
     });
-  });
+  }
+
+  function boot() {
+    bootPetals();
+    syncLangToggle();
+  }
+
+  document.addEventListener("astro:page-load", boot);
+  document.addEventListener("astro:after-swap", boot);
+  document.addEventListener("DOMContentLoaded", boot);
+
+  if (document.readyState !== "loading") {
+    boot();
+  }
 </script>
