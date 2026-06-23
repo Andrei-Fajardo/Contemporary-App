@@ -31,7 +31,7 @@ const subtitle = `${dimensions} | ${medium}`;
     <div class="w-full flex flex-col space-y-6">
 
       <div class="w-full flex justify-between items-baseline border-b border-neutral-900/10 pb-3 min-w-0">
-        <h3 class="font-heading text-3xl md:text-4xl text-neutral-900 tracking-tight leading-none truncate pr-4">
+        <h3 class="type-subheading text-3xl md:text-4xl text-neutral-900 leading-none truncate pr-4">
           {title}
         </h3>
         <span class="font-mono text-xs text-neutral-400 shrink-0 select-none">
@@ -45,7 +45,7 @@ const subtitle = `${dimensions} | ${medium}`;
         </p>
       </div>
 
-      <div class="font-body text-sm text-neutral-600 leading-relaxed max-w-[60ch] pt-2">
+      <div class="type-body text-sm text-neutral-600 leading-relaxed max-w-[60ch] pt-2">
         <slot />
       </div>
     </div>

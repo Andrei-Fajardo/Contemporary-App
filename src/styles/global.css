@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Forum&family=Inter:wght@400&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
 
@@ -190,6 +190,28 @@ html {
   line-height: 1.62;
 }
 
+/* Exhibition wall label — Forum heads + Inter prose */
+.art-wall-label h1,
+.art-wall-label h3 {
+  font-family: var(--font-subheading);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.05;
+}
+
+.art-wall-label .type-heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--heading-track);
+}
+
+.art-wall-label .content-prose,
+.art-wall-label .type-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
 /* Staggered fade-in reveal */
 @keyframes stagger-in {
   0% { opacity: 0; transform: translateY(1.5rem); }
@@ -336,10 +358,15 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .editorial-dense .type-heading.text-3xl,
-.editorial-dense .type-subheading.text-2xl,
-.editorial-dense h2 {
+.editorial-dense h2.type-heading {
   line-height: var(--heading-tight);
-  letter-spacing: -0.028em;
+  letter-spacing: var(--heading-track);
+}
+
+.editorial-dense .type-subheading.text-2xl,
+.editorial-dense h2.type-subheading {
+  line-height: var(--heading-tight);
+  letter-spacing: normal;
 }
 
 .editorial-dense .content-prose {
