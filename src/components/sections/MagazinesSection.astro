@@ -1,0 +1,45 @@
+---
+import LazyImage from '../LazyImage.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { magazines } from '../../data/content';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="magazines" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.magazinesTag}</p>
+    <h2 class="scroll-reveal type-heading text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-ink mb-12 md:mb-16">
+      {l.magazineHeading}
+    </h2>
+
+    <div class="editorial-magazine-grid">
+      {magazines.map((mag) => (
+        <article class="scroll-reveal magazine-editorial-item">
+          {mag.image && (
+            <div class="magazine-editorial-item__image">
+              <LazyImage
+                src={mag.image}
+                alt={mag.title}
+                aspectRatio="3 / 4"
+                parallaxSpeed={0}
+                depthTarget={false}
+                class="transition-[filter] duration-700 view-parallax-media"
+              />
+            </div>
+          )}
+          <div>
+            <p class="section-eyebrow mb-3">{mag.issue}</p>
+            <h3 class="type-subheading text-xl md:text-2xl text-ink leading-tight">{mag.title}</h3>
+            <p class="content-prose mt-3 text-ink-60">{mag.feature}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

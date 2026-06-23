@@ -1,0 +1,38 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import { t } from '../../../data/translations';
+const l = t.ru;
+
+const virtualShows = [
+  { image: "/media/virtual/clover-anna.jpg", title: "Soul Gift", year: "2026", venue: "CLOVER GALLERY", subtitle: "가상 전시" },
+  { image: "/media/virtual/the-atrium.jpg", title: "The Atrium", year: "2026", venue: "THE ATRIUM", subtitle: "가상 전시" },
+];
+---
+
+<PageLayout title="가상 전시" activeSection="virtual" locale="ru">
+  <div slot="content">
+    <div class="px-8 py-16 md:py-24">
+      <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">{l.virtualTag}</span>
+      <h1 class="font-heading font-bold tracking-tight text-5xl md:text-7xl lg:text-[8rem] leading-[0.9] text-neutral-900 mb-16" set:html={l.virtualHeading}></h1>
+      {virtualShows.map((v, i) => (
+        <div class={`flex flex-col md:flex-row border-t border-neutral-900/20 py-10 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+          <div class="w-full md:w-2/3 pr-0 md:pr-8">
+            <div class="relative overflow-hidden group">
+              <img src={v.image} alt={v.title} class="w-full h-[45vh] md:h-[55vh] object-cover" loading="lazy" />
+              <div class="afterimage-trail absolute inset-0 w-full h-full bg-cover bg-center pointer-events-none" style={`background-image: url(${v.image})`} />
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 flex flex-col justify-center mt-4 md:mt-0">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[10px] tracking-widest text-neutral-400">[{String(i + 1).padStart(3, '0')} // 가상]</span>
+              <span class="font-mono text-[9px] border border-neutral-400 px-2 py-0.5 text-neutral-500">{v.year}</span>
+            </div>
+            <h2 class="font-subheading font-bold tracking-tight uppercase text-2xl md:text-3xl leading-[0.95] text-neutral-900">{v.title}</h2>
+            <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 uppercase mt-2">{v.venue}</span>
+            <span class="font-sans text-xs uppercase tracking-wider font-semibold text-neutral-700 mt-4">{v.subtitle}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</PageLayout>

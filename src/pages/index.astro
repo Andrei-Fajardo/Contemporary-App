@@ -1,49 +1,11 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import HomePageContent from '../components/HomePageContent.astro';
+import { t } from '../data/translations';
 
-const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
-
-const paintings = [
-  {
-    image: iiif("3c27b499-af56-f0d5-93b5-a7f2f1ad5813"),
-    title: "Water Lilies",
-    medium: "90CM X 90CM, OIL ON CANVAS",
-    year: "1906",
-    description: "A meditation on light and reflection, capturing the ephemeral play of water surface within the artist's celebrated Giverny garden pond.",
-  },
-  {
-    image: iiif("6644829f-f292-c5c4-a73c-0356a6fdbf0d"),
-    title: "The Bedroom",
-    medium: "72CM X 90CM, OIL ON CANVAS",
-    year: "1889",
-    description: "An intimate interior study rendered with bold chromatic contrasts, transforming a private domestic space into a field of psychological tension.",
-  },
-  {
-    image: iiif("b5bc6b66-9e6e-fe57-dcec-fc49e820e904"),
-    title: "Improvisation No. 30",
-    medium: "110CM X 110CM, OIL ON CANVAS",
-    year: "1913",
-    description: "A seminal abstract composition where color and form detach from representational roots, channeling the cacophony of the modern era through pure visual rhythm.",
-  },
-];
+const l = t.en;
 ---
 
-<PageLayout title="Art" activeSection="Art">
-  <div class="px-8 py-10">
-    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(PAINTINGS)</span>
-
-    {paintings.map((p, i) => (
-      <div class={`flex border-b border-black/[0.15] py-8 ${i === paintings.length - 1 ? 'border-b-0' : ''}`}>
-        <div class="w-[45%] flex-shrink-0 pr-8 border-r border-black/[0.15]">
-          <img src={p.image} alt={p.title} class="w-full aspect-[4/3] object-cover" loading="lazy" />
-        </div>
-        <div class="w-[55%] pl-8 flex flex-col justify-center">
-          <h3 class="font-serif text-base font-medium text-neutral-900">{p.title}</h3>
-          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase block mt-0.5">{p.medium}</span>
-          <span class="inline-block border border-neutral-400 px-2.5 py-0.5 text-[10px] font-mono rounded-full text-neutral-600 mt-2 w-fit">( {p.year} )</span>
-          <p class="text-sm text-neutral-600 leading-relaxed max-w-[55ch] mt-3">{p.description}</p>
-        </div>
-      </div>
-    ))}
-  </div>
+<PageLayout title="Art" locale="en">
+  <HomePageContent slot="content" locale="en" />
 </PageLayout>
