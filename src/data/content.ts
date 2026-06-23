@@ -117,9 +117,9 @@ export const exhibitionEntries: ExhibitionEntry[] = [
 ];
 
 export const magazines = [
-  { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls of Leavings', image: '/media/posters/poster-1.jpg' },
-  { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/posters/nana-nyc.jpg' },
-  { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/posters/paris-poster.png' },
+  { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls & Leavings', image: '/media/posters/poster-1.jpg' },
+  { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls & Leavings', image: '/media/posters/nana-nyc.jpg' },
+  { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls & Leavings', image: '/media/posters/paris-poster.png' },
   { title: 'Wildsape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
   { title: 'Onart Magazine', issue: 'TBD', feature: 'Featured', image: '/media/posters/itaewon-poster.png' },
 ];
@@ -179,9 +179,9 @@ export interface PressItem {
 }
 
 export const pressItems: PressItem[] = [
-  { author: 'Astraea Zine', title: 'The Fish and Souls of Leavings — Issue Eight Feature', outlet: 'Astraea Zine', date: '2025' },
-  { author: 'Hush Magazine', title: 'Souls of Leavings — Issue 001 LOST//FOUND', outlet: 'Hush Magazine', date: '2025' },
-  { author: 'Spellbinder Magazine', title: 'Souls of Leavings — Spring 2026 Issue', outlet: 'Spellbinder Magazine', date: '2026' },
+  { author: 'Astraea Zine', title: 'The Fish and Souls & Leavings — Issue Eight Feature', outlet: 'Astraea Zine', date: '2025' },
+  { author: 'Hush Magazine', title: 'Souls & Leavings — Issue 001 LOST//FOUND', outlet: 'Hush Magazine', date: '2025' },
+  { author: 'Spellbinder Magazine', title: 'Souls & Leavings — Spring 2026 Issue', outlet: 'Spellbinder Magazine', date: '2026' },
   { author: 'Wildsape Literary Journal', title: 'The Fish — Featured Artwork', outlet: 'Wildsape Literary Journal', date: '2025' },
   { author: 'Itaewon Film Festival', title: 'Featured Filmmaker / Artist', outlet: 'Itaewon Film Festival', date: '2025' },
 ];
