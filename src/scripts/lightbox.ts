@@ -84,28 +84,30 @@ export function closeLightbox(): void {
 
 export function initGlobalLightbox(): void {
   if (bound) return;
+
+  clickHandler = (e) => {
+    const target = e.target;
+    if (!(target instanceof HTMLImageElement)) return;
+    if (isExcluded(target)) return;
+    if (!target.closest("main, .tabular-main, .site-main-column")) return;
+
+    const src = getImageSrc(target);
+    if (!src) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    openLightbox(src, target.alt || "");
+  };
+
+  document.addEventListener("click", clickHandler, true);
   bound = true;
-
-  document.addEventListener(
-    "click",
-    (e) => {
-      const target = e.target;
-      if (!(target instanceof HTMLImageElement)) return;
-      if (isExcluded(target)) return;
-      if (!target.closest("main, .tabular-main, .site-main-column")) return;
-
-      const src = getImageSrc(target);
-      if (!src) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-      openLightbox(src, target.alt || "");
-    },
-    true
-  );
 }
 
 export function resetGlobalLightbox(): void {
+  if (clickHandler) {
+    document.removeEventListener("click", clickHandler, true);
+    clickHandler = null;
+  }
   bound = false;
   closeLightbox();
 }
