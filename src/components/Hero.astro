@@ -1,55 +1,56 @@
 ---
-import LazyImage from "./LazyImage.astro";
-import { t, type LocaleKey } from "../data/translations";
+import { t, type LocaleKey } from '../data/translations';
+import { siteCopy } from '../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
-  heroImage?: string;
-  heroImageAlt?: string;
 }
 
-const { locale = "en", heroImage = "/media/souls-and-leavings.jpg", heroImageAlt = "Anna Dauyl Rockswell — selected work" } = Astro.props;
+const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="home" class="hero-section scroll-section">
-  <div class="hero-editorial">
+<section id="home" class="hero-section hero-chaos scroll-section">
+  <div class="chaos-splashes" aria-hidden="true">
+    <span class="chaos-splash chaos-splash--1"></span>
+    <span class="chaos-splash chaos-splash--2"></span>
+    <span class="chaos-splash chaos-splash--3"></span>
+  </div>
+
+  <div class="hero-editorial hero-chaos__inner">
     <div class="hero-editorial__copy">
-      <p class="scroll-reveal hero-editorial__tagline">{l.heroTagline}</p>
+      <p class="scroll-reveal hero-editorial__tagline section-eyebrow--blood">{l.heroTagline}</p>
 
       <div class="scroll-reveal hero-editorial__name-block">
-        <h1 class="hero-editorial__name">{l.heroFirstName}</h1>
+        <h1 class="hero-editorial__name chaos-title-mark">{l.heroFirstName}</h1>
         <p class="hero-editorial__surname">{l.heroLastName}</p>
       </div>
+
+      <hr class="brutal-rule brutal-rule--short scroll-reveal" />
 
       <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
 
       <p class="scroll-reveal hero-editorial__motto">
         <span class="hero-editorial__pipe" aria-hidden="true">|</span>
-        {l.heroMotto}
+        <span class="chaos-strike">{l.heroMotto}</span>
       </p>
 
       <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
 
       <p class="scroll-reveal hero-editorial__desc content-prose text-ink-45 text-sm">{l.heroDesc}</p>
+
+      <div class="scroll-reveal hero-chaos__ghosts" aria-label="Literary influences">
+        {siteCopy.about.literaryGhosts.map((name) => (
+          <span class="hero-chaos__ghost">{name}</span>
+        ))}
+      </div>
     </div>
 
-    <div class="hero-editorial__visual scroll-reveal">
-      <div class="hero-editorial__frame">
-        <LazyImage
-          src={heroImage}
-          alt={heroImageAlt}
-          aspectRatio="3 / 4"
-          parallaxSpeed={0.2}
-          depthTarget={false}
-          eager={true}
-          contain={true}
-          class="w-full h-full object-contain"
-        />
-      </div>
-      <p class="hero-editorial__caption type-subheading text-[9px] text-ink-45 mt-4">
-        Souls &amp; Leavings · 2025
-      </p>
-    </div>
+    <aside class="hero-chaos__aside scroll-reveal" aria-label="Artist motto">
+      <blockquote class="hero-chaos__aside-quote">
+        "Live or die, but don't poison everything."
+      </blockquote>
+      <cite class="hero-chaos__aside-cite">— Anne Sexton</cite>
+    </aside>
   </div>
 </section>

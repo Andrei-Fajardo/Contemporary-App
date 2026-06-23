@@ -1,5 +1,5 @@
 ---
-import LazyImage from '../LazyImage.astro';
+import EducationTimeline from '../EducationTimeline.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { siteCopy } from '../../data/site-copy';
 
@@ -11,114 +11,49 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="about" class="scroll-section section-gap">
+<section id="about" class="scroll-section section-gap about-chaos">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow">{l.aboutTag}</p>
+    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.aboutTag}</p>
 
-    <div class="about-editorial">
-      <div class="about-editorial__portrait scroll-reveal">
-        <LazyImage
-          src="/media/the-fish.png"
-          alt="The Fish — selected painting"
-          aspectRatio="3 / 4"
-          parallaxSpeed={0.15}
-          depthTarget={false}
-          contain={true}
-          class="w-full h-auto max-h-[68vh] object-contain"
-        />
-      </div>
-
-      <div class="about-editorial__content">
-        <div class="scroll-reveal">
-          <h2 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-8">
-            NANA (Anna Dauyl Rockswell)
-          </h2>
-          <p class="content-prose--sans text-ink-55 mb-6">{l.intro}</p>
-          <div class="content-prose space-y-5">
-            <p>{l.bio}</p>
-          </div>
-        </div>
-
-        <div class="scroll-reveal about-editorial__meta">
-          <div>
-            <p class="section-eyebrow mb-4">{l.interestsLabel}</p>
-            <ul class="about-editorial__list">
-              {siteCopy.about.interests.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p class="section-eyebrow mb-4">{l.influencesLabel}</p>
-            <ul class="about-editorial__list">
-              {siteCopy.about.influences.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div class="scroll-reveal pt-6 border-t border-subtle">
-          <p class="section-eyebrow mb-5">{l.artistStatement}</p>
-          <p class="content-prose italic text-ink-70 max-w-[58ch]">
-            {siteCopy.about.statement}
-          </p>
+    <div class="about-chaos__body">
+      <div class="scroll-reveal about-chaos__intro">
+        <h2 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-8 about-chaos__name">
+          NANA (Anna Dauyl Rockswell)
+        </h2>
+        <p class="content-prose--sans text-ink-55 mb-6">{l.intro}</p>
+        <div class="content-prose space-y-5">
+          <p>{l.bio}</p>
         </div>
       </div>
+
+      <div class="scroll-reveal about-chaos__meta">
+        <div>
+          <p class="section-eyebrow mb-4">{l.interestsLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.interests.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p class="section-eyebrow mb-4">{l.influencesLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.influences.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="scroll-reveal pt-8">
+        <p class="section-eyebrow mb-5">{l.artistStatement}</p>
+        <p class="content-prose italic text-ink-70 max-w-[58ch] about-chaos__statement">
+          {siteCopy.about.statement}
+        </p>
+      </div>
+
+      <EducationTimeline label={l.education} />
     </div>
   </div>
 </section>
-
-<style>
-  .about-editorial {
-    display: grid;
-    gap: clamp(3rem, 8vw, 7rem);
-    align-items: start;
-  }
-
-  @media (min-width: 900px) {
-    .about-editorial {
-      grid-template-columns: minmax(14rem, 0.75fr) minmax(0, 1.25fr);
-      gap: clamp(4rem, 10vw, 9rem);
-    }
-
-    .about-editorial__portrait {
-      padding-top: 2rem;
-    }
-  }
-
-  .about-editorial__meta {
-    display: grid;
-    gap: 2rem;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  @media (min-width: 640px) {
-    .about-editorial__meta {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-  }
-
-  .about-editorial__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 0.75rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .about-editorial__list li {
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    color: var(--ink-60);
-    border: 1px solid var(--border-subtle);
-    padding: 0.35rem 0.65rem;
-    border-radius: var(--radius-lang-btn);
-    line-height: 1.3;
-  }
-</style>

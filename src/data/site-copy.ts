@@ -9,6 +9,15 @@ export const siteCopy = {
     basedIn: "Writer & Artist based in Seoul and Almaty",
   },
   about: {
+    literaryGhosts: [
+      "Anne Sexton",
+      "Sylvia Plath",
+      "Chuck Palahniuk",
+      "Kim Hyesoon",
+      "Chelsey Minnis",
+      "Han Kang",
+      "Courtney Love",
+    ],
     interests: [
       "Graphs",
       "Epistemology",

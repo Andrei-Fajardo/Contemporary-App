@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Inter:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Forum&family=Inter:wght@400;600&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
+@import "./chaos.css";
 
 /* Editorial typography — Forum (heads) + Inter (body) */
 :root {
@@ -422,6 +423,14 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
 .section-inverted a {
   color: var(--canvas);
+}
+
+.section-inverted--blood {
+  border-top: 3px solid var(--accent-red);
+}
+
+.section-inverted--blood .section-eyebrow {
+  color: var(--accent-red-bright);
 }
 
 /* Mobile-specific improvements */
