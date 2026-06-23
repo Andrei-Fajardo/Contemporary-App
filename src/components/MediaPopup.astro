@@ -1,0 +1,43 @@
+---
+import LazyImage from "./LazyImage.astro";
+
+interface Props {
+  imageSrc: string;
+  imageAlt: string;
+  title: string;
+  subtitle?: string;
+  aspectRatio?: string;
+  parallaxSpeed?: number;
+  contain?: boolean;
+  imageClass?: string;
+}
+
+const {
+  imageSrc,
+  imageAlt,
+  title,
+  subtitle = "",
+  aspectRatio = "4 / 5",
+  parallaxSpeed = 0.45,
+  contain = false,
+  imageClass = "",
+} = Astro.props;
+---
+
+<div class="media-card">
+  <slot name="media">
+    <LazyImage
+      src={imageSrc}
+      alt={imageAlt}
+      aspectRatio={aspectRatio}
+      parallaxSpeed={parallaxSpeed}
+      contain={contain}
+      depthTarget={false}
+      class={imageClass}
+    />
+  </slot>
+  <div class="media-card-caption" aria-hidden="true">
+    <p class="media-card-title">{title}</p>
+    {subtitle && <p class="media-card-subtitle">{subtitle}</p>}
+  </div>
+</div>

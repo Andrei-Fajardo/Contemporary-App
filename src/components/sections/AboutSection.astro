@@ -1,0 +1,59 @@
+---
+import EducationTimeline from '../EducationTimeline.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { siteCopy } from '../../data/site-copy';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="about" class="scroll-section section-gap about-chaos">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.aboutTag}</p>
+
+    <div class="about-chaos__body">
+      <div class="scroll-reveal about-chaos__intro">
+        <h2 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-8 about-chaos__name">
+          NANA (Anna Dauyl Rockswell)
+        </h2>
+        <p class="content-prose--sans text-ink-55 mb-6">{l.intro}</p>
+        <div class="content-prose space-y-5">
+          <p>{l.bio}</p>
+        </div>
+      </div>
+
+      <div class="scroll-reveal about-chaos__meta">
+        <div>
+          <p class="section-eyebrow mb-4">{l.interestsLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.interests.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p class="section-eyebrow mb-4">{l.influencesLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.influences.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="scroll-reveal pt-8">
+        <p class="section-eyebrow mb-5">{l.artistStatement}</p>
+        <p class="content-prose italic text-ink-70 max-w-[58ch] about-chaos__statement">
+          {siteCopy.about.statement}
+        </p>
+      </div>
+
+      <EducationTimeline label={l.education} />
+    </div>
+  </div>
+</section>
