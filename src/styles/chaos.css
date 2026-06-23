@@ -9,10 +9,15 @@
 }
 
 /* --- Decorative red splashes (leaf drift inside hero) --- */
-.hero-chaos__inner {
+.hero-chaos {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+}
+
+.hero-chaos__inner {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-chaos .hero-editorial__copy,
@@ -24,7 +29,7 @@
 .chaos-splashes {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
   z-index: 0;
 }
@@ -36,6 +41,7 @@
   opacity: 0.72;
   mix-blend-mode: multiply;
   will-change: transform;
+  transform-origin: center center;
 }
 
 .chaos-splash--1 {
@@ -45,7 +51,6 @@
   top: 8%;
   right: 6%;
   opacity: 0.55;
-  animation: leaf-drift-1 28s var(--ease-editorial) infinite;
 }
 
 .chaos-splash--2 {
@@ -55,7 +60,6 @@
   bottom: 22%;
   left: 4%;
   opacity: 0.38;
-  animation: leaf-drift-2 34s var(--ease-editorial) infinite;
 }
 
 .chaos-splash--3 {
@@ -65,51 +69,71 @@
   top: 42%;
   left: 38%;
   opacity: 0.28;
-  animation: leaf-drift-3 22s var(--ease-editorial) infinite;
+}
+
+/* CSS fallback when JS has not bound yet */
+.chaos-splash:not([data-leaf-drift]) {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.chaos-splash--1:not([data-leaf-drift]) {
+  animation-name: leaf-drift-1;
+  animation-duration: 14s;
+}
+
+.chaos-splash--2:not([data-leaf-drift]) {
+  animation-name: leaf-drift-2;
+  animation-duration: 18s;
+}
+
+.chaos-splash--3:not([data-leaf-drift]) {
+  animation-name: leaf-drift-3;
+  animation-duration: 11s;
 }
 
 @keyframes leaf-drift-1 {
   0%, 100% {
-    transform: translate(0, 0) rotate(-18deg) scale(1);
+    transform: translate3d(0, 0, 0) rotate(-18deg) scale(1);
   }
-  20% {
-    transform: translate(-8vw, 6vh) rotate(-32deg) scale(1.05);
+  25% {
+    transform: translate3d(-90px, 55px, 0) rotate(-34deg) scale(1.06);
   }
-  45% {
-    transform: translate(-18vw, 2vh) rotate(-8deg) scale(0.96);
+  50% {
+    transform: translate3d(-160px, 20px, 0) rotate(-10deg) scale(0.95);
   }
-  70% {
-    transform: translate(-10vw, -4vh) rotate(-24deg) scale(1.02);
+  75% {
+    transform: translate3d(-70px, -45px, 0) rotate(-26deg) scale(1.03);
   }
 }
 
 @keyframes leaf-drift-2 {
   0%, 100% {
-    transform: translate(0, 0) rotate(32deg) skewX(-8deg) scale(1);
+    transform: translate3d(0, 0, 0) rotate(32deg) scale(1);
   }
   25% {
-    transform: translate(12vw, -5vh) rotate(18deg) skewX(-4deg) scale(1.08);
+    transform: translate3d(110px, -40px, 0) rotate(18deg) scale(1.08);
   }
-  55% {
-    transform: translate(22vw, 3vh) rotate(42deg) skewX(-12deg) scale(0.94);
+  50% {
+    transform: translate3d(180px, 35px, 0) rotate(44deg) scale(0.92);
   }
-  80% {
-    transform: translate(8vw, 8vh) rotate(26deg) skewX(-6deg) scale(1.03);
+  75% {
+    transform: translate3d(60px, 70px, 0) rotate(24deg) scale(1.04);
   }
 }
 
 @keyframes leaf-drift-3 {
   0%, 100% {
-    transform: translate(0, 0) rotate(-42deg) scale(1);
+    transform: translate3d(0, 0, 0) rotate(-42deg) scale(1);
   }
-  30% {
-    transform: translate(-6vw, 10vh) rotate(-28deg) scale(1.12);
+  25% {
+    transform: translate3d(-50px, 75px, 0) rotate(-28deg) scale(1.14);
   }
-  60% {
-    transform: translate(10vw, 14vh) rotate(-55deg) scale(0.9);
+  50% {
+    transform: translate3d(95px, 110px, 0) rotate(-58deg) scale(0.88);
   }
-  85% {
-    transform: translate(4vw, 4vh) rotate(-35deg) scale(1.05);
+  75% {
+    transform: translate3d(35px, 30px, 0) rotate(-36deg) scale(1.06);
   }
 }
 
@@ -153,16 +177,6 @@
 }
 
 /* --- Hero: typographic, no artwork --- */
-.hero-chaos {
-  position: relative;
-  isolation: isolate;
-}
-
-.hero-chaos__inner {
-  position: relative;
-  z-index: 1;
-}
-
 .hero-chaos__ghosts {
   display: flex;
   flex-wrap: wrap;
@@ -465,7 +479,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-chaos__ghost,
   .about-chaos__list li,
-  .chaos-splash {
+  .chaos-splash:not([data-leaf-drift]) {
     animation: none !important;
     transform: none !important;
   }
