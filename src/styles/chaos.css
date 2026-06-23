@@ -233,6 +233,55 @@
   z-index: 1;
 }
 
+/* --- Contact section (light editorial, matches other panels) --- */
+.contacts-chaos {
+  position: relative;
+}
+
+.contacts-chaos__input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.15);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.85vw + 0.7rem, 1.1875rem);
+  line-height: 1.5;
+  color: var(--ink);
+  padding: 0.5rem 0;
+  transition: border-color 0.25s ease;
+}
+
+.contacts-chaos__input::placeholder {
+  color: var(--ink-45);
+}
+
+.contacts-chaos__input:focus {
+  outline: none;
+  border-bottom-color: var(--accent-red);
+}
+
+.contacts-chaos__input--area {
+  min-height: 6rem;
+}
+
+.contacts-chaos__submit {
+  font-family: var(--font-subheading);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  background: transparent;
+  border: 1px solid var(--accent-red);
+  padding: 0.875rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.contacts-chaos__submit:hover {
+  background: var(--accent-red);
+  color: var(--canvas);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-chaos__ghost,
   .about-chaos__list li {

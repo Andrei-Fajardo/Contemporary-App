@@ -50,16 +50,17 @@ const HERO_PETALS: PetalSpec[] = [
   { sel: ".chaos-splash--7", ox: 0.86, oy: 0.62, ax: 55, ay: 45, rot: 18, rs: 9, sp: 0.52, ph: 4.2 },
 ];
 
-const GENTLE_RADIUS = 130;
-const GENTLE_STRENGTH = 52;
-const SWIPE_RADIUS = 320;
-const SWIPE_VEL_THRESHOLD = 280;
-const SWIPE_STRENGTH = 0.14;
-const SWIPE_MAX_SPEED = 3200;
-const DAMPING = 0.9;
-const SPRING = 0.065;
-const MAX_OFFSET = 260;
-const ROT_SWIPE_FACTOR = 0.022;
+const GENTLE_RADIUS = 210;
+const GENTLE_STRENGTH = 118;
+const GENTLE_CLOSE_BOOST = 1.65;
+const SWIPE_RADIUS = 420;
+const SWIPE_VEL_THRESHOLD = 160;
+const SWIPE_STRENGTH = 0.26;
+const SWIPE_MAX_SPEED = 3600;
+const DAMPING = 0.93;
+const SPRING = 0.04;
+const MAX_OFFSET = 360;
+const ROT_SWIPE_FACTOR = 0.038;
 const ROT_DAMPING = 0.86;
 const ROT_SPRING = 0.08;
 
@@ -137,7 +138,8 @@ function applyCursorForces(
 
   if (dist < GENTLE_RADIUS) {
     const proximity = 1 - dist / GENTLE_RADIUS;
-    const gentle = GENTLE_STRENGTH * proximity * proximity * react;
+    const closeBoost = dist < 60 ? GENTLE_CLOSE_BOOST : 1;
+    const gentle = GENTLE_STRENGTH * proximity * proximity * closeBoost * react;
     state.vx += nx * gentle * dt;
     state.vy += ny * gentle * dt;
   }
@@ -258,8 +260,10 @@ function onPointerMove(event: PointerEvent): void {
   lastMove.t = now;
 }
 
-function onPointerEnd(): void {
+function onPointerLeave(): void {
   cursor.active = false;
+  cursor.vx = 0;
+  cursor.vy = 0;
 }
 
 export function bindPetalPointerListener(): void {
@@ -268,10 +272,8 @@ export function bindPetalPointerListener(): void {
 
   window.addEventListener("pointermove", onPointerMove, { passive: true });
   window.addEventListener("pointerdown", onPointerMove, { passive: true });
-  window.addEventListener("pointerup", onPointerEnd, { passive: true });
-  window.addEventListener("pointercancel", onPointerEnd, { passive: true });
-  window.addEventListener("blur", onPointerEnd);
-  document.documentElement.addEventListener("mouseleave", onPointerEnd);
+  window.addEventListener("blur", onPointerLeave);
+  document.documentElement.addEventListener("mouseleave", onPointerLeave);
 }
 
 export function startPetalDrift(): void {
