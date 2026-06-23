@@ -1,0 +1,56 @@
+---
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+
+const [anna, ...restFirst] = l.heroFirstName.split(" ");
+const restOfFirst = restFirst.join(" ");
+---
+
+<section id="home" class="hero-section hero-chaos scroll-section">
+  <div class="chaos-splashes" aria-hidden="true">
+    <span class="chaos-splash chaos-splash--1" data-petal="1"></span>
+    <span class="chaos-splash chaos-splash--2" data-petal="2"></span>
+    <span class="chaos-splash chaos-splash--3" data-petal="3"></span>
+    <span class="chaos-splash chaos-splash--4" data-petal="4"></span>
+    <span class="chaos-splash chaos-splash--5" data-petal="5"></span>
+    <span class="chaos-splash chaos-splash--6" data-petal="6"></span>
+    <span class="chaos-splash chaos-splash--7" data-petal="7"></span>
+  </div>
+
+  <div class="hero-editorial hero-chaos__inner">
+    <div class="hero-editorial__copy">
+      <p class="scroll-reveal hero-editorial__tagline section-eyebrow--blood">{l.heroTagline}</p>
+
+      <div class="scroll-reveal hero-editorial__name-block">
+        <h1 class="hero-editorial__name">
+          <span class="hero-editorial__anna">{anna}</span>{restOfFirst ? ` ${restOfFirst}` : ""}
+        </h1>
+        <p class="hero-editorial__surname">{l.heroLastName}</p>
+      </div>
+
+      <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
+
+      <p class="scroll-reveal hero-editorial__motto">
+        <span class="hero-editorial__pipe" aria-hidden="true">|</span>
+        <span class="chaos-strike">{l.heroMotto}</span>
+      </p>
+
+      <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
+
+      <p class="scroll-reveal hero-editorial__desc content-prose text-ink-45 text-sm">{l.heroDesc}</p>
+    </div>
+
+    <aside class="hero-chaos__aside scroll-reveal" aria-label="Artist motto">
+      <blockquote class="hero-chaos__aside-quote">
+        "Live or die, but don't poison everything."
+      </blockquote>
+      <cite class="hero-chaos__aside-cite">— Anne Sexton</cite>
+    </aside>
+  </div>
+</section>
