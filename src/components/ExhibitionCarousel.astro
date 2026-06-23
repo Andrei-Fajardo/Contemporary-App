@@ -7,7 +7,6 @@ interface Props {
 
 const { images, alt, id } = Astro.props;
 const slides = images.length > 0 ? images : [];
-const loopSlides = slides.length > 1 ? [...slides, ...slides] : slides;
 ---
 
 {slides.length > 0 && (
@@ -28,11 +27,11 @@ const loopSlides = slides.length > 1 ? [...slides, ...slides] : slides;
 
     <div class="exhibition-carousel__viewport" tabindex="0">
       <div class="exhibition-carousel__track">
-        {loopSlides.map((src, i) => (
+        {slides.map((src, i) => (
           <figure class="exhibition-carousel__slide">
             <img
               src={src}
-              alt={`${alt} — photo ${(i % slides.length) + 1}`}
+              alt={`${alt} — photo ${i + 1}`}
               loading="eager"
               decoding="async"
               fetchpriority={i < 2 ? "high" : "auto"}
@@ -53,7 +52,7 @@ const loopSlides = slides.length > 1 ? [...slides, ...slides] : slides;
 
     {slides.length > 1 && (
       <p class="exhibition-carousel__hint font-mono text-[9px] tracking-[0.2em] uppercase text-ink-35">
-        Auto-scroll · drag or use arrows
+        Drag or use arrows · stops at last image
       </p>
     )}
   </div>

@@ -447,6 +447,31 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   z-index: auto;
 }
 
+#mobile-drawer .sidebar-nav-link {
+  position: relative;
+}
+
+#mobile-drawer .sidebar-nav-link::after {
+  bottom: 0.85rem;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+#mobile-drawer .sidebar-nav-link:hover::after,
+#mobile-drawer .sidebar-nav-link:focus-visible::after {
+  width: 2.25rem;
+  opacity: 1;
+}
+
+#mobile-drawer .sidebar-nav-link .sidebar-nav-label {
+  opacity: 0.55;
+}
+
+#mobile-drawer .sidebar-nav-link:hover .sidebar-nav-label,
+#mobile-drawer .sidebar-nav-link:focus-visible .sidebar-nav-label,
+#mobile-drawer .sidebar-nav-link.nav-link--active .sidebar-nav-label {
+  opacity: 1;
+}
+
 #mobile-drawer .sidebar-nav-link.nav-link--active {
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
@@ -472,7 +497,54 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 .sidebar-nav-link {
-  transition: color 0.4s ease, opacity 0.4s ease;
+  position: relative;
+  display: block;
+  padding-left: 0.25rem;
+  transition: color 0.4s var(--ease-editorial);
+  will-change: transform;
+}
+
+.sidebar-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.35rem;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  transition:
+    width 0.45s var(--ease-editorial),
+    opacity 0.35s var(--ease-editorial);
+}
+
+.sidebar-nav-link:hover::after,
+.sidebar-nav-link:focus-visible::after {
+  width: 1.75rem;
+  opacity: 0.85;
+}
+
+.sidebar-nav-link.nav-link--active::after {
+  width: 2rem;
+  opacity: 1;
+}
+
+.sidebar-nav-link:hover,
+.sidebar-nav-link:focus-visible {
+  color: #111 !important;
+}
+
+.sidebar-nav-label {
+  display: inline-block;
+  opacity: 0.72;
+  letter-spacing: 0.01em;
+  transition: opacity 0.35s var(--ease-editorial);
+}
+
+.sidebar-nav-link:hover .sidebar-nav-label,
+.sidebar-nav-link:focus-visible .sidebar-nav-label,
+.sidebar-nav-link.nav-link--active .sidebar-nav-label {
+  opacity: 1;
 }
 
 .exhibitions-explore-link {
@@ -649,13 +721,23 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   transition:
     color 0.25s var(--ease-editorial),
     border-color 0.25s var(--ease-editorial),
-    background 0.25s var(--ease-editorial);
+    background 0.25s var(--ease-editorial),
+    transform 0.25s var(--ease-editorial),
+    opacity 0.25s var(--ease-editorial);
 }
 
-.exhibition-carousel__btn:hover {
+.exhibition-carousel__btn:hover:not(:disabled):not(.is-disabled) {
   color: var(--ink);
   border-color: var(--border-section);
   background: var(--canvas);
+  transform: translateY(-1px);
+}
+
+.exhibition-carousel__btn:disabled,
+.exhibition-carousel__btn.is-disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .exhibition-carousel__btn--prev {

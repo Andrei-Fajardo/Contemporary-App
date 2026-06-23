@@ -306,7 +306,7 @@ const menuItems: { key: string; href: string }[] = [
                   data-nav-key={item.key}
                   class="sidebar-nav-link block py-4 px-5 font-forum text-base rounded-md transition-all duration-400 text-[#888] hover:bg-white/5 hover:text-white"
                 >
-                  {l.nav[navKey]}
+                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
                 </a>
               </li>
             );
@@ -459,6 +459,9 @@ const menuItems: { key: string; href: string }[] = [
     });
     document.querySelectorAll("[data-accordion-motion]").forEach((el) => {
       delete (el as HTMLElement).dataset.accordionMotion;
+    });
+    document.querySelectorAll("[data-nav-hover]").forEach((el) => {
+      delete (el as HTMLElement).dataset.navHover;
     });
     bootPageScripts();
   });

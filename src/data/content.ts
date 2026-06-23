@@ -94,6 +94,26 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
   },
+  {
+    id: 'soul-gift',
+    year: '2026',
+    title: 'Soul Gift',
+    gallery: 'Clover Gallery',
+    place: 'Virtual Exhibition',
+    kind: 'group',
+    images: ['/media/virtual/clover-anna.jpg', '/media/virtual/soul-gift.jpg', '/media/virtual/soul-gift-poster.png'],
+    note: 'Virtual exhibition at Clover Gallery — digital and material realities.',
+  },
+  {
+    id: 'the-atrium',
+    year: '2026',
+    title: 'The Atrium',
+    gallery: 'The Atrium',
+    place: 'Virtual Exhibition',
+    kind: 'group',
+    images: ['/media/virtual/the-atrium.jpg'],
+    note: 'A virtual space exploring architectural memory and digital presence.',
+  },
 ];
 
 export const magazines = [
@@ -101,7 +121,7 @@ export const magazines = [
   { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/posters/nana-nyc.jpg' },
   { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/posters/paris-poster.png' },
   { title: 'Wildsape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
-  { title: 'Onart Magazine', issue: 'TBD', feature: 'Featured', image: '' },
+  { title: 'Onart Magazine', issue: 'TBD', feature: 'Featured', image: '/media/posters/itaewon-poster.png' },
 ];
 
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
