@@ -51,6 +51,7 @@
   top: 8%;
   right: 6%;
   opacity: 0.55;
+  animation: leaf-drift-1 14s ease-in-out infinite;
 }
 
 .chaos-splash--2 {
@@ -60,6 +61,7 @@
   bottom: 22%;
   left: 4%;
   opacity: 0.38;
+  animation: leaf-drift-2 18s ease-in-out infinite;
 }
 
 .chaos-splash--3 {
@@ -69,27 +71,7 @@
   top: 42%;
   left: 38%;
   opacity: 0.28;
-}
-
-/* CSS fallback when JS has not bound yet */
-.chaos-splash:not([data-leaf-drift]) {
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-.chaos-splash--1:not([data-leaf-drift]) {
-  animation-name: leaf-drift-1;
-  animation-duration: 14s;
-}
-
-.chaos-splash--2:not([data-leaf-drift]) {
-  animation-name: leaf-drift-2;
-  animation-duration: 18s;
-}
-
-.chaos-splash--3:not([data-leaf-drift]) {
-  animation-name: leaf-drift-3;
-  animation-duration: 11s;
+  animation: leaf-drift-3 11s ease-in-out infinite;
 }
 
 @keyframes leaf-drift-1 {
@@ -478,9 +460,20 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-chaos__ghost,
-  .about-chaos__list li,
-  .chaos-splash:not([data-leaf-drift]) {
-    animation: none !important;
+  .about-chaos__list li {
     transform: none !important;
+  }
+
+  /* Decorative petals: slow drift instead of frozen (Windows often sets reduce) */
+  .chaos-splash--1 {
+    animation-duration: 42s;
+  }
+
+  .chaos-splash--2 {
+    animation-duration: 52s;
+  }
+
+  .chaos-splash--3 {
+    animation-duration: 36s;
   }
 }

@@ -50,3 +50,41 @@ const restOfFirst = restFirst.join(" ");
     </aside>
   </div>
 </section>
+
+<script is:inline>
+  (function () {
+    var anims = {
+      "chaos-splash--1": "leaf-drift-1 14s ease-in-out infinite",
+      "chaos-splash--2": "leaf-drift-2 18s ease-in-out infinite",
+      "chaos-splash--3": "leaf-drift-3 11s ease-in-out infinite",
+    };
+
+    function restartPetals() {
+      var splashes = document.querySelectorAll(".hero-chaos .chaos-splash");
+      if (!splashes.length) return;
+      document.documentElement.classList.add("petals-live");
+      splashes.forEach(function (el) {
+        var name = "";
+        Object.keys(anims).forEach(function (cls) {
+          if (el.classList.contains(cls)) name = anims[cls];
+        });
+        if (!name) return;
+        el.style.animation = "none";
+        void el.offsetHeight;
+        el.style.animation = name;
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", restartPetals);
+    } else {
+      restartPetals();
+    }
+
+    document.addEventListener("tabular:change", function (e) {
+      if (e.detail && e.detail.tab === "about") {
+        requestAnimationFrame(restartPetals);
+      }
+    });
+  })();
+</script>

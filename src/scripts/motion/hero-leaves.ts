@@ -1,90 +1,55 @@
-import { animate, type AnimationPlaybackControls } from "motion";
-import { prefersReducedMotion } from "./utils";
+/** Restart CSS petal animations (e.g. after tab panel becomes visible). */
+const SPLASH_ANIM: Record<string, string> = {
+  "chaos-splash--1": "leaf-drift-1 14s ease-in-out infinite",
+  "chaos-splash--2": "leaf-drift-2 18s ease-in-out infinite",
+  "chaos-splash--3": "leaf-drift-3 11s ease-in-out infinite",
+};
 
-const controllers = new WeakMap<HTMLElement, AnimationPlaybackControls>();
+function animationFor(el: HTMLElement): string {
+  for (const cls of Object.keys(SPLASH_ANIM)) {
+    if (el.classList.contains(cls)) return SPLASH_ANIM[cls];
+  }
+  return "";
+}
 
-const LEAF_CONFIGS = [
-  {
-    className: "chaos-splash--1",
-    keyframes: [
-      { x: 0, y: 0, rotate: -18, scale: 1 },
-      { x: -90, y: 55, rotate: -34, scale: 1.06 },
-      { x: -160, y: 20, rotate: -10, scale: 0.95 },
-      { x: -70, y: -45, rotate: -26, scale: 1.03 },
-      { x: 0, y: 0, rotate: -18, scale: 1 },
-    ],
-    duration: 14,
-  },
-  {
-    className: "chaos-splash--2",
-    keyframes: [
-      { x: 0, y: 0, rotate: 32, scale: 1 },
-      { x: 110, y: -40, rotate: 18, scale: 1.08 },
-      { x: 180, y: 35, rotate: 44, scale: 0.92 },
-      { x: 60, y: 70, rotate: 24, scale: 1.04 },
-      { x: 0, y: 0, rotate: 32, scale: 1 },
-    ],
-    duration: 18,
-  },
-  {
-    className: "chaos-splash--3",
-    keyframes: [
-      { x: 0, y: 0, rotate: -42, scale: 1 },
-      { x: -50, y: 75, rotate: -28, scale: 1.14 },
-      { x: 95, y: 110, rotate: -58, scale: 0.88 },
-      { x: 35, y: 30, rotate: -36, scale: 1.06 },
-      { x: 0, y: 0, rotate: -42, scale: 1 },
-    ],
-    duration: 11,
-  },
-] as const;
-
-function isHeroVisible(hero: HTMLElement): boolean {
-  const panel = hero.closest<HTMLElement>("[data-tab-panel]");
-  if (panel) return !panel.hidden && panel.classList.contains("is-active");
-  return hero.getBoundingClientRect().width > 0;
+function restartSplash(el: HTMLElement): void {
+  const value = animationFor(el);
+  if (!value) return;
+  el.style.animation = "none";
+  void el.offsetHeight;
+  el.style.animation = value;
 }
 
 export function initHeroLeaves(): void {
-  if (prefersReducedMotion()) return;
-
   const hero = document.querySelector<HTMLElement>(".hero-chaos");
-  if (!hero || !isHeroVisible(hero)) return;
+  if (!hero) return;
 
-  LEAF_CONFIGS.forEach((cfg) => {
-    const el = hero.querySelector<HTMLElement>(`.${cfg.className}`);
-    if (!el) return;
-
-    const existing = controllers.get(el);
-    if (existing) {
-      existing.play();
+  hero.querySelectorAll<HTMLElement>(".chaos-splash").forEach((el) => {
+    if (el.dataset.petalsReady === "true") {
+      if (el.getAnimations().length === 0) restartSplash(el);
       return;
     }
-
-    el.style.animation = "none";
-    el.dataset.leafDrift = "true";
-
-    const controls = animate(el, [...cfg.keyframes], {
-      duration: cfg.duration,
-      ease: "easeInOut",
-      repeat: Infinity,
-    });
-
-    controllers.set(el, controls);
+    el.dataset.petalsReady = "true";
+    document.documentElement.classList.add("petals-live");
+    restartSplash(el);
   });
 }
 
 export function pauseHeroLeaves(): void {
-  controllers.forEach((ctrl) => ctrl.pause());
+  document.querySelectorAll<HTMLElement>(".hero-chaos .chaos-splash").forEach((el) => {
+    el.getAnimations().forEach((a) => a.pause());
+  });
 }
 
 export function resetHeroLeaves(): void {
   document.querySelectorAll<HTMLElement>(".hero-chaos .chaos-splash").forEach((el) => {
-    delete el.dataset.leafDrift;
+    delete el.dataset.petalsReady;
     el.style.animation = "";
-    controllers.get(el)?.stop();
-    controllers.delete(el);
+    el.getAnimations().forEach((a) => a.cancel());
   });
+  if (!document.querySelector(".hero-chaos .chaos-splash[data-petals-ready]")) {
+    document.documentElement.classList.remove("petals-live");
+  }
 }
 
 export function bindHeroLeavesTabListener(): void {
