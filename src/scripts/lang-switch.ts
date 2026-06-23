@@ -1,31 +1,23 @@
+import { activateTab, type TabId } from "./tab-view";
+
 export function restoreLangScroll(): void {
-  const saved = sessionStorage.getItem("lang-preserve-scroll");
-  if (saved === null) return;
+  const savedTab = sessionStorage.getItem("lang-preserve-tab");
+  if (savedTab === null) return;
 
-  const y = parseInt(saved, 10);
-  if (Number.isNaN(y)) {
-    sessionStorage.removeItem("lang-preserve-scroll");
-    sessionStorage.removeItem("lang-switching");
-    return;
-  }
+  sessionStorage.removeItem("lang-preserve-tab");
+  sessionStorage.removeItem("lang-switching");
 
-  const apply = () => window.scrollTo({ top: y, left: 0, behavior: "instant" });
+  const valid: TabId[] = ["about", "art", "exhibitions", "publications", "research", "press", "contacts"];
+  const tab = valid.includes(savedTab as TabId) ? (savedTab as TabId) : "about";
 
-  apply();
   requestAnimationFrame(() => {
-    apply();
-    requestAnimationFrame(() => {
-      apply();
-      sessionStorage.removeItem("lang-preserve-scroll");
-      sessionStorage.removeItem("lang-switching");
-      document.dispatchEvent(new CustomEvent("lang-scroll-restored"));
+    activateTab(tab, { updateHash: true });
 
-      const overlay = document.getElementById("lang-transition-overlay");
-      overlay?.classList.remove("is-active");
-      overlay?.setAttribute("aria-hidden", "true");
-      document.documentElement.classList.remove("lang-switching");
-      document.body.classList.remove("lang-switching");
-    });
+    const overlay = document.getElementById("lang-transition-overlay");
+    overlay?.classList.remove("is-active");
+    overlay?.setAttribute("aria-hidden", "true");
+    document.documentElement.classList.remove("lang-switching");
+    document.body.classList.remove("lang-switching");
   });
 }
 

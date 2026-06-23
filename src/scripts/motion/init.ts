@@ -30,7 +30,7 @@ export function initMotion(): void {
   resetExhibitionAccordion();
   resetNavHover();
 
-  if (prefersReducedMotion()) {
+  if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
     document.documentElement.classList.add("motion-reduced");
     document.documentElement.classList.remove("motion-live");
     revealAllFallback();
@@ -46,8 +46,12 @@ export function initMotion(): void {
     updateDepthField();
   }
 
-  initScrollSpy();
-  initAnchorNav();
+  const isTabular = document.body.dataset.layout === "tabular";
+
+  if (!isTabular) {
+    initScrollSpy();
+    initAnchorNav();
+  }
   initExhibitionCarousels();
   initExhibitionAccordion();
   initNavHover();

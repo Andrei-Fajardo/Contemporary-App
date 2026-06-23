@@ -269,6 +269,85 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   margin-top: 0;
 }
 
+/* --- Tabular editorial shell (Layout Number 2) --- */
+.tabular-view {
+  width: 100%;
+  min-height: calc(100vh - 10rem);
+}
+
+.tabular-panels {
+  width: 100%;
+}
+
+.tabular-panel {
+  display: none;
+}
+
+.tabular-panel.is-active {
+  display: block;
+}
+
+.tabular-main {
+  min-height: 0;
+}
+
+/* Compressed editorial density — reference: design2 */
+.editorial-dense {
+  --section-gap-y: clamp(2rem, 4vw, 3.25rem);
+  --heading-tight: 0.94;
+  --body-tight: 1.56;
+}
+
+.editorial-dense .section-gap {
+  padding-block: var(--section-gap-y);
+}
+
+.editorial-dense .section-shell--wide {
+  max-width: min(88rem, calc(100vw - clamp(1.25rem, 3.5vw, 2.75rem)));
+}
+
+.editorial-dense .font-forum.text-4xl,
+.editorial-dense .font-forum.text-3xl,
+.editorial-dense h2 {
+  line-height: var(--heading-tight);
+  letter-spacing: -0.028em;
+}
+
+.editorial-dense .content-prose {
+  font-size: clamp(0.9375rem, 0.75vw + 0.62rem, 1.0625rem);
+  line-height: var(--body-tight);
+  color: var(--ink-70);
+}
+
+.editorial-dense .content-prose--sans {
+  font-size: clamp(0.9375rem, 0.65vw + 0.6rem, 1.0625rem);
+  line-height: 1.5;
+}
+
+.editorial-dense .section-eyebrow {
+  margin-bottom: 1rem;
+  letter-spacing: 0.32em;
+}
+
+.editorial-dense .hero-editorial {
+  padding-top: clamp(2.5rem, 8vh, 4.5rem);
+  padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  gap: clamp(2rem, 6vw, 4rem);
+}
+
+.editorial-dense .hero-editorial__name {
+  font-size: clamp(2.75rem, 7.5vw, 5.25rem);
+  line-height: 0.92;
+}
+
+.editorial-dense .hero-editorial__surname {
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+}
+
+.editorial-dense .art-piece .section-shell {
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+}
+
 /* Inverted contact panel — section-inverted */
 .section-inverted {
   background: var(--ink);
