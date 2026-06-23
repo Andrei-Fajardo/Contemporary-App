@@ -1,0 +1,105 @@
+---
+import { magazines } from '../../data/content';
+import LazyImage from '../LazyImage.astro';
+import { t, type LocaleKey } from '../../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="publications" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.publicationsTag}</p>
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-ink mb-6">
+      {l.publicationsHeading}
+    </h2>
+    <p class="scroll-reveal content-prose text-ink-60 max-w-[62ch] mb-12 md:mb-16">
+      {l.publicationsIntro}
+    </p>
+
+    <div class="publications-grid scroll-reveal">
+      <div class="publications-grid__col">
+        <p class="section-eyebrow mb-5">{l.novelsLabel}</p>
+        <ul class="editorial-divider-list">
+          <li class="publications-item">
+            <span class="publications-item__title font-forum text-xl text-ink">Untitled Novel</span>
+            <span class="publications-item__badge">{l.comingSoon}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="publications-grid__col">
+        <p class="section-eyebrow mb-5">{l.poetryLabel}</p>
+        <ul class="editorial-divider-list">
+          <li class="publications-item">
+            <span class="publications-item__title font-forum text-xl text-ink">Poetry Collection</span>
+            <span class="publications-item__badge">{l.comingSoon}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 md:mt-20 pt-12 border-t border-subtle">
+      <p class="scroll-reveal section-eyebrow mb-8">{l.magazinesTag}</p>
+      <div class="editorial-magazine-grid">
+        {magazines.filter((m) => m.image).map((mag) => (
+          <article class="scroll-reveal magazine-editorial-item">
+            <div class="magazine-editorial-item__image">
+              <LazyImage
+                src={mag.image}
+                alt={mag.title}
+                aspectRatio="3 / 4"
+                parallaxSpeed={0}
+                depthTarget={false}
+                class="transition-[filter] duration-700 view-parallax-media"
+              />
+            </div>
+            <div>
+              <p class="section-eyebrow mb-3">{mag.issue}</p>
+              <h3 class="font-forum text-xl md:text-2xl text-ink leading-tight">{mag.title}</h3>
+              <p class="content-prose mt-3 text-ink-60">{mag.feature}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .publications-grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .publications-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 6rem);
+    }
+  }
+
+  .publications-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+  }
+
+  .publications-item__badge {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+    border: 1px solid var(--border-subtle);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-lang-btn);
+  }
+</style>

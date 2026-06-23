@@ -1,0 +1,55 @@
+---
+import LazyImage from "./LazyImage.astro";
+import { t, type LocaleKey } from "../data/translations";
+
+interface Props {
+  locale?: LocaleKey;
+  heroImage?: string;
+  heroImageAlt?: string;
+}
+
+const { locale = "en", heroImage = "/media/souls-and-leavings.jpg", heroImageAlt = "Anna Dauyl Rockswell — selected work" } = Astro.props;
+const l = t[locale];
+---
+
+<section id="home" class="hero-section scroll-section">
+  <div class="hero-editorial">
+    <div class="hero-editorial__copy">
+      <p class="scroll-reveal hero-editorial__tagline">{l.heroTagline}</p>
+
+      <div class="scroll-reveal hero-editorial__name-block">
+        <h1 class="hero-editorial__name">{l.heroFirstName}</h1>
+        <p class="hero-editorial__surname">{l.heroLastName}</p>
+      </div>
+
+      <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
+
+      <p class="scroll-reveal hero-editorial__motto">
+        <span class="hero-editorial__pipe" aria-hidden="true">|</span>
+        {l.heroMotto}
+      </p>
+
+      <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
+
+      <p class="scroll-reveal hero-editorial__desc content-prose--mono">{l.heroDesc}</p>
+    </div>
+
+    <div class="hero-editorial__visual scroll-reveal">
+      <div class="hero-editorial__frame">
+        <LazyImage
+          src={heroImage}
+          alt={heroImageAlt}
+          aspectRatio="3 / 4"
+          parallaxSpeed={0.2}
+          depthTarget={false}
+          eager={true}
+          contain={true}
+          class="w-full h-full object-contain"
+        />
+      </div>
+      <p class="hero-editorial__caption font-mono text-[9px] tracking-[0.25em] uppercase text-ink-45 mt-4">
+        Souls &amp; Leavings · 2025
+      </p>
+    </div>
+  </div>
+</section>

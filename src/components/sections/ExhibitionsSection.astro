@@ -1,0 +1,24 @@
+---
+import ExhibitionAccordion from '../ExhibitionAccordion.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { exhibitionEntries } from '../../data/content';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="exhibitions" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.exhibitionsTag}</p>
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-ink mb-6" set:html={l.exhibitionHistory}></h2>
+    <p class="scroll-reveal content-prose text-ink-60 max-w-[62ch] mb-12 md:mb-16">
+      Chronological record of exhibitions — expand each entry to view posters, promotional materials, and documentation.
+    </p>
+
+    <ExhibitionAccordion entries={exhibitionEntries} />
+  </div>
+</section>
