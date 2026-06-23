@@ -7,6 +7,7 @@ import { initDepthField, resetDepthField, updateDepthField } from "./depth-field
 import { initExhibitionCarousels, resetExhibitionCarousels } from "./exhibition-carousel";
 import { initExhibitionAccordion, resetExhibitionAccordion } from "./exhibition-accordion";
 import { initNavHover, resetNavHover } from "./nav-hover";
+import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -29,6 +30,7 @@ export function initMotion(): void {
   resetExhibitionCarousels();
   resetExhibitionAccordion();
   resetNavHover();
+  resetGlobalLightbox();
 
   if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
     document.documentElement.classList.add("motion-reduced");
@@ -55,4 +57,5 @@ export function initMotion(): void {
   initExhibitionCarousels();
   initExhibitionAccordion();
   initNavHover();
+  initGlobalLightbox();
 }

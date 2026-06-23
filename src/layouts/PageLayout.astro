@@ -275,6 +275,7 @@ const menuItems: { key: string; href: string }[] = [
   import { initMotion } from "../scripts/motion/init";
   import { initLangSwitch, syncLangHrefs, syncLangToggle, restoreLangScroll } from "../scripts/lang-switch";
   import { initTabView, resetTabView } from "../scripts/tab-view";
+  import { resetGlobalLightbox } from "../scripts/lightbox";
 
   function initDrawer() {
     const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -353,6 +354,7 @@ const menuItems: { key: string; href: string }[] = [
     document.querySelectorAll("[data-tab-bound]").forEach((el) => {
       delete (el as HTMLElement).dataset.tabBound;
     });
+    resetGlobalLightbox();
     resetTabView();
     bootPageScripts();
   });

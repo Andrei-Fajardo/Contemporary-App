@@ -1,6 +1,5 @@
 ---
 import { t, type LocaleKey } from '../data/translations';
-import { siteCopy } from '../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
@@ -8,22 +7,26 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+
+const [anna, ...restFirst] = l.heroFirstName.split(" ");
+const restOfFirst = restFirst.join(" ");
 ---
 
 <section id="home" class="hero-section hero-chaos scroll-section">
-  <div class="chaos-splashes" aria-hidden="true">
-    <span class="chaos-splash chaos-splash--1"></span>
-    <span class="chaos-splash chaos-splash--2"></span>
-    <span class="chaos-splash chaos-splash--3"></span>
-  </div>
-
   <div class="hero-editorial hero-chaos__inner">
+    <div class="chaos-splashes" aria-hidden="true">
+      <span class="chaos-splash chaos-splash--1"></span>
+      <span class="chaos-splash chaos-splash--2"></span>
+      <span class="chaos-splash chaos-splash--3"></span>
+    </div>
+
     <div class="hero-editorial__copy">
       <p class="scroll-reveal hero-editorial__tagline section-eyebrow--blood">{l.heroTagline}</p>
 
       <div class="scroll-reveal hero-editorial__name-block">
-        <h1 class="hero-editorial__name">{l.heroFirstName}</h1>
-        <hr class="brutal-rule brutal-rule--short hero-editorial__name-rule" aria-hidden="true" />
+        <h1 class="hero-editorial__name">
+          <span class="hero-editorial__anna">{anna}</span>{restOfFirst ? ` ${restOfFirst}` : ""}
+        </h1>
         <p class="hero-editorial__surname">{l.heroLastName}</p>
       </div>
 
@@ -37,12 +40,6 @@ const l = t[locale];
       <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
 
       <p class="scroll-reveal hero-editorial__desc content-prose text-ink-45 text-sm">{l.heroDesc}</p>
-
-      <div class="scroll-reveal hero-chaos__ghosts" aria-label="Literary influences">
-        {siteCopy.about.literaryGhosts.map((name) => (
-          <span class="hero-chaos__ghost">{name}</span>
-        ))}
-      </div>
     </div>
 
     <aside class="hero-chaos__aside scroll-reveal" aria-label="Artist motto">

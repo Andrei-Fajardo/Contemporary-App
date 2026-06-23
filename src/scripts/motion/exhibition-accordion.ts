@@ -15,22 +15,23 @@ function rotateChevron(chevron: HTMLElement | null, open: boolean): void {
   animate(chevron, { rotate: open ? 45 : 0, scale: open ? 1.12 : 1 }, { duration: 0.35, ease: EASE });
 }
 
-function setSummaryStyles(summary: HTMLElement, open: boolean): void {
-  animate(
-    summary,
-    {
-      backgroundColor: open ? "rgba(17, 17, 17, 0.06)" : "rgba(17, 17, 17, 0)",
-      borderColor: open ? "rgba(17, 17, 17, 0.18)" : "rgba(17, 17, 17, 0)",
-      x: open ? 4 : 0,
-    },
-    { duration: 0.4, ease: EASE }
-  );
+function clearSummaryInlineStyles(summary: HTMLElement): void {
+  summary.style.removeProperty("background-color");
+  summary.style.removeProperty("border-color");
+  summary.style.removeProperty("transform");
+  summary.style.removeProperty("x");
+}
+
+function setOpenState(item: HTMLDetailsElement, summary: HTMLElement, open: boolean): void {
+  item.classList.toggle("is-expanded", open);
+  summary.setAttribute("aria-expanded", open ? "true" : "false");
+  if (!open) clearSummaryInlineStyles(summary);
 }
 
 function openPanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLElement, chevron: HTMLElement | null): void {
   animating.add(item);
   item.setAttribute("open", "");
-  summary.setAttribute("aria-expanded", "true");
+  setOpenState(item, summary, true);
 
   panel.style.overflow = "hidden";
   panel.style.height = "0px";
@@ -49,13 +50,12 @@ function openPanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLEl
     });
   });
 
-  setSummaryStyles(summary, true);
   rotateChevron(chevron, true);
 }
 
 function closePanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLElement, chevron: HTMLElement | null): void {
   animating.add(item);
-  summary.setAttribute("aria-expanded", "false");
+  setOpenState(item, summary, false);
 
   const start = panel.scrollHeight;
   panel.style.overflow = "hidden";
@@ -66,14 +66,15 @@ function closePanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLE
     ease: EASE,
     onComplete: () => {
       item.removeAttribute("open");
+      item.classList.remove("is-expanded");
       panel.style.height = "";
       panel.style.opacity = "";
       panel.style.overflow = "";
+      clearSummaryInlineStyles(summary);
       animating.delete(item);
     },
   });
 
-  setSummaryStyles(summary, false);
   rotateChevron(chevron, false);
 }
 
@@ -86,16 +87,19 @@ export function initExhibitionAccordion(): void {
     summary.dataset.accordionMotion = "true";
 
     summary.setAttribute("role", "button");
-    summary.setAttribute("aria-expanded", item.open ? "true" : "false");
+    clearSummaryInlineStyles(summary);
 
     if (item.open) {
+      item.classList.add("is-expanded");
       panel.style.height = "auto";
       panel.style.opacity = "1";
+      summary.setAttribute("aria-expanded", "true");
       rotateChevron(chevron, true);
     } else {
       panel.style.height = "0px";
       panel.style.opacity = "0";
       panel.style.overflow = "hidden";
+      summary.setAttribute("aria-expanded", "false");
     }
 
     summary.addEventListener("click", (e) => {
@@ -108,46 +112,18 @@ export function initExhibitionAccordion(): void {
         openPanel(item, panel, summary, chevron);
       }
     });
-
-    summary.addEventListener("mouseenter", () => {
-      if (item.hasAttribute("open")) return;
-      animate(
-        summary,
-        {
-          backgroundColor: "rgba(17, 17, 17, 0.055)",
-          borderColor: "rgba(17, 17, 17, 0.14)",
-          x: 6,
-        },
-        { duration: 0.35, ease: EASE }
-      );
-      if (chevron) {
-        animate(chevron, { x: 3, scale: 1.1 }, { duration: 0.35, ease: EASE });
-      }
-    });
-
-    summary.addEventListener("mouseleave", () => {
-      if (item.hasAttribute("open")) {
-        setSummaryStyles(summary, true);
-        return;
-      }
-      animate(
-        summary,
-        {
-          backgroundColor: "rgba(17, 17, 17, 0)",
-          borderColor: "rgba(17, 17, 17, 0)",
-          x: 0,
-        },
-        { duration: 0.35, ease: EASE }
-      );
-      if (chevron) {
-        animate(chevron, { x: 0, scale: 1, rotate: 0 }, { duration: 0.35, ease: EASE });
-      }
-    });
   });
 }
 
 export function resetExhibitionAccordion(): void {
   document.querySelectorAll<HTMLElement>(".exhibition-accordion__summary").forEach((el) => {
     delete el.dataset.accordionMotion;
+    el.style.removeProperty("background-color");
+    el.style.removeProperty("border-color");
+    el.style.removeProperty("transform");
+    el.style.removeProperty("x");
+  });
+  document.querySelectorAll<HTMLDetailsElement>(".exhibition-accordion__item").forEach((item) => {
+    item.classList.remove("is-expanded");
   });
 }

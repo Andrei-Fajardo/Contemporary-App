@@ -267,6 +267,22 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   width: clamp(3.5rem, 22vw, 9rem);
 }
 
+.hero-editorial__anna {
+  display: inline-block;
+  position: relative;
+}
+
+.hero-editorial__anna::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.06em;
+  height: 2px;
+  background: var(--accent-red);
+  transform: skewX(-8deg);
+}
+
 .hero-editorial__surname {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 5.5vw, 3.75rem);
@@ -274,7 +290,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   line-height: 0.95;
   letter-spacing: normal;
   color: var(--ink-70);
-  margin: 0;
+  margin: 0.25rem 0 0;
   padding-top: 0;
 }
 
