@@ -394,11 +394,16 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
 .editorial-dense .hero-editorial__name {
   font-size: clamp(2.75rem, 7.5vw, 5.25rem);
-  line-height: 0.92;
+  line-height: 0.88;
+}
+
+.editorial-dense .hero-editorial__name-rule {
+  margin: 0.15rem 0 0.3rem;
 }
 
 .editorial-dense .hero-editorial__surname {
   font-size: clamp(1.75rem, 4.5vw, 3rem);
+  line-height: 0.92;
 }
 
 .editorial-dense .art-piece .section-shell {

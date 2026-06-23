@@ -248,27 +248,34 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 }
 
 .hero-editorial__name-block {
-  margin-bottom: clamp(1.25rem, 3vh, 2rem);
+  margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
 }
 
 .hero-editorial__name {
   font-family: var(--font-heading);
   font-size: clamp(3.25rem, 9vw, 6.5rem);
   font-weight: 400;
-  line-height: 0.95;
+  line-height: 0.88;
   letter-spacing: normal;
   color: var(--ink);
   margin: 0;
+  padding-bottom: 0;
+}
+
+.hero-editorial__name-rule {
+  margin: 0.2rem 0 0.35rem;
+  width: clamp(3.5rem, 22vw, 9rem);
 }
 
 .hero-editorial__surname {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 5.5vw, 3.75rem);
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.95;
   letter-spacing: normal;
   color: var(--ink-70);
-  margin: 0.15em 0 0;
+  margin: 0;
+  padding-top: 0;
 }
 
 .hero-editorial__roles {
@@ -277,6 +284,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   font-size: clamp(1rem, 1.6vw, 1.25rem);
   line-height: 1.45;
   color: var(--ink-65);
+  margin-top: clamp(0.5rem, 1.5vh, 0.85rem);
   margin-bottom: clamp(1.25rem, 3vh, 2rem);
   max-width: 28ch;
 }
