@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import { t, type LocaleKey } from '../data/translations';
+import { artworks, galleryArtworkEntries } from '../data/artworks';
 
 export interface Props {
   locale?: LocaleKey;
@@ -10,11 +11,7 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 
 const galleryImages = [
-  // Artwork
-  { src: "/media/the-fish.png", title: "The Fish", year: "2024", medium: "OIL ON CANVAS", dimensions: "90CM × 80CM", group: "Artwork" },
-  { src: "/media/souls-and-leavings.jpg", title: "The Souls of Leavings", year: "2025", medium: "MIXED MEDIA ON CANVAS", dimensions: "120CM × 100CM", group: "Artwork" },
-
-  // Exhibition shots
+  ...galleryArtworkEntries(artworks),
   { src: "/media/exhibitions/senses-main.jpg", title: "Senses International Art Fair", year: "2025", medium: "MUST MUSEUM, LECCE", dimensions: "", group: "Exhibitions" },
   { src: "/media/exhibitions/senses-1.jpg", title: "Senses — Installation View", year: "2025", medium: "MUST MUSEUM, LECCE", dimensions: "", group: "Exhibitions" },
   { src: "/media/exhibitions/senses-2.jpg", title: "Senses — Detail", year: "2025", medium: "MUST MUSEUM, LECCE", dimensions: "", group: "Exhibitions" },
@@ -61,7 +58,7 @@ const galleryImages = [
   <div slot="content">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-12 md:py-20">
       <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(GALLERY)</span>
-      <h1 class="font-heading font-bold tracking-tight text-5xl md:text-7xl lg:text-[8rem] leading-[0.9] text-neutral-900 mb-16">
+      <h1 class="type-heading text-5xl md:text-7xl lg:text-[8rem] leading-[0.9] text-neutral-900 mb-16">
         Gallery
       </h1>
 
@@ -86,7 +83,7 @@ const galleryImages = [
               style={`animation-delay: ${(i % 12) * 60}ms`}
             />
             <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <p class="font-sans text-white text-xs font-medium truncate">{img.title}</p>
+              <p class="type-body text-white text-xs truncate">{img.title}</p>
               <p class="font-mono text-[9px] text-white/70 uppercase tracking-wider">{img.medium} {img.year ? `// ${img.year}` : ''}</p>
             </div>
           </div>
