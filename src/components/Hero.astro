@@ -17,6 +17,10 @@ const restOfFirst = restFirst.join(" ");
     <span class="chaos-splash chaos-splash--1" data-petal="1"></span>
     <span class="chaos-splash chaos-splash--2" data-petal="2"></span>
     <span class="chaos-splash chaos-splash--3" data-petal="3"></span>
+    <span class="chaos-splash chaos-splash--4" data-petal="4"></span>
+    <span class="chaos-splash chaos-splash--5" data-petal="5"></span>
+    <span class="chaos-splash chaos-splash--6" data-petal="6"></span>
+    <span class="chaos-splash chaos-splash--7" data-petal="7"></span>
   </div>
 
   <div class="hero-editorial hero-chaos__inner">
@@ -54,9 +58,15 @@ const restOfFirst = restFirst.join(" ");
 <script is:inline>
   (function () {
     var PETALS = [
+      /* Left cluster */
       { sel: ".chaos-splash--1", ox: 0.04, oy: 0.12, ax: 120, ay: 70, rot: -18, rs: 10, sp: 0.42, ph: 0 },
       { sel: ".chaos-splash--2", ox: 0.08, oy: 0.28, ax: 95, ay: 55, rot: 32, rs: 14, sp: 0.35, ph: 1.4 },
-      { sel: ".chaos-splash--3", ox: 0.38, oy: 0.42, ax: 75, ay: 90, rot: -42, rs: 18, sp: 0.55, ph: 2.8 },
+      { sel: ".chaos-splash--3", ox: 0.32, oy: 0.44, ax: 75, ay: 90, rot: -42, rs: 18, sp: 0.55, ph: 2.8 },
+      /* Right cluster — around quote box */
+      { sel: ".chaos-splash--4", ox: 0.68, oy: 0.05, ax: 85, ay: 60, rot: -12, rs: 12, sp: 0.38, ph: 0.6 },
+      { sel: ".chaos-splash--5", ox: 0.82, oy: 0.22, ax: 70, ay: 50, rot: 24, rs: 16, sp: 0.48, ph: 2.1 },
+      { sel: ".chaos-splash--6", ox: 0.72, oy: 0.48, ax: 90, ay: 65, rot: -28, rs: 11, sp: 0.33, ph: 3.5 },
+      { sel: ".chaos-splash--7", ox: 0.86, oy: 0.62, ax: 55, ay: 45, rot: 18, rs: 9, sp: 0.52, ph: 4.2 },
     ];
 
     var rafId = 0;
