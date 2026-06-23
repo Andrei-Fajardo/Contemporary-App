@@ -1,62 +1,55 @@
 ---
 import LazyImage from "./LazyImage.astro";
+import { t, type LocaleKey } from "../data/translations";
 
 interface Props {
-  artTag: string;
-  selected: string;
-  works: string;
-  year?: string;
-  intro: string;
-  heroDesc: string;
+  locale?: LocaleKey;
   heroImage?: string;
   heroImageAlt?: string;
 }
 
-const {
-  artTag,
-  selected,
-  works,
-  year = "2026",
-  intro,
-  heroDesc,
-  heroImage = "/media/souls-and-leavings.jpg",
-  heroImageAlt = "Anna Dauyl Rockswell — selected work",
-} = Astro.props;
+const { locale = "en", heroImage = "/media/souls-and-leavings.jpg", heroImageAlt = "Anna Dauyl Rockswell — selected work" } = Astro.props;
+const l = t[locale];
 ---
 
 <section id="home" class="hero-section scroll-section">
-  <div class="hero-sticky">
-    <div class="hero-parallax-layer">
-      <p class="scroll-reveal section-eyebrow mb-0">{artTag}</p>
-      <div class="mt-6 md:mt-8">
-        <h1 class="scroll-reveal font-heading font-bold tracking-tight text-5xl md:text-7xl lg:text-[8.5rem] leading-[0.92] text-ink">
-          {selected}
-        </h1>
-        <div class="scroll-reveal flex items-center gap-4 md:gap-8 my-3 md:my-4">
-          <div class="h-px flex-1 bg-[var(--border-section)]" />
-          <span class="font-mono text-[10px] tracking-widest text-ink-45">[001]</span>
-        </div>
-        <div class="scroll-reveal flex flex-wrap items-baseline gap-x-2 md:gap-x-4">
-          <h1 class="font-heading font-bold tracking-tight text-5xl md:text-7xl lg:text-[8.5rem] leading-[0.92] text-ink">
-            {works}
-          </h1>
-          <span class="font-subheading font-semibold tracking-tight text-5xl md:text-7xl lg:text-[8.5rem] leading-[0.92] text-outline">{year}</span>
-        </div>
+  <div class="hero-editorial">
+    <div class="hero-editorial__copy">
+      <p class="scroll-reveal hero-editorial__tagline">{l.heroTagline}</p>
+
+      <div class="scroll-reveal hero-editorial__name-block">
+        <h1 class="hero-editorial__name">{l.heroFirstName}</h1>
+        <p class="hero-editorial__surname">{l.heroLastName}</p>
       </div>
-      <p class="scroll-reveal content-prose italic mt-10 md:mt-12 max-w-[62ch]">{intro}</p>
-      <p class="scroll-reveal content-prose--mono uppercase tracking-widest mt-5 md:mt-6 max-w-[58ch]">{heroDesc}</p>
+
+      <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
+
+      <p class="scroll-reveal hero-editorial__motto">
+        <span class="hero-editorial__pipe" aria-hidden="true">|</span>
+        {l.heroMotto}
+      </p>
+
+      <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
+
+      <p class="scroll-reveal hero-editorial__desc content-prose--mono">{l.heroDesc}</p>
     </div>
 
-    <div class="hero-media-frame scroll-reveal">
-      <LazyImage
-        src={heroImage}
-        alt={heroImageAlt}
-        aspectRatio="4 / 5"
-        parallaxSpeed={0.35}
-        depthTarget={false}
-        eager={true}
-        class="w-full h-full object-cover"
-      />
+    <div class="hero-editorial__visual scroll-reveal">
+      <div class="hero-editorial__frame">
+        <LazyImage
+          src={heroImage}
+          alt={heroImageAlt}
+          aspectRatio="3 / 4"
+          parallaxSpeed={0.2}
+          depthTarget={false}
+          eager={true}
+          contain={true}
+          class="w-full h-full object-contain"
+        />
+      </div>
+      <p class="hero-editorial__caption font-mono text-[9px] tracking-[0.25em] uppercase text-ink-45 mt-4">
+        Souls &amp; Leavings · 2025
+      </p>
     </div>
   </div>
 </section>

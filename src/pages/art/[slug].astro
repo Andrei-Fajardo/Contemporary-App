@@ -1,72 +1,35 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import { t, type LocaleKey } from '../../data/translations';
+import { artworks } from '../../data/artworks';
 
 export interface Props {
   locale?: LocaleKey;
 }
 
 export async function getStaticPaths() {
-  const slugs = ["the-fish", "the-souls-of-leavings"];
-  return slugs.map((slug) => ({
-    params: { slug },
+  return artworks.map((art) => ({
+    params: { slug: art.slug },
   }));
 }
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
 
-const paintings: Record<string, {
-  title: string;
-  year: string;
-  medium: string;
-  dimensions: string;
-  imageUrl: string;
-  paragraphs: string[];
-  additionalMedia: string[];
-}> = {
-  "the-fish": {
-    title: "The Fish",
-    year: "2024",
-    medium: "OIL ON CANVAS",
-    dimensions: "90CM X 80CM",
-    imageUrl: "/media/the-fish.png",
-    paragraphs: [
-      "She floats in a half-life, caught between Piscean intuition and the weight of funeral black. The fur is not warmth — it is the silence before the burial.",
-      "The fish totem carries her through waters both amniotic and grave-cold. Her gaze does not meet ours — she is already elsewhere, dissolving into the black that surrounds her.",
-    ],
-    additionalMedia: [
-      "/media/exhibitions/senses-1.jpg",
-      "/media/feature/itaewon-1.jpg",
-    ],
-  },
-  "the-souls-of-leavings": {
-    title: "The Souls of Leavings",
-    year: "2025",
-    medium: "MIXED MEDIA ON CANVAS",
-    dimensions: "120CM X 100CM",
-    imageUrl: "/media/souls-and-leavings.jpg",
-    paragraphs: [
-      "This painting emerged from witnessing the devastation of abandonment and the quiet violence of loss. The female figure appears caught between states — as though waiting for something to leave her, or return.",
-      "In Kazakh tradition, the departing soul lingers for forty days. This work is that forty-day room — suspended, echoing, almost empty. A study in suspended grief: the moment between knowing and accepting, between holding on and letting go.",
-    ],
-    additionalMedia: [
-      "/media/exhibitions/kinship-1.jpg",
-      "/media/exhibitions/holy-paris-1.webp",
-    ],
-  },
-};
-
-const painting = paintings[Astro.params.slug!];
+const painting = artworks.find((a) => a.slug === Astro.params.slug);
 
 if (!painting) {
   return Astro.redirect("/404");
 }
+
+const additionalMedia: Record<string, string[]> = {
+  "the-fish": ["/media/exhibitions/senses-1.jpg", "/media/feature/itaewon-1.jpg"],
+  "the-souls-of-leavings": ["/media/exhibitions/kinship-1.jpg", "/media/exhibitions/holy-paris-1.webp"],
+};
 ---
 
 <PageLayout title={`${painting.title} — ${l.siteTitle}`} activeSection="art" locale={locale}>
   <div slot="content">
-    <!-- Back link -->
     <div class="max-w-7xl mx-auto px-6 sm:px-12 pt-16 md:pt-24 pb-2">
       <a
         href={locale === "en" ? "/" : `/${locale}`}
@@ -76,19 +39,13 @@ if (!painting) {
       </a>
     </div>
 
-    <!-- Hero split — exact 45%/1fr grid -->
     <div class="w-full grid grid-cols-1 md:grid-cols-[45%_1fr] gap-8 md:gap-12 items-start py-12 max-w-7xl mx-auto px-6 sm:px-12">
-
-      <!-- LEFT — Main image with global premium hover interaction -->
       <div class="interactive-image-container aspect-[4/5] md:aspect-square">
-        <img src={painting.imageUrl} alt={painting.title} loading="lazy" />
+        <img src={painting.image} alt={painting.title} loading="lazy" />
       </div>
 
-      <!-- RIGHT — Text block -->
       <div class="w-full flex flex-col justify-between h-full min-w-0">
         <div class="w-full flex flex-col space-y-6">
-
-          <!-- Title + Year row -->
           <div class="w-full flex justify-between items-baseline border-b border-neutral-900/10 pb-3 min-w-0">
             <h1 class="font-heading text-3xl md:text-4xl text-neutral-900 tracking-tight leading-none truncate pr-4">
               {painting.title}
@@ -98,22 +55,24 @@ if (!painting) {
             </span>
           </div>
 
-          <!-- Dimensions + Medium — whitespace-nowrap protected -->
           <div class="w-full block overflow-x-auto scrollbar-none pb-1">
             <p class="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-neutral-500 uppercase whitespace-nowrap">
               {painting.dimensions} <span class="text-neutral-300 mx-2">|</span> {painting.medium}
             </p>
           </div>
 
-          <!-- Description paragraphs -->
+          <p class="content-prose text-neutral-600 text-sm">By Artist NANA (Anna Dauyl Rockswell)</p>
+
           <div class="font-body text-sm text-neutral-600 leading-relaxed max-w-[55ch] pt-2 space-y-4">
-            {painting.paragraphs.map((para) => (
-              <p>{para}</p>
-            ))}
+            <p>{painting.about}</p>
+          </div>
+
+          <div class="pt-4 border-t border-neutral-900/10">
+            <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-3">Artist Bio</p>
+            <p class="text-sm text-neutral-600 leading-relaxed max-w-[55ch]">{painting.artistBio}</p>
           </div>
         </div>
 
-        <!-- View More — toggle grid expansion -->
         <div class="pt-8">
           <button
             id="view-details-btn"
@@ -127,13 +86,12 @@ if (!painting) {
       </div>
     </div>
 
-    <!-- Detail Grid -->
     <section
       id="detail-grid"
       class="hidden max-w-7xl mx-auto px-6 sm:px-12 pb-16 md:pb-24"
     >
       <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-900/10 border border-neutral-900/10">
-        {painting.additionalMedia.map((media) => (
+        {(additionalMedia[painting.slug] ?? []).map((media) => (
           <div class="interactive-image-container aspect-video">
             <img
               src={media}

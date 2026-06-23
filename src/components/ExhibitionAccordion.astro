@@ -47,7 +47,10 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 
   .exhibition-accordion__panel {
     padding: 0 0 1.5rem 4.5rem;
-    overflow: visible;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    will-change: height, opacity;
   }
 
   .exhibition-accordion__summary {
@@ -128,7 +131,8 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-size: 1.25rem;
     line-height: 1;
     color: var(--ink-35);
-    transition: transform 0.25s var(--ease-editorial), color 0.3s var(--ease-editorial);
+    display: inline-block;
+    transform-origin: center;
   }
 
   .exhibition-accordion__summary:hover .exhibition-accordion__chevron {
@@ -136,7 +140,6 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
   }
 
   .exhibition-accordion__item[open] .exhibition-accordion__chevron {
-    transform: rotate(45deg);
     color: var(--ink);
   }
 

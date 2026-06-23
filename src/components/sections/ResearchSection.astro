@@ -10,12 +10,16 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="research" class="scroll-section border-b border-neutral-900/20">
-  <div class="section-shell section-shell--wide py-12 md:py-20 lg:py-24">
+<section id="research" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.academicTag}</p>
+    <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-ink mb-6">
+      {l.academicHeading}
+    </h2>
     <ComingSoon
-      label="(ACADEMIC RESEARCH)"
-      heading="Academic Research"
-      message={l.comingSoonMessage}
+      label={l.academicTag}
+      heading={l.academicHeading}
+      message="Published studies and scientific essays will appear here as they become available."
       note={l.comingSoonNote}
     />
   </div>
