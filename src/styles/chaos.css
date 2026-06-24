@@ -110,7 +110,7 @@
   left: 0;
   overflow: visible;
   pointer-events: none;
-  z-index: 20;
+  z-index: 0;
 }
 
 @media (min-width: 1024px) {
@@ -224,13 +224,29 @@
 
 .site-main-column {
   position: relative;
-  background-color: var(--canvas);
+  z-index: 1;
+  background-color: transparent;
+  isolation: isolate;
 }
 
 .site-main-column .tabular-main,
 .site-main-column > main {
   position: relative;
   z-index: 1;
+}
+
+/* Editorial images sit above the petal layer */
+.cursor-tilt,
+.press-chaos__tilt-wrap,
+.media-card .cursor-tilt {
+  position: relative;
+  z-index: 2;
+}
+
+[data-cursor-tilt],
+.cursor-tilt__surface {
+  position: relative;
+  z-index: 2;
 }
 
 /* --- Press section — exhibition posters --- */
@@ -287,6 +303,7 @@ html.cursor-tilt-live .press-chaos__tilt:hover .press-chaos__media {
     0 1px 0 rgba(17, 17, 17, 0.04),
     0 18px 48px -28px rgba(17, 17, 17, 0.22);
   transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
 }
 
 html.cursor-tilt-live .press-chaos__media {
@@ -345,10 +362,7 @@ html.motion-reduced .press-chaos__poster {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cursor-tilt__surface,
-  [data-cursor-tilt],
-  .press-chaos__tilt,
-  .press-chaos__media {
+  .press-chaos__tilt {
     transform: none !important;
     will-change: auto;
   }

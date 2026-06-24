@@ -474,6 +474,11 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   width: 100%;
 }
 
+.media-card .cursor-tilt__surface,
+.media-card .lazy-media {
+  background: var(--surface-placeholder);
+}
+
 .media-card-caption {
   position: absolute;
   left: 0;
@@ -542,11 +547,22 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 /* --- Single-page scroll layout --- */
 .site-shell {
   min-width: 0;
+  position: relative;
+  background-color: var(--canvas);
 }
 
 .site-main-column {
+  position: relative;
+  z-index: 1;
+  overflow-x: visible;
+  background-color: transparent;
+  isolation: isolate;
+}
+
+.tabular-main {
+  position: relative;
+  z-index: 1;
   overflow-x: clip;
-  background-color: var(--canvas);
 }
 
 /* --- Desktop persistent sidebar --- */

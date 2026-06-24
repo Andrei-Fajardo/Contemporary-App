@@ -9,9 +9,9 @@ type TiltState = {
   velY: number;
 };
 
-const PROXIMITY_RADIUS = 420;
-const MAX_TILT = 9;
-const SPRING = 0.16;
+const PROXIMITY_RADIUS = 480;
+const MAX_TILT = 11;
+const SPRING = 0.18;
 const DAMPING = 0.84;
 
 const cursor = { x: -9999, y: -9999, active: false };
@@ -25,6 +25,10 @@ let lastFrameT = 0;
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
+}
+
+function motionScale(): number {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0.5 : 1;
 }
 
 function collectTiltTargets(): HTMLElement[] {
@@ -67,10 +71,10 @@ function proximityStrength(dist: number, radius: number): number {
 }
 
 function updateTargets(): void {
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const scale = motionScale();
   const targets = collectTiltTargets();
 
-  if (!cursor.active || reduced) {
+  if (!cursor.active) {
     targets.forEach((el) => {
       const state = getState(el);
       state.targetX = 0;
@@ -96,7 +100,7 @@ function updateTargets(): void {
     const dist = Math.hypot(dx, dy);
     const strength = proximityStrength(
       dist,
-      PROXIMITY_RADIUS + Math.max(rect.width, rect.height) * 0.4,
+      PROXIMITY_RADIUS + Math.max(rect.width, rect.height) * 0.45,
     );
 
     if (strength <= 0) {
@@ -107,8 +111,8 @@ function updateTargets(): void {
 
     const normX = clamp(dx / (rect.width * 0.5), -1, 1);
     const normY = clamp(dy / (rect.height * 0.5), -1, 1);
-    state.targetY = normX * MAX_TILT * strength;
-    state.targetX = -normY * MAX_TILT * strength;
+    state.targetY = normX * MAX_TILT * strength * scale;
+    state.targetX = -normY * MAX_TILT * strength * scale;
   });
 }
 
@@ -133,7 +137,7 @@ function applyTransforms(): void {
     const active = Math.hypot(state.rotX, state.rotY) > 0.15;
     el.classList.toggle("is-tilt-active", active);
 
-    const lift = Math.min(10, Math.hypot(state.rotX, state.rotY) * 0.55);
+    const lift = Math.min(12, Math.hypot(state.rotX, state.rotY) * 0.6);
     el.style.transform = `rotateX(${state.rotX.toFixed(3)}deg) rotateY(${state.rotY.toFixed(3)}deg) translateZ(${lift.toFixed(2)}px)`;
   });
 }
@@ -175,11 +179,16 @@ function bindPointer(): void {
   document.documentElement.addEventListener("mouseleave", onPointerLeave);
 }
 
+function primeTargets(): void {
+  collectTiltTargets().forEach((el) => getState(el));
+}
+
 export function startCursorTilt(): void {
   if (running) return;
   running = true;
   lastFrameT = 0;
   document.documentElement.classList.add("cursor-tilt-live");
+  primeTargets();
   cancelAnimationFrame(rafId);
   rafId = requestAnimationFrame(tick);
 }
@@ -202,10 +211,9 @@ export function resetCursorTilt(): void {
 
 export function initCursorTilt(): void {
   if (!collectTiltTargets().length) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   bindPointer();
-  collectTiltTargets().forEach((el) => getState(el));
+  primeTargets();
   startCursorTilt();
 }
 
@@ -214,11 +222,16 @@ export function bindCursorTiltTabListener(): void {
   tabListenerBound = true;
 
   document.addEventListener("tabular:change", () => {
-    if (!running) initCursorTilt();
+    primeTargets();
+    if (!running) startCursorTilt();
     collectTiltTargets().forEach((el) => {
       const state = getState(el);
       state.targetX = 0;
       state.targetY = 0;
+      state.rotX = 0;
+      state.rotY = 0;
+      state.velX = 0;
+      state.velY = 0;
     });
   });
 
@@ -227,6 +240,7 @@ export function bindCursorTiltTabListener(): void {
     (event) => {
       const target = event.target as HTMLElement;
       if (!target.classList.contains("exhibition-accordion__item")) return;
+      primeTargets();
       collectTiltTargets().forEach((el) => {
         const state = getState(el);
         state.targetX = 0;

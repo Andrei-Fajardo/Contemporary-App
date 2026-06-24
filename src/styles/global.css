@@ -587,11 +587,10 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     opacity: 0.012;
   }
 
-  .site-main-column,
   .tabular-main,
   .tabular-view,
   .tabular-panel {
-    background-color: var(--canvas);
+    background-color: transparent;
   }
 
   html,
@@ -673,10 +672,6 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
   body,
   .site-shell,
-  .site-main-column,
-  .tabular-main,
-  .tabular-view,
-  .tabular-panel,
   #mobile-drawer,
   .mobile-drawer__footer,
   header.lg\:hidden,
