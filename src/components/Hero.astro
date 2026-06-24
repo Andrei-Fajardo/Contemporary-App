@@ -28,7 +28,22 @@ const restOfFirst = restFirst.join(" ");
 
       <p class="scroll-reveal hero-editorial__motto">
         <span class="hero-editorial__pipe" aria-hidden="true">|</span>
-        <span class="chaos-strike">{l.heroMotto}</span>
+        <span class="hero-editorial__motto-text">
+          {l.heroMottoLead}
+          <span class="chaos-encircle">
+            <svg class="chaos-encircle__ring" aria-hidden="true" viewBox="0 0 128 48" preserveAspectRatio="none">
+              <path
+                d="M 16 26 C 20 10, 48 6, 64 8 C 84 5, 108 12, 112 24 C 110 36, 84 42, 64 40 C 40 42, 14 38, 16 26 Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="chaos-encircle__text">{l.heroMottoEmphasis}</span>
+          </span>
+        </span>
       </p>
 
       <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>

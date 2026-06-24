@@ -447,6 +447,34 @@ html.motion-reduced .press-chaos__poster {
   color: var(--accent-red);
 }
 
+.chaos-encircle {
+  position: relative;
+  display: inline-block;
+  padding: 0.08em 0.42em 0.12em;
+  margin-left: 0.05em;
+  white-space: nowrap;
+}
+
+.chaos-encircle__ring {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 112%;
+  height: 2.35em;
+  transform: translate(-50%, -50%) rotate(-11deg) skewX(-7deg);
+  pointer-events: none;
+  color: var(--accent-red-label);
+  opacity: 0.92;
+}
+
+.chaos-encircle__text {
+  position: relative;
+  z-index: 1;
+  color: var(--ink-75);
+  font-style: italic;
+}
+
+/* Legacy — kept for any remaining strike-through usage */
 .chaos-strike {
   position: relative;
   display: inline-block;
