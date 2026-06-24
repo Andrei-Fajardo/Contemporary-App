@@ -19,10 +19,17 @@ const currentLang = Astro.url.pathname.split('/')[1] || 'en';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style="color-scheme: light only; background-color: #F0EEE9;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="supported-color-schemes" content="light" />
+    <meta name="theme-color" content="#F0EEE9" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <style is:inline>
+      html, body { background-color: #f0eee9 !important; color: #111 !important; color-scheme: light only; }
+    </style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} — Anna Dauyl Rockswell</title>
     <ClientRouter />

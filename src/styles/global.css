@@ -606,6 +606,15 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     opacity: 0.01;
   }
 
+  /* Grain + petals darken the cream canvas on iOS; keep mobile flat and light */
+  .grain-overlay {
+    display: none;
+  }
+
+  .floating-petals {
+    display: none;
+  }
+
   /* Ensure touch targets are at least 44x44px */
   button, a {
     min-height: 44px;
@@ -643,5 +652,55 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   .interactive-image-container:hover::after {
     opacity: 0;
     transform: none;
+  }
+}
+
+/* iOS Safari / system dark appearance — force editorial light palette */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light only;
+    --canvas: #f0eee9;
+    --ink: #111111;
+    --ink-muted: #555555;
+    --ink-tertiary: #888888;
+    --ink-inverse: #ffffff;
+    --border-subtle: rgba(17, 17, 17, 0.1);
+    --border-section: rgba(17, 17, 17, 0.2);
+    --surface-placeholder: rgba(0, 0, 0, 0.04);
+    --surface-hero-frame: rgba(0, 0, 0, 0.03);
+  }
+
+  html {
+    color-scheme: light only;
+    background-color: var(--canvas) !important;
+  }
+
+  body,
+  .site-shell,
+  .site-main-column,
+  .tabular-main,
+  .tabular-view,
+  .tabular-panel,
+  #mobile-drawer,
+  .mobile-drawer__footer,
+  header.lg\:hidden,
+  .desktop-sidebar,
+  .desktop-sidebar__inner,
+  .site-topbar,
+  .site-footer {
+    background-color: var(--canvas) !important;
+    color: var(--ink) !important;
+    color-scheme: light only;
+  }
+
+  .grain-overlay,
+  .floating-petals {
+    display: none !important;
+  }
+
+  .grain-overlay::before,
+  .grain-overlay::after {
+    mix-blend-mode: normal;
+    opacity: 0;
   }
 }
