@@ -13,7 +13,7 @@ const l = t[locale];
 
 <section id="about" class="scroll-section section-gap">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow">{l.aboutTag}</p>
+    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.aboutTag}</p>
 
     <div class="about-editorial">
       <div class="about-editorial__portrait scroll-reveal">
@@ -39,9 +39,11 @@ const l = t[locale];
           </div>
         </div>
 
+        <hr class="editorial-rule scroll-reveal about-editorial__rule" />
+
         <div class="scroll-reveal about-editorial__meta">
           <div>
-            <p class="section-eyebrow mb-4">{l.interestsLabel}</p>
+            <p class="section-eyebrow section-eyebrow--blood mb-4">{l.interestsLabel}</p>
             <ul class="about-editorial__list">
               {siteCopy.about.interests.map((item) => (
                 <li>{item}</li>
@@ -50,7 +52,7 @@ const l = t[locale];
           </div>
 
           <div>
-            <p class="section-eyebrow mb-4">{l.influencesLabel}</p>
+            <p class="section-eyebrow section-eyebrow--blood mb-4">{l.influencesLabel}</p>
             <ul class="about-editorial__list">
               {siteCopy.about.influences.map((item) => (
                 <li>{item}</li>
@@ -59,8 +61,10 @@ const l = t[locale];
           </div>
         </div>
 
-        <div class="scroll-reveal pt-6 border-t border-subtle">
-          <p class="section-eyebrow mb-5">{l.artistStatement}</p>
+        <hr class="editorial-rule scroll-reveal about-editorial__rule" />
+
+        <div class="scroll-reveal about-editorial__statement">
+          <p class="section-eyebrow section-eyebrow--blood mb-5">{l.artistStatement}</p>
           <p class="content-prose italic text-ink-70 max-w-[58ch]">
             {siteCopy.about.statement}
           </p>
@@ -88,12 +92,15 @@ const l = t[locale];
     }
   }
 
+  .about-editorial__rule {
+    margin-top: 2.5rem;
+    margin-bottom: 0;
+  }
+
   .about-editorial__meta {
     display: grid;
     gap: 2rem;
     margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-subtle);
   }
 
   @media (min-width: 640px) {
@@ -101,6 +108,10 @@ const l = t[locale];
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
     }
+  }
+
+  .about-editorial__statement {
+    margin-top: 2.5rem;
   }
 
   .about-editorial__list {
@@ -116,7 +127,7 @@ const l = t[locale];
     font-family: var(--font-body);
     font-size: 0.875rem;
     color: var(--ink-60);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-section);
     padding: 0.35rem 0.65rem;
     border-radius: var(--radius-lang-btn);
     line-height: 1.3;

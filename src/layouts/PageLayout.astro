@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import SiteFooter from '../components/SiteFooter.astro';
+import FloatingPetals from '../components/FloatingPetals.astro';
 import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
@@ -169,6 +170,7 @@ const menuItems: { key: string; href: string }[] = [
   <body class="font-body antialiased bg-[var(--canvas)] text-[#111]" data-layout="spa-scroll">
     <!-- Film grain overlay -->
     <div class="grain-overlay" />
+    <FloatingPetals />
 
     <!-- Language switch transition (persists across ClientRouter swaps) -->
     <div id="lang-transition-overlay" class="lang-transition-overlay" transition:persist="lang-overlay" aria-hidden="true" aria-live="polite">
@@ -386,6 +388,7 @@ const menuItems: { key: string; href: string }[] = [
   import { initMotion } from "../scripts/motion/init";
   import { initLangSwitch, restoreLangScroll, syncLangHrefs, syncLangToggle } from "../scripts/lang-switch";
   import { updateScrollSpy } from "../scripts/motion/scroll-spy";
+  import { initPetalDrift, resetPetalDrift } from "../scripts/motion/petal-drift";
 
   function initDrawer() {
     const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -444,6 +447,8 @@ const menuItems: { key: string; href: string }[] = [
     syncLangToggle();
     initLangSwitch();
     initMotion();
+    resetPetalDrift();
+    initPetalDrift();
     restoreLangScroll();
   }
 
