@@ -180,37 +180,37 @@ export interface PressItem {
   image: string;
 }
 
-/** Exhibition press & promotional posters — one image per entry, no duplicates. */
+/** Exhibition press & promotional posters — image paths match `public/media/press/` filenames. */
 export const pressItems: PressItem[] = [
   {
     id: 'with-iam-insa',
     title: 'Hechyeomoyeo — With IAM Insa',
     venue: '2025 Insadong Antique & Art Fair',
-    place: 'Insadong, Seoul, South Korea',
+    place: 'Annyeong Insa-dong, Insadong, Seoul, South Korea',
     date: 'September 11–14, 2024',
-    image: '/media/posters/poster-1.jpg',
+    image: '/media/press/with-iam-insa.jpg',
   },
   {
     id: 'nyc-hcmy',
     title: 'New York Art Exhibition — HCMY #12',
     venue: 'The Living Gallery',
-    place: 'Bushwick, Brooklyn, New York, USA',
+    place: '1094 Broadway, Bushwick, Brooklyn, New York, USA',
     date: 'October 11–26, 2025',
-    image: '/media/posters/nana-nyc.jpg',
+    image: '/media/press/nyc-hcmy.jpg',
   },
   {
     id: 'paris-vandals',
     title: 'Paris Art Exhibition 2025 — The Vandals',
     venue: 'Of Nazareth Gallery',
-    place: 'Le Marais, Paris, France',
+    place: '46–48 Rue Notre Dame de Nazareth, Le Marais, Paris, France',
     date: 'October 17–20, 2025',
-    image: '/media/posters/paris-poster.png',
+    image: '/media/press/paris-vandals.png',
   },
   {
     id: 'vandals-edge-of-now',
     title: 'The Vandals — Edge of Now',
     venue: 'The Koppel Project',
-    place: "Regent's Park Road, Camden Town, London, UK",
+    place: "157 Regent's Park Road, Camden Town, London, United Kingdom",
     date: 'October 23–26, 2025',
     image: '/media/press/vandals-edge-of-now.jpg',
   },
@@ -220,13 +220,13 @@ export const pressItems: PressItem[] = [
     venue: 'Bokwang Theater',
     place: 'Itaewon, Seoul, South Korea',
     date: 'November 13–16, 2025',
-    image: '/media/posters/itaewon-poster.png',
+    image: '/media/press/itaewon-film-festival.png',
   },
   {
     id: 'istanbul-art-show',
     title: 'Istanbul Art Show',
     venue: 'Luna Grande Art',
-    place: 'Kadıköy, Istanbul, Turkey',
+    place: 'Rasimpaşa Mah. Bayramyeri Sok. No:15/1, Kadıköy, Istanbul, Turkey',
     date: 'November 15–21, 2025',
     image: '/media/press/istanbul-art-show.jpg',
   },
