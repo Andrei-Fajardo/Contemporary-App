@@ -20,18 +20,24 @@ const l = t[locale];
 
     <div class="press-chaos__list editorial-divider-list">
       {pressItems.map((item, i) => (
-        <article class="scroll-reveal press-chaos__item grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-center py-12 md:py-16 first:pt-0">
-          <div class:list={["press-chaos__media overflow-clip w-full max-w-md mx-auto md:mx-0 border border-subtle", i % 2 === 1 && "md:col-start-2"]}>
-            <LazyImage
-              src={item.image}
-              alt={`${item.title} — ${item.venue}`}
-              aspectRatio="3 / 4"
-              parallaxSpeed={0}
-              depthTarget={false}
-              contain={true}
-              eager={true}
-              class="press-chaos__poster transition-[filter] duration-700"
-            />
+        <article class="scroll-reveal press-chaos__item grid md:grid-cols-[1.12fr_0.88fr] gap-10 lg:gap-14 xl:gap-16 items-center py-12 md:py-16 first:pt-0">
+          <div
+            class:list={["press-chaos__tilt-wrap", i % 2 === 1 && "md:col-start-2"]}
+          >
+            <div class="press-chaos__tilt">
+              <div class="press-chaos__media overflow-clip w-full border border-subtle" data-press-tilt>
+                <LazyImage
+                  src={item.image}
+                  alt={`${item.title} — ${item.venue}`}
+                  aspectRatio="3 / 4"
+                  parallaxSpeed={0}
+                  depthTarget={false}
+                  contain={true}
+                  eager={true}
+                  class="press-chaos__poster"
+                />
+              </div>
+            </div>
           </div>
           <div class:list={[i % 2 === 1 && "md:col-start-1 md:row-start-1"]}>
             <p class="section-eyebrow section-eyebrow--blood mb-4">{item.date}</p>
