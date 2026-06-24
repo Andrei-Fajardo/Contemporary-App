@@ -233,6 +233,28 @@
   z-index: 1;
 }
 
+/* --- Press section — exhibition posters --- */
+.press-chaos {
+  position: relative;
+}
+
+.press-chaos__media {
+  background: var(--surface-placeholder);
+  max-width: min(100%, 22rem);
+}
+
+.press-chaos__poster {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+html.motion-reduced .press-chaos__media .lazy-media img,
+html.motion-reduced .press-chaos__poster {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
 /* --- Contact section (light editorial, matches other panels) --- */
 .contacts-chaos {
   position: relative;

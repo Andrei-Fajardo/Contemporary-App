@@ -28,7 +28,9 @@ const l = t[locale];
               aspectRatio="3 / 4"
               parallaxSpeed={0}
               depthTarget={false}
-              class="transition-[filter] duration-700 view-parallax-media"
+              contain={true}
+              eager={true}
+              class="press-chaos__poster transition-[filter] duration-700"
             />
           </div>
           <div class:list={[i % 2 === 1 && "md:col-start-1 md:row-start-1"]}>

@@ -2,7 +2,7 @@ import { updateDepthField } from "./depth-field";
 
 let lazyObserver: IntersectionObserver | null = null;
 
-function loadImage(img: HTMLImageElement): void {
+export function loadImage(img: HTMLImageElement): void {
   const src = img.dataset.src;
   if (!src || img.src === src) return;
 
@@ -64,4 +64,10 @@ export function initLazyMedia(): void {
     if (!img.dataset.src) return;
     lazyObserver?.observe(img);
   });
+}
+
+/** Eagerly load lazy images inside a tab panel or other hidden container. */
+export function loadLazyMediaIn(root: ParentNode = document): void {
+  root.querySelectorAll<HTMLImageElement>(".lazy-media img[data-src]").forEach(loadImage);
+  root.querySelectorAll<HTMLElement>(".scroll-reveal").forEach((el) => el.classList.add("is-visible"));
 }

@@ -3,6 +3,8 @@
  * No scroll-spy, no page transitions between panels.
  */
 
+import { loadLazyMediaIn } from "./motion/lazy-media";
+
 const VALID_TABS = [
   "about",
   "art",
@@ -59,6 +61,9 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
     const base = window.location.pathname + window.location.search;
     history.replaceState(null, "", `${base}#${tab}`);
   }
+
+  const activePanel = root.querySelector<HTMLElement>(`[data-tab-panel="${tab}"]`);
+  if (activePanel) loadLazyMediaIn(activePanel);
 
   document.dispatchEvent(new CustomEvent("tabular:change", { detail: { tab } }));
 }
