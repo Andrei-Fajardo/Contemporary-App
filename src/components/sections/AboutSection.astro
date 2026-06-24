@@ -28,18 +28,9 @@ const l = t[locale];
 
       <div class="scroll-reveal about-chaos__meta">
         <div>
-          <p class="section-eyebrow mb-4">{l.interestsLabel}</p>
+          <p class="section-eyebrow section-eyebrow--blood mb-4">{l.interestsLabel}</p>
           <ul class="about-chaos__list">
             {siteCopy.about.interests.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <p class="section-eyebrow mb-4">{l.influencesLabel}</p>
-          <ul class="about-chaos__list">
-            {siteCopy.about.influences.map((item) => (
               <li>{item}</li>
             ))}
           </ul>
@@ -47,7 +38,7 @@ const l = t[locale];
       </div>
 
       <div class="scroll-reveal pt-8">
-        <p class="section-eyebrow mb-5">{l.artistStatement}</p>
+        <p class="section-eyebrow section-eyebrow--blood mb-5">{l.artistStatement}</p>
         <p class="content-prose italic text-ink-70 max-w-[58ch] about-chaos__statement">
           {siteCopy.about.statement}
         </p>

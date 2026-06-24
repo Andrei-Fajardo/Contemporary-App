@@ -32,7 +32,6 @@ export const siteCopy = {
       "Transgressive literature",
       "Counterculture art",
     ],
-    influences: ["Mental catharsis"],
     statement:
       "My work occupies the threshold between the visceral and the conceptual — where the body becomes a site of memory, loss, and transformation. Drawing from Jungian archetypes, dark expressionism, and transgressive literature, I explore how feminine experience is inscribed, erased, and reinscribed across personal and collective histories.",
   },

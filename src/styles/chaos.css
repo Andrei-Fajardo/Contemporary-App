@@ -5,6 +5,7 @@
   --accent-red-bright: #E61919;
   --accent-red-ghost: rgba(196, 30, 58, 0.08);
   --accent-red-ink: rgba(196, 30, 58, 0.55);
+  --accent-red-label: #8F2231;
   --chaos-radius: 0;
 }
 
@@ -561,8 +562,8 @@ html.motion-reduced .press-chaos__poster {
 
 @media (min-width: 640px) {
   .about-chaos__meta {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 }
 
@@ -634,7 +635,7 @@ html.motion-reduced .press-chaos__poster {
 }
 
 .edu-timeline__label {
-  color: var(--accent-red) !important;
+  color: var(--accent-red-label) !important;
 }
 
 .edu-timeline__track {
@@ -736,15 +737,19 @@ html.motion-reduced .press-chaos__poster {
 
 /* --- Section-level chaos accents --- */
 .section-eyebrow--blood {
-  color: var(--accent-red) !important;
+  color: var(--accent-red-label) !important;
 }
 
 .art-piece:nth-child(odd) .art-wall-label .type-heading {
-  color: var(--accent-red);
+  color: var(--accent-red-label);
 }
 
-.scroll-section:nth-child(even) .section-eyebrow {
-  color: var(--accent-red-ink);
+.scroll-section:nth-child(even) .section-eyebrow:not(.section-eyebrow--blood) {
+  color: var(--ink-60);
+}
+
+.about-chaos .section-eyebrow {
+  color: var(--accent-red-label);
 }
 
 /* Nav active indicator bleeds red */

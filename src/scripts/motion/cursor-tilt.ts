@@ -67,7 +67,7 @@ function getState(el: HTMLElement): TiltState {
 function proximityStrength(dist: number, radius: number): number {
   if (dist >= radius) return 0;
   const t = 1 - dist / radius;
-  return t * t;
+  return t * t * (0.55 + t * 0.45);
 }
 
 function updateTargets(): void {
@@ -100,7 +100,7 @@ function updateTargets(): void {
     const dist = Math.hypot(dx, dy);
     const strength = proximityStrength(
       dist,
-      PROXIMITY_RADIUS + Math.max(rect.width, rect.height) * 0.45,
+      PROXIMITY_RADIUS + Math.max(rect.width, rect.height) * 0.55,
     );
 
     if (strength <= 0) {
@@ -137,7 +137,7 @@ function applyTransforms(): void {
     const active = Math.hypot(state.rotX, state.rotY) > 0.15;
     el.classList.toggle("is-tilt-active", active);
 
-    const lift = Math.min(12, Math.hypot(state.rotX, state.rotY) * 0.6);
+    const lift = Math.min(22, Math.hypot(state.rotX, state.rotY) * 0.85);
     el.style.transform = `rotateX(${state.rotX.toFixed(3)}deg) rotateY(${state.rotY.toFixed(3)}deg) translateZ(${lift.toFixed(2)}px)`;
   });
 }
