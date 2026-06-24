@@ -17,13 +17,17 @@ const slides = images.length > 0 ? images : [];
   >
     {slides.map((src, i) => (
       <figure class="exhibition-gallery-grid__item">
-        <img
-          src={src}
-          alt={`${alt} — photo ${i + 1}`}
-          loading="lazy"
-          decoding="async"
-          draggable="false"
-        />
+        <div class="cursor-tilt">
+          <div class="cursor-tilt__surface exhibition-gallery-grid__tilt" data-cursor-tilt>
+            <img
+              src={src}
+              alt={`${alt} — photo ${i + 1}`}
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+            />
+          </div>
+        </div>
       </figure>
     ))}
   </div>
@@ -47,14 +51,18 @@ const slides = images.length > 0 ? images : [];
       <div class="exhibition-carousel__track">
         {slides.map((src, i) => (
           <figure class="exhibition-carousel__slide">
-            <img
-              src={src}
-              alt={`${alt} — photo ${i + 1}`}
-              loading="eager"
-              decoding="async"
-              fetchpriority={i < 2 ? "high" : "auto"}
-              draggable="false"
-            />
+            <div class="cursor-tilt h-full">
+              <div class="cursor-tilt__surface exhibition-carousel__tilt h-full" data-cursor-tilt>
+                <img
+                  src={src}
+                  alt={`${alt} — photo ${i + 1}`}
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority={i < 2 ? "high" : "auto"}
+                  draggable="false"
+                />
+              </div>
+            </div>
           </figure>
         ))}
       </div>

@@ -25,7 +25,10 @@ const l = t[locale];
             class:list={["press-chaos__tilt-wrap", i % 2 === 1 && "md:col-start-2"]}
           >
             <div class="press-chaos__tilt">
-              <div class="press-chaos__media overflow-clip w-full border border-subtle" data-press-tilt>
+              <div
+                class="press-chaos__media overflow-clip w-full border border-subtle"
+                data-cursor-tilt
+              >
                 <LazyImage
                   src={item.image}
                   alt={`${item.title} — ${item.venue}`}

@@ -25,17 +25,21 @@ const {
 ---
 
 <div class="media-card">
-  <slot name="media">
-    <LazyImage
-      src={imageSrc}
-      alt={imageAlt}
-      aspectRatio={aspectRatio}
-      parallaxSpeed={parallaxSpeed}
-      contain={contain}
-      depthTarget={false}
-      class={imageClass}
-    />
-  </slot>
+  <div class="cursor-tilt">
+    <div class="cursor-tilt__surface" data-cursor-tilt>
+      <slot name="media">
+        <LazyImage
+          src={imageSrc}
+          alt={imageAlt}
+          aspectRatio={aspectRatio}
+          parallaxSpeed={parallaxSpeed}
+          contain={contain}
+          depthTarget={false}
+          class={imageClass}
+        />
+      </slot>
+    </div>
+  </div>
   <div class="media-card-caption" aria-hidden="true">
     <p class="media-card-title">{title}</p>
     {subtitle && <p class="media-card-subtitle">{subtitle}</p>}

@@ -9,7 +9,7 @@ import { initExhibitionAccordion, resetExhibitionAccordion } from "./exhibition-
 import { initNavHover, resetNavHover } from "./nav-hover";
 import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
 import { initPetalDrift, resetPetalDrift, bindPetalDriftTabListener } from "./petal-drift";
-import { initPressTilt, resetPressTilt, bindPressTiltTabListener } from "./press-tilt";
+import { initCursorTilt, resetCursorTilt, bindCursorTiltTabListener } from "./cursor-tilt";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -34,7 +34,7 @@ export function initMotion(): void {
   resetNavHover();
   resetGlobalLightbox();
   resetPetalDrift();
-  resetPressTilt();
+  resetCursorTilt();
 
   if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
     document.documentElement.classList.add("motion-reduced");
@@ -64,6 +64,6 @@ export function initMotion(): void {
   initGlobalLightbox();
   bindPetalDriftTabListener();
   initPetalDrift();
-  bindPressTiltTabListener();
-  initPressTilt();
+  bindCursorTiltTabListener();
+  initCursorTilt();
 }

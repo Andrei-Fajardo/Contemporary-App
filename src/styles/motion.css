@@ -468,6 +468,12 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   display: block;
 }
 
+.media-card .cursor-tilt,
+.media-card .cursor-tilt__surface {
+  display: block;
+  width: 100%;
+}
+
 .media-card-caption {
   position: absolute;
   left: 0;
@@ -823,7 +829,13 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   background: var(--surface-placeholder);
 }
 
-.exhibition-gallery-grid__item img {
+.exhibition-gallery-grid__tilt {
+  width: 100%;
+  height: 100%;
+}
+
+.exhibition-gallery-grid__item img,
+.exhibition-gallery-grid__tilt img {
   display: block;
   width: 100%;
   height: 100%;
@@ -904,7 +916,13 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   background: var(--surface-placeholder);
 }
 
-.exhibition-carousel__slide img {
+.exhibition-carousel__tilt {
+  width: 100%;
+  height: 100%;
+}
+
+.exhibition-carousel__slide img,
+.exhibition-carousel__tilt img {
   display: block;
   height: 100%;
   width: auto;

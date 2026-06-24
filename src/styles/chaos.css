@@ -255,6 +255,30 @@
   transform-style: preserve-3d;
 }
 
+/* --- Site-wide cursor-reactive image tilt --- */
+.cursor-tilt {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.cursor-tilt__surface,
+[data-cursor-tilt] {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.cursor-tilt-live [data-cursor-tilt] {
+  will-change: transform;
+}
+
+html.cursor-tilt-live [data-cursor-tilt].is-tilt-active,
+html.cursor-tilt-live .press-chaos__tilt:hover .press-chaos__media {
+  box-shadow:
+    0 1px 0 rgba(17, 17, 17, 0.05),
+    0 28px 64px -24px rgba(17, 17, 17, 0.28);
+}
+
 .press-chaos__media {
   background: var(--surface-placeholder);
   transform-style: preserve-3d;
@@ -265,15 +289,8 @@
   transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html.press-tilt-live .press-chaos__media {
+html.cursor-tilt-live .press-chaos__media {
   will-change: transform;
-}
-
-html.press-tilt-live .press-chaos__tilt:hover .press-chaos__media,
-html.press-tilt-live .press-chaos__media.is-tilt-active {
-  box-shadow:
-    0 1px 0 rgba(17, 17, 17, 0.05),
-    0 28px 64px -24px rgba(17, 17, 17, 0.28);
 }
 
 .press-chaos__poster {
@@ -328,6 +345,8 @@ html.motion-reduced .press-chaos__poster {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .cursor-tilt__surface,
+  [data-cursor-tilt],
   .press-chaos__tilt,
   .press-chaos__media {
     transform: none !important;
