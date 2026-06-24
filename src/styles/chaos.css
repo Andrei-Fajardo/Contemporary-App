@@ -632,7 +632,7 @@
   position: absolute;
   left: 0;
   bottom: -0.15em;
-  width: 35%;
+  width: 100%;
   height: 3px;
   background: var(--accent-red);
   transform: skewX(-12deg);
