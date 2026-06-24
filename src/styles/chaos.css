@@ -11,8 +11,7 @@
 /* --- Decorative red splashes (leaf drift inside hero) --- */
 .hero-chaos {
   position: relative;
-  overflow: hidden;
-  isolation: isolate;
+  overflow: visible;
 }
 
 .hero-chaos__inner {
@@ -111,7 +110,7 @@
   left: 0;
   overflow: visible;
   pointer-events: none;
-  z-index: 0;
+  z-index: 20;
 }
 
 @media (min-width: 1024px) {
