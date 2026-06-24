@@ -633,7 +633,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 #mobile-drawer .sidebar-nav-link::after {
   bottom: 0.85rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--ink-35);
 }
 
 #mobile-drawer .sidebar-nav-link:hover::after,
@@ -643,7 +643,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 #mobile-drawer .sidebar-nav-link .sidebar-nav-label {
-  opacity: 0.55;
+  opacity: 0.72;
 }
 
 #mobile-drawer .sidebar-nav-link:hover .sidebar-nav-label,
@@ -653,8 +653,8 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 #mobile-drawer .sidebar-nav-link.nav-link--active {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(17, 17, 17, 0.06);
+  color: var(--ink);
 }
 
 .scroll-page {
@@ -1115,6 +1115,30 @@ html {
   gap: 0.15rem;
 }
 
+.lang-toggle--drawer {
+  position: static;
+  top: auto;
+  right: auto;
+  z-index: auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.35rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.lang-toggle--drawer .lang-btn {
+  min-width: 0;
+  width: 100%;
+  padding: 0.55rem 0.25rem;
+  font-size: 0.625rem;
+}
+
 @media (max-width: 1023px) {
   #lang-toggle-desktop,
   .lang-toggle--desktop {
@@ -1124,7 +1148,8 @@ html {
 
 @media (min-width: 1024px) {
   #lang-toggle-mobile,
-  .lang-toggle--mobile {
+  .lang-toggle--mobile,
+  .lang-toggle--drawer {
     display: none !important;
   }
 }

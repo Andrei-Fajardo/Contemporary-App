@@ -5,6 +5,7 @@
 
 /* Editorial typography — Forum (heads) + Inter (body) */
 :root {
+  color-scheme: light only;
   --font-heading: "Forum", Georgia, "Times New Roman", serif;
   --font-subheading: "Forum", Georgia, "Times New Roman", serif;
   --font-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -48,6 +49,8 @@
 /* Warm editorial canvas background */
 body {
   background-color: var(--canvas) !important;
+  color: var(--ink) !important;
+  color-scheme: light only;
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
@@ -56,6 +59,7 @@ html {
   margin: 0;
   padding: 0;
   background-color: var(--canvas);
+  color-scheme: light only;
 }
 
 /* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
@@ -588,6 +592,18 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   .tabular-view,
   .tabular-panel {
     background-color: var(--canvas);
+  }
+
+  html,
+  body {
+    background-color: var(--canvas) !important;
+    color: var(--ink) !important;
+    color-scheme: light only;
+  }
+
+  .grain-overlay::before,
+  .grain-overlay::after {
+    opacity: 0.01;
   }
 
   /* Ensure touch targets are at least 44x44px */

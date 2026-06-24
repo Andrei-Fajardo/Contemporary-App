@@ -42,6 +42,8 @@ const menuItems: { key: string; href: string }[] = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#F0EEE9" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} — {l.siteTitle}</title>
     <!-- tabular-v1: sidebar tabs, instant panel swap -->
@@ -147,8 +149,52 @@ const menuItems: { key: string; href: string }[] = [
       <a href={`${homePath}#about`} class="type-subheading text-xl md:text-2xl whitespace-nowrap text-[#111] hover:opacity-70 transition-opacity" data-nav-key="about">
         Anna Dauyl Rockswell
       </a>
-      <div class="flex items-center gap-3">
-        <div id="lang-toggle-mobile" class="lang-toggle lang-toggle--mobile">
+      <button
+          id="hamburger-btn"
+          class="w-11 h-11 flex items-center justify-center focus:outline-none active:scale-95 transition-transform"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg class="w-6 h-6 text-[#111]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+    </header>
+
+    <!-- Mobile drawer backdrop -->
+    <div id="drawer-backdrop" class="lg:hidden fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-[400ms] ease-out" />
+
+    <!-- Mobile slide-out drawer (<1024px) -->
+    <aside
+      id="mobile-drawer"
+      class="lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] z-50 bg-[var(--canvas)] border-l border-black/[0.08] translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
+    >
+      <nav class="flex-1 pt-20 px-5 overflow-y-auto">
+        <ul class="space-y-0">
+          {menuItems.map((item) => {
+            const navKey = item.key as keyof typeof l.nav;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  data-nav-key={item.key}
+                  id={`nav-${item.key}-mobile`}
+                  aria-current={item.key === "about" ? "true" : "false"}
+                  class="sidebar-nav-link block py-3.5 px-3 type-subheading text-base rounded-md transition-all duration-300 text-[#555] hover:bg-black/[0.04] hover:text-[#111]"
+                >
+                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <div class="mobile-drawer__footer px-5 py-5 border-t border-black/[0.08] mt-auto">
+        <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-2">{l.basedIn}</span>
+        <span class="font-sans text-xs text-[#555] font-medium tracking-wide block mb-5">{l.location}</span>
+        <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-2">Language</span>
+        <div id="lang-toggle-mobile" class="lang-toggle lang-toggle--drawer">
           {langList.map((lang) => (
             <button
               type="button"
@@ -161,51 +207,6 @@ const menuItems: { key: string; href: string }[] = [
             </button>
           ))}
         </div>
-        <button
-          id="hamburger-btn"
-          class="w-11 h-11 flex items-center justify-center focus:outline-none active:scale-95 transition-transform"
-          aria-label="Toggle menu"
-          aria-expanded="false"
-        >
-          <svg class="w-6 h-6 text-[#111]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </header>
-
-    <!-- Mobile drawer backdrop -->
-    <div id="drawer-backdrop" class="lg:hidden fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-[400ms] ease-out" />
-
-    <!-- Mobile slide-out drawer (<1024px) -->
-    <aside
-      id="mobile-drawer"
-      class="lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] z-50 bg-[#111] border-l border-white/10 translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
-    >
-      <nav class="flex-1 pt-24 px-6 overflow-y-auto">
-        <ul class="space-y-1">
-          {menuItems.map((item) => {
-            const navKey = item.key as keyof typeof l.nav;
-            return (
-              <li>
-                <a
-                  href={item.href}
-                  data-nav-key={item.key}
-                  id={`nav-${item.key}`}
-                  aria-current={item.key === "about" ? "true" : "false"}
-                  class="sidebar-nav-link block py-4 px-5 type-subheading text-base rounded-md transition-all duration-400 text-[#888] hover:bg-white/5 hover:text-white"
-                >
-                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-      <div class="px-6 py-10 border-t border-white/10">
-        <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-3">{l.basedIn}</span>
-        <span class="font-sans text-xs text-[#888] font-medium tracking-wide">{l.location}</span>
       </div>
     </aside>
 
