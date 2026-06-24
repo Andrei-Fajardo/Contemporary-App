@@ -40,16 +40,6 @@ const GLOBAL_PETALS: PetalSpec[] = [
   { sel: ".floating-petal--10", ox: 0.82, oy: 0.85, ax: 55, ay: 40, rot: 20, rs: 8, sp: 0.52, ph: 5.1 },
 ];
 
-const HERO_PETALS: PetalSpec[] = [
-  { sel: ".chaos-splash--1", ox: 0.04, oy: 0.12, ax: 120, ay: 70, rot: -18, rs: 10, sp: 0.42, ph: 0 },
-  { sel: ".chaos-splash--2", ox: 0.08, oy: 0.28, ax: 95, ay: 55, rot: 32, rs: 14, sp: 0.35, ph: 1.4 },
-  { sel: ".chaos-splash--3", ox: 0.32, oy: 0.44, ax: 75, ay: 90, rot: -42, rs: 18, sp: 0.55, ph: 2.8 },
-  { sel: ".chaos-splash--4", ox: 0.68, oy: 0.05, ax: 85, ay: 60, rot: -12, rs: 12, sp: 0.38, ph: 0.6 },
-  { sel: ".chaos-splash--5", ox: 0.82, oy: 0.22, ax: 70, ay: 50, rot: 24, rs: 16, sp: 0.48, ph: 2.1 },
-  { sel: ".chaos-splash--6", ox: 0.72, oy: 0.48, ax: 90, ay: 65, rot: -28, rs: 11, sp: 0.33, ph: 3.5 },
-  { sel: ".chaos-splash--7", ox: 0.86, oy: 0.62, ax: 55, ay: 45, rot: 18, rs: 9, sp: 0.52, ph: 4.2 },
-];
-
 const GENTLE_RADIUS = 300;
 const GENTLE_STRENGTH = 210;
 const GENTLE_CLOSE_BOOST = 2.1;
@@ -64,21 +54,8 @@ const ROT_SWIPE_FACTOR = 0.062;
 const ROT_DAMPING = 0.88;
 const ROT_SPRING = 0.065;
 
-function isHeroVisible(): boolean {
-  const hero = document.querySelector(".hero-chaos");
-  if (!hero) return false;
-  const panel = hero.closest("[data-tab-panel]");
-  if (!panel) return true;
-  return panel.classList.contains("is-active") && !panel.hidden;
-}
-
 const GROUPS: PetalGroup[] = [
   { rootSelector: ".floating-petals", petals: GLOBAL_PETALS },
-  {
-    rootSelector: ".hero-chaos",
-    petals: HERO_PETALS,
-    isActive: isHeroVisible,
-  },
 ];
 
 const physics = new Map<HTMLElement, PetalPhysics>();
@@ -113,7 +90,7 @@ function clearPhysics(): void {
 }
 
 function prepPetalElements(): void {
-  document.querySelectorAll(".chaos-splash, .floating-petal").forEach((el) => {
+  document.querySelectorAll(".floating-petal").forEach((el) => {
     (el as HTMLElement).style.animation = "none";
     (el as HTMLElement).dataset.drift = "true";
   });
@@ -302,8 +279,7 @@ export function resetPetalDrift(): void {
 }
 
 export function initPetalDrift(): void {
-  const hasPetals =
-    document.querySelector(".floating-petals") || document.querySelector(".hero-chaos .chaos-splash");
+  const hasPetals = document.querySelector(".floating-petals");
   if (!hasPetals) return;
 
   bindPetalPointerListener();
