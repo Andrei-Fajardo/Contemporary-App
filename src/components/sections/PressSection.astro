@@ -9,69 +9,37 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-
-const pressImages: Record<string, string> = {
-  'Astraea Zine': '/media/posters/poster-1.jpg',
-  'Hush Magazine': '/media/posters/nana-nyc.jpg',
-  'Spellbinder Magazine': '/media/posters/paris-poster.png',
-  'Wildsape Literary Journal': '/media/the-fish.png',
-  'Itaewon Film Festival': '/media/feature/itaewon-film-fest.jpg',
-};
-
-const pressGallery: Record<string, string[]> = {
-  'Itaewon Film Festival': [
-    '/media/feature/itaewon-film-fest.jpg',
-    '/media/feature/itaewon-1.jpg',
-    '/media/feature/itaewon-2.jpg',
-    '/media/posters/itaewon-poster.png',
-  ],
-};
 ---
 
 <section id="press" class="scroll-section section-gap">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow">{l.pressTag}</p>
+    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.pressTag}</p>
     <h2 class="scroll-reveal font-forum text-4xl md:text-6xl lg:text-7xl leading-[0.95] text-ink mb-12 md:mb-16">
       {l.nav.press}
     </h2>
 
     <div class="editorial-divider-list space-y-0">
       {pressItems.map((item, i) => (
-        <div class="scroll-reveal grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-center py-12 md:py-16 first:pt-0">
-          {pressImages[item.outlet] && (
-            <div class={`overflow-clip w-full max-w-md mx-auto md:mx-0 border border-subtle ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
-              {pressGallery[item.outlet] ? (
-                <div class="grid grid-cols-2 gap-px bg-black/[0.06]">
-                  {pressGallery[item.outlet].map((src) => (
-                    <LazyImage
-                      src={src}
-                      alt={item.outlet}
-                      aspectRatio="3 / 4"
-                      parallaxSpeed={0}
-                      depthTarget={false}
-                      class="transition-[filter] duration-700 view-parallax-media"
-                    />
-                  ))}
-                </div>
-              ) : (
-                <LazyImage
-                  src={pressImages[item.outlet]}
-                  alt={item.outlet}
-                  aspectRatio="3 / 4"
-                  parallaxSpeed={0}
-                  depthTarget={false}
-                  class="transition-[filter] duration-700 view-parallax-media"
-                />
-              )}
-            </div>
-          )}
-          <div class={`${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
-            <p class="section-eyebrow mb-4">{item.outlet}</p>
+        <article class="scroll-reveal grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-center py-12 md:py-16 first:pt-0">
+          <div class:list={["overflow-clip w-full max-w-md mx-auto md:mx-0 border border-subtle", i % 2 === 1 && "md:col-start-2"]}>
+            <LazyImage
+              src={item.image}
+              alt={`${item.title} — ${item.venue}`}
+              aspectRatio="3 / 4"
+              parallaxSpeed={0}
+              depthTarget={false}
+              class="transition-[filter] duration-700 view-parallax-media"
+            />
+          </div>
+          <div class:list={[i % 2 === 1 && "md:col-start-1 md:row-start-1"]}>
+            <p class="section-eyebrow section-eyebrow--blood mb-4">{item.date}</p>
+            <h3 class="font-forum text-2xl md:text-3xl text-ink mb-4">{item.title}</h3>
             <p class="content-prose text-ink-75 max-w-[58ch]">
-              {item.author}, &ldquo;{item.title},&rdquo; <em>{item.outlet}</em>, {item.date}.
+              <span class="text-ink">{item.venue}</span>
+              {item.place ? ` — ${item.place}` : ""}
             </p>
           </div>
-        </div>
+        </article>
       ))}
     </div>
   </div>

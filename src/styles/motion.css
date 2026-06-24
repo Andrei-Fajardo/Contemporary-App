@@ -675,7 +675,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 /* --- Editorial list patterns (anti-card slop) --- */
 .editorial-divider-list > * + * {
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--border-section);
 }
 
 .editorial-magazine-grid {
