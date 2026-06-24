@@ -211,6 +211,21 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   padding: clamp(4rem, 12vh, 8rem) clamp(1rem, 3vw, 2.5rem) clamp(3rem, 8vh, 6rem);
 }
 
+@media (max-width: 1023px) {
+  .hero-editorial {
+    gap: clamp(1.5rem, 5vw, 2.5rem);
+    padding: clamp(1.25rem, 4vh, 2rem) clamp(0.75rem, 3vw, 1.25rem) clamp(1.5rem, 4vh, 2rem);
+  }
+
+  .hero-editorial__tagline {
+    margin-bottom: clamp(0.875rem, 2.5vh, 1.25rem);
+  }
+
+  .hero-chaos__aside {
+    margin-top: 0.5rem;
+  }
+}
+
 .hero-chaos .hero-editorial {
   align-items: start;
 }
@@ -525,6 +540,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 .site-main-column {
   overflow-x: clip;
+  background-color: var(--canvas);
 }
 
 /* --- Desktop persistent sidebar --- */
@@ -578,8 +594,9 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   display: none !important;
 }
 
-/* --- Site top bar (logo + languages) --- */
+/* --- Site top bar (logo + languages) — desktop only --- */
 .site-topbar {
+  display: none;
   position: sticky;
   top: 0;
   z-index: 30;
@@ -593,12 +610,14 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   border-bottom: 1px solid rgba(17, 17, 17, 0.05);
 }
 
-.site-topbar__logo {
-  letter-spacing: normal;
+@media (min-width: 1024px) {
+  .site-topbar {
+    display: flex;
+  }
 }
 
-.site-topbar {
-  display: flex;
+.site-topbar__logo {
+  letter-spacing: normal;
 }
 
 .site-topbar__langs.lang-toggle {
@@ -788,6 +807,39 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
+  }
+}
+
+/* --- Exhibition auto-carousel (desktop) --- */
+.exhibition-gallery-grid {
+  display: none;
+}
+
+.exhibition-gallery-grid__item {
+  margin: 0;
+  aspect-ratio: 1;
+  border: 1px solid var(--border-subtle);
+  overflow: clip;
+  background: var(--surface-placeholder);
+}
+
+.exhibition-gallery-grid__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 1023px) {
+  .exhibition-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .exhibition-carousel {
+    display: none !important;
   }
 }
 
@@ -1061,6 +1113,20 @@ html {
   z-index: auto;
   padding: 0.2rem;
   gap: 0.15rem;
+}
+
+@media (max-width: 1023px) {
+  #lang-toggle-desktop,
+  .lang-toggle--desktop {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  #lang-toggle-mobile,
+  .lang-toggle--mobile {
+    display: none !important;
+  }
 }
 
 .lang-toggle--desktop .lang-btn {

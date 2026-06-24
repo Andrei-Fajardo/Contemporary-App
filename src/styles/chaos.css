@@ -225,6 +225,7 @@
 
 .site-main-column {
   position: relative;
+  background-color: var(--canvas);
 }
 
 .site-main-column .tabular-main,
@@ -286,6 +287,41 @@ html.motion-reduced .press-chaos__media .lazy-media img,
 html.motion-reduced .press-chaos__poster {
   opacity: 1 !important;
   filter: none !important;
+}
+
+@media (max-width: 1023px) {
+  /* Multiply blend darkens cream into brown on mobile — keep petals light */
+  .floating-petal,
+  .chaos-splash {
+    mix-blend-mode: normal;
+  }
+
+  .floating-petal--1 { opacity: 0.28; }
+  .floating-petal--2 { opacity: 0.22; }
+  .floating-petal--3 { opacity: 0.2; }
+  .floating-petal--4 { opacity: 0.24; }
+  .floating-petal--5 { opacity: 0.18; }
+  .floating-petal--6 { opacity: 0.26; }
+  .floating-petal--7 { opacity: 0.22; }
+  .floating-petal--8 { opacity: 0.2; }
+  .floating-petal--9 { opacity: 0.18; }
+  .floating-petal--10 { opacity: 0.16; }
+
+  .chaos-splash--1 { opacity: 0.3; }
+  .chaos-splash--2 { opacity: 0.22; }
+  .chaos-splash--3 { opacity: 0.18; }
+  .chaos-splash--4 { opacity: 0.28; }
+  .chaos-splash--5 { opacity: 0.22; }
+  .chaos-splash--6 { opacity: 0.2; }
+  .chaos-splash--7 { opacity: 0.24; }
+
+  .press-chaos__item {
+    padding-block: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .press-chaos__tilt-wrap {
+    max-width: min(100%, clamp(16rem, 88vw, 24rem));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

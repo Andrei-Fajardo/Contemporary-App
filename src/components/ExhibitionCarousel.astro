@@ -10,6 +10,24 @@ const slides = images.length > 0 ? images : [];
 ---
 
 {slides.length > 0 && (
+  <>
+  <div
+    class="exhibition-gallery-grid"
+    aria-label={`${alt} exhibition photos`}
+  >
+    {slides.map((src, i) => (
+      <figure class="exhibition-gallery-grid__item">
+        <img
+          src={src}
+          alt={`${alt} — photo ${i + 1}`}
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+        />
+      </figure>
+    ))}
+  </div>
+
   <div
     class="exhibition-carousel"
     data-exhibition-carousel
@@ -56,6 +74,7 @@ const slides = images.length > 0 ? images : [];
       </p>
     )}
   </div>
+  </>
 )}
 
 <script>

@@ -177,6 +177,35 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
   .exhibition-accordion__summary:hover .exhibition-accordion__badge {
     border-color: var(--border-section);
   }
+
+  @media (max-width: 1023px) {
+    .exhibition-accordion__panel {
+      padding: 0 0 0.875rem 0;
+    }
+
+    .exhibition-accordion__summary {
+      grid-template-columns: 2.75rem 1fr auto;
+      gap: 0.15rem 0.75rem;
+      margin-inline: 0;
+      padding: 0.875rem 0.25rem;
+    }
+
+    .exhibition-accordion__year {
+      font-size: 0.6875rem;
+    }
+
+    .exhibition-accordion__title {
+      font-size: 1.0625rem;
+    }
+
+    .exhibition-accordion__meta {
+      font-size: 0.875rem;
+    }
+
+    .exhibition-accordion__chevron {
+      font-size: 1.125rem;
+    }
+  }
 </style>
 
 <script>

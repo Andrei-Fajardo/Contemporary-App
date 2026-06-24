@@ -55,6 +55,7 @@ body {
 html {
   margin: 0;
   padding: 0;
+  background-color: var(--canvas);
 }
 
 /* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
@@ -544,6 +545,51 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
 /* Mobile-specific improvements */
 @media (max-width: 1023px) {
+  .section-shell,
+  .section-shell--wide {
+    padding-inline: clamp(0.75rem, 3vw, 1.25rem);
+  }
+
+  .section-gap {
+    padding-block: clamp(2rem, 5vw, 3rem);
+  }
+
+  .editorial-dense {
+    --section-gap-y: clamp(1.25rem, 3.5vw, 2rem);
+  }
+
+  .editorial-dense .hero-editorial {
+    padding-top: clamp(1.25rem, 4vh, 2rem);
+    padding-bottom: clamp(1rem, 3vh, 1.5rem);
+  }
+
+  .editorial-dense .section-shell--wide {
+    max-width: min(88rem, calc(100vw - clamp(0.75rem, 3vw, 1.5rem)));
+  }
+
+  .section-eyebrow {
+    margin-bottom: 0.875rem;
+  }
+
+  .section-gap :is(h2.type-heading, h2.type-subheading) {
+    margin-bottom: clamp(1.25rem, 3.5vw, 1.75rem) !important;
+  }
+
+  .grain-overlay::before {
+    opacity: 0.018;
+  }
+
+  .grain-overlay::after {
+    opacity: 0.012;
+  }
+
+  .site-main-column,
+  .tabular-main,
+  .tabular-view,
+  .tabular-panel {
+    background-color: var(--canvas);
+  }
+
   /* Ensure touch targets are at least 44x44px */
   button, a {
     min-height: 44px;
