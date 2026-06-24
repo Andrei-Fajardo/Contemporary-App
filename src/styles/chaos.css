@@ -291,8 +291,8 @@ html.cursor-tilt-live [data-cursor-tilt] {
 html.cursor-tilt-live [data-cursor-tilt].is-tilt-active,
 html.cursor-tilt-live .press-chaos__tilt:hover .press-chaos__media {
   box-shadow:
-    0 1px 0 rgba(17, 17, 17, 0.05),
-    0 28px 64px -24px rgba(17, 17, 17, 0.28);
+    0 2px 0 rgba(17, 17, 17, 0.06),
+    0 36px 80px -20px rgba(17, 17, 17, 0.38);
 }
 
 .press-chaos__media {

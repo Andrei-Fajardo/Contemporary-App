@@ -9,10 +9,10 @@ type TiltState = {
   velY: number;
 };
 
-const PROXIMITY_RADIUS = 480;
-const MAX_TILT = 11;
-const SPRING = 0.18;
-const DAMPING = 0.84;
+const PROXIMITY_RADIUS = 560;
+const MAX_TILT = 18;
+const SPRING = 0.22;
+const DAMPING = 0.82;
 
 const cursor = { x: -9999, y: -9999, active: false };
 
