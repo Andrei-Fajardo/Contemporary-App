@@ -5,11 +5,10 @@
   --accent-red-bright: #E61919;
   --accent-red-ghost: rgba(196, 30, 58, 0.08);
   --accent-red-ink: rgba(196, 30, 58, 0.55);
-  --petal-fill: #d45666;
   --chaos-radius: 0;
 }
 
-/* --- Decorative red splashes (legacy — hero now uses site-wide floating petals) --- */
+/* --- Decorative red splashes (leaf drift inside hero) --- */
 .hero-chaos {
   position: relative;
   overflow: hidden;
@@ -140,7 +139,6 @@
   border-radius: 50% 40% 60% 30%;
   filter: blur(0.5px);
   mix-blend-mode: multiply;
-  background: var(--petal-fill);
   will-change: transform;
   transform-origin: center center;
   animation: none !important;
@@ -149,69 +147,79 @@
 .floating-petal--1 {
   width: clamp(3.5rem, 10vw, 7.5rem);
   height: clamp(2.5rem, 7vw, 5.5rem);
-  opacity: 0.36;
+  background: var(--accent-red);
+  opacity: 0.55;
 }
 
 .floating-petal--2 {
   width: clamp(2.5rem, 6vw, 5rem);
   height: clamp(1.75rem, 4.5vw, 3.5rem);
-  opacity: 0.32;
+  background: var(--accent-red-bright);
+  opacity: 0.42;
   border-radius: 55% 35% 60% 40%;
 }
 
 .floating-petal--3 {
   width: clamp(2rem, 5vw, 4rem);
   height: clamp(1.5rem, 3.5vw, 3rem);
-  opacity: 0.28;
+  background: var(--accent-red);
+  opacity: 0.38;
   border-radius: 40% 60% 45% 55%;
 }
 
 .floating-petal--4 {
   width: clamp(2.75rem, 7vw, 5.5rem);
   height: clamp(2rem, 5vw, 4rem);
-  opacity: 0.34;
+  background: var(--accent-red-bright);
+  opacity: 0.5;
   border-radius: 45% 55% 50% 35%;
 }
 
 .floating-petal--5 {
   width: clamp(1.5rem, 4vw, 3rem);
   height: clamp(1rem, 2.5vw, 2rem);
-  opacity: 0.26;
+  background: var(--accent-red);
+  opacity: 0.32;
   border-radius: 60% 40% 50% 50%;
 }
 
 .floating-petal--6 {
   width: clamp(3rem, 8vw, 6rem);
   height: clamp(2.25rem, 6vw, 4.5rem);
-  opacity: 0.34;
+  background: var(--accent-red);
+  opacity: 0.48;
   border-radius: 50% 35% 55% 40%;
 }
 
 .floating-petal--7 {
   width: clamp(2.25rem, 5.5vw, 4.5rem);
   height: clamp(1.5rem, 4vw, 3rem);
-  opacity: 0.3;
+  background: var(--accent-red-bright);
+  opacity: 0.4;
   border-radius: 42% 58% 48% 52%;
 }
 
 .floating-petal--8 {
   width: clamp(2rem, 5vw, 4rem);
   height: clamp(1.5rem, 3.5vw, 3rem);
-  opacity: 0.28;
+  background: var(--accent-red);
+  opacity: 0.36;
   border-radius: 55% 45% 60% 35%;
 }
 
 .floating-petal--9 {
   width: clamp(1.75rem, 4vw, 3.25rem);
   height: clamp(1.25rem, 3vw, 2.25rem);
-  opacity: 0.26;
+  background: var(--accent-red-bright);
+  opacity: 0.3;
   border-radius: 48% 52% 42% 58%;
 }
 
 .floating-petal--10 {
   width: clamp(1.25rem, 3vw, 2.5rem);
   height: clamp(0.875rem, 2vw, 1.75rem);
-  opacity: 0.24;
+  background: var(--accent-red);
+  opacity: 0.28;
   border-radius: 60% 40% 55% 45%;
 }
 
@@ -292,16 +300,24 @@ html.motion-reduced .press-chaos__poster {
     opacity: 0.42;
   }
 
-  .floating-petal--1 { opacity: 0.2; }
+  .floating-petal--1 { opacity: 0.22; }
   .floating-petal--2 { opacity: 0.18; }
   .floating-petal--3 { opacity: 0.16; }
-  .floating-petal--4 { opacity: 0.19; }
+  .floating-petal--4 { opacity: 0.2; }
   .floating-petal--5 { opacity: 0.14; }
-  .floating-petal--6 { opacity: 0.19; }
-  .floating-petal--7 { opacity: 0.17; }
+  .floating-petal--6 { opacity: 0.2; }
+  .floating-petal--7 { opacity: 0.18; }
   .floating-petal--8 { opacity: 0.16; }
   .floating-petal--9 { opacity: 0.14; }
   .floating-petal--10 { opacity: 0.12; }
+
+  .chaos-splash--1 { opacity: 0.24; }
+  .chaos-splash--2 { opacity: 0.18; }
+  .chaos-splash--3 { opacity: 0.14; }
+  .chaos-splash--4 { opacity: 0.22; }
+  .chaos-splash--5 { opacity: 0.18; }
+  .chaos-splash--6 { opacity: 0.16; }
+  .chaos-splash--7 { opacity: 0.2; }
 
   .press-chaos__item {
     padding-block: clamp(1.5rem, 4vw, 2rem);

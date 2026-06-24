@@ -606,12 +606,8 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     opacity: 0.01;
   }
 
-  /* Grain + petals darken the cream canvas on iOS; keep mobile flat and light */
+  /* Grain darkens the cream canvas on iOS; keep mobile flat and light */
   .grain-overlay {
-    display: none;
-  }
-
-  .floating-petals {
     display: none;
   }
 
@@ -693,8 +689,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     color-scheme: light only;
   }
 
-  .grain-overlay,
-  .floating-petals {
+  .grain-overlay {
     display: none !important;
   }
 
