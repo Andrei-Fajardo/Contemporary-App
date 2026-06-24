@@ -50,19 +50,19 @@ const HERO_PETALS: PetalSpec[] = [
   { sel: ".chaos-splash--7", ox: 0.86, oy: 0.62, ax: 55, ay: 45, rot: 18, rs: 9, sp: 0.52, ph: 4.2 },
 ];
 
-const GENTLE_RADIUS = 210;
-const GENTLE_STRENGTH = 118;
-const GENTLE_CLOSE_BOOST = 1.65;
-const SWIPE_RADIUS = 420;
-const SWIPE_VEL_THRESHOLD = 160;
-const SWIPE_STRENGTH = 0.26;
-const SWIPE_MAX_SPEED = 3600;
-const DAMPING = 0.93;
-const SPRING = 0.04;
-const MAX_OFFSET = 360;
-const ROT_SWIPE_FACTOR = 0.038;
-const ROT_DAMPING = 0.86;
-const ROT_SPRING = 0.08;
+const GENTLE_RADIUS = 300;
+const GENTLE_STRENGTH = 210;
+const GENTLE_CLOSE_BOOST = 2.1;
+const SWIPE_RADIUS = 560;
+const SWIPE_VEL_THRESHOLD = 120;
+const SWIPE_STRENGTH = 0.48;
+const SWIPE_MAX_SPEED = 4200;
+const DAMPING = 0.915;
+const SPRING = 0.032;
+const MAX_OFFSET = 520;
+const ROT_SWIPE_FACTOR = 0.062;
+const ROT_DAMPING = 0.88;
+const ROT_SPRING = 0.065;
 
 function isHeroVisible(): boolean {
   const hero = document.querySelector(".hero-chaos");
@@ -138,7 +138,7 @@ function applyCursorForces(
 
   if (dist < GENTLE_RADIUS) {
     const proximity = 1 - dist / GENTLE_RADIUS;
-    const closeBoost = dist < 60 ? GENTLE_CLOSE_BOOST : 1;
+    const closeBoost = dist < 90 ? GENTLE_CLOSE_BOOST : 1;
     const gentle = GENTLE_STRENGTH * proximity * proximity * closeBoost * react;
     state.vx += nx * gentle * dt;
     state.vy += ny * gentle * dt;
@@ -172,7 +172,7 @@ function integratePhysics(state: PetalPhysics, dt: number): void {
   state.rotV *= rotDamp;
   state.rotV += -state.rot * ROT_SPRING * dt * 60;
   state.rot += state.rotV * dt;
-  state.rot = clamp(state.rot, -45, 45);
+  state.rot = clamp(state.rot, -58, 58);
 }
 
 function decayCursorVelocity(now: number): void {
