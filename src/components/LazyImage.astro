@@ -32,6 +32,7 @@ const hasParallax = parallaxSpeed !== undefined && parallaxSpeed > 0;
     eager && "is-loaded",
     hasParallax && "lazy-media--parallax",
   ]}
+  data-lightbox
   style={contain ? undefined : `--lazy-aspect: ${aspectRatio}`}
 >
   {hasParallax ? (

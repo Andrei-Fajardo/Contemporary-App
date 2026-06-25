@@ -37,7 +37,7 @@ const menuItems: { key: string; href: string; index: string }[] = [
 ---
 
 <!doctype html>
-<html lang={l.lang} class="from-utero" style="color-scheme: light only; background-color: #e4ddd0;">
+<html lang={l.lang} class="visceral-editorial" style="color-scheme: light only; background-color: #e4ddd0;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -86,7 +86,7 @@ const menuItems: { key: string; href: string; index: string }[] = [
       })();
     </script>
   </head>
-  <body class="font-body antialiased from-utero bg-[var(--canvas)] text-[var(--ink)]" data-layout="tabular">
+  <body class="font-body antialiased visceral-editorial bg-[var(--canvas)] text-[var(--ink)]" data-layout="tabular">
     <!-- Film grain overlay -->
     <div class="grain-overlay" />
 
@@ -246,10 +246,10 @@ const menuItems: { key: string; href: string; index: string }[] = [
       <div class="desktop-sidebar__inner flex flex-col h-full">
         <div class="desktop-sidebar__brand p-6 pb-4">
           <a href={`${homePath}#about`} class="block group" data-nav-key="about">
-            <h1 class="desktop-sidebar__title type-display text-xl italic text-[var(--ink)] leading-[1.15] transition-opacity duration-300 group-hover:opacity-70">
-              From Utero
+            <h1 class="desktop-sidebar__title font-handwriting text-[clamp(1.35rem,2.2vw,1.65rem)] text-[var(--ink)] leading-[1.1] transition-opacity duration-300 group-hover:opacity-70">
+              Anna Dauyl Rockswell
             </h1>
-            <span class="desktop-sidebar__subtitle type-heading text-[8px] text-[var(--ink-muted)] mt-1.5 block">Anna Dauyl Rockswell</span>
+            <span class="desktop-sidebar__subtitle type-heading text-[10px] tracking-[0.22em] text-[var(--ink-muted)] mt-2 block" set:html={l.subtitle} />
           </a>
         </div>
         <div class="desktop-sidebar__nav px-5 flex-1">

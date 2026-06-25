@@ -2,6 +2,9 @@ let bound = false;
 let keyHandler: ((e: KeyboardEvent) => void) | null = null;
 let clickHandler: ((e: Event) => void) | null = null;
 
+const MEDIA_CONTAINER_SELECTOR =
+  ".lazy-media, .cursor-tilt__surface, .media-card, .exhibition-carousel__slide, [data-lightbox]";
+
 function getImageSrc(img: HTMLImageElement): string {
   return img.currentSrc || img.src || img.dataset.src || "";
 }
@@ -14,6 +17,25 @@ function isExcluded(img: HTMLImageElement): boolean {
   const src = getImageSrc(img);
   if (!src || src.startsWith("data:")) return true;
   return false;
+}
+
+function resolveClickableImage(target: EventTarget | null): HTMLImageElement | null {
+  if (!(target instanceof Element)) return null;
+
+  if (target instanceof HTMLImageElement && !isExcluded(target)) {
+    return target;
+  }
+
+  const container = target.closest(MEDIA_CONTAINER_SELECTOR);
+  if (!container) return null;
+  if (!container.closest("main, .tabular-main, .site-main-column")) return null;
+
+  const img = container.querySelector("img");
+  if (img instanceof HTMLImageElement && !isExcluded(img)) {
+    return img;
+  }
+
+  return null;
 }
 
 function ensureLightbox(): HTMLElement {
@@ -86,17 +108,15 @@ export function initGlobalLightbox(): void {
   if (bound) return;
 
   clickHandler = (e) => {
-    const target = e.target;
-    if (!(target instanceof HTMLImageElement)) return;
-    if (isExcluded(target)) return;
-    if (!target.closest("main, .tabular-main, .site-main-column")) return;
+    const img = resolveClickableImage(e.target);
+    if (!img) return;
 
-    const src = getImageSrc(target);
+    const src = getImageSrc(img);
     if (!src) return;
 
     e.preventDefault();
     e.stopPropagation();
-    openLightbox(src, target.alt || "");
+    openLightbox(src, img.alt || "");
   };
 
   document.addEventListener("click", clickHandler, true);

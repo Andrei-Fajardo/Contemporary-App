@@ -12,24 +12,15 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="art" class="scroll-section section-gap art-section--unified utero-layered" data-art-section>
-  <div class="section-shell section-shell--wide mb-6 md:mb-8">
+<section id="art" class="scroll-section section-gap art-section--unified utero-layered">
+  <div class="section-shell section-shell--wide mb-4 md:mb-5">
     <ManuscriptSectionHeader num="II" eyebrow={l.artTag} title={l.nav.art} />
-
-    <div class="art-view-toggle scroll-reveal" role="group" aria-label="Art layout view">
-      <button type="button" class="art-view-toggle__btn" data-art-view="separated">
-        {l.artViewSeparated}
-      </button>
-      <button type="button" class="art-view-toggle__btn is-active" data-art-view="unified">
-        {l.artViewUnified}
-      </button>
-    </div>
   </div>
 
   {artworks.map((p, i) => (
     <article class="art-piece depth-target" data-popup-title={p.title}>
-      <div class="section-shell section-shell--wide py-5 md:py-8 lg:py-10">
-        <div class={`grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-start`}>
+      <div class="section-shell section-shell--wide py-3 md:py-5 lg:py-6">
+        <div class={`grid md:grid-cols-2 gap-6 lg:gap-10 xl:gap-12 items-start`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
             <MediaPopup
               imageSrc={p.image}
@@ -44,13 +35,13 @@ const l = t[locale];
           </div>
 
           <div class={`scroll-reveal min-w-0 art-wall-label ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
-            <h3 class="type-display text-2xl md:text-3xl lg:text-[2rem] text-ink mb-3">{p.title}</h3>
-            <p class="type-subheading text-lg md:text-xl text-ink-65 mb-2">{p.dimensions}</p>
-            <p class="type-body text-ink-60 text-sm mb-8">{p.medium} · {p.year}</p>
+            <h3 class="type-display text-2xl md:text-3xl lg:text-[2rem] text-ink mb-2">{p.title}</h3>
+            <p class="type-subheading text-lg md:text-xl text-ink-65 mb-1">{p.dimensions}</p>
+            <p class="type-body text-ink-60 text-sm mb-5">{p.medium} · {p.year}</p>
 
             <div class="art-wall-label__block">
-              <p class="type-heading text-[0.6875rem] text-ink-50 mb-4">About</p>
-              <div class="space-y-4">
+              <p class="type-heading text-[0.6875rem] text-ink-50 mb-3">About</p>
+              <div class="space-y-3">
                 {p.aboutParagraphs.map((para) => (
                   <p class="content-prose text-ink-75 max-w-[58ch]">{para}</p>
                 ))}
@@ -68,9 +59,3 @@ const l = t[locale];
     margin-top: 0.25rem;
   }
 </style>
-
-<script>
-  import { initArtViewToggle } from "../../scripts/art-view-toggle";
-  initArtViewToggle();
-  document.addEventListener("astro:page-load", initArtViewToggle);
-</script>

@@ -34,7 +34,7 @@ const hasMore = slides.length > maxVisible;
         {slides.map((src, i) => (
           <figure class:list={["exhibition-carousel__slide", hasMore && i >= maxVisible && "is-collapsed"]}>
             <div class="cursor-tilt h-full">
-              <div class="cursor-tilt__surface exhibition-carousel__tilt h-full" data-cursor-tilt>
+              <div class="cursor-tilt__surface exhibition-carousel__tilt h-full" data-cursor-tilt data-lightbox>
                 <img
                   src={src}
                   alt={`${alt} — photo ${i + 1}`}

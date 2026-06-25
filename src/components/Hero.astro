@@ -1,6 +1,5 @@
 ---
 import { t, type LocaleKey } from '../data/translations';
-import { siteCopy } from '../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
@@ -8,27 +7,21 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-const { marginalia } = siteCopy.hero;
 ---
 
-<section id="home" class="hero-section hero-chaos utero-layered scroll-section manuscript-cover">
-  <div class="manuscript-cover__frame">
+<section id="home" class="hero-section hero-chaos utero-layered scroll-section visceral-hero">
+  <div class="visceral-hero__frame">
     <div class="hero-editorial hero-chaos__inner">
       <div class="hero-editorial__copy">
-        <p class="manuscript-label">Poetry Chapbook</p>
-        <h1 class="manuscript-masthead">From Utero</h1>
-        <p class="manuscript-epigraph">
-          uterō <span class="manuscript-epigraph__latin">(abl. of uterus)</span>: from the womb; out of the belly.
-        </p>
-        <hr class="brutal-rule brutal-rule--short scroll-reveal" />
-
         <p class="scroll-reveal hero-editorial__tagline section-eyebrow--blood">{l.heroTagline}</p>
 
         <div class="scroll-reveal hero-editorial__name-block">
-          <h2 class="hero-editorial__name font-handwriting">
+          <h1 class="hero-editorial__name font-handwriting">
             {l.heroFirstName} {l.heroLastName}
-          </h2>
+          </h1>
         </div>
+
+        <hr class="brutal-rule brutal-rule--short scroll-reveal" />
 
         <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
 
@@ -41,27 +34,16 @@ const { marginalia } = siteCopy.hero;
 
         <p class="scroll-reveal hero-editorial__desc content-prose text-ink-45 text-sm">{l.heroDesc}</p>
       </div>
-
-      <aside class="manuscript-marginalia scroll-reveal" aria-label="Reader notes">
-        <p class="manuscript-marginalia__label">Reader Notes</p>
-        {marginalia.map((note) => (
-          <blockquote class="manuscript-pullquote">
-            <p>{note.text}</p>
-            <cite>— {note.author}</cite>
-          </blockquote>
-        ))}
-        <p class="manuscript-page-mark">— 1 of 20 —</p>
-      </aside>
     </div>
   </div>
 </section>
 
 <style>
   .hero-editorial__name {
-    font-size: clamp(2rem, 4.5vw, 3rem);
-    line-height: 1.12;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.1;
     color: var(--ink);
-    margin: 0 0 0.25em;
+    margin: 0 0 0.35em;
     text-shadow: none;
   }
 
