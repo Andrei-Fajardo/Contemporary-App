@@ -12,9 +12,9 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="publications" class="scroll-section section-gap utero-layered">
+<section id="publications" class="scroll-section section-gap">
   <div class="section-shell section-shell--wide">
     <ManuscriptSectionHeader num="IV" eyebrow={l.publicationsTag} title={l.publicationsHeading} />
-    <EditorialLinkList items={publicationsList} emptyMessage={l.listForthcoming} />
+    <EditorialLinkList items={publicationsList} emptyMessage={l.listForthcoming} emptyNote={l.comingSoonNote} />
   </div>
 </section>

@@ -2,8 +2,6 @@
 
 .visceral-editorial {
   --canvas: #e4ddd0;
-  --canvas-stain: #d9cfc0;
-  --canvas-panel: #ddd4c4;
   --ink: #14100c;
   --ink-muted: #4a4038;
   --ink-75: rgba(20, 16, 12, 0.78);
@@ -35,12 +33,7 @@
 }
 
 .visceral-editorial .utero-layered::before {
-  opacity: 0.9;
-  background:
-    radial-gradient(ellipse 50% 34% at 3% 8%, rgba(196, 30, 58, 0.06) 0%, transparent 68%),
-    radial-gradient(ellipse 44% 30% at 97% 92%, var(--utero-splash) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 42% at 50% 100%, var(--utero-ink-wash) 0%, transparent 72%),
-    linear-gradient(180deg, transparent 35%, var(--utero-layer) 100%);
+  display: none;
 }
 
 /* --- Hero --- */
@@ -56,17 +49,7 @@
 }
 
 .visceral-hero__frame::after {
-  content: "";
-  position: absolute;
-  top: 10%;
-  right: 6%;
-  width: clamp(2rem, 5vw, 3.5rem);
-  height: clamp(1.25rem, 3vw, 2rem);
-  background: var(--accent-red);
-  opacity: 0.14;
-  border-radius: 48% 52% 58% 42%;
-  transform: rotate(-14deg);
-  pointer-events: none;
+  display: none;
 }
 
 .visceral-hero .hero-editorial {
@@ -114,7 +97,7 @@
 /* --- Sidebar --- */
 .visceral-editorial .desktop-sidebar {
   width: 15rem;
-  background: linear-gradient(180deg, var(--canvas-stain) 0%, var(--canvas) 14%, var(--canvas) 100%);
+  background: var(--canvas);
   border-right: 1px solid var(--border-section);
 }
 
@@ -234,29 +217,16 @@
   padding-bottom: clamp(0.75rem, 1.5vh, 1.25rem);
 }
 
-/* --- Light accent panels (not dark) --- */
+/* --- Contact & panels — flat canvas, no boxed panels --- */
 .visceral-panel {
-  padding: clamp(0.85rem, 2vw, 1.25rem);
-  background: var(--canvas-panel);
-  border: 1px solid var(--border-section);
-  border-left: 3px solid var(--accent-red);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .visceral-panel .manuscript-section-header {
-  border-bottom-color: var(--border-subtle);
-}
-
-/* --- Contact inputs — visible on light panel --- */
-.contacts-chaos__input--boxed {
-  background: rgba(255, 255, 255, 0.35);
-  border: 1px solid var(--border-section) !important;
-  padding: 0.55rem 0.65rem !important;
-}
-
-.contacts-chaos__input--boxed:focus {
-  border-color: var(--accent-red) !important;
-  background: rgba(255, 255, 255, 0.55);
+  border-bottom-color: var(--border-section);
 }
 
 /* --- Clickable media — full frame --- */
@@ -291,41 +261,37 @@
   padding-block: 0.5rem;
 }
 
-.visceral-editorial .about-chaos__meta {
-  margin-top: 0.85rem;
-  padding-top: 0;
-  border-top: none;
+.visceral-editorial .about-chaos__intro {
+  max-width: 68ch;
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
 }
 
-.visceral-editorial .about-chaos__meta--compact {
-  max-width: 72ch;
-}
-
-.visceral-editorial .about-chaos__interests {
-  font-size: clamp(0.875rem, 0.55vw + 0.58rem, 0.975rem);
-  line-height: 1.55;
+.visceral-editorial .about-chaos__intro .content-prose {
+  margin: 0;
 }
 
 .visceral-editorial .edu-timeline {
-  margin-top: 1.25rem;
-  padding-top: 0.85rem;
+  margin-top: clamp(1rem, 2.5vw, 1.5rem);
+  padding-top: clamp(0.75rem, 2vw, 1rem);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .visceral-editorial .edu-timeline__label {
-  margin-bottom: 0.65rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
 .visceral-editorial .edu-timeline__track {
-  padding-top: 1.75rem;
-  gap: clamp(1rem, 2.5vw, 1.5rem);
+  padding-top: 1.5rem;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 
-.visceral-editorial .about-chaos__intro {
-  max-width: 72ch;
+.visceral-editorial .exhibition-accordion__see-more {
+  opacity: 0.85;
 }
 
-.visceral-editorial .about-chaos__intro .content-prose--sans {
-  margin-bottom: 0.5rem;
+.visceral-editorial .exhibition-accordion__summary:hover .exhibition-accordion__see-more,
+.visceral-editorial .exhibition-accordion__item.is-expanded .exhibition-accordion__see-more {
+  opacity: 1;
 }
 
 .visceral-editorial .site-footer,

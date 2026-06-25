@@ -1,12 +1,14 @@
 ---
 import type { LinkItem } from '../data/content';
+import SectionEmptyState from './SectionEmptyState.astro';
 
 interface Props {
   items: LinkItem[];
   emptyMessage?: string;
+  emptyNote?: string;
 }
 
-const { items, emptyMessage = 'List forthcoming' } = Astro.props;
+const { items, emptyMessage = 'List forthcoming', emptyNote } = Astro.props;
 ---
 
 {items.length > 0 ? (
@@ -21,5 +23,5 @@ const { items, emptyMessage = 'List forthcoming' } = Astro.props;
     ))}
   </ul>
 ) : (
-  <p class="scroll-reveal content-prose text-ink-55">{emptyMessage}</p>
+  <SectionEmptyState message={emptyMessage} note={emptyNote} />
 )}

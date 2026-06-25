@@ -2,7 +2,6 @@
 import EducationTimeline from '../EducationTimeline.astro';
 import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
-import { siteCopy } from '../../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
@@ -12,21 +11,13 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="about" class="scroll-section section-gap about-chaos utero-layered">
+<section id="about" class="scroll-section section-gap about-chaos">
   <div class="section-shell section-shell--wide">
     <ManuscriptSectionHeader num="I" eyebrow={l.aboutTag} title={l.nav.about} />
 
     <div class="about-chaos__body">
       <div class="scroll-reveal about-chaos__intro">
-        <p class="content-prose--sans text-ink-55 mb-2">{l.intro}</p>
-        <p class="content-prose">{l.bio}</p>
-      </div>
-
-      <div class="scroll-reveal about-chaos__meta about-chaos__meta--compact">
-        <p class="section-eyebrow section-eyebrow--blood mb-2">{l.interestsLabel}</p>
-        <p class="content-prose text-ink-60 about-chaos__interests">
-          {siteCopy.about.interests.join(' · ')}
-        </p>
+        <p class="content-prose">{l.intro} {l.bio}</p>
       </div>
 
       <EducationTimeline label={l.education} />

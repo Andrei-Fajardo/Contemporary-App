@@ -12,7 +12,7 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="art" class="scroll-section section-gap art-section--unified utero-layered">
+<section id="art" class="scroll-section section-gap art-section--unified">
   <div class="section-shell section-shell--wide mb-4 md:mb-5">
     <ManuscriptSectionHeader num="II" eyebrow={l.artTag} title={l.nav.art} />
   </div>
@@ -21,7 +21,7 @@ const l = t[locale];
     <article class="art-piece" data-popup-title={p.title}>
       <div class="section-shell section-shell--wide py-3 md:py-5 lg:py-6">
         <div class="grid md:grid-cols-2 gap-0 items-stretch art-piece__grid">
-          <div class={`min-w-0 h-full ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
+          <div class={`art-piece__media min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
             <MediaPopup
               imageSrc={p.image}
               imageAlt={p.title}
@@ -34,17 +34,19 @@ const l = t[locale];
             />
           </div>
 
-          <div class={`scroll-reveal min-w-0 h-full art-wall-label art-wall-label--unified ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1 art-wall-label--left' : 'art-wall-label--right'}`}>
-            <h3 class="type-display text-2xl md:text-3xl lg:text-[2rem] text-ink mb-2">{p.title}</h3>
-            <p class="type-subheading text-lg md:text-xl text-ink-65 mb-1">{p.dimensions}</p>
-            <p class="type-body text-ink-60 text-sm mb-5">{p.medium} · {p.year}</p>
+          <div class={`art-wall-label art-wall-label--unified ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1 art-wall-label--left' : 'art-wall-label--right'}`}>
+            <div class="scroll-reveal art-wall-label__inner">
+              <h3 class="type-display text-2xl md:text-3xl lg:text-[2rem] text-ink mb-2">{p.title}</h3>
+              <p class="type-subheading text-lg md:text-xl text-ink-65 mb-1">{p.dimensions}</p>
+              <p class="type-body text-ink-60 text-sm mb-5">{p.medium} · {p.year}</p>
 
-            <div class="art-wall-label__block">
-              <p class="type-heading text-[0.6875rem] text-ink-50 mb-3">About</p>
-              <div class="space-y-3">
-                {p.aboutParagraphs.map((para) => (
-                  <p class="content-prose text-ink-75 max-w-[58ch]">{para}</p>
-                ))}
+              <div class="art-wall-label__block">
+                <p class="type-heading text-[0.6875rem] text-ink-50 mb-3">About</p>
+                <div class="space-y-3">
+                  {p.aboutParagraphs.map((para) => (
+                    <p class="content-prose text-ink-75 max-w-[58ch]">{para}</p>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -55,19 +57,27 @@ const l = t[locale];
 </section>
 
 <style>
+  .art-wall-label__inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 100%;
+    height: 100%;
+  }
+
   .art-wall-label__block {
     margin-top: 0.25rem;
-    flex: 1;
+    flex: 1 1 auto;
   }
 
   .art-piece__grid {
     min-height: 0;
+    align-items: stretch;
   }
 
   .art-section--unified .art-wall-label--unified {
     display: flex;
     flex-direction: column;
-    height: 100%;
     min-height: 100%;
     align-self: stretch;
   }
@@ -80,3 +90,27 @@ const l = t[locale];
     border-left: 1px solid var(--border-subtle);
   }
 </style>
+
+<script>
+  function syncArtLabelHeights() {
+    document.querySelectorAll<HTMLElement>(".art-piece__grid").forEach((grid) => {
+      const media = grid.querySelector<HTMLElement>(".art-piece__media");
+      const label = grid.querySelector<HTMLElement>(".art-wall-label");
+      if (!media || !label) return;
+
+      label.style.minHeight = "";
+      const mediaHeight = media.getBoundingClientRect().height;
+      if (mediaHeight > 0) {
+        label.style.minHeight = `${mediaHeight}px`;
+      }
+    });
+  }
+
+  syncArtLabelHeights();
+  window.addEventListener("resize", syncArtLabelHeights);
+  document.addEventListener("astro:page-load", syncArtLabelHeights);
+  document.querySelectorAll<HTMLImageElement>(".art-piece img").forEach((img) => {
+    if (img.complete) return;
+    img.addEventListener("load", syncArtLabelHeights, { once: true });
+  });
+</script>

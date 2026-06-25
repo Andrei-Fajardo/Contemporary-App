@@ -31,16 +31,7 @@
 }
 
 .utero-layered::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 42% 28% at 8% 18%, var(--utero-splash) 0%, transparent 72%),
-    radial-gradient(ellipse 36% 24% at 92% 72%, var(--utero-layer) 0%, transparent 68%),
-    linear-gradient(165deg, transparent 55%, var(--utero-ink-wash) 100%);
-  opacity: 0.55;
+  display: none;
 }
 
 .utero-layered > * {
@@ -49,17 +40,7 @@
 }
 
 .hero-section.utero-layered::after {
-  content: "";
-  position: absolute;
-  bottom: -2rem;
-  left: -5%;
-  width: 55%;
-  height: clamp(6rem, 18vw, 14rem);
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(ellipse at center, rgba(15, 14, 12, 0.06) 0%, transparent 70%);
-  filter: blur(2px);
-  transform: rotate(-4deg);
+  display: none;
 }
 
 /* Typography roles mapped to reference fonts */
@@ -190,14 +171,42 @@
   align-items: stretch;
 }
 
+.art-section--unified .art-piece__media {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  align-self: stretch;
+}
+
+.art-section--unified .art-piece__media .media-card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.art-section--unified .art-piece__media .cursor-tilt,
+.art-section--unified .art-piece__media .cursor-tilt__surface,
+.art-section--unified .art-piece__media .lazy-media {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.art-section--unified .art-piece__media .lazy-media--fit {
+  justify-content: center;
+}
+
 .art-section--unified .art-wall-label {
   padding: clamp(1.25rem, 3vw, 2rem);
-  background: var(--canvas-panel, var(--canvas));
+  background: transparent;
   border-top: none;
   display: flex;
   flex-direction: column;
   min-height: 100%;
   height: 100%;
+  align-self: stretch;
 }
 
 .art-section--unified .art-wall-label__block {
