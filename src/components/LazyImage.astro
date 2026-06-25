@@ -29,7 +29,7 @@ const hasParallax = parallaxSpeed !== undefined && parallaxSpeed > 0;
     "lazy-media",
     depthTarget && "depth-target",
     contain && "lazy-media--contain lazy-media--fit",
-    eager && "is-loaded",
+    eager && "is-loaded is-visible",
     hasParallax && "lazy-media--parallax scroll-parallax-mask",
   ]}
   style={contain ? undefined : `--lazy-aspect: ${aspectRatio}`}

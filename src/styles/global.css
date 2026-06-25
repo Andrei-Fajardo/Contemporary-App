@@ -170,15 +170,21 @@ html {
   max-width: min(100vw, 1920px);
   max-height: 100vh;
   width: 100%;
+  pointer-events: none;
+}
+
+.global-lightbox__stage > * {
+  pointer-events: auto;
 }
 
 .global-lightbox__img {
   display: block;
   max-width: min(96vw, 1920px);
-  max-height: min(88vh, 1080px);
+  max-height: min(92vh, 1400px);
   width: auto;
   height: auto;
   object-fit: contain;
+  image-rendering: auto;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
   animation: lightbox-scale-in 0.4s var(--ease-editorial);
 }

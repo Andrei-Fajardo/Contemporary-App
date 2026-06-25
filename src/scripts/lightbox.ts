@@ -34,6 +34,13 @@ function ensureLightbox(): HTMLElement {
   `;
   document.body.appendChild(root);
 
+  root.addEventListener("click", (e) => {
+    if (!root.classList.contains("is-open")) return;
+    const target = e.target as HTMLElement;
+    if (target.closest(".global-lightbox__img")) return;
+    closeLightbox();
+  });
+
   root.querySelectorAll("[data-lightbox-close]").forEach((el) => {
     el.addEventListener("click", closeLightbox);
   });
