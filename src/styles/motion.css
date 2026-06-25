@@ -343,6 +343,11 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   font-size: clamp(0.75rem, 1vw, 0.875rem);
   letter-spacing: 0.06em;
   color: var(--ink-50);
+  margin-bottom: 1rem;
+}
+
+.hero-editorial__intro {
+  max-width: 42ch;
   margin-bottom: 1.25rem;
 }
 
