@@ -1,0 +1,29 @@
+---
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+---
+
+<section class="mag-cta scroll-section" aria-labelledby="mag-cta-heading">
+  <div class="mag-shell">
+    <div class="mag-cta__inner scroll-reveal">
+      <p class="mag-section-header__eyebrow">{l.ctaEyebrow}</p>
+      <h2 id="mag-cta-heading" class="mag-cta__title">{l.ctaHeadline}</h2>
+      <p class="mag-cta__body">{l.ctaBody}</p>
+      <div class="mag-cta__actions">
+        <a href={`${homePath}#contacts`} data-nav-key="contacts" class="mag-btn mag-btn--fill">
+          {l.ctaPrimary}
+        </a>
+        <a href={`${homePath}#exhibitions`} data-nav-key="exhibitions" class="mag-cta__link">
+          {l.ctaSecondary}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

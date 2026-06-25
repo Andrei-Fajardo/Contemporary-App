@@ -1,0 +1,35 @@
+---
+import { educationTimeline } from '../data/education';
+
+interface Props {
+  label?: string;
+}
+
+const { label = "Education" } = Astro.props;
+---
+
+<div class="edu-timeline scroll-reveal" aria-label={label}>
+  <p class="section-eyebrow section-eyebrow--blood edu-timeline__label mb-8">{label}</p>
+
+  <div class="edu-timeline__track" role="list">
+    <div class="edu-timeline__rail" aria-hidden="true"></div>
+
+    {educationTimeline.map((entry, i) => (
+      <article
+        class:list={["edu-timeline__node", i % 2 === 1 && "edu-timeline__node--accent"]}
+        role="listitem"
+        style={`--node-i: ${i}`}
+      >
+        <div class="edu-timeline__marker" aria-hidden="true">
+          <span class="edu-timeline__dot"></span>
+        </div>
+        <div class="edu-timeline__stem" aria-hidden="true"></div>
+        <div class="edu-timeline__card">
+          <time class="edu-timeline__years" datetime={entry.years.replace(/\s/g, '')}>{entry.years}</time>
+          <h3 class="edu-timeline__title">{entry.title}</h3>
+          <p class="edu-timeline__institution">{entry.institution}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>
