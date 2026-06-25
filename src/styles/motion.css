@@ -215,7 +215,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   container-type: inline-size;
   container-name: hero;
   position: relative;
-  min-height: min(92vh, 56rem);
+  min-height: min(88vh, 52rem);
 }
 
 .hero-editorial {
@@ -296,8 +296,12 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 }
 
 .hero-editorial__name-rule {
-  margin: 0.2rem 0 0.35rem;
-  width: clamp(3.5rem, 22vw, 9rem);
+  display: block;
+  margin: 0.35rem 0 0;
+  width: clamp(4rem, 28vw, 10rem);
+  height: 2px;
+  background: var(--accent-red);
+  transform: skewX(-8deg);
 }
 
 .hero-editorial__anna {

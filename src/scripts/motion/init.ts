@@ -11,6 +11,7 @@ import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
 import { initCursorTilt, resetCursorTilt, bindCursorTiltTabListener } from "./cursor-tilt";
 import { initArtViewToggle, resetArtViewToggle } from "../art-view-toggle";
 import { initExhibitionFilter, resetExhibitionFilter } from "../exhibition-filter";
+import { initHeroMotion, resetHeroMotion } from "./hero-motion";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -37,6 +38,7 @@ export function initMotion(): void {
   resetCursorTilt();
   resetArtViewToggle();
   resetExhibitionFilter();
+  resetHeroMotion();
 
   if (prefersReducedMotion()) {
     document.documentElement.classList.add("motion-reduced");
@@ -68,6 +70,7 @@ export function initMotion(): void {
   initCursorTilt();
   initArtViewToggle();
   initExhibitionFilter();
+  initHeroMotion();
   bindTabularMotionRefresh();
 }
 

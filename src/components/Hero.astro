@@ -1,5 +1,8 @@
 ---
 import { t, type LocaleKey } from '../data/translations';
+import { siteCopy } from '../data/site-copy';
+import { artworks } from '../data/artworks';
+import { exhibitionEntries } from '../data/content';
 
 interface Props {
   locale?: LocaleKey;
@@ -7,9 +10,13 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+
+const featured = artworks[1] ?? artworks[0];
+const themeTags = siteCopy.about.interests.slice(0, 8);
 ---
 
-<section id="home" class="hero-section hero-chaos utero-layered scroll-section hero-scroll-fade">
+<section id="home" class="hero-section hero-chaos utero-layered scroll-section" data-hero-section>
   <div class="hero-editorial hero-chaos__inner">
     <div class="hero-editorial__copy">
       <p class="scroll-reveal hero-editorial__tagline section-eyebrow--blood">{l.heroTagline}</p>
@@ -18,32 +25,103 @@ const l = t[locale];
         <h1 class="hero-editorial__name font-handwriting">
           {l.heroFirstName} {l.heroLastName}
         </h1>
+        <span class="hero-editorial__name-rule" aria-hidden="true"></span>
       </div>
 
       <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
 
       <p class="scroll-reveal hero-editorial__motto type-editorial">
-        {l.heroMottoLead}
-        <span class="hero-editorial__motto-emphasis">{l.heroMottoEmphasis}</span>
+        <span class="hero-editorial__pipe" aria-hidden="true">|</span>
+        <span class="hero-editorial__motto-text">
+          {l.heroMottoLead}
+          <span class="chaos-encircle">
+            <svg class="chaos-encircle__ring" aria-hidden="true" viewBox="0 0 128 48" preserveAspectRatio="none">
+              <path
+                d="M 16 26 C 20 10, 48 6, 64 8 C 84 5, 108 12, 112 24 C 110 36, 84 42, 64 40 C 40 42, 14 38, 16 26 Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="chaos-encircle__text">{l.heroMottoEmphasis}</span>
+          </span>
+        </span>
       </p>
 
       <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
 
+      <div class="scroll-reveal hero-editorial__actions" role="group" aria-label="Explore portfolio">
+        <a href={`${homePath}#art`} data-nav-key="art" class="hero-cta hero-cta--fill">
+          {l.viewPaintings}
+        </a>
+        <a href={`${homePath}#exhibitions`} data-nav-key="exhibitions" class="hero-cta">
+          {l.viewExhibitions}
+        </a>
+        <a href={`${homePath}#contacts`} data-nav-key="contacts" class="hero-cta hero-cta--ghost">
+          {l.nav.contacts}
+        </a>
+      </div>
+
+      <dl class="scroll-reveal hero-editorial__stats">
+        <div class="hero-editorial__stat">
+          <dt>{l.exhibitionsTag}</dt>
+          <dd>{exhibitionEntries.length}</dd>
+        </div>
+        <div class="hero-editorial__stat">
+          <dt>{l.artTag}</dt>
+          <dd>{artworks.length}</dd>
+        </div>
+        <div class="hero-editorial__stat">
+          <dt>{l.basedIn}</dt>
+          <dd class="hero-editorial__stat-place">{l.location}</dd>
+        </div>
+      </dl>
+
+      <div class="scroll-reveal hero-chaos__ghosts scroll-reveal-group" aria-label="Themes">
+        {themeTags.map((tag) => (
+          <span class="hero-chaos__ghost">{tag}</span>
+        ))}
+      </div>
+
       <p class="scroll-reveal hero-editorial__desc content-prose text-ink-45 text-sm">{l.heroDesc}</p>
+    </div>
+
+    <div class="hero-editorial__visual hero-visual scroll-reveal">
+      <div class="hero-visual__marks" aria-hidden="true">
+        <span class="hero-visual__mark hero-visual__mark--1"></span>
+        <span class="hero-visual__mark hero-visual__mark--2"></span>
+        <span class="hero-visual__mark hero-visual__mark--3"></span>
+      </div>
+
+      <span class="hero-visual__stamp">{l.location} · {featured.year}</span>
+
+      <figure class="hero-media-frame hero-visual__frame" data-hero-visual>
+        <div class="cursor-tilt">
+          <div class="cursor-tilt__surface" data-cursor-tilt>
+            <img
+              src={featured.image}
+              alt={featured.title}
+              width="640"
+              height="800"
+              fetchpriority="high"
+              decoding="async"
+              class="hero-visual__img"
+            />
+          </div>
+        </div>
+        <figcaption class="hero-visual__caption">
+          <span class="hero-visual__caption-title">{featured.title}</span>
+          <span class="hero-visual__caption-meta">{featured.medium} · {featured.year}</span>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<style>
-  .hero-editorial__name {
-    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
-    line-height: 1.15;
-    color: var(--ink);
-    margin: 0 0 0.35em;
-    text-shadow: none;
-  }
-
-  .hero-editorial__motto-emphasis {
-    color: var(--ink-75);
-  }
-</style>
+<script>
+  import { initHeroMotion } from '../scripts/motion/hero-motion';
+  initHeroMotion();
+  document.addEventListener('astro:page-load', initHeroMotion);
+</script>
