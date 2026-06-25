@@ -47,7 +47,7 @@
   --radius-lang-btn: 0.2rem;
 
   /* Global type scale — bumps all rem-based typography */
-  --type-scale: 1.125;
+  --type-scale: 1.25;
 }
 
 /* Warm editorial canvas background */
@@ -349,7 +349,7 @@ html {
 /* Universal meta-label strip — locks tech specs to a single elegant line */
 .meta-label-strip {
   font-family: var(--font-mono, monospace);
-  font-size: 11px;
+  font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #9CA3AF;
