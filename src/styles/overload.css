@@ -1,0 +1,475 @@
+/* UI Overload — inspired refinements from Supahero, CTA Gallery, Footer.design, 404s.design */
+
+/* ── Shared buttons ── */
+.overload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.75rem 1.35rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background 0.3s var(--ease-editorial),
+    color 0.3s var(--ease-editorial),
+    border-color 0.3s var(--ease-editorial),
+    transform 0.25s var(--ease-editorial);
+}
+
+.overload-btn:hover {
+  transform: translateY(-1px);
+}
+
+.overload-btn--primary {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+
+.overload-btn--primary:hover {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  color: var(--canvas);
+}
+
+.overload-btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-section);
+}
+
+.overload-btn--ghost:hover {
+  border-color: var(--ink);
+  background: rgba(20, 16, 12, 0.04);
+}
+
+.overload-btn--lg {
+  padding: 0.9rem 1.75rem;
+  font-size: 0.75rem;
+}
+
+/* ── Supahero-inspired split hero ── */
+.overload-hero {
+  container-type: inline-size;
+  container-name: overload-hero;
+  min-height: min(88vh, 52rem) !important;
+  border-bottom: 1px solid var(--border-section);
+  display: flex;
+  align-items: center;
+}
+
+.overload-hero .section-shell {
+  width: 100%;
+}
+
+.overload-hero__grid {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding-block: clamp(1.5rem, 4vh, 3rem);
+}
+
+@container overload-hero (min-width: 768px) {
+  .overload-hero__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+}
+
+.overload-hero__copy {
+  min-width: 0;
+}
+
+.overload-hero__title {
+  margin: 0 0 clamp(0.75rem, 2vh, 1.25rem);
+  line-height: 0.95;
+}
+
+.overload-hero__title-script {
+  display: block;
+  font-size: clamp(2.75rem, 7vw, 4.75rem);
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 0.08em;
+}
+
+.overload-hero__title-serif {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink-70);
+}
+
+.overload-hero__roles {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  line-height: 1.45;
+  color: var(--ink-65);
+  margin: 0 0 0.65rem;
+  max-width: 32ch;
+}
+
+.overload-hero__motto {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  color: var(--ink-55);
+  margin: 0 0 clamp(1.25rem, 3vh, 1.75rem);
+  max-width: 36ch;
+}
+
+.overload-hero__motto em {
+  font-style: normal;
+  color: var(--ink-75);
+}
+
+.overload-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 0.85rem;
+  margin-bottom: clamp(1.5rem, 3vh, 2.25rem);
+}
+
+.overload-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 0;
+  padding: clamp(0.85rem, 2vw, 1.15rem) 0 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.overload-hero__stat {
+  min-width: 0;
+}
+
+.overload-hero__stat dt {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  margin-bottom: 0.25rem;
+}
+
+.overload-hero__stat dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 0.9vw, 0.9375rem);
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.overload-hero__visual {
+  min-width: 0;
+}
+
+.overload-hero__frame {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--border-section);
+  background: rgba(20, 16, 12, 0.03);
+  overflow: clip;
+  aspect-ratio: 4 / 5;
+}
+
+.overload-hero__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.overload-hero__frame figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--canvas);
+  background: linear-gradient(to top, rgba(20, 16, 12, 0.72), transparent);
+}
+
+.overload-hero__tagline {
+  margin-bottom: clamp(0.65rem, 1.5vh, 1rem) !important;
+}
+
+/* ── CTA Gallery-inspired conversion band ── */
+.overload-cta {
+  border-bottom: 1px solid var(--border-section);
+}
+
+.overload-cta__inner {
+  text-align: center;
+  max-width: 44rem;
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 3.5rem);
+}
+
+.overload-cta__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0.35rem 0 0.85rem;
+}
+
+.overload-cta__body {
+  margin: 0 auto 1.5rem;
+  max-width: 38ch;
+  color: var(--ink-55);
+}
+
+.overload-cta__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.overload-cta__secondary {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink-55);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.overload-cta__secondary:hover {
+  color: var(--accent-red);
+  border-bottom-color: var(--accent-red);
+}
+
+/* ── Footer.design-inspired multi-column footer ── */
+.overload-footer {
+  border-top: 1px solid var(--border-section);
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 3vw, 2rem);
+}
+
+.overload-footer__grid {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+@media (min-width: 640px) {
+  .overload-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .overload-footer__grid {
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  }
+}
+
+.overload-footer__brand-title {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0 0 0.5rem;
+}
+
+.overload-footer__brand-sub {
+  font-family: var(--font-heading);
+  font-size: 0.5625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  margin-bottom: 0.85rem;
+}
+
+.overload-footer__brand-desc {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-55);
+  max-width: 28ch;
+  margin: 0;
+}
+
+.overload-footer__col-title {
+  font-family: var(--font-heading);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-red-label);
+  margin: 0 0 0.85rem;
+}
+
+.overload-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.overload-footer__links a {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink-65);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  width: fit-content;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.overload-footer__links a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink-35);
+}
+
+.overload-footer__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: clamp(1.25rem, 3vw, 1.75rem);
+  border-top: 1px solid var(--border-subtle);
+}
+
+@media (min-width: 640px) {
+  .overload-footer__bottom {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.overload-footer__signature {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.overload-footer__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+@media (min-width: 640px) {
+  .overload-footer__meta {
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+.overload-footer__copyright {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-35);
+  margin: 0;
+}
+
+.overload-footer__back {
+  font-family: var(--font-heading);
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.overload-footer__back:hover {
+  color: var(--accent-red);
+  border-bottom-color: var(--accent-red);
+}
+
+/* ── 404s.design-inspired error page ── */
+.overload-404 {
+  min-height: calc(100vh - 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
+}
+
+.overload-404__inner {
+  text-align: center;
+  max-width: 40rem;
+}
+
+.overload-404__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-red-label);
+  margin-bottom: 1rem;
+}
+
+.overload-404__code {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 22vw, 12rem);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.overload-404__code-accent {
+  color: var(--accent-red);
+  font-style: italic;
+}
+
+.overload-404__body {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--ink-55);
+  margin: 1rem auto 2rem;
+  max-width: 32ch;
+}
+
+.overload-404__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* Override legacy compact hero when overload is active */
+.visceral-editorial .overload-hero {
+  min-height: min(88vh, 52rem) !important;
+}
+
+.visceral-editorial .overload-hero .visceral-hero__frame {
+  border-left: none;
+}
+
+.visceral-editorial .overload-footer {
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 3vw, 2rem) !important;
+}
+
+.visceral-editorial .desktop-sidebar .overload-btn {
+  width: 100%;
+  padding-block: 0.55rem;
+  font-size: 0.5625rem;
+}

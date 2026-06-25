@@ -1,5 +1,6 @@
 ---
 import { t, type LocaleKey } from '../data/translations';
+import { exhibitionEntries } from '../data/content';
 
 interface Props {
   locale?: LocaleKey;
@@ -7,47 +8,65 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+const exhibitionCount = exhibitionEntries.length;
 ---
 
-<section id="home" class="hero-section hero-chaos scroll-section visceral-hero">
-  <div class="visceral-hero__frame">
-    <div class="hero-editorial hero-chaos__inner">
-      <div class="hero-editorial__copy">
-        <p class="scroll-reveal hero-editorial__tagline section-eyebrow--blood">{l.heroTagline}</p>
+<section id="home" class="hero-section overload-hero scroll-section visceral-hero">
+  <div class="section-shell section-shell--wide">
+    <div class="overload-hero__grid">
+      <div class="overload-hero__copy">
+        <p class="overload-hero__tagline section-eyebrow section-eyebrow--blood">{l.heroTagline}</p>
 
-        <div class="scroll-reveal hero-editorial__name-block">
-          <h1 class="hero-editorial__name font-handwriting">
-            {l.heroFirstName} {l.heroLastName}
-          </h1>
-        </div>
+        <h1 class="overload-hero__title">
+          <span class="overload-hero__title-script font-handwriting">{l.heroFirstName}</span>
+          <span class="overload-hero__title-serif">{l.heroLastName}</span>
+        </h1>
 
-        <hr class="brutal-rule brutal-rule--short scroll-reveal" />
+        <p class="overload-hero__roles">{l.heroRoles}</p>
 
-        <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
-
-        <p class="scroll-reveal hero-editorial__motto type-editorial">
-          {l.heroMottoLead}
-          <span class="hero-editorial__motto-emphasis">{l.heroMottoEmphasis}</span>
+        <p class="overload-hero__motto">
+          {l.heroMottoLead}<em>{l.heroMottoEmphasis}</em>
         </p>
 
-        <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
+        <div class="overload-hero__actions">
+          <a href={`${homePath}#art`} data-nav-key="art" class="overload-btn overload-btn--primary">
+            {l.heroCtaArt}
+          </a>
+          <a href={`${homePath}#contacts`} data-nav-key="contacts" class="overload-btn overload-btn--ghost">
+            {l.heroCtaContact}
+          </a>
+        </div>
 
-        <p class="scroll-reveal hero-editorial__desc content-prose text-ink-45 text-sm">{l.heroDesc}</p>
+        <dl class="overload-hero__stats">
+          <div class="overload-hero__stat">
+            <dt>{l.heroStatExhibitions}</dt>
+            <dd>{exhibitionCount}+</dd>
+          </div>
+          <div class="overload-hero__stat">
+            <dt>{l.heroStatLocations}</dt>
+            <dd>{l.location}</dd>
+          </div>
+          <div class="overload-hero__stat">
+            <dt>{l.heroStatDisciplines}</dt>
+            <dd>{l.heroStatDisciplinesValue}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="overload-hero__visual scroll-reveal">
+        <figure class="overload-hero__frame">
+          <img
+            src="/media/souls-and-leavings.jpg"
+            alt="Souls & Leavings — mixed media on canvas"
+            width="600"
+            height="750"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <figcaption>{l.heroFeaturedCaption}</figcaption>
+        </figure>
       </div>
     </div>
   </div>
 </section>
-
-<style>
-  .hero-editorial__name {
-    font-size: clamp(2.25rem, 5vw, 3.5rem);
-    line-height: 1.1;
-    color: var(--ink);
-    margin: 0 0 0.35em;
-    text-shadow: none;
-  }
-
-  .hero-editorial__motto-emphasis {
-    color: var(--ink-75);
-  }
-</style>

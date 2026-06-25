@@ -1,6 +1,7 @@
 ---
 import Hero from './Hero.astro';
 import AboutSection from './sections/AboutSection.astro';
+import CallToActionSection from './CallToActionSection.astro';
 import ArtSection from './sections/ArtSection.astro';
 import ExhibitionsSection from './sections/ExhibitionsSection.astro';
 import PublicationsSection from './sections/PublicationsSection.astro';
@@ -21,6 +22,7 @@ const { locale } = Astro.props;
     <div class="tabular-panel is-active" data-tab-panel="about" id="panel-about" role="tabpanel" aria-labelledby="nav-about">
       <Hero locale={locale} />
       <AboutSection locale={locale} />
+      <CallToActionSection locale={locale} />
     </div>
 
     <div class="tabular-panel" data-tab-panel="art" id="panel-art" role="tabpanel" hidden aria-hidden="true">

@@ -268,7 +268,14 @@ const menuItems: { key: string; href: string; index: string }[] = [
         </div>
         <div class="desktop-sidebar__footer px-5 py-8 mt-auto">
           <span class="desktop-sidebar__footer-label font-sans text-[8px] uppercase tracking-[0.25em] text-[var(--ink-muted)] block mb-1">{l.basedIn}</span>
-          <span class="desktop-sidebar__footer-text font-sans text-[11px] text-[var(--ink-muted)] font-medium tracking-wide">{l.location}</span>
+          <span class="desktop-sidebar__footer-text font-sans text-[11px] text-[var(--ink-muted)] font-medium tracking-wide block mb-4">{l.location}</span>
+          <a
+            href={`${homePath}#contacts`}
+            data-nav-key="contacts"
+            class="overload-btn overload-btn--ghost w-full text-center text-[0.5625rem] !py-2"
+          >
+            {l.heroCtaContact}
+          </a>
         </div>
       </div>
     </aside>

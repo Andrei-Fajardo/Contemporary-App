@@ -1,0 +1,29 @@
+---
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+---
+
+<section class="overload-cta scroll-section section-gap" aria-labelledby="cta-heading">
+  <div class="section-shell section-shell--wide">
+    <div class="overload-cta__inner scroll-reveal">
+      <span class="section-eyebrow section-eyebrow--blood">{l.ctaEyebrow}</span>
+      <h2 id="cta-heading" class="overload-cta__title">{l.ctaHeadline}</h2>
+      <p class="overload-cta__body content-prose">{l.ctaBody}</p>
+      <div class="overload-cta__actions">
+        <a href={`${homePath}#contacts`} data-nav-key="contacts" class="overload-btn overload-btn--primary overload-btn--lg">
+          {l.ctaPrimary}
+        </a>
+        <a href={`${homePath}#exhibitions`} data-nav-key="exhibitions" class="overload-cta__secondary">
+          {l.ctaSecondary}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

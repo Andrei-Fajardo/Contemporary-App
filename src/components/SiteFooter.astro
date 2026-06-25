@@ -1,5 +1,6 @@
 ---
 import { t, type LocaleKey } from '../data/translations';
+import { siteCopy } from '../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
@@ -7,16 +8,70 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+
+const navLinks = [
+  { key: 'about', label: l.nav.about },
+  { key: 'art', label: l.nav.art },
+  { key: 'exhibitions', label: l.nav.exhibitions },
+  { key: 'publications', label: l.nav.publications },
+  { key: 'research', label: l.nav.research },
+  { key: 'press', label: l.nav.press },
+  { key: 'contacts', label: l.nav.contacts },
+] as const;
 ---
 
-<footer class="section-shell py-12 md:py-14 border-t border-subtle">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 text-sm font-body text-ink-55">
-    <a href="mailto:contact@annadauylrockswell.com" class="hover:text-ink transition-colors underline underline-offset-4 decoration-black/20">
-      contact@annadauylrockswell.com
-    </a>
-    <a href="https://instagram.com/annadauylrockswell" target="_blank" rel="noopener noreferrer" class="hover:text-ink transition-colors underline underline-offset-4 decoration-black/20">
-      @annadauylrockswell
-    </a>
+<footer class="overload-footer section-shell section-shell--wide">
+  <div class="overload-footer__grid">
+    <div class="overload-footer__brand">
+      <p class="overload-footer__brand-title font-handwriting">{l.heroFirstName} {l.heroLastName}</p>
+      <p class="overload-footer__brand-sub" set:html={l.subtitle} />
+      <p class="overload-footer__brand-desc">{l.heroMotto}</p>
+    </div>
+
+    <nav class="overload-footer__col" aria-label={l.footerNavigate}>
+      <p class="overload-footer__col-title">{l.footerNavigate}</p>
+      <ul class="overload-footer__links">
+        {navLinks.map((item) => (
+          <li>
+            <a href={`${homePath}#${item.key}`} data-nav-key={item.key}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="overload-footer__col">
+      <p class="overload-footer__col-title">{l.footerConnect}</p>
+      <ul class="overload-footer__links">
+        <li>
+          <a href="mailto:contact@annadauylrockswell.com">contact@annadauylrockswell.com</a>
+        </li>
+        <li>
+          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer">@rockswellnana</a>
+        </li>
+        <li>
+          <span class="text-ink-55 text-sm">{l.location}</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="overload-footer__col">
+      <p class="overload-footer__col-title">{l.licenses}</p>
+      <ul class="overload-footer__links">
+        {siteCopy.licenses.map((license) => (
+          <li>
+            <a href={license.href} target="_blank" rel="noopener noreferrer">{license.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
-  <p class="text-[10px] font-mono text-ink-35 mt-10 tracking-wider">{l.copyright}</p>
+
+  <div class="overload-footer__bottom">
+    <p class="overload-footer__signature font-handwriting" aria-hidden="true">{l.heroFirstName} {l.heroLastName}</p>
+    <div class="overload-footer__meta">
+      <a href={`${homePath}#about`} class="overload-footer__back" data-nav-key="about">{l.footerBackToTop}</a>
+      <p class="overload-footer__copyright">{l.copyright}</p>
+    </div>
+  </div>
 </footer>

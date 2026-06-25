@@ -130,9 +130,10 @@ const { entries, seeMoreLabel = 'See more' } = Astro.props;
     transition: color 0.3s var(--ease-editorial);
   }
 
+  .exhibition-accordion__summary:hover .exhibition-accordion__see-more,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__see-more,
   .exhibition-accordion__see-more.is-open {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    color: var(--ink);
   }
 
   @media (max-width: 1023px) {
