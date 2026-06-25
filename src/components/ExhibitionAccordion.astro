@@ -20,7 +20,7 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
         {entry.kind === 'museum' && (
           <span class="exhibition-accordion__badge">Museum</span>
         )}
-        <span class="exhibition-accordion__chevron" aria-hidden="true">+</span>
+        <span class="exhibition-accordion__see-more">{expandLabel} →</span>
       </summary>
       <div class="exhibition-accordion__panel">
         {entry.note && (
@@ -131,22 +131,21 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     color: var(--ink-65);
   }
 
-  .exhibition-accordion__chevron {
+  .exhibition-accordion__see-more {
     grid-row: 1 / 3;
     grid-column: 3;
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     line-height: 1;
-    color: var(--ink-35);
-    display: inline-block;
-    transform-origin: center;
+    color: var(--ink-45);
+    white-space: nowrap;
+    transition: color 0.3s var(--ease-editorial);
   }
 
-  .exhibition-accordion__summary:hover .exhibition-accordion__chevron {
-    color: var(--ink);
-  }
-
-  .exhibition-accordion__item.is-expanded .exhibition-accordion__chevron {
+  .exhibition-accordion__summary:hover .exhibition-accordion__see-more,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__see-more {
     color: var(--ink);
   }
 
@@ -202,8 +201,8 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
       font-size: 0.875rem;
     }
 
-    .exhibition-accordion__chevron {
-      font-size: 1.125rem;
+    .exhibition-accordion__see-more {
+      font-size: 0.5rem;
     }
   }
 </style>

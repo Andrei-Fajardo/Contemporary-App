@@ -1,5 +1,6 @@
 ---
 import { t, type LocaleKey } from '../data/translations';
+import { siteCopy } from '../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
@@ -7,16 +8,48 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+
+const navLinks = [
+  { key: 'about', label: l.nav.about },
+  { key: 'art', label: l.nav.art },
+  { key: 'exhibitions', label: l.nav.exhibitions },
+  { key: 'contacts', label: l.nav.contacts },
+] as const;
 ---
 
-<footer class="section-shell py-12 md:py-14 border-t border-subtle">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 text-sm font-body text-ink-55">
-    <a href="mailto:contact@annadauylrockswell.com" class="hover:text-ink transition-colors underline underline-offset-4 decoration-black/20">
-      contact@annadauylrockswell.com
-    </a>
-    <a href="https://instagram.com/annadauylrockswell" target="_blank" rel="noopener noreferrer" class="hover:text-ink transition-colors underline underline-offset-4 decoration-black/20">
-      @annadauylrockswell
-    </a>
+<footer class="mag-footer mag-shell">
+  <div class="mag-footer__grid">
+    <div>
+      <p class="mag-footer__brand">{l.heroFirstName} {l.heroLastName}</p>
+      <p class="mag-footer__tagline">{l.heroMotto}</p>
+    </div>
+
+    <nav aria-label={l.footerNavigate}>
+      <p class="mag-footer__col-title">{l.footerNavigate}</p>
+      <ul class="mag-footer__links">
+        {navLinks.map((item) => (
+          <li>
+            <a href={`${homePath}#${item.key}`} data-nav-key={item.key}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div>
+      <p class="mag-footer__col-title">{l.footerConnect}</p>
+      <ul class="mag-footer__links">
+        <li><a href="mailto:contact@annadauylrockswell.com">contact@annadauylrockswell.com</a></li>
+        <li><a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer">@rockswellnana</a></li>
+        {siteCopy.licenses.map((license) => (
+          <li><a href={license.href} target="_blank" rel="noopener noreferrer">{license.label}</a></li>
+        ))}
+      </ul>
+    </div>
   </div>
-  <p class="text-[10px] font-mono text-ink-35 mt-10 tracking-wider">{l.copyright}</p>
+
+  <div class="mag-footer__bottom">
+    <a href={`${homePath}#about`} class="mag-section-header__eyebrow" data-nav-key="about" style="text-decoration: none;">{l.footerBackToTop}</a>
+    <p class="mag-footer__copy">{l.copyright}</p>
+  </div>
 </footer>

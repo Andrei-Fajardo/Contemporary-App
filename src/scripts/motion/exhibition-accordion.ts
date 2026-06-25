@@ -10,9 +10,9 @@ function getPanel(item: HTMLDetailsElement): HTMLElement | null {
   return item.querySelector<HTMLElement>(".exhibition-accordion__panel");
 }
 
-function rotateChevron(chevron: HTMLElement | null, open: boolean): void {
-  if (!chevron) return;
-  animate(chevron, { rotate: open ? 45 : 0, scale: open ? 1.12 : 1 }, { duration: 0.35, ease: EASE });
+function setSeeMoreIndicator(indicator: HTMLElement | null, open: boolean): void {
+  if (!indicator) return;
+  indicator.classList.toggle("is-open", open);
 }
 
 function clearSummaryInlineStyles(summary: HTMLElement): void {
@@ -28,7 +28,7 @@ function setOpenState(item: HTMLDetailsElement, summary: HTMLElement, open: bool
   if (!open) clearSummaryInlineStyles(summary);
 }
 
-function openPanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLElement, chevron: HTMLElement | null): void {
+function openPanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLElement, indicator: HTMLElement | null): void {
   animating.add(item);
   item.setAttribute("open", "");
   setOpenState(item, summary, true);
@@ -50,10 +50,10 @@ function openPanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLEl
     });
   });
 
-  rotateChevron(chevron, true);
+  setSeeMoreIndicator(indicator, true);
 }
 
-function closePanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLElement, chevron: HTMLElement | null): void {
+function closePanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLElement, indicator: HTMLElement | null): void {
   animating.add(item);
   setOpenState(item, summary, false);
 
@@ -75,14 +75,14 @@ function closePanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLE
     },
   });
 
-  rotateChevron(chevron, false);
+  setSeeMoreIndicator(indicator, false);
 }
 
 export function initExhibitionAccordion(): void {
   document.querySelectorAll<HTMLDetailsElement>(".exhibition-accordion__item").forEach((item) => {
     const summary = item.querySelector<HTMLElement>(".exhibition-accordion__summary");
     const panel = getPanel(item);
-    const chevron = item.querySelector<HTMLElement>(".exhibition-accordion__chevron");
+    const indicator = item.querySelector<HTMLElement>(".exhibition-accordion__see-more");
     if (!summary || !panel || summary.dataset.accordionMotion === "true") return;
     summary.dataset.accordionMotion = "true";
 
@@ -94,7 +94,7 @@ export function initExhibitionAccordion(): void {
       panel.style.height = "auto";
       panel.style.opacity = "1";
       summary.setAttribute("aria-expanded", "true");
-      rotateChevron(chevron, true);
+      setSeeMoreIndicator(indicator, true);
     } else {
       panel.style.height = "0px";
       panel.style.opacity = "0";
@@ -107,9 +107,9 @@ export function initExhibitionAccordion(): void {
       if (animating.has(item)) return;
 
       if (item.open) {
-        closePanel(item, panel, summary, chevron);
+        closePanel(item, panel, summary, indicator);
       } else {
-        openPanel(item, panel, summary, chevron);
+        openPanel(item, panel, summary, indicator);
       }
     });
   });

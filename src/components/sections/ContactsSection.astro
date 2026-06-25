@@ -1,4 +1,5 @@
 ---
+import MagazineSectionHeader from '../MagazineSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { siteCopy } from '../../data/site-copy';
 
@@ -10,44 +11,36 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="contacts" class="scroll-section section-gap contacts-chaos">
-  <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.contactTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-12 md:mb-16 chaos-title-mark">
-      {l.contactHeading}
-    </h2>
+<section id="contacts" class="scroll-section">
+  <div class="mag-shell">
+    <MagazineSectionHeader num="VII" eyebrow={l.contactTag} title={l.contactHeading} />
 
-    <div class="grid md:grid-cols-2 gap-14 md:gap-20 lg:gap-24">
-      <div class="scroll-reveal space-y-10">
+    <div class="mag-grid">
+      <div class="mag-col-6 scroll-reveal space-y-8">
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.email}</span>
+          <span class="mag-section-header__eyebrow block mb-2">{l.email}</span>
           <a href="mailto:contact@annadauylrockswell.com" class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
             contact@annadauylrockswell.com
           </a>
-          <a href="mailto:support@annadauylrockswell.com" class="content-prose block mt-3 underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
+          <a href="mailto:support@annadauylrockswell.com" class="content-prose block mt-2 underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
             support@annadauylrockswell.com
           </a>
         </div>
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.basedIn}</span>
+          <span class="mag-section-header__eyebrow block mb-2">{l.basedIn}</span>
           <p class="content-prose text-ink-75">{l.location}</p>
         </div>
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.socials}</span>
+          <span class="mag-section-header__eyebrow block mb-2">{l.socials}</span>
           <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer" class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
             @rockswellnana
           </a>
         </div>
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.licenses}</span>
-          <div class="flex flex-col gap-3">
+          <span class="mag-section-header__eyebrow block mb-2">{l.licenses}</span>
+          <div class="flex flex-col gap-2">
             {siteCopy.licenses.map((license) => (
-              <a
-                href={license.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all"
-              >
+              <a href={license.href} target="_blank" rel="noopener noreferrer" class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
                 {license.label}
               </a>
             ))}
@@ -55,25 +48,21 @@ const l = t[locale];
         </div>
       </div>
 
-      <div class="scroll-reveal">
-        <form class="contacts-chaos__form space-y-8" onsubmit="event.preventDefault(); alert('Sent (demo)');">
+      <div class="mag-col-6 scroll-reveal">
+        <form class="contacts-chaos__form space-y-6" onsubmit="event.preventDefault(); alert('Sent (demo)');">
           <div>
-            <span class="section-divider-label section-eyebrow--blood block mb-3">{l.nameLabel}</span>
-            <input type="text" placeholder={l.namePlaceholder} class="contacts-chaos__input" />
-          </div>
-          <div>
-            <span class="section-divider-label section-eyebrow--blood block mb-3">{l.emailLabel}</span>
-            <input type="email" placeholder={l.emailPlaceholder} class="contacts-chaos__input" />
+            <label class="mag-section-header__eyebrow block mb-2" for="contact-name">{l.nameLabel}</label>
+            <input id="contact-name" type="text" placeholder={l.namePlaceholder} class="contacts-chaos__input" />
           </div>
           <div>
-            <span class="section-divider-label section-eyebrow--blood block mb-3">{l.messageLabel}</span>
-            <textarea rows="4" placeholder={l.messagePlaceholder} class="contacts-chaos__input contacts-chaos__input--area resize-none"></textarea>
+            <label class="mag-section-header__eyebrow block mb-2" for="contact-email">{l.emailLabel}</label>
+            <input id="contact-email" type="email" placeholder={l.emailPlaceholder} class="contacts-chaos__input" />
           </div>
-          <div class="pt-2">
-            <button type="submit" class="contacts-chaos__submit">
-              {l.sendMessage}
-            </button>
+          <div>
+            <label class="mag-section-header__eyebrow block mb-2" for="contact-message">{l.messageLabel}</label>
+            <textarea id="contact-message" rows="5" placeholder={l.messagePlaceholder} class="contacts-chaos__input contacts-chaos__input--area resize-none"></textarea>
           </div>
+          <button type="submit" class="mag-btn mag-btn--fill">{l.sendMessage}</button>
         </form>
       </div>
     </div>

@@ -1,5 +1,6 @@
 ---
 import MediaPopup from '../MediaPopup.astro';
+import MagazineSectionHeader from '../MagazineSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { artworks } from '../../data/artworks';
 
@@ -11,20 +12,16 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="art" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide mb-10 md:mb-14">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.artTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-5 chaos-title-mark">
-      {l.nav.art}
-    </h2>
-    <hr class="brutal-rule brutal-rule--short scroll-reveal" />
+<section id="art" class="scroll-section">
+  <div class="mag-shell">
+    <MagazineSectionHeader num="II" eyebrow={l.artTag} title={l.nav.art} />
   </div>
 
   {artworks.map((p, i) => (
-    <article class="art-piece depth-target" data-popup-title={p.title}>
-      <div class="section-shell section-shell--wide py-8 md:py-12 lg:py-14">
-        <div class={`grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-start`}>
-          <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
+    <article class="mag-art-piece art-piece depth-target" data-popup-title={p.title}>
+      <div class="mag-shell">
+        <div class={`mag-art-piece__grid ${i % 2 === 1 ? 'mag-art-piece__grid--flip' : ''}`}>
+          <div class="mag-art-piece__media min-w-0">
             <MediaPopup
               imageSrc={p.image}
               imageAlt={p.title}
@@ -37,14 +34,14 @@ const l = t[locale];
             />
           </div>
 
-          <div class={`scroll-reveal min-w-0 art-wall-label ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
-            <h3 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-3">{p.title}</h3>
-            <p class="type-subheading text-lg md:text-xl text-ink-65 mb-2">{p.dimensions}</p>
-            <p class="type-body text-ink-60 text-sm mb-8">By Artist NANA (Anna Dauyl Rockswell)</p>
+          <div class="mag-art-piece__label scroll-reveal art-wall-label">
+            <h3 class="type-subheading text-2xl md:text-3xl text-ink mb-2">{p.title}</h3>
+            <p class="type-subheading text-lg text-ink-65 mb-1">{p.dimensions}</p>
+            <p class="type-body text-ink-60 text-sm mb-6">{p.medium} · {p.year}</p>
 
             <div class="art-wall-label__block">
-              <p class="type-heading text-[0.6875rem] text-ink-50 mb-4">About</p>
-              <div class="space-y-4">
+              <p class="mag-section-header__eyebrow mb-3">About</p>
+              <div class="space-y-3">
                 {p.aboutParagraphs.map((para) => (
                   <p class="content-prose text-ink-75 max-w-[58ch]">{para}</p>
                 ))}
@@ -58,7 +55,7 @@ const l = t[locale];
 </section>
 
 <style>
-  .art-wall-label__block {
-    margin-top: 0.25rem;
+  .mag-art-piece {
+    padding-block: clamp(2rem, 5vw, 3rem);
   }
 </style>

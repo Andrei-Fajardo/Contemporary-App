@@ -1,5 +1,6 @@
 ---
 import ExhibitionAccordion from '../ExhibitionAccordion.astro';
+import MagazineSectionHeader from '../MagazineSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { exhibitionEntries } from '../../data/content';
 
@@ -11,14 +12,9 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="exhibitions" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.exhibitionsTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-6 chaos-title-mark" set:html={l.exhibitionHistory}></h2>
-    <p class="scroll-reveal content-prose text-ink-60 max-w-[62ch] mb-8 md:mb-16">
-      Chronological record of exhibitions — expand each entry to view posters, promotional materials, and documentation.
-    </p>
-
-    <ExhibitionAccordion entries={exhibitionEntries} />
+<section id="exhibitions" class="scroll-section">
+  <div class="mag-shell">
+    <MagazineSectionHeader num="III" eyebrow={l.exhibitionsTag} title={l.exhibitionHistory} />
+    <ExhibitionAccordion entries={exhibitionEntries} expandLabel={l.seeMore} />
   </div>
 </section>

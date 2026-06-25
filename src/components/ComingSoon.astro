@@ -7,11 +7,11 @@ export interface Props {
 const { message, note } = Astro.props;
 ---
 
-<div class="min-h-[32vh] flex flex-col justify-center">
-  <div class="scroll-reveal border border-neutral-900/20 rounded p-10 md:p-14 lg:p-16 max-w-3xl">
-    <p class="content-prose italic text-neutral-700">{message}</p>
-    {note && (
-      <p class="section-divider-label font-mono text-neutral-400 mt-6">{note}</p>
-    )}
-  </div>
+<div class="scroll-reveal" style="padding-block: clamp(2rem, 5vw, 3rem); max-width: 42ch;">
+  <p style="font-family: var(--font-editorial); font-style: italic; font-size: 1.0625rem; line-height: 1.6; color: var(--ink-55); margin: 0;">
+    {message}
+  </p>
+  {note && (
+    <p class="mag-section-header__eyebrow" style="margin-top: 1rem;">{note}</p>
+  )}
 </div>

@@ -1,5 +1,6 @@
 ---
 import LazyImage from '../LazyImage.astro';
+import MagazineSectionHeader from '../MagazineSectionHeader.astro';
 import { pressItems } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
@@ -11,39 +12,29 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="press" class="scroll-section section-gap press-chaos">
-  <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.pressTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-12 md:mb-16 chaos-title-mark">
-      {l.nav.press}
-    </h2>
+<section id="press" class="scroll-section">
+  <div class="mag-shell">
+    <MagazineSectionHeader num="VI" eyebrow={l.pressTag} title={l.nav.press} />
 
     <div class="press-chaos__list editorial-divider-list">
       {pressItems.map((item, i) => (
-        <article class="scroll-reveal press-chaos__item grid md:grid-cols-[1.12fr_0.88fr] gap-10 lg:gap-14 xl:gap-16 items-center py-12 md:py-16 first:pt-0">
-          <div
-            class:list={["press-chaos__tilt-wrap", i % 2 === 1 && "md:col-start-2"]}
-          >
-            <div class="press-chaos__tilt">
-              <div
-                class="press-chaos__media overflow-clip w-full border border-subtle"
-                data-cursor-tilt
-              >
-                <LazyImage
-                  src={item.image}
-                  alt={`${item.title} — ${item.venue}`}
-                  aspectRatio="3 / 4"
-                  parallaxSpeed={0}
-                  depthTarget={false}
-                  contain={true}
-                  eager={true}
-                  class="press-chaos__poster"
-                />
-              </div>
+        <article class="scroll-reveal press-chaos__item grid md:grid-cols-2 gap-10 lg:gap-14 items-center py-12 md:py-16 first:pt-0">
+          <div class:list={[i % 2 === 1 && "md:col-start-2"]}>
+            <div class="press-chaos__media overflow-clip w-full border border-subtle" data-cursor-tilt>
+              <LazyImage
+                src={item.image}
+                alt={`${item.title} — ${item.venue}`}
+                aspectRatio="3 / 4"
+                parallaxSpeed={0}
+                depthTarget={false}
+                contain={true}
+                eager={true}
+                class="press-chaos__poster"
+              />
             </div>
           </div>
           <div class:list={[i % 2 === 1 && "md:col-start-1 md:row-start-1"]}>
-            <p class="section-eyebrow section-eyebrow--blood mb-4">{item.date}</p>
+            <p class="mag-section-header__eyebrow mb-3">{item.date}</p>
             <h3 class="type-subheading text-2xl md:text-3xl text-ink mb-4">{item.title}</h3>
             <p class="content-prose text-ink-75 max-w-[58ch]">
               <span class="text-ink">{item.venue}</span>

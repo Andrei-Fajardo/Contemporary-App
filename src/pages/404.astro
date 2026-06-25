@@ -1,14 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import { t } from '../data/translations';
 ---
 
-<Layout title="404: Not Found">
-  <main class="flex flex-col items-center justify-center min-h-[60vh] px-8">
-    <span class="font-mono text-[10px] tracking-[0.3em] text-neutral-500 block mb-6">(ERROR)</span>
-    <h1 class="type-heading text-7xl md:text-9xl leading-[0.9] text-neutral-900 mb-4">404</h1>
-    <p class="type-body text-xl text-neutral-600 max-w-[40ch] text-center">The requested page could not be found.</p>
-    <a href="/" class="mt-10 type-heading text-[11px] text-neutral-900 underline underline-offset-4 hover:text-neutral-500 transition-colors">
-      Return Home
-    </a>
-  </main>
-</Layout>
+<PageLayout title="404">
+  <section slot="content" class="mag-404">
+    <div class="mag-404__inner">
+      <p class="mag-section-header__eyebrow">{t.en.notFoundEyebrow}</p>
+      <h1 class="mag-404__code">4<span>0</span>4</h1>
+      <p class="mag-404__body">{t.en.notFoundBody}</p>
+      <div class="mag-hero__actions" style="justify-content: center;">
+        <a href="/" class="mag-btn mag-btn--fill">{t.en.notFoundCta}</a>
+        <a href="/#art" class="mag-btn">{t.en.notFoundAlt}</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

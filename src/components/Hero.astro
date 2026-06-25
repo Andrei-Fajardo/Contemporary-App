@@ -1,5 +1,6 @@
 ---
 import { t, type LocaleKey } from '../data/translations';
+import { exhibitionEntries } from '../data/content';
 
 interface Props {
   locale?: LocaleKey;
@@ -7,55 +8,83 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-
-const [anna, ...restFirst] = l.heroFirstName.split(" ");
-const restOfFirst = restFirst.join(" ");
+const homePath = locale === 'en' ? '/' : `/${locale}`;
 ---
 
-<section id="home" class="hero-section hero-chaos scroll-section">
-  <div class="hero-editorial hero-chaos__inner">
-    <div class="hero-editorial__copy">
-      <p class="scroll-reveal hero-editorial__tagline section-eyebrow--blood">{l.heroTagline}</p>
+<section id="home" class="mag-hero scroll-section">
+  <div class="mag-shell">
+    <div class="mag-hero__grid">
+      <div class="mag-hero__copy">
+        <p class="mag-hero__tagline scroll-reveal">{l.heroTagline}</p>
 
-      <div class="scroll-reveal hero-editorial__name-block">
-        <h1 class="hero-editorial__name">
-          <span class="hero-editorial__anna">{anna}</span>{restOfFirst ? ` ${restOfFirst}` : ""}
+        <h1 class="scroll-reveal">
+          <span class="mag-hero__title-line mag-hero__title-line--first">{l.heroFirstName}</span>
+          <span class="mag-hero__title-line mag-hero__title-line--last">{l.heroLastName}</span>
         </h1>
-        <p class="hero-editorial__surname">{l.heroLastName}</p>
+
+        <p class="mag-hero__roles scroll-reveal">{l.heroRoles}</p>
+
+        <p class="mag-hero__motto scroll-reveal">
+          {l.heroMottoLead}<em>{l.heroMottoEmphasis}</em>
+        </p>
+
+        <div class="mag-hero__actions scroll-reveal">
+          <a href={`${homePath}#art`} data-nav-key="art" class="mag-btn mag-btn--fill">
+            {l.heroCtaArt}
+          </a>
+          <a href={`${homePath}#contacts`} data-nav-key="contacts" class="mag-btn">
+            {l.heroCtaContact}
+          </a>
+        </div>
+
+        <dl class="mag-hero__stats scroll-reveal">
+          <div class="mag-hero__stat">
+            <dt>{l.heroStatExhibitions}</dt>
+            <dd>{exhibitionEntries.length}+</dd>
+          </div>
+        </dl>
       </div>
 
-      <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
-
-      <p class="scroll-reveal hero-editorial__motto">
-        <span class="hero-editorial__pipe" aria-hidden="true">|</span>
-        <span class="hero-editorial__motto-text">
-          {l.heroMottoLead}
-          <span class="chaos-encircle">
-            <svg class="chaos-encircle__ring" aria-hidden="true" viewBox="0 0 128 48" preserveAspectRatio="none">
-              <path
-                d="M 16 26 C 20 10, 48 6, 64 8 C 84 5, 108 12, 112 24 C 110 36, 84 42, 64 40 C 40 42, 14 38, 16 26 Z"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <span class="chaos-encircle__text">{l.heroMottoEmphasis}</span>
-          </span>
-        </span>
-      </p>
-
-      <p class="scroll-reveal hero-editorial__based">{l.heroBasedIn}</p>
-
-      <p class="scroll-reveal hero-editorial__desc content-prose text-ink-45 text-sm">{l.heroDesc}</p>
+      <div class="mag-hero__visual scroll-reveal">
+        <span class="mag-hero__issue" aria-hidden="true">Vol. I · 2026</span>
+        <figure class="mag-hero__frame">
+          <img
+            src="/media/souls-and-leavings.jpg"
+            alt="Souls & Leavings — mixed media on canvas"
+            width="640"
+            height="800"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <figcaption>{l.heroFeaturedCaption}</figcaption>
+        </figure>
+      </div>
     </div>
-
-    <aside class="hero-chaos__aside scroll-reveal" aria-label="Artist motto">
-      <blockquote class="hero-chaos__aside-quote">
-        "Live or die, but don't poison everything."
-      </blockquote>
-      <cite class="hero-chaos__aside-cite">— Anne Sexton</cite>
-    </aside>
   </div>
 </section>
+
+<style>
+  .mag-hero__stats {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .mag-hero__stat dt {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+    margin-bottom: 0.25rem;
+  }
+
+  .mag-hero__stat dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--ink);
+  }
+</style>
