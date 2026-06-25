@@ -1,0 +1,264 @@
+/* From Utero — grainy paper with subtle dark ink layers (not full dark mode) */
+
+:root {
+  --utero-dark: #0f0e0c;
+  --utero-ink-wash: rgba(15, 14, 12, 0.04);
+  --utero-splash: rgba(15, 14, 12, 0.07);
+  --utero-layer: rgba(26, 22, 20, 0.05);
+}
+
+/* Grain stays subtle on warm canvas */
+.grain-overlay::before {
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+}
+
+.grain-overlay::after {
+  opacity: 0.02;
+  mix-blend-mode: overlay;
+}
+
+@media (max-width: 1023px) {
+  .grain-overlay {
+    display: none;
+  }
+}
+
+/* Light sections — faint dark splashes for depth */
+.utero-layered {
+  position: relative;
+  isolation: isolate;
+}
+
+.utero-layered::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 42% 28% at 8% 18%, var(--utero-splash) 0%, transparent 72%),
+    radial-gradient(ellipse 36% 24% at 92% 72%, var(--utero-layer) 0%, transparent 68%),
+    linear-gradient(165deg, transparent 55%, var(--utero-ink-wash) 100%);
+  opacity: 0.55;
+}
+
+.utero-layered > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section.utero-layered::after {
+  content: "";
+  position: absolute;
+  bottom: -2rem;
+  left: -5%;
+  width: 55%;
+  height: clamp(6rem, 18vw, 14rem);
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, rgba(15, 14, 12, 0.06) 0%, transparent 70%);
+  filter: blur(2px);
+  transform: rotate(-4deg);
+}
+
+/* Typography roles mapped to reference fonts */
+.font-handwriting,
+.font-cursive {
+  font-family: var(--font-handwriting);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Section title — red rule tight under the word */
+.section-title-mark {
+  position: relative;
+  display: inline-block;
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+  padding-bottom: 0.12em;
+}
+
+.section-title-mark::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-red);
+  transform: skewX(-8deg);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-editorial {
+  font-family: var(--font-editorial);
+}
+
+.type-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.type-display--italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+.type-editorial {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Exhibition category filters */
+.exhibition-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.exhibition-filter {
+  font-family: var(--font-heading);
+  font-size: clamp(0.5625rem, 0.5vw + 0.4rem, 0.6875rem);
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  color: var(--ink-45);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.35rem 0;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.exhibition-filter:hover,
+.exhibition-filter.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.exhibition-accordion__item.is-filtered-out {
+  display: none;
+}
+
+/* Art layout toggle */
+.art-view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border-section);
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.art-view-toggle__btn {
+  font-family: var(--font-heading);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  background: transparent;
+  color: var(--ink-50);
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.art-view-toggle__btn.is-active {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+.art-section--unified .art-piece + .art-piece {
+  margin-top: 0;
+}
+
+.art-section--unified .art-piece .section-shell {
+  padding-block: 0;
+}
+
+.art-section--unified .art-piece .grid {
+  gap: 0;
+}
+
+.art-section--unified .art-wall-label {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--canvas);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.art-section--unified .art-piece .cursor-tilt__surface,
+.art-section--unified .art-piece img {
+  border-radius: 0;
+}
+
+/* Hyperlink lists — publications, research, press */
+.editorial-link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.editorial-link-list li {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.875rem 0;
+}
+
+.editorial-link-list a {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1vw + 0.75rem, 1.1875rem);
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.editorial-link-list a:hover {
+  border-bottom-color: var(--ink-45);
+}
+
+.editorial-link-list__meta {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-45);
+}
+
+.exhibition-carousel__see-more {
+  grid-column: 1 / -1;
+  justify-self: start;
+  margin-top: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+  background: none;
+  border: 1px solid var(--border-section);
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.exhibition-carousel__see-more:hover {
+  background: var(--ink);
+  color: var(--canvas);
+}
+
+.exhibition-carousel__slide.is-collapsed {
+  display: none;
+}
+
+.exhibition-carousel.is-expanded .exhibition-carousel__slide.is-collapsed {
+  display: block;
+}

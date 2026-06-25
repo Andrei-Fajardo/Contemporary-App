@@ -1,0 +1,74 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  aspectRatio?: string;
+  parallaxSpeed?: number;
+  contain?: boolean;
+  eager?: boolean;
+  depthTarget?: boolean;
+}
+
+const {
+  src,
+  alt,
+  class: className = "",
+  aspectRatio = "4 / 5",
+  parallaxSpeed,
+  contain = false,
+  eager = false,
+  depthTarget = true,
+} = Astro.props;
+
+const hasParallax = parallaxSpeed !== undefined && parallaxSpeed > 0;
+---
+
+<div
+  class:list={[
+    "lazy-media",
+    depthTarget && "depth-target",
+    contain && "lazy-media--contain lazy-media--fit",
+    eager && "is-loaded",
+    hasParallax && "lazy-media--parallax scroll-parallax-mask",
+  ]}
+  style={contain ? undefined : `--lazy-aspect: ${aspectRatio}`}
+>
+  {hasParallax ? (
+    <div class="lazy-media__parallax scroll-parallax-container">
+      {eager ? (
+        <img
+          src={src}
+          alt={alt}
+          class:list={["scroll-parallax-image", className]}
+          decoding="async"
+          fetchpriority="high"
+        />
+      ) : (
+        <img
+          data-src={src}
+          alt={alt}
+          class:list={["scroll-parallax-image", className]}
+          decoding="async"
+          loading="lazy"
+        />
+      )}
+    </div>
+  ) : eager ? (
+    <img
+      src={src}
+      alt={alt}
+      class={className}
+      decoding="async"
+      fetchpriority="high"
+    />
+  ) : (
+    <img
+      data-src={src}
+      alt={alt}
+      class={className}
+      decoding="async"
+      loading="lazy"
+    />
+  )}
+</div>
