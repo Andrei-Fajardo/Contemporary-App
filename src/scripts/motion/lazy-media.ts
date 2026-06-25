@@ -28,6 +28,18 @@ export function loadImage(img: HTMLImageElement): void {
   if (img.complete) onLoad();
 }
 
+/** Load images already visible or near the top of the viewport immediately. */
+export function loadVisibleLazyMedia(root: ParentNode = document): void {
+  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+
+  root.querySelectorAll<HTMLImageElement>(".lazy-media img[data-src]").forEach((img) => {
+    const rect = img.getBoundingClientRect();
+    if (rect.top < vh * 1.05 && rect.bottom > -vh * 0.1) {
+      loadImage(img);
+    }
+  });
+}
+
 export function initLazyMedia(): void {
   document.querySelectorAll<HTMLImageElement>(".lazy-media img[src]:not([data-src])").forEach((img) => {
     const wrap = img.closest(".lazy-media");
@@ -64,9 +76,12 @@ export function initLazyMedia(): void {
     if (!img.dataset.src) return;
     lazyObserver?.observe(img);
   });
+
+  loadVisibleLazyMedia();
 }
 
 /** Eagerly load lazy images inside a tab panel or other hidden container. */
 export function loadLazyMediaIn(root: ParentNode = document): void {
   root.querySelectorAll<HTMLImageElement>(".lazy-media img[data-src]").forEach(loadImage);
+  loadVisibleLazyMedia(root);
 }
