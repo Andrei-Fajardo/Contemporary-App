@@ -5,15 +5,16 @@ let depthTicking = false;
 let depthScrollHandler: (() => void) | null = null;
 
 function applyDepth(el: HTMLElement, focus: number): void {
+  if (el.classList.contains("art-piece") || el.closest(".exhibition-carousel")) {
+    return;
+  }
+
   const f = Math.max(0, Math.min(1, focus));
   el.style.setProperty("--depth-focus", f.toFixed(3));
   el.classList.toggle("is-focused", f >= 0.72);
 
-  if (el.classList.contains("art-piece")) {
-    el.style.opacity = String(0.32 + f * 0.68);
-  }
-
   el.querySelectorAll<HTMLImageElement>("img").forEach((img) => {
+    if (img.closest(".art-piece") || img.closest(".exhibition-carousel")) return;
     const wrap = img.closest(".lazy-media");
     const isReady = !wrap || wrap.classList.contains("is-loaded") || !img.dataset.src;
     if (!isReady) return;
@@ -76,4 +77,10 @@ export function resetDepthField(): void {
     depthScrollHandler = null;
   }
   depthBound = false;
+
+  document.querySelectorAll<HTMLImageElement>(".art-piece img, .exhibition-carousel img").forEach((img) => {
+    img.style.removeProperty("opacity");
+    img.style.removeProperty("filter");
+    img.style.removeProperty("-webkit-filter");
+  });
 }

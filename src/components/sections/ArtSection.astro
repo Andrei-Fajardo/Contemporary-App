@@ -18,7 +18,7 @@ const l = t[locale];
   </div>
 
   {artworks.map((p, i) => (
-    <article class="art-piece depth-target" data-popup-title={p.title}>
+    <article class="art-piece" data-popup-title={p.title}>
       <div class="section-shell section-shell--wide py-3 md:py-5 lg:py-6">
         <div class={`grid md:grid-cols-2 gap-6 lg:gap-10 xl:gap-12 items-start`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>

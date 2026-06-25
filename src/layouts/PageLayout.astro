@@ -79,12 +79,6 @@ const menuItems: { key: string; href: string; index: string }[] = [
     <title>{title} — {l.siteTitle}</title>
     <!-- tabular-v1: sidebar tabs, instant panel swap -->
     <ClientRouter />
-    <script is:inline>
-      (function () {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        document.documentElement.classList.add("motion-live");
-      })();
-    </script>
   </head>
   <body class="font-body antialiased visceral-editorial bg-[var(--canvas)] text-[var(--ink)]" data-layout="tabular">
     <!-- Film grain overlay -->
@@ -363,7 +357,6 @@ const menuItems: { key: string; href: string; index: string }[] = [
   }
 
   function bootPageScripts() {
-    document.documentElement.classList.add("motion-live");
     initDrawer();
     syncLangHrefs();
     syncLangToggle();

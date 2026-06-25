@@ -5,6 +5,14 @@
 
 import { loadLazyMediaIn } from "./motion/lazy-media";
 
+function clearArtImageFilters(): void {
+  document.querySelectorAll<HTMLImageElement>(".art-piece img, .exhibition-carousel img").forEach((img) => {
+    img.style.removeProperty("opacity");
+    img.style.removeProperty("filter");
+    img.style.removeProperty("-webkit-filter");
+  });
+}
+
 const VALID_TABS = [
   "about",
   "art",
@@ -64,6 +72,7 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
 
   const activePanel = root.querySelector<HTMLElement>(`[data-tab-panel="${tab}"]`);
   if (activePanel) loadLazyMediaIn(activePanel);
+  clearArtImageFilters();
 
   document.dispatchEvent(new CustomEvent("tabular:change", { detail: { tab } }));
 }

@@ -149,24 +149,26 @@ html.motion-live .lazy-media:not(.is-loaded):not(.lazy-media--fit) {
   min-height: 12rem;
 }
 
-/* --- Depth of field (scroll position, not hover) --- */
-html.motion-live .depth-target {
+/* --- Depth of field (scroll position, not hover) — disabled for artwork/exhibitions --- */
+html.motion-live .depth-target:not(.art-piece) {
   --depth-focus: 0;
   transition:
     opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
     filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html.motion-live .art-piece {
-  opacity: calc(0.42 + var(--depth-focus, 0) * 0.58);
+html.motion-live .art-piece,
+html.motion-live .art-piece .lazy-media.is-loaded img,
+html.motion-live .exhibition-carousel__slide img,
+html.motion-reduced .lazy-media img,
+body[data-layout="tabular"] .lazy-media img,
+body[data-layout="tabular"] .art-piece {
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-html.motion-live .art-piece.is-focused {
-  opacity: 1;
-}
-
-html.motion-live .lazy-media.is-loaded img,
-html.motion-live .art-piece .lazy-media.is-loaded img {
+html.motion-live .lazy-media.is-loaded img:not(.art-piece img),
+html.motion-live .depth-target:not(.art-piece) .lazy-media.is-loaded img {
   opacity: calc(0.5 + var(--depth-focus, 0) * 0.5);
   filter: blur(calc((1 - var(--depth-focus, 0)) * 10px));
   transition:
@@ -175,18 +177,14 @@ html.motion-live .art-piece .lazy-media.is-loaded img {
 }
 
 html.motion-live .lazy-media.is-loaded.is-focused img,
-html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
+html.motion-live .depth-target.is-focused .lazy-media.is-loaded img {
   opacity: 1;
   filter: blur(0);
 }
 
 @media (max-width: 1023px) {
-  html.motion-live .art-piece {
-    opacity: 1;
-  }
-
-  html.motion-live .lazy-media.is-loaded img,
-  html.motion-live .art-piece .lazy-media.is-loaded img {
+  html.motion-live .lazy-media.is-loaded img:not(.art-piece img),
+  html.motion-live .depth-target:not(.art-piece) .lazy-media.is-loaded img {
     opacity: calc(0.65 + var(--depth-focus, 0) * 0.35);
     filter: blur(calc((1 - var(--depth-focus, 0)) * 5px));
   }
