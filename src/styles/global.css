@@ -2,6 +2,7 @@
 @import "tailwindcss";
 @import "./motion.css";
 @import "./chaos.css";
+@import "./utero.css";
 
 /* Editorial typography — Forum (heads) + Inter (body) */
 :root {
@@ -614,11 +615,11 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   }
 
   .grain-overlay::before {
-    opacity: 0.018;
+    opacity: 0.035;
   }
 
   .grain-overlay::after {
-    opacity: 0.012;
+    opacity: 0.022;
   }
 
   .tabular-main,
@@ -632,16 +633,6 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     background-color: var(--canvas) !important;
     color: var(--ink) !important;
     color-scheme: light only;
-  }
-
-  .grain-overlay::before,
-  .grain-overlay::after {
-    opacity: 0.01;
-  }
-
-  /* Grain darkens the cream canvas on iOS; keep mobile flat and light */
-  .grain-overlay {
-    display: none;
   }
 
   /* Ensure touch targets are at least 44x44px */
@@ -716,15 +707,5 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     background-color: var(--canvas) !important;
     color: var(--ink) !important;
     color-scheme: light only;
-  }
-
-  .grain-overlay {
-    display: none !important;
-  }
-
-  .grain-overlay::before,
-  .grain-overlay::after {
-    mix-blend-mode: normal;
-    opacity: 0;
   }
 }
