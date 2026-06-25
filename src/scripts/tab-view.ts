@@ -49,6 +49,12 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
     panel.classList.toggle("is-active", on);
     panel.hidden = !on;
     panel.setAttribute("aria-hidden", on ? "false" : "true");
+
+    if (!on) {
+      panel.querySelectorAll<HTMLElement>(".scroll-reveal.is-visible").forEach((el) => {
+        el.classList.remove("is-visible");
+      });
+    }
   });
 
   setActiveNav(tab);

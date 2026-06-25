@@ -806,6 +806,43 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
     animation-range: entry 5% cover 40%;
   }
 
+  /* Cinematic mask reveal — container crops in, image scales (atomic.ie-style) */
+  .scroll-parallax-mask {
+    animation: scroll-mask-reveal cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+    will-change: clip-path, filter, opacity;
+  }
+
+  .scroll-parallax-container {
+    overflow: clip;
+  }
+
+  .scroll-parallax-image {
+    animation: scroll-image-scale cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+    will-change: transform;
+  }
+
+  .scroll-parallax-text {
+    animation: scroll-text-rise cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 45%;
+  }
+
+  .scroll-pop-in {
+    animation: scroll-pop-in cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 35%;
+  }
+
+  .hero-scroll-fade {
+    animation: hero-scroll-fade linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 100%;
+  }
+
   @keyframes view-parallax-y {
     from {
       transform: translate3d(0, 6%, 0) scale(1.04);
@@ -825,14 +862,76 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
       transform: translate3d(0, 0, 0);
     }
   }
+
+  @keyframes scroll-mask-reveal {
+    0% {
+      clip-path: inset(12% 12% 12% 12% round 6px);
+      filter: blur(6px);
+      opacity: 0.35;
+    }
+    100% {
+      clip-path: inset(0% 0% 0% 0% round 0px);
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scroll-image-scale {
+    0% {
+      transform: scale(1.18) translate3d(0, 28px, 0);
+    }
+    100% {
+      transform: scale(1) translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes scroll-text-rise {
+    0% {
+      transform: translate3d(0, 4rem, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scroll-pop-in {
+    0% {
+      transform: translate3d(0, 2.5rem, 0) scale(0.96);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes hero-scroll-fade {
+    from {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      opacity: 0.15;
+      transform: translate3d(0, -4rem, 0);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .view-parallax-media,
-  .view-reveal-fade {
+  .view-reveal-fade,
+  .scroll-parallax-mask,
+  .scroll-parallax-image,
+  .scroll-parallax-text,
+  .scroll-pop-in,
+  .hero-scroll-fade {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
   }
 }
 

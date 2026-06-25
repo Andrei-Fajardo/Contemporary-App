@@ -11,7 +11,7 @@ function lerp(current: number, target: number, factor: number): number {
   return current + (target - current) * factor;
 }
 
-function updateParallax(): void {
+export function updateParallax(): void {
   const layers = document.querySelectorAll<HTMLElement>(".parallax-layer, [data-parallax-speed]");
 
   layers.forEach((el) => {

@@ -30,17 +30,17 @@ const hasParallax = parallaxSpeed !== undefined && parallaxSpeed > 0;
     depthTarget && "depth-target",
     contain && "lazy-media--contain lazy-media--fit",
     eager && "is-loaded",
-    hasParallax && "lazy-media--parallax",
+    hasParallax && "lazy-media--parallax scroll-parallax-mask",
   ]}
   style={contain ? undefined : `--lazy-aspect: ${aspectRatio}`}
 >
   {hasParallax ? (
-    <div class="parallax-layer lazy-media__parallax" data-parallax-speed={parallaxSpeed}>
+    <div class="lazy-media__parallax scroll-parallax-container">
       {eager ? (
         <img
           src={src}
           alt={alt}
-          class={className}
+          class:list={["scroll-parallax-image", className]}
           decoding="async"
           fetchpriority="high"
         />
@@ -48,7 +48,7 @@ const hasParallax = parallaxSpeed !== undefined && parallaxSpeed > 0;
         <img
           data-src={src}
           alt={alt}
-          class={className}
+          class:list={["scroll-parallax-image", className]}
           decoding="async"
           loading="lazy"
         />

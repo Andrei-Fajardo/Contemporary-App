@@ -69,5 +69,4 @@ export function initLazyMedia(): void {
 /** Eagerly load lazy images inside a tab panel or other hidden container. */
 export function loadLazyMediaIn(root: ParentNode = document): void {
   root.querySelectorAll<HTMLImageElement>(".lazy-media img[data-src]").forEach(loadImage);
-  root.querySelectorAll<HTMLElement>(".scroll-reveal").forEach((el) => el.classList.add("is-visible"));
 }

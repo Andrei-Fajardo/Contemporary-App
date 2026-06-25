@@ -1,6 +1,6 @@
-import { initLazyMedia } from "./lazy-media";
-import { initParallax, resetParallax } from "./parallax";
-import { initScrollReveal } from "./scroll-reveal";
+import { initLazyMedia, loadLazyMediaIn } from "./lazy-media";
+import { initParallax, resetParallax, updateParallax } from "./parallax";
+import { initScrollReveal, refreshScrollReveal } from "./scroll-reveal";
 import { initScrollVelocity, resetScrollVelocity } from "./scroll-velocity";
 import { initAnchorNav, initScrollSpy, resetScrollSpy } from "./scroll-spy";
 import { initDepthField, resetDepthField, updateDepthField } from "./depth-field";
@@ -38,7 +38,7 @@ export function initMotion(): void {
   resetArtViewToggle();
   resetExhibitionFilter();
 
-  if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
+  if (prefersReducedMotion()) {
     document.documentElement.classList.add("motion-reduced");
     document.documentElement.classList.remove("motion-live");
     revealAllFallback();
@@ -68,4 +68,31 @@ export function initMotion(): void {
   initCursorTilt();
   initArtViewToggle();
   initExhibitionFilter();
+  bindTabularMotionRefresh();
+}
+
+function refreshMotionForActivePanel(): void {
+  if (prefersReducedMotion()) return;
+
+  const activePanel = document.querySelector<HTMLElement>(".tabular-panel.is-active");
+  if (activePanel) {
+    loadLazyMediaIn(activePanel);
+    refreshScrollReveal(activePanel);
+  } else {
+    refreshScrollReveal();
+  }
+
+  updateParallax();
+  updateDepthField();
+}
+
+let tabularMotionBound = false;
+
+function bindTabularMotionRefresh(): void {
+  if (tabularMotionBound) return;
+  tabularMotionBound = true;
+
+  document.addEventListener("tabular:change", () => {
+    refreshMotionForActivePanel();
+  });
 }

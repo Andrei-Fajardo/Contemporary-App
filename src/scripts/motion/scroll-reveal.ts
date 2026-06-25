@@ -15,9 +15,9 @@ function applyStaggerDelay(el: HTMLElement): void {
   }
 }
 
-export function initScrollReveal(): void {
+export function initScrollReveal(root: ParentNode = document): void {
   resetStagger();
-  const targets = document.querySelectorAll<HTMLElement>(".scroll-reveal");
+  const targets = root.querySelectorAll<HTMLElement>(".scroll-reveal");
   if (!targets.length) return;
 
   if (!("IntersectionObserver" in window)) {
@@ -51,4 +51,18 @@ export function initScrollReveal(): void {
     }
     revealObserver?.observe(el);
   });
+}
+
+/** Re-observe scroll reveals inside a panel after tab switch or dynamic content change. */
+export function refreshScrollReveal(root: ParentNode = document): void {
+  resetStagger();
+
+  root.querySelectorAll<HTMLElement>(".scroll-reveal.is-visible").forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top >= window.innerHeight * 0.94 || rect.bottom <= 0) {
+      el.classList.remove("is-visible");
+    }
+  });
+
+  initScrollReveal(root);
 }
