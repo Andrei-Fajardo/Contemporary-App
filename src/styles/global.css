@@ -14,7 +14,7 @@
   --font-editorial: "Libre Baskerville", Georgia, serif;
   --font-heading: "Forum", Georgia, "Times New Roman", serif;
   --font-subheading: "Forum", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Caudex", Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
   --heading-track: 0.1em;
 
@@ -23,9 +23,10 @@
   --font-serif: var(--font-body);
   --font-sans: var(--font-body);
 
-  /* color.canvas / color.ink — ux-guidelines.md */
-  --canvas: #F0EEE9;
-  --ink: #111111;
+  /* Pantone 11-4201 TCX Cloud Dancer — site canvas */
+  --pantone-11-4201: #F0EEE9;
+  --canvas: var(--pantone-11-4201);
+  --ink: #0a0a0a;
   --ink-muted: #555555;
   --ink-tertiary: #888888;
   --ink-inverse: #ffffff;
@@ -83,27 +84,27 @@ html {
   z-index: 9999;
 }
 
-/* Layer 1: Micro-Dark Grit — ultra-subtle so the paper tone stays clean */
+/* Layer 1: 35mm film grain — micro-dark grit on Cloud Dancer */
 .grain-overlay::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image: url('/grain.gif');
   background-repeat: repeat;
-  background-size: auto;
-  opacity: 0.03;
+  background-size: 200px auto;
+  opacity: 0.055;
   mix-blend-mode: multiply;
 }
 
-/* Layer 2: Soft Micro-Highlighting */
+/* Layer 2: Soft highlight grain — lifts the paper tone */
 .grain-overlay::after {
   content: "";
   position: absolute;
   inset: 0;
   background-image: url('/grain.gif');
   background-repeat: repeat;
-  background-size: auto;
-  opacity: 0.02;
+  background-size: 280px auto;
+  opacity: 0.038;
   mix-blend-mode: overlay;
 }
 
@@ -597,11 +598,18 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   }
 
   .grain-overlay::before {
-    opacity: 0.018;
+    opacity: 0.032;
+    background-size: 220px auto;
   }
 
   .grain-overlay::after {
-    opacity: 0.012;
+    opacity: 0.022;
+    background-size: 300px auto;
+  }
+
+  /* Keep subtle film grain on mobile — lighter than desktop */
+  .grain-overlay {
+    display: block;
   }
 
   .tabular-main,
@@ -619,12 +627,11 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
   .grain-overlay::before,
   .grain-overlay::after {
-    opacity: 0.01;
+    opacity: 0.028;
   }
 
-  /* Grain darkens the cream canvas on iOS; keep mobile flat and light */
   .grain-overlay {
-    display: none;
+    display: block;
   }
 
   /* Ensure touch targets are at least 44x44px */
@@ -671,8 +678,8 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: light only;
-    --canvas: #f0eee9;
-    --ink: #111111;
+    --canvas: var(--pantone-11-4201);
+    --ink: #0a0a0a;
     --ink-muted: #555555;
     --ink-tertiary: #888888;
     --ink-inverse: #ffffff;

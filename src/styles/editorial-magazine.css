@@ -1,5 +1,4 @@
-/* Editorial Magazine — Print-for-the-Web design system
-   Constraints: --canvas (#F0EEE9) + grain.gif only. Everything else is new. */
+/* Editorial Magazine — Pantone 11-4201 Cloud Dancer + grain.gif */
 
 .editorial-magazine {
   --mag-display: clamp(3.5rem, 10vw, 8.5rem);
@@ -230,21 +229,28 @@
 .mag-hero__title-line--first {
   font-size: clamp(2.5rem, 7vw, 5.5rem);
   font-weight: 400;
+  letter-spacing: -0.03em;
 }
 
 .mag-hero__title-line--last {
-  font-size: var(--mag-display);
+  font-family: var(--font-handwriting);
+  font-size: clamp(2.85rem, 7.25vw, 6.5rem);
   font-weight: 400;
-  font-style: italic;
-  color: var(--ink-70);
-  margin-top: -0.05em;
+  font-style: normal;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--accent-red);
+  margin-top: 0.15em;
+  margin-left: 0.06em;
+  display: block;
 }
 
 .mag-hero__roles {
-  font-family: var(--font-body);
+  font-family: var(--font-editorial);
   font-size: var(--mag-lead);
+  font-style: italic;
   line-height: 1.45;
-  color: var(--ink-65);
+  color: var(--ink-60);
   margin: clamp(1rem, 2vh, 1.5rem) 0;
   max-width: 28ch;
 }
