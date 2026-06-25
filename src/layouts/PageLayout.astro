@@ -222,9 +222,9 @@ const menuItems: { key: string; href: string }[] = [
         </ul>
       </nav>
       <div class="mobile-drawer__footer px-5 py-5 border-t border-black/[0.08] mt-auto">
-        <span class="font-sans text-[10px] uppercase tracking-[0.25em] text-[#555] block mb-2">{l.basedIn}</span>
+        <span class="font-sans text-[11px] uppercase tracking-[0.25em] text-[#555] block mb-2">{l.basedIn}</span>
         <span class="font-sans text-xs text-[#555] font-medium tracking-wide block mb-5">{l.location}</span>
-        <span class="font-sans text-[10px] uppercase tracking-[0.25em] text-[#555] block mb-2">Language</span>
+        <span class="font-sans text-[11px] uppercase tracking-[0.25em] text-[#555] block mb-2">Language</span>
         <div id="lang-toggle-mobile" class="lang-toggle lang-toggle--drawer">
           {langList.map((lang) => (
             <button
@@ -249,7 +249,7 @@ const menuItems: { key: string; href: string }[] = [
             <h1 class="desktop-sidebar__title type-subheading text-2xl text-[#111] leading-[1.05] transition-opacity duration-300 group-hover:opacity-70">
               Anna Dauyl Rockswell
             </h1>
-            <span class="desktop-sidebar__subtitle type-heading text-[11px] text-[#555]/70 mt-2 block" set:html={l.subtitle} />
+            <span class="desktop-sidebar__subtitle type-heading text-[12px] text-[#555]/70 mt-2 block" set:html={l.subtitle} />
           </a>
         </div>
         <div class="desktop-sidebar__nav px-5 flex-1">
@@ -262,7 +262,7 @@ const menuItems: { key: string; href: string }[] = [
                   data-nav-key={item.key}
                   id={`nav-${item.key}`}
                   aria-current={item.key === "about" ? "true" : "false"}
-                  class="sidebar-nav-link group relative type-subheading text-[19px] py-2.5 block transition-colors duration-300 text-[#555]/80 hover:text-[#111]"
+                  class="sidebar-nav-link group relative type-subheading text-[22px] py-2.5 block transition-colors duration-300 text-[#555]/80 hover:text-[#111]"
                 >
                   <span class="sidebar-nav-label">{l.nav[navKey]}</span>
                 </a>
@@ -271,8 +271,8 @@ const menuItems: { key: string; href: string }[] = [
           </nav>
         </div>
         <div class="desktop-sidebar__footer px-5 py-8 mt-auto">
-          <span class="desktop-sidebar__footer-label font-sans text-[10px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
-          <span class="desktop-sidebar__footer-text font-sans text-[13px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
+          <span class="desktop-sidebar__footer-label font-sans text-[11px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
+          <span class="desktop-sidebar__footer-text font-sans text-[14px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
         </div>
       </div>
     </aside>

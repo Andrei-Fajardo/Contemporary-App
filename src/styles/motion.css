@@ -1178,8 +1178,8 @@ html {
 .lang-toggle--drawer .lang-btn {
   min-width: 0;
   width: 100%;
-  padding: 0.65rem 0.35rem;
-  font-size: 0.85rem;
+  padding: 0.7rem 0.4rem;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 1023px) {
@@ -1198,15 +1198,15 @@ html {
 }
 
 .lang-toggle--desktop .lang-btn {
-  min-width: 3.1rem;
-  padding: 0.8rem 1.05rem;
-  font-size: 0.95rem;
+  min-width: 3.35rem;
+  padding: 0.85rem 1.1rem;
+  font-size: 1rem;
 }
 
 .lang-toggle--mobile .lang-btn {
-  min-width: 2.5rem;
-  padding: 0.65rem 0.75rem;
-  font-size: 0.85rem;
+  min-width: 2.65rem;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.9rem;
 }
 
 .lang-btn__label {
