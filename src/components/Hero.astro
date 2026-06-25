@@ -11,9 +11,9 @@ const l = t[locale];
 const homePath = locale === 'en' ? '/' : `/${locale}`;
 ---
 
-<section id="home" class="mag-hero scroll-section utero-layered">
+<section id="home" class="mag-hero mag-hero--text scroll-section utero-layered">
   <div class="mag-shell">
-    <div class="mag-hero__grid">
+    <div class="mag-hero__grid mag-hero__grid--solo">
       <div class="mag-hero__copy">
         <p class="mag-hero__tagline scroll-reveal">{l.heroTagline}</p>
 
@@ -43,21 +43,6 @@ const homePath = locale === 'en' ? '/' : `/${locale}`;
             <dd>{exhibitionEntries.length}+</dd>
           </div>
         </dl>
-      </div>
-
-      <div class="mag-hero__visual scroll-reveal">
-        <span class="mag-hero__issue" aria-hidden="true">Vol. I · 2026</span>
-        <figure class="mag-hero__frame">
-          <img
-            src="/media/souls-and-leavings.jpg"
-            alt="Souls & Leavings — mixed media on canvas"
-            width="640"
-            height="800"
-            fetchpriority="high"
-            decoding="async"
-          />
-          <figcaption>{l.heroFeaturedCaption}</figcaption>
-        </figure>
       </div>
     </div>
   </div>

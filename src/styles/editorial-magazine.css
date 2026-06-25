@@ -189,10 +189,24 @@
   align-items: center;
 }
 
+.mag-hero__grid--solo {
+  grid-template-columns: 1fr;
+  max-width: 42rem;
+}
+
+.mag-hero--text {
+  min-height: min(72dvh, 40rem);
+}
+
 @media (min-width: 900px) {
   .mag-hero__grid {
     grid-template-columns: 1.05fr 0.95fr;
     gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .mag-hero__grid--solo {
+    grid-template-columns: 1fr;
+    max-width: 44rem;
   }
 }
 
@@ -316,12 +330,14 @@
 .mag-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   font-family: var(--font-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
+  font-size: clamp(0.6875rem, 0.45vw + 0.55rem, 0.8125rem);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 0.85rem 1.5rem;
+  min-height: 3rem;
+  padding: 0.9rem 1.75rem;
   border: 1px solid var(--ink);
   color: var(--ink);
   background: transparent;
