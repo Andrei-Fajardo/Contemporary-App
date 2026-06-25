@@ -6,7 +6,7 @@
 
 /* Editorial typography — Forum / Playfair / Caudex / Libre Baskerville + cursive name */
 :root {
-  color-scheme: dark;
+  color-scheme: light only;
   --font-cursive: "Great Vibes", "Segoe Script", cursive;
   --font-display: "Playfair Display", "Bodoni MT", Georgia, serif;
   --font-editorial: "Libre Baskerville", Georgia, serif;
@@ -21,28 +21,28 @@
   --font-serif: var(--font-body);
   --font-sans: var(--font-body);
 
-  /* Dark grainy canvas — From Utero reference */
-  --canvas: #141210;
-  --ink: #e8e4dc;
-  --ink-muted: #a8a4a0;
-  --ink-tertiary: #7a7672;
-  --ink-inverse: #141210;
-  --ink-90: rgba(232, 228, 220, 0.9);
-  --ink-75: rgba(232, 228, 220, 0.75);
-  --ink-70: rgba(232, 228, 220, 0.7);
-  --ink-60: rgba(232, 228, 220, 0.6);
-  --ink-55: rgba(232, 228, 220, 0.55);
-  --ink-65: rgba(232, 228, 220, 0.65);
-  --ink-50: rgba(232, 228, 220, 0.5);
-  --ink-45: rgba(232, 228, 220, 0.45);
-  --ink-35: rgba(232, 228, 220, 0.35);
-  --ink-25: rgba(232, 228, 220, 0.25);
+  /* Warm editorial canvas — dark ink splashes via .utero-layered, not full dark mode */
+  --canvas: #f0eee9;
+  --ink: #111111;
+  --ink-muted: #555555;
+  --ink-tertiary: #888888;
+  --ink-inverse: #ffffff;
+  --ink-90: rgba(17, 17, 17, 0.9);
+  --ink-75: rgba(17, 17, 17, 0.75);
+  --ink-70: rgba(17, 17, 17, 0.7);
+  --ink-60: rgba(17, 17, 17, 0.6);
+  --ink-55: rgba(17, 17, 17, 0.55);
+  --ink-65: rgba(17, 17, 17, 0.65);
+  --ink-50: rgba(17, 17, 17, 0.5);
+  --ink-45: rgba(17, 17, 17, 0.45);
+  --ink-35: rgba(17, 17, 17, 0.35);
+  --ink-25: rgba(17, 17, 17, 0.25);
 
-  --border-subtle: rgba(232, 228, 220, 0.12);
-  --border-section: rgba(232, 228, 220, 0.22);
-  --border-sidebar: rgba(232, 228, 220, 0.08);
-  --surface-placeholder: rgba(232, 228, 220, 0.04);
-  --surface-hero-frame: rgba(232, 228, 220, 0.03);
+  --border-subtle: rgba(17, 17, 17, 0.1);
+  --border-section: rgba(17, 17, 17, 0.2);
+  --border-sidebar: rgba(0, 0, 0, 0.06);
+  --surface-placeholder: rgba(0, 0, 0, 0.04);
+  --surface-hero-frame: rgba(0, 0, 0, 0.03);
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   --radius-default: 0.25rem;
@@ -53,7 +53,7 @@
 body {
   background-color: var(--canvas) !important;
   color: var(--ink) !important;
-  color-scheme: dark;
+  color-scheme: light only;
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
@@ -62,7 +62,7 @@ html {
   margin: 0;
   padding: 0;
   background-color: var(--canvas);
-  color-scheme: dark;
+  color-scheme: light only;
 }
 
 /* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
