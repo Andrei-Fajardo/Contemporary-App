@@ -1,4 +1,28 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 export type ExhibitionCategory = 'physical' | 'digital' | 'magazine';
+
+const IMAGE_EXT = /\.(jpe?g|png|webp|gif)$/i;
+
+/** Build a URL-safe /media/... path (encodes spaces and special chars). */
+function mediaUrl(...segments: string[]): string {
+  return `/media/${segments.map((segment) => encodeURIComponent(segment)).join('/')}`;
+}
+
+/** Read image filenames from a folder under public/media at build time. */
+function imagesFromMediaFolder(...folderSegments: string[]): string[] {
+  const dir = path.join(process.cwd(), 'public', 'media', ...folderSegments);
+  if (!fs.existsSync(dir)) return [];
+
+  return fs
+    .readdirSync(dir)
+    .filter((file) => IMAGE_EXT.test(file))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+    .map((file) => mediaUrl(...folderSegments, file));
+}
+
+const hechyeomoyeoMexicoImages = imagesFromMediaFolder('Hechyeomoyeo Mexico');
 
 export interface ExhibitionEntry {
   id: string;
@@ -76,13 +100,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Tnumbra Gallery',
     place: 'Mexicali, Mexico',
     category: 'physical',
-    images: [
-      '/media/exhibitions/hech-mexico-1.jpg',
-      '/media/exhibitions/hech-mexico-2.jpg',
-      '/media/exhibitions/hech-mexico-3.jpg',
-      '/media/exhibitions/hech-mexico-4.jpg',
-      '/media/exhibitions/hech-mexico-5.jpg',
-    ],
+    images: hechyeomoyeoMexicoImages,
   },
   {
     id: 'im-insa',
