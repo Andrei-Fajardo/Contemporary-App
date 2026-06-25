@@ -7,6 +7,16 @@ export const siteCopy = {
     roles: "Writer, Ghostwriter, Painter, Visual Artist",
     motto: "I express therefore I am.",
     basedIn: "Writer & Artist based in Seoul and Almaty",
+    marginalia: [
+      {
+        text: "Anna's works are darkly, violently feminine. Her poetry does not shy away from transgression, and will leave readers unsettled and thinking long after the read.",
+        author: "Kyeyoung Lee",
+      },
+      {
+        text: "An Edgar Allan Poe born in the 21st century armed with feminine rage. She is truly a mind that will delightfully horrify you with her dissection of the physical world, of the metaphysical world, of herself, and of the reader.",
+        author: "Jane Lee",
+      },
+    ],
   },
   about: {
     literaryGhosts: [

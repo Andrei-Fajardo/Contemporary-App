@@ -1,5 +1,6 @@
 ---
 import MediaPopup from '../MediaPopup.astro';
+import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { artworks } from '../../data/artworks';
 
@@ -12,11 +13,8 @@ const l = t[locale];
 ---
 
 <section id="art" class="scroll-section section-gap art-section--unified utero-layered" data-art-section>
-  <div class="section-shell section-shell--wide mb-10 md:mb-14">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.artTag}</p>
-    <h2 class="scroll-reveal type-display text-3xl md:text-5xl lg:text-6xl text-ink section-title-mark">
-      {l.nav.art}
-    </h2>
+  <div class="section-shell section-shell--wide mb-6 md:mb-8">
+    <ManuscriptSectionHeader num="II" eyebrow={l.artTag} title={l.nav.art} />
 
     <div class="art-view-toggle scroll-reveal" role="group" aria-label="Art layout view">
       <button type="button" class="art-view-toggle__btn" data-art-view="separated">
@@ -30,7 +28,7 @@ const l = t[locale];
 
   {artworks.map((p, i) => (
     <article class="art-piece depth-target" data-popup-title={p.title}>
-      <div class="section-shell section-shell--wide py-8 md:py-12 lg:py-14">
+      <div class="section-shell section-shell--wide py-5 md:py-8 lg:py-10">
         <div class={`grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-start`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
             <MediaPopup

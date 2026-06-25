@@ -1,4 +1,5 @@
 ---
+import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { siteCopy } from '../../data/site-copy';
 
@@ -10,14 +11,16 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="contacts" class="scroll-section section-gap contacts-chaos">
+<section id="contacts" class="scroll-section section-gap contacts-chaos section-inverted section-inverted--blood">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.contactTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-12 md:mb-16 chaos-title-mark">
-      {l.contactHeading}
-    </h2>
+    <ManuscriptSectionHeader
+      num="VII"
+      eyebrow={l.contactTag}
+      title={l.contactHeading}
+      titleClass="type-heading text-2xl md:text-4xl lg:text-[2.75rem] text-[var(--canvas)] chaos-title-mark"
+    />
 
-    <div class="grid md:grid-cols-2 gap-14 md:gap-20 lg:gap-24">
+    <div class="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-14">
       <div class="scroll-reveal space-y-10">
         <div>
           <span class="section-divider-label section-eyebrow--blood block mb-3">{l.email}</span>

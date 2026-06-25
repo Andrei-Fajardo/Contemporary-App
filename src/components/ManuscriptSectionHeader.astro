@@ -1,0 +1,18 @@
+---
+interface Props {
+  num: string;
+  eyebrow: string;
+  title: string;
+  titleClass?: string;
+}
+
+const { num, eyebrow, title, titleClass = 'type-display text-2xl md:text-4xl lg:text-[2.75rem] text-ink section-title-mark' } = Astro.props;
+---
+
+<header class="scroll-reveal manuscript-section-header">
+  <span class="manuscript-section-header__num" aria-hidden="true">{num}</span>
+  <div class="manuscript-section-header__body">
+    <p class="section-eyebrow section-eyebrow--blood">{eyebrow}</p>
+    <h2 class={titleClass}>{title}</h2>
+  </div>
+</header>

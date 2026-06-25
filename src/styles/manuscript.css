@@ -1,0 +1,432 @@
+/* From Utero — chapbook manuscript aesthetic */
+
+.from-utero {
+  --canvas: #e4ddd0;
+  --canvas-stain: #d9cfc0;
+  --ink: #14100c;
+  --ink-muted: #4a4038;
+  --ink-75: rgba(20, 16, 12, 0.78);
+  --ink-70: rgba(20, 16, 12, 0.72);
+  --ink-65: rgba(20, 16, 12, 0.65);
+  --ink-55: rgba(20, 16, 12, 0.55);
+  --ink-50: rgba(20, 16, 12, 0.5);
+  --ink-45: rgba(20, 16, 12, 0.45);
+  --border-subtle: rgba(20, 16, 12, 0.12);
+  --border-section: rgba(20, 16, 12, 0.22);
+  --utero-splash: rgba(20, 12, 10, 0.11);
+  --utero-ink-wash: rgba(20, 12, 10, 0.06);
+  --utero-layer: rgba(30, 18, 14, 0.08);
+  --section-gap-y: clamp(1.25rem, 2.5vw, 2rem);
+  --body-tight: 1.48;
+  --heading-tight: 1.02;
+}
+
+.from-utero .grain-overlay::before {
+  opacity: 0.055;
+}
+
+.from-utero .grain-overlay::after {
+  opacity: 0.035;
+}
+
+.from-utero .grain-overlay {
+  display: block;
+}
+
+.from-utero .utero-layered::before {
+  opacity: 0.85;
+  background:
+    radial-gradient(ellipse 48% 32% at 4% 12%, rgba(196, 30, 58, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 28% at 96% 88%, var(--utero-splash) 0%, transparent 68%),
+    radial-gradient(ellipse 55% 40% at 50% 100%, var(--utero-ink-wash) 0%, transparent 75%),
+    linear-gradient(180deg, transparent 40%, var(--utero-layer) 100%);
+}
+
+/* --- Chapbook cover --- */
+.manuscript-cover {
+  min-height: auto !important;
+  border-bottom: 2px solid var(--border-section);
+}
+
+.manuscript-cover__frame {
+  position: relative;
+  border-left: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  background:
+    linear-gradient(90deg, var(--canvas-stain) 0%, transparent 3%, transparent 97%, var(--canvas-stain) 100%);
+  overflow: hidden;
+}
+
+.manuscript-cover .hero-editorial {
+  grid-template-columns: minmax(0, 1.1fr) minmax(11rem, 0.42fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+  padding: clamp(1.5rem, 3vh, 2.5rem) clamp(1rem, 3vw, 2rem) clamp(1.75rem, 3vh, 2.75rem);
+  max-width: min(72rem, calc(100vw - clamp(1rem, 3vw, 2rem)));
+}
+
+.manuscript-label {
+  font-family: var(--font-heading);
+  font-size: clamp(0.5625rem, 0.45vw + 0.38rem, 0.6875rem);
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--accent-red-label);
+  margin: 0 0 0.65rem;
+}
+
+.manuscript-masthead {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6.5vw, 4.25rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: var(--heading-tight);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 0.35rem;
+}
+
+.manuscript-epigraph {
+  font-family: var(--font-editorial);
+  font-size: clamp(0.8125rem, 0.9vw + 0.55rem, 0.9375rem);
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-55);
+  margin: 0 0 1rem;
+  max-width: 38ch;
+}
+
+.manuscript-epigraph__latin {
+  font-style: normal;
+  font-size: 0.92em;
+  color: var(--ink-45);
+}
+
+.manuscript-cover .brutal-rule--short {
+  margin-bottom: 1rem;
+}
+
+.manuscript-cover .hero-editorial__tagline {
+  margin-bottom: 0.75rem;
+}
+
+.manuscript-cover .hero-editorial__name {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  margin-bottom: 0.25em;
+}
+
+.manuscript-cover .hero-editorial__roles {
+  margin-top: 0.35rem;
+  margin-bottom: 0.85rem;
+  max-width: none;
+  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+}
+
+.manuscript-cover .hero-editorial__motto {
+  margin-bottom: 0.85rem;
+  font-family: var(--font-editorial);
+  font-size: clamp(0.9375rem, 1vw, 1.0625rem);
+}
+
+.manuscript-cover .hero-editorial__based {
+  margin-bottom: 0.5rem;
+}
+
+.manuscript-cover .hero-editorial__desc {
+  max-width: 52ch;
+  line-height: var(--body-tight);
+}
+
+/* Marginalia column — chapbook blurbs */
+.manuscript-marginalia {
+  border-left: 1px solid var(--border-subtle);
+  padding-left: clamp(0.85rem, 2vw, 1.25rem);
+  padding-top: 0.25rem;
+}
+
+.manuscript-marginalia__label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent-red-label);
+  margin-bottom: 0.75rem;
+}
+
+.manuscript-pullquote {
+  font-family: var(--font-editorial);
+  font-size: clamp(0.8125rem, 0.75vw + 0.55rem, 0.9375rem);
+  font-style: italic;
+  line-height: 1.58;
+  color: var(--ink-65);
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: none;
+}
+
+.manuscript-pullquote cite {
+  display: block;
+  margin-top: 0.65rem;
+  font-family: var(--font-heading);
+  font-size: 0.5625rem;
+  font-style: normal;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.manuscript-page-mark {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-45);
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* --- TOC sidebar --- */
+.from-utero .desktop-sidebar {
+  width: 14rem;
+  background: linear-gradient(180deg, var(--canvas-stain) 0%, var(--canvas) 18%, var(--canvas) 100%);
+  border-right: 1px solid var(--border-section);
+}
+
+.from-utero .site-main-column {
+  padding-left: 14rem;
+}
+
+.from-utero .desktop-sidebar__title {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.15;
+}
+
+.from-utero .sidebar-nav-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  padding-block: 0.45rem;
+}
+
+.from-utero .sidebar-nav-index {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--accent-red-label);
+  min-width: 1.1rem;
+  flex-shrink: 0;
+}
+
+.from-utero .sidebar-nav-label {
+  flex: 0 1 auto;
+}
+
+.from-utero .sidebar-nav-leader {
+  flex: 1 1 auto;
+  min-width: 0.5rem;
+  border-bottom: 1px dotted var(--ink-25);
+  margin: 0 0.25rem;
+  transform: translateY(-0.2em);
+}
+
+.from-utero .sidebar-nav-link.nav-link--active {
+  color: var(--accent-red) !important;
+}
+
+.from-utero .sidebar-nav-link.nav-link--active .sidebar-nav-leader {
+  border-bottom-color: rgba(196, 30, 58, 0.35);
+}
+
+/* --- Section manuscript headers --- */
+.manuscript-section-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem 1.25rem;
+  align-items: end;
+  margin-bottom: clamp(0.85rem, 2vw, 1.25rem);
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-section);
+}
+
+.manuscript-section-header__num {
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1;
+  color: var(--accent-red-label);
+  opacity: 0.85;
+}
+
+.manuscript-section-header__body {
+  min-width: 0;
+}
+
+.manuscript-section-header .section-eyebrow {
+  margin-bottom: 0.35rem;
+}
+
+.manuscript-section-header h2 {
+  margin: 0;
+}
+
+/* --- Dense editorial rhythm --- */
+.from-utero .section-gap {
+  padding-block: var(--section-gap-y);
+}
+
+.from-utero .section-shell,
+.from-utero .section-shell--wide {
+  max-width: min(68rem, calc(100vw - clamp(1rem, 3vw, 2rem)));
+  padding-inline: clamp(0.85rem, 2.5vw, 1.75rem);
+}
+
+.from-utero .scroll-section {
+  border-bottom: 1px solid var(--border-section);
+}
+
+.from-utero .content-prose {
+  line-height: var(--body-tight);
+  font-size: clamp(0.9375rem, 0.65vw + 0.62rem, 1.0625rem);
+}
+
+.from-utero .section-eyebrow {
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.34em;
+}
+
+/* --- Testimonial / dark inset --- */
+.manuscript-inset {
+  margin: clamp(1rem, 2.5vw, 1.5rem) 0;
+  padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1rem, 3vw, 1.5rem);
+  background: var(--ink);
+  color: var(--canvas);
+  border-left: 3px solid var(--accent-red);
+  position: relative;
+}
+
+.manuscript-inset p {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(0.875rem, 0.8vw + 0.55rem, 1rem);
+  line-height: 1.58;
+  color: rgba(228, 221, 208, 0.88);
+  margin: 0;
+}
+
+.manuscript-inset cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 0.5625rem;
+  font-style: normal;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(228, 221, 208, 0.45);
+}
+
+/* --- TOC-style accordion rows --- */
+.from-utero .exhibition-accordion__summary {
+  padding-block: 0.85rem;
+  border-bottom: 1px dotted var(--border-subtle);
+  border-radius: 0;
+  margin-inline: 0;
+}
+
+.from-utero .exhibition-accordion__title {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.from-utero .editorial-link-list li {
+  padding-block: 0.65rem;
+}
+
+.from-utero .editorial-link-list a {
+  font-size: clamp(0.9375rem, 0.65vw + 0.6rem, 1.0625rem);
+}
+
+.from-utero .about-chaos__list {
+  gap: 0.35rem 0.5rem;
+}
+
+.from-utero .about-chaos__list li {
+  font-size: 0.8125rem;
+  padding: 0.3rem 0.65rem;
+  border-color: var(--border-section);
+}
+
+.from-utero .site-footer,
+.from-utero footer {
+  padding-block: clamp(1.25rem, 3vw, 1.75rem) !important;
+}
+
+.section-inverted .manuscript-section-header {
+  border-bottom-color: rgba(228, 221, 208, 0.15);
+}
+
+.section-inverted .manuscript-section-header__num {
+  color: var(--accent-red-bright);
+}
+
+.section-inverted .section-eyebrow {
+  color: rgba(228, 221, 208, 0.45);
+}
+
+.section-inverted .chaos-title-mark::after {
+  background: var(--accent-red-bright);
+}
+
+/* Red ink blots — static, not animated petals */
+.manuscript-cover__frame::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  right: 8%;
+  width: clamp(2.5rem, 6vw, 4.5rem);
+  height: clamp(1.75rem, 4vw, 3rem);
+  background: var(--accent-red);
+  opacity: 0.12;
+  border-radius: 48% 52% 60% 40%;
+  filter: blur(0.5px);
+  transform: rotate(-18deg);
+  pointer-events: none;
+}
+
+.manuscript-cover__frame::before {
+  content: "";
+  position: absolute;
+  bottom: 18%;
+  left: 6%;
+  width: clamp(1.25rem, 3vw, 2rem);
+  height: clamp(0.75rem, 2vw, 1.25rem);
+  background: var(--accent-red-bright);
+  opacity: 0.1;
+  border-radius: 40% 60% 55% 45%;
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .manuscript-cover .hero-editorial {
+    grid-template-columns: 1fr;
+  }
+
+  .manuscript-marginalia {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+    padding-left: 0;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .from-utero .site-main-column {
+    padding-left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .from-utero .site-topbar {
+    left: 14rem;
+  }
+}

@@ -1,5 +1,6 @@
 ---
 import EducationTimeline from '../EducationTimeline.astro';
+import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { siteCopy } from '../../data/site-copy';
 
@@ -13,19 +14,24 @@ const l = t[locale];
 
 <section id="about" class="scroll-section section-gap about-chaos utero-layered">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.aboutTag}</p>
+    <ManuscriptSectionHeader num="I" eyebrow={l.aboutTag} title="Biography" />
 
     <div class="about-chaos__body">
       <div class="scroll-reveal about-chaos__intro">
-        <p class="content-prose--sans text-ink-55 mb-6">{l.intro}</p>
-        <div class="content-prose space-y-5">
+        <p class="content-prose--sans text-ink-55 mb-4">{l.intro}</p>
+        <div class="content-prose space-y-4">
           <p>{l.bio}</p>
         </div>
       </div>
 
+      <figure class="scroll-reveal manuscript-inset">
+        <p>{siteCopy.hero.marginalia[0].text}</p>
+        <cite>— {siteCopy.hero.marginalia[0].author}</cite>
+      </figure>
+
       <div class="scroll-reveal about-chaos__meta">
         <div>
-          <p class="section-eyebrow section-eyebrow--blood mb-4">{l.interestsLabel}</p>
+          <p class="section-eyebrow section-eyebrow--blood mb-3">{l.interestsLabel}</p>
           <ul class="about-chaos__list">
             {siteCopy.about.interests.map((item) => (
               <li>{item}</li>

@@ -4,6 +4,7 @@
 @import "./motion.css";
 @import "./chaos.css";
 @import "./utero.css";
+@import "./manuscript.css";
 
 /* Editorial typography — Forum / Playfair / Caudex / Libre Baskerville + cursive name */
 :root {
@@ -23,9 +24,10 @@
   --font-serif: var(--font-body);
   --font-sans: var(--font-body);
 
-  /* Warm editorial canvas — dark ink splashes via .utero-layered, not full dark mode */
-  --canvas: #f0eee9;
-  --ink: #111111;
+  /* Warm parchment canvas — From Utero manuscript overrides in manuscript.css */
+  --canvas: #e4ddd0;
+  --canvas-stain: #d9cfc0;
+  --ink: #14100c;
   --ink-muted: #555555;
   --ink-tertiary: #888888;
   --ink-inverse: #ffffff;

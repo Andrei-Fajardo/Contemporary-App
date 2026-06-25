@@ -1,5 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
+import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { researchList } from '../../data/content';
 
@@ -13,10 +14,7 @@ const l = t[locale];
 
 <section id="research" class="scroll-section section-gap utero-layered">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.academicTag}</p>
-    <h2 class="scroll-reveal type-display text-3xl md:text-5xl lg:text-6xl text-ink mb-6">
-      {l.academicHeading}
-    </h2>
+    <ManuscriptSectionHeader num="V" eyebrow={l.academicTag} title={l.academicHeading} />
     <EditorialLinkList items={researchList} emptyMessage={l.listForthcoming} />
   </div>
 </section>
