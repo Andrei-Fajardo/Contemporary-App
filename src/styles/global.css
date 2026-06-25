@@ -45,6 +45,9 @@
   --radius-default: 0.25rem;
   --radius-lang-toggle: 0.35rem;
   --radius-lang-btn: 0.2rem;
+
+  /* Global type scale — bumps all rem-based typography */
+  --type-scale: 1.125;
 }
 
 /* Warm editorial canvas background */
@@ -61,6 +64,7 @@ html {
   padding: 0;
   background-color: var(--canvas);
   color-scheme: light only;
+  font-size: calc(16px * var(--type-scale));
 }
 
 /* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
