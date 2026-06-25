@@ -1,0 +1,75 @@
+---
+import { t, type LocaleKey } from '../data/translations';
+import { exhibitionEntries } from '../data/content';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+---
+
+<section id="home" class="mag-hero mag-hero--text scroll-section utero-layered">
+  <div class="mag-shell">
+    <div class="mag-hero__grid mag-hero__grid--solo">
+      <div class="mag-hero__copy">
+        <p class="mag-hero__tagline scroll-reveal">{l.heroTagline}</p>
+
+        <h1 class="scroll-reveal">
+          <span class="mag-hero__title-line mag-hero__title-line--first">{l.heroFirstName}</span>
+          <span class="mag-hero__title-line mag-hero__title-line--last font-cursive">{l.heroLastName}</span>
+        </h1>
+
+        <p class="mag-hero__roles scroll-reveal">{l.heroRoles}</p>
+
+        <p class="mag-hero__motto scroll-reveal">
+          {l.heroMottoLead}<em>{l.heroMottoEmphasis}</em>
+        </p>
+
+        <div class="mag-hero__actions scroll-reveal">
+          <a href={`${homePath}#art`} data-nav-key="art" class="mag-btn mag-btn--fill">
+            {l.heroCtaArt}
+          </a>
+          <a href={`${homePath}#contacts`} data-nav-key="contacts" class="mag-btn">
+            {l.heroCtaContact}
+          </a>
+        </div>
+
+        <dl class="mag-hero__stats scroll-reveal">
+          <div class="mag-hero__stat">
+            <dt>{l.heroStatExhibitions}</dt>
+            <dd>{exhibitionEntries.length}+</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mag-hero__stats {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .mag-hero__stat dt {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+    margin-bottom: 0.25rem;
+  }
+
+  .mag-hero__stat dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--ink);
+  }
+</style>

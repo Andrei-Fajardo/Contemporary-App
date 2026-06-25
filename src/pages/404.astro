@@ -1,0 +1,18 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { t } from '../data/translations';
+---
+
+<PageLayout title="404">
+  <section slot="content" class="mag-404">
+    <div class="mag-404__inner">
+      <p class="mag-section-header__eyebrow">{t.en.notFoundEyebrow}</p>
+      <h1 class="mag-404__code">4<span>0</span>4</h1>
+      <p class="mag-404__body">{t.en.notFoundBody}</p>
+      <div class="mag-hero__actions" style="justify-content: center;">
+        <a href="/" class="mag-btn mag-btn--fill">{t.en.notFoundCta}</a>
+        <a href="/#art" class="mag-btn">{t.en.notFoundAlt}</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>

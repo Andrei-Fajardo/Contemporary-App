@@ -1,61 +1,415 @@
 ---
 import '../styles/global.css';
-import Sidebar from '../components/Sidebar.astro';
+import { ClientRouter } from 'astro:transitions';
+import SiteFooter from '../components/SiteFooter.astro';
+import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
 
 export interface Props {
   title: string;
-  activeSection: string;
+  activeSection?: string;
+  locale?: LocaleKey;
 }
 
-const { title, activeSection } = Astro.props;
+const { title, activeSection = '', locale = 'en' } = Astro.props;
+const l = t[locale];
+const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
+
+// Derive active language from URL pathname — reliable across all routes and ClientRouter
+const pathSeg = Astro.url.pathname.split('/')[1];
+const activeLang = pathSeg && langList.includes(pathSeg as Lang) ? (pathSeg as Lang) : 'en';
+
+function isActiveLang(lang: string): boolean {
+  if (lang === 'en') return activeLang === 'en';
+  return activeLang === lang;
+}
+
+const homePath = locale === 'en' ? '/' : `/${locale}`;
+
+const menuItems: { key: string; href: string; index: string }[] = [
+  { key: "about", href: `${homePath}#about`, index: "I" },
+  { key: "art", href: `${homePath}#art`, index: "II" },
+  { key: "exhibitions", href: `${homePath}#exhibitions`, index: "III" },
+  { key: "publications", href: `${homePath}#publications`, index: "IV" },
+  { key: "research", href: `${homePath}#research`, index: "V" },
+  { key: "press", href: `${homePath}#press`, index: "VI" },
+  { key: "contacts", href: `${homePath}#contacts`, index: "VII" },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={l.lang} class="editorial-magazine" style="color-scheme: light only; background-color: #F0EEE9;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="supported-color-schemes" content="light" />
+    <meta name="theme-color" content="#F0EEE9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#F0EEE9" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <style is:inline>
+      html {
+        color-scheme: light only;
+        background-color: #f0eee9;
+      }
+      body {
+        background-color: #f0eee9 !important;
+        color: #111 !important;
+        color-scheme: light only;
+      }
+      @media (prefers-color-scheme: dark) {
+        html,
+        body,
+        .site-shell,
+        .site-main-column,
+        .tabular-main,
+        .tabular-view,
+        .tabular-panel,
+        #mobile-drawer,
+        .mobile-drawer__footer,
+        header.site-topbar,
+        .desktop-sidebar,
+        .desktop-sidebar__inner {
+          background-color: #f0eee9 !important;
+          color: #111 !important;
+          color-scheme: light only;
+        }
+        .grain-overlay {
+          display: none !important;
+        }
+      }
+    </style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} — Anna Dauyl Rockswell</title>
+    <title>{title} — {l.siteTitle}</title>
+    <!-- tabular-v1: sidebar tabs, instant panel swap -->
+    <ClientRouter />
+    <script is:inline>
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        document.documentElement.classList.add("motion-live");
+      })();
+    </script>
   </head>
-  <body class="font-sans text-neutral-800 antialiased">
-    <div class="flex min-h-screen">
-      <Sidebar activeSection={activeSection} />
-      <div class="fixed top-0 left-[18vw] z-50 w-10 h-10 bg-[#2B2B26] flex items-center justify-center">
-        <span class="text-white text-[9px] font-mono tracking-wider">L</span>
-      </div>
-      <div class="fixed top-4 right-6 z-50 flex items-center gap-2 border border-neutral-800/20 px-2 py-1 text-[11px] font-mono tracking-wider bg-white/20 backdrop-blur-sm">
-        <span class="text-neutral-800 font-semibold">EN</span>
-        <span class="text-neutral-400">KR</span>
-      </div>
+  <body class="font-body antialiased editorial-magazine bg-[var(--canvas)] text-[#111]" data-layout="tabular">
+    <!-- Film grain overlay -->
+    <div class="grain-overlay" />
 
-      <main class="ml-[18vw] w-[82vw] min-h-screen bg-[#E3E2DA]">
-        <slot />
-        <footer class="px-8 pt-12 pb-24">
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-8 border-t border-black/[0.15] pt-12">
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Email</span>
-              <a href="mailto:contact@annadauylrockswell.com" class="text-xs font-sans text-neutral-800 underline underline-offset-4">contact@annadauylrockswell.com</a>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Licenses</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARS [Artists Rights Society]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">ARKO [Arts Council Korea]</span>
-                <span class="block underline underline-offset-2 decoration-neutral-300">DACS</span>
-              </div>
-            </div>
-            <div>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 block mb-2">Socials</span>
-              <div class="text-xs font-sans text-neutral-700 space-y-1">
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">Instagram</a>
-                <a href="#" class="block underline underline-offset-2 decoration-neutral-300 hover:text-neutral-900">X</a>
-              </div>
-            </div>
-          </div>
-          <p class="text-[11px] font-mono text-neutral-400 mt-12 text-center">&copy; 2026 Anna Dauyl Rockswell. All rights reserved.</p>
-        </footer>
-      </main>
+    <!-- Language switch transition (persists across ClientRouter swaps) -->
+    <div id="lang-transition-overlay" class="lang-transition-overlay" transition:persist="lang-overlay" aria-hidden="true" aria-live="polite">
+      <div class="lang-transition-overlay__panel">
+        <span class="lang-transition-overlay__eyebrow font-mono text-[10px] tracking-[0.35em] uppercase text-[#555]/70">Language</span>
+        <p class="lang-transition-overlay__code type-subheading text-6xl md:text-7xl text-[#111] leading-none" data-lang-code>EN</p>
+        <p class="lang-transition-overlay__name type-body text-xl md:text-2xl text-[#555] mt-3" data-lang-name>English</p>
+        <div class="lang-transition-overlay__bar" aria-hidden="true">
+          <span class="lang-transition-overlay__bar-fill"></span>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline>
+      (function () {
+        var LANG = {
+          en: { code: "EN", name: "English" },
+          kr: { code: "KR", name: "한국어" },
+          kk: { code: "KK", name: "Қазақша" },
+          zh: { code: "简", name: "中文" },
+          ru: { code: "RU", name: "Русский" },
+        };
+        var switching = false;
+
+        function currentLang() {
+          var seg = location.pathname.split("/")[1];
+          var langs = ["kr", "kk", "zh", "ru"];
+          return langs.indexOf(seg) >= 0 ? seg : "en";
+        }
+
+        function showOverlay(lang) {
+          var overlay = document.getElementById("lang-transition-overlay");
+          var display = LANG[lang] || { code: lang.toUpperCase(), name: lang };
+          var codeEl = overlay && overlay.querySelector("[data-lang-code]");
+          var nameEl = overlay && overlay.querySelector("[data-lang-name]");
+          var barFill = overlay && overlay.querySelector(".lang-transition-overlay__bar-fill");
+          if (codeEl) codeEl.textContent = display.code;
+          if (nameEl) nameEl.textContent = display.name;
+          if (barFill) {
+            barFill.style.animation = "none";
+            void barFill.offsetWidth;
+            barFill.style.animation = "";
+          }
+          if (overlay) {
+            overlay.classList.add("is-active");
+            overlay.setAttribute("aria-hidden", "false");
+          }
+          document.documentElement.classList.add("lang-switching");
+          document.body.classList.add("lang-switching");
+        }
+
+        window.__showLangOverlay = showOverlay;
+
+        document.addEventListener(
+          "click",
+          function (e) {
+            var btn = e.target && e.target.closest ? e.target.closest(".lang-btn") : null;
+            if (!btn) return;
+            var lang = btn.getAttribute("data-lang");
+            if (!lang || lang === currentLang()) {
+              e.preventDefault();
+              return;
+            }
+            if (switching) {
+              e.preventDefault();
+              return;
+            }
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            switching = true;
+
+            var href = lang === "en" ? "/" : "/" + lang;
+            sessionStorage.setItem("lang-preserve-tab", location.hash.replace("#", "") || "about");
+            sessionStorage.setItem("lang-switching", "1");
+            showOverlay(lang);
+
+            setTimeout(function () {
+              window.location.assign(href);
+            }, 1500);
+          },
+          true
+        );
+      })();
+    </script>
+
+    <!-- Mobile header bar (<1024px) -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-[var(--canvas)] border-b border-black/[0.06] flex items-center justify-between px-4">
+      <a href={`${homePath}#about`} class="type-subheading text-xl md:text-2xl whitespace-nowrap text-[#111] hover:opacity-70 transition-opacity" data-nav-key="about">
+        Anna Dauyl Rockswell
+      </a>
+      <button
+          id="hamburger-btn"
+          class="w-11 h-11 flex items-center justify-center focus:outline-none active:scale-95 transition-transform"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg class="w-6 h-6 text-[#111]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+    </header>
+
+    <!-- Mobile drawer backdrop -->
+    <div id="drawer-backdrop" class="lg:hidden fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-[400ms] ease-out" />
+
+    <!-- Mobile slide-out drawer (<1024px) -->
+    <aside
+      id="mobile-drawer"
+      class="lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] z-50 bg-[var(--canvas)] border-l border-black/[0.08] translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
+    >
+      <nav class="flex-1 pt-20 px-5 overflow-y-auto">
+        <ul class="space-y-0">
+          {menuItems.map((item) => {
+            const navKey = item.key as keyof typeof l.nav;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  data-nav-key={item.key}
+                  id={`nav-${item.key}-mobile`}
+                  aria-current={item.key === "about" ? "true" : "false"}
+                  class="sidebar-nav-link block py-3.5 px-3 type-subheading text-base rounded-md transition-all duration-300 text-[#555] hover:bg-black/[0.04] hover:text-[#111]"
+                >
+                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <div class="mobile-drawer__footer px-5 py-5 border-t border-black/[0.08] mt-auto">
+        <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-2">{l.basedIn}</span>
+        <span class="font-sans text-xs text-[#555] font-medium tracking-wide block mb-5">{l.location}</span>
+        <span class="font-sans text-[9px] uppercase tracking-[0.25em] text-[#555] block mb-2">Language</span>
+        <div id="lang-toggle-mobile" class="lang-toggle lang-toggle--drawer">
+          {langList.map((lang) => (
+            <button
+              type="button"
+              class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
+              data-lang={lang}
+              aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
+              aria-label={`Switch to ${langLabels[lang]}`}
+            >
+              <span class="lang-btn__label">{langLabels[lang]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </aside>
+
+    <!-- Desktop sidebar — always visible -->
+    <aside class="desktop-sidebar hidden lg:flex" aria-label="Site navigation">
+      <div class="desktop-sidebar__inner flex flex-col h-full">
+        <a href={`${homePath}#about`} class="desktop-sidebar__monogram" data-nav-key="about" aria-label="Anna Dauyl Rockswell">A·R</a>
+        <div class="desktop-sidebar__brand">
+          <a href={`${homePath}#about`} class="block group" data-nav-key="about">
+            <h1 class="desktop-sidebar__title type-subheading text-xl text-[#111] leading-[1.05] transition-opacity duration-300 group-hover:opacity-70">
+              Anna Dauyl Rockswell
+            </h1>
+            <span class="desktop-sidebar__subtitle type-heading text-[9px] text-[#555]/70 mt-2 block" set:html={l.subtitle} />
+          </a>
+        </div>
+        <p class="desktop-sidebar__index-label">Contents</p>
+        <div class="desktop-sidebar__nav px-0 flex-1">
+          <nav class="sidebar-nav">
+            {menuItems.map((item) => {
+              const navKey = item.key as keyof typeof l.nav;
+              return (
+                <a
+                  href={item.href}
+                  data-nav-key={item.key}
+                  id={`nav-${item.key}`}
+                  aria-current={item.key === "about" ? "true" : "false"}
+                  class="sidebar-nav-link group relative py-2.5 block transition-colors duration-300 text-[#555]/80 hover:text-[#111]"
+                >
+                  <span class="sidebar-nav-index">{item.index}</span>
+                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
+                  <span class="sidebar-nav-leader" aria-hidden="true"></span>
+                </a>
+              );
+            })}
+          </nav>
+        </div>
+        <div class="desktop-sidebar__footer px-5 py-8 mt-auto">
+          <span class="desktop-sidebar__footer-label font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
+          <span class="desktop-sidebar__footer-text font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="site-shell min-h-screen">
+      <header class="site-topbar hidden lg:flex">
+        <a href={`${homePath}#about`} class="site-topbar__logo type-subheading text-lg text-[#111]" aria-label="Anna Dauyl Rockswell" data-nav-key="about">A·R</a>
+        <div id="lang-toggle-desktop" class="lang-toggle lang-toggle--desktop site-topbar__langs">
+          {langList.map((lang) => (
+            <button
+              type="button"
+              class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
+              data-lang={lang}
+              aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
+              aria-label={`Switch to ${langLabels[lang]}`}
+            >
+              <span class="lang-btn__label">{langLabels[lang]}</span>
+            </button>
+          ))}
+        </div>
+      </header>
+      <div class="site-main-column min-w-0 pt-14 lg:pt-14">
+        <main class="tabular-main motion-main">
+          <slot name="content" />
+        </main>
+        <SiteFooter locale={locale} />
+      </div>
     </div>
   </body>
 </html>
+
+<script>
+  import { initMotion } from "../scripts/motion/init";
+  import { initLangSwitch, syncLangHrefs, syncLangToggle, restoreLangScroll } from "../scripts/lang-switch";
+  import { initTabView, resetTabView } from "../scripts/tab-view";
+  import { resetGlobalLightbox } from "../scripts/lightbox";
+  import { initArtViewToggle, resetArtViewToggle } from "../scripts/art-view-toggle";
+  import { initExhibitionFilter, resetExhibitionFilter } from "../scripts/exhibition-filter";
+
+  function initDrawer() {
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const drawer = document.getElementById("mobile-drawer");
+    const backdrop = document.getElementById("drawer-backdrop");
+    if (!hamburgerBtn || !drawer || hamburgerBtn.dataset.drawerBound === "true") return;
+    hamburgerBtn.dataset.drawerBound = "true";
+    const hamOpen = hamburgerBtn.querySelector(".ham-open");
+    const hamClose = hamburgerBtn.querySelector(".ham-close");
+    let isOpen = false;
+
+    const toggleDrawer = (forceClose = false) => {
+      if (forceClose && !isOpen) return;
+      isOpen = forceClose ? false : !isOpen;
+
+      if (isOpen) {
+        drawer?.classList.remove("translate-x-full");
+        drawer?.classList.add("translate-x-0");
+        backdrop?.classList.remove("bg-black/0", "pointer-events-none");
+        backdrop?.classList.add("bg-black/60", "pointer-events-auto");
+        hamOpen?.classList.add("hidden");
+        hamClose?.classList.remove("hidden");
+        hamburgerBtn?.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+      } else {
+        drawer?.classList.remove("translate-x-0");
+        drawer?.classList.add("translate-x-full");
+        backdrop?.classList.remove("bg-black/60", "pointer-events-auto");
+        backdrop?.classList.add("bg-black/0", "pointer-events-none");
+        hamOpen?.classList.remove("hidden");
+        hamClose?.classList.add("hidden");
+        hamburgerBtn?.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      }
+    };
+
+    // Close drawer on navigation link click
+    const navLinks = drawer?.querySelectorAll("a");
+    navLinks?.forEach(link => {
+      link.addEventListener("click", () => {
+        setTimeout(() => toggleDrawer(true), 150);
+      });
+    });
+
+    hamburgerBtn?.addEventListener("click", () => toggleDrawer());
+    backdrop?.addEventListener("click", () => toggleDrawer());
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) toggleDrawer();
+    });
+  }
+
+  function bootPageScripts() {
+    document.documentElement.classList.add("motion-live");
+    initDrawer();
+    syncLangHrefs();
+    syncLangToggle();
+    initLangSwitch();
+    initTabView();
+    initMotion();
+    initArtViewToggle();
+    initExhibitionFilter();
+    restoreLangScroll();
+  }
+
+  document.addEventListener("astro:after-swap", () => {
+    document.querySelectorAll("[data-drawer-bound]").forEach((el) => {
+      delete (el as HTMLElement).dataset.drawerBound;
+    });
+    document.querySelectorAll("[data-carousel-bound]").forEach((el) => {
+      delete (el as HTMLElement).dataset.carouselBound;
+    });
+    document.querySelectorAll("[data-accordion-motion]").forEach((el) => {
+      delete (el as HTMLElement).dataset.accordionMotion;
+    });
+    document.querySelectorAll("[data-nav-hover]").forEach((el) => {
+      delete (el as HTMLElement).dataset.navHover;
+    });
+    document.querySelectorAll("[data-tab-bound]").forEach((el) => {
+      delete (el as HTMLElement).dataset.tabBound;
+    });
+    resetGlobalLightbox();
+    resetTabView();
+    resetArtViewToggle();
+    resetExhibitionFilter();
+    bootPageScripts();
+  });
+
+  document.addEventListener("DOMContentLoaded", bootPageScripts);
+
+  document.addEventListener("astro:page-load", bootPageScripts);
+
+  if (document.readyState !== "loading") {
+    bootPageScripts();
+  }
+</script>

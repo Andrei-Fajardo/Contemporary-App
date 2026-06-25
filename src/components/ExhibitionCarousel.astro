@@ -1,0 +1,79 @@
+---
+interface Props {
+  images: string[];
+  alt: string;
+  id: string;
+  maxVisible?: number;
+  seeMoreLabel?: string;
+}
+
+const { images, alt, id, maxVisible = 4, seeMoreLabel = 'See more' } = Astro.props;
+const slides = images.length > 0 ? images : [];
+const hasMore = slides.length > maxVisible;
+---
+
+{slides.length > 0 && (
+  <div
+    class="exhibition-carousel"
+    data-exhibition-carousel
+    data-carousel-id={id}
+    data-max-visible={maxVisible}
+    aria-roledescription="carousel"
+    aria-label={`${alt} exhibition photos`}
+  >
+    <button
+      type="button"
+      class="exhibition-carousel__btn exhibition-carousel__btn--prev"
+      aria-label="Previous image"
+    >
+      <span aria-hidden="true">←</span>
+    </button>
+
+    <div class="exhibition-carousel__viewport" tabindex="0">
+      <div class="exhibition-carousel__track">
+        {slides.map((src, i) => (
+          <figure class:list={["exhibition-carousel__slide", hasMore && i >= maxVisible && "is-collapsed"]}>
+            <div class="cursor-tilt h-full">
+              <div class="cursor-tilt__surface exhibition-carousel__tilt h-full" data-cursor-tilt data-lightbox>
+                <img
+                  src={src}
+                  alt={`${alt} — photo ${i + 1}`}
+                  loading={i < maxVisible ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchpriority={i < 2 ? "high" : "auto"}
+                  draggable="false"
+                />
+              </div>
+            </div>
+          </figure>
+        ))}
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="exhibition-carousel__btn exhibition-carousel__btn--next"
+      aria-label="Next image"
+    >
+      <span aria-hidden="true">→</span>
+    </button>
+
+    {hasMore && (
+      <button type="button" class="exhibition-carousel__see-more" data-carousel-see-more>
+        {seeMoreLabel}
+      </button>
+    )}
+
+    {slides.length > 1 && (
+      <p class="exhibition-carousel__hint font-mono text-[9px] tracking-[0.2em] uppercase text-ink-35">
+        Drag or use arrows
+      </p>
+    )}
+  </div>
+)}
+
+<script>
+  import { initExhibitionCarousels } from "../scripts/motion/exhibition-carousel";
+  initExhibitionCarousels();
+  document.addEventListener("astro:page-load", initExhibitionCarousels);
+</script>

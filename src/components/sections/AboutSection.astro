@@ -1,0 +1,39 @@
+---
+import EducationTimeline from '../EducationTimeline.astro';
+import MagazineSectionHeader from '../MagazineSectionHeader.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { siteCopy } from '../../data/site-copy';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="about" class="scroll-section utero-layered">
+  <div class="mag-shell">
+    <MagazineSectionHeader num="I" eyebrow={l.aboutTag} title={l.nav.about} />
+
+    <div class="mag-grid">
+      <div class="mag-col-12 scroll-reveal">
+        <p class="content-prose--sans text-ink-55 mb-4">{l.intro}</p>
+        <div class="content-prose space-y-4">
+          <p>{l.bio}</p>
+        </div>
+      </div>
+
+      <div class="mag-col-12 scroll-reveal">
+        <p class="mag-section-header__eyebrow mb-4">{l.interestsLabel}</p>
+        <p class="content-prose text-ink-60" style="max-width: 72ch;">
+          {siteCopy.about.interests.join(' · ')}
+        </p>
+      </div>
+
+      <div class="mag-col-12">
+        <EducationTimeline label={l.education} />
+      </div>
+    </div>
+  </div>
+</section>

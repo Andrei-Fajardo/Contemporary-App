@@ -1,0 +1,19 @@
+---
+import ComingSoon from '../ComingSoon.astro';
+import MagazineSectionHeader from '../MagazineSectionHeader.astro';
+import { t, type LocaleKey } from '../../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="publications" class="scroll-section">
+  <div class="mag-shell">
+    <MagazineSectionHeader num="IV" eyebrow={l.publicationsTag} title={l.publicationsHeading} />
+    <ComingSoon message={l.comingSoonMessage} note={l.comingSoonNote} />
+  </div>
+</section>

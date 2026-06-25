@@ -1,0 +1,34 @@
+---
+import ExhibitionAccordion from '../ExhibitionAccordion.astro';
+import MagazineSectionHeader from '../MagazineSectionHeader.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { exhibitionEntries } from '../../data/content';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="exhibitions" class="scroll-section utero-layered">
+  <div class="mag-shell" data-exhibition-filter-root>
+    <MagazineSectionHeader num="III" eyebrow={l.exhibitionsTag} title={l.exhibitionHistory} />
+
+    <div class="exhibition-filters scroll-reveal" role="tablist" aria-label="Exhibition categories">
+      <button type="button" class="exhibition-filter is-active" data-exhibition-filter="all">{l.all}</button>
+      <button type="button" class="exhibition-filter" data-exhibition-filter="physical">{l.physical}</button>
+      <button type="button" class="exhibition-filter" data-exhibition-filter="digital">{l.digitalFilter}</button>
+      <button type="button" class="exhibition-filter" data-exhibition-filter="magazine">{l.magazineFilter}</button>
+    </div>
+
+    <ExhibitionAccordion entries={exhibitionEntries} seeMoreLabel={l.seeMore} />
+  </div>
+</section>
+
+<script>
+  import { initExhibitionFilter } from "../../scripts/exhibition-filter";
+  initExhibitionFilter();
+  document.addEventListener("astro:page-load", initExhibitionFilter);
+</script>

@@ -1,0 +1,172 @@
+---
+import ExhibitionCarousel from './ExhibitionCarousel.astro';
+import type { ExhibitionEntry } from '../data/content';
+
+interface Props {
+  entries: ExhibitionEntry[];
+  seeMoreLabel?: string;
+}
+
+const { entries, seeMoreLabel = 'See more' } = Astro.props;
+---
+
+<div class="exhibition-accordion editorial-divider-list">
+  {entries.map((entry) => (
+    <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
+      <summary class="exhibition-accordion__summary">
+        <span class="exhibition-accordion__year">{entry.year}</span>
+        <span class="exhibition-accordion__title">{entry.title}</span>
+        <span class="exhibition-accordion__meta">{entry.gallery} · {entry.place}</span>
+        <span class="exhibition-accordion__see-more">{seeMoreLabel} →</span>
+      </summary>
+      <div class="exhibition-accordion__panel">
+        {entry.images.length > 0 && (
+          <ExhibitionCarousel
+            id={entry.id}
+            images={entry.images}
+            alt={entry.title}
+            maxVisible={4}
+            seeMoreLabel={seeMoreLabel}
+          />
+        )}
+      </div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .exhibition-accordion__item {
+    background: transparent;
+    overflow: visible;
+  }
+
+  .exhibition-accordion__panel {
+    padding: 0 0 1.5rem 4.5rem;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    will-change: height, opacity;
+  }
+
+  .exhibition-accordion__summary {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.2rem 1.25rem;
+    align-items: center;
+    margin-inline: -0.75rem;
+    padding: 1.25rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-default);
+    cursor: pointer;
+    list-style: none;
+    background: transparent;
+    transition:
+      box-shadow 0.35s var(--ease-editorial),
+      border-color 0.35s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover {
+    box-shadow: inset 3px 0 0 var(--ink-35);
+  }
+
+  .exhibition-accordion__summary:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__summary {
+    box-shadow: inset 3px 0 0 var(--ink);
+  }
+
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__summary:hover {
+    box-shadow: inset 3px 0 0 var(--ink);
+  }
+
+  .exhibition-accordion__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .exhibition-accordion__year {
+    grid-row: 1 / 3;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-45);
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__year,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__year {
+    color: var(--ink-70);
+  }
+
+  .exhibition-accordion__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    color: var(--ink);
+    line-height: 1.2;
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__meta {
+    grid-column: 2;
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 1vw, 1.0625rem);
+    color: var(--ink-55);
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__see-more {
+    grid-row: 1 / 3;
+    grid-column: 3;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--ink-45);
+    white-space: nowrap;
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__see-more,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__see-more {
+    color: var(--ink);
+  }
+
+  @media (max-width: 1023px) {
+    .exhibition-accordion__panel {
+      padding: 0 0 0.875rem 0;
+    }
+
+    .exhibition-accordion__summary {
+      grid-template-columns: 2.75rem 1fr auto;
+      gap: 0.15rem 0.75rem;
+      margin-inline: 0;
+      padding: 0.875rem 0.25rem;
+    }
+
+    .exhibition-accordion__year {
+      font-size: 0.6875rem;
+    }
+
+    .exhibition-accordion__title {
+      font-size: 1.0625rem;
+    }
+
+    .exhibition-accordion__meta {
+      font-size: 0.875rem;
+    }
+
+    .exhibition-accordion__see-more {
+      font-size: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  import { initExhibitionAccordion } from "../scripts/motion/exhibition-accordion";
+  initExhibitionAccordion();
+  document.addEventListener("astro:page-load", initExhibitionAccordion);
+</script>

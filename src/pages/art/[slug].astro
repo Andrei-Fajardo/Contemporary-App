@@ -1,0 +1,121 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { artworks } from '../../data/artworks';
+
+export interface Props {
+  locale?: LocaleKey;
+}
+
+export async function getStaticPaths() {
+  return artworks.map((art) => ({
+    params: { slug: art.slug },
+  }));
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+
+const painting = artworks.find((a) => a.slug === Astro.params.slug);
+
+if (!painting) {
+  return Astro.redirect("/404");
+}
+
+const additionalMedia: Record<string, string[]> = {
+  "the-fish": ["/media/exhibitions/senses-1.jpg", "/media/feature/itaewon-1.jpg"],
+  "the-souls-of-leavings": ["/media/exhibitions/kinship-1.jpg", "/media/exhibitions/holy-paris-1.webp"],
+};
+---
+
+<PageLayout title={`${painting.title} — ${l.siteTitle}`} activeSection="art" locale={locale}>
+  <div slot="content">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 pt-16 md:pt-24 pb-2">
+      <a
+        href={locale === "en" ? "/" : `/${locale}`}
+        class="inline-block font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-400 hover:text-neutral-900 transition-all duration-300 ease-out transform hover:-translate-x-1"
+      >
+        &larr; {l.artTag}
+      </a>
+    </div>
+
+    <div class="w-full grid grid-cols-1 md:grid-cols-[45%_1fr] gap-8 md:gap-12 items-start py-12 max-w-7xl mx-auto px-6 sm:px-12">
+      <div class="interactive-image-container aspect-[4/5] md:aspect-square">
+        <img src={painting.image} alt={painting.title} loading="lazy" />
+      </div>
+
+      <div class="w-full flex flex-col justify-between h-full min-w-0 art-wall-label">
+        <div class="w-full flex flex-col space-y-6">
+          <h1 class="type-subheading text-3xl md:text-4xl text-neutral-900 leading-none">
+            {painting.title}
+          </h1>
+
+          <p class="type-subheading text-lg text-neutral-600">{painting.dimensions}</p>
+          <p class="type-body text-neutral-600 text-sm">By Artist NANA (Anna Dauyl Rockswell)</p>
+
+          <div class="pt-2">
+            <p class="type-heading text-[0.6875rem] text-neutral-400 mb-4">About</p>
+            <div class="space-y-4 max-w-[55ch]">
+              {painting.aboutParagraphs.map((para) => (
+                <p class="content-prose text-neutral-600">{para}</p>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pt-8">
+          <button
+            id="view-details-btn"
+            class="inline-block font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-900 border-b border-neutral-900 pb-1 hover:text-neutral-500 hover:border-neutral-300 transition-all duration-300 ease-out transform hover:translate-x-1 cursor-pointer"
+            aria-expanded="false"
+            aria-controls="detail-grid"
+          >
+            View More &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section
+      id="detail-grid"
+      class="hidden max-w-7xl mx-auto px-6 sm:px-12 pb-16 md:pb-24"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-900/10 border border-neutral-900/10">
+        {(additionalMedia[painting.slug] ?? []).map((media) => (
+          <div class="interactive-image-container aspect-video">
+            <img
+              src={media}
+              alt={`${painting.title} — detail`}
+              loading="lazy"
+              class="opacity-0 translate-y-4 animate-fade-up"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</PageLayout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("view-details-btn");
+    const grid = document.getElementById("detail-grid");
+    if (!btn || !grid) return;
+
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      grid.classList.toggle("hidden");
+
+      if (!expanded) {
+        grid.querySelectorAll("img").forEach((img, i) => {
+          setTimeout(() => {
+            img.classList.remove("opacity-0", "translate-y-4");
+            img.classList.add("opacity-100", "translate-y-0");
+          }, i * 150);
+        });
+      }
+    });
+  });
+</script>
