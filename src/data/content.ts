@@ -49,19 +49,40 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     id: 'hechyeomoyeo-13',
     year: '2025',
     title: 'Hechyeomoyeo 13',
-    gallery: 'Hechyeomoyeo',
+    gallery: 'The Living Gallery',
     place: 'New York, USA',
     category: 'physical',
-    images: ['/media/press/nyc-hcmy.jpg', '/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg'],
+    images: ['/media/press/nyc-hcmy.jpg'],
   },
   {
     id: 'hechyeomoyeo-14',
-    year: '2025',
+    year: '2026',
     title: 'Hechyeomoyeo 14',
-    gallery: 'Hechyeomoyeo',
-    place: 'New York, USA',
+    gallery: 'Chinatown Garden',
+    place: 'Washington, DC, USA',
     category: 'physical',
-    images: ['/media/exhibitions/hech-3.jpg', '/media/exhibitions/hech-4.jpg'],
+    images: [
+      '/media/exhibitions/hech-1.jpg',
+      '/media/exhibitions/hech-2.jpg',
+      '/media/exhibitions/hech-3.jpg',
+      '/media/exhibitions/hech-4.jpg',
+      '/media/exhibitions/hechyeomoyeo-nyc.png',
+    ],
+  },
+  {
+    id: 'hechyeomoyeo-mexico',
+    year: '2025',
+    title: 'Hechyeomoyeo Mexico',
+    gallery: 'Tnumbra Gallery',
+    place: 'Mexicali, Mexico',
+    category: 'physical',
+    images: [
+      '/media/exhibitions/hech-mexico-1.jpg',
+      '/media/exhibitions/hech-mexico-2.jpg',
+      '/media/exhibitions/hech-mexico-3.jpg',
+      '/media/exhibitions/hech-mexico-4.jpg',
+      '/media/exhibitions/hech-mexico-5.jpg',
+    ],
   },
   {
     id: 'im-insa',
@@ -204,7 +225,23 @@ export const publicationsList: LinkItem[] = [];
 export const researchList: LinkItem[] = [];
 
 /** Press coverage — hyperlinked list (posters live under Exhibition History). */
-export const pressLinks: LinkItem[] = [];
+export const pressLinks: LinkItem[] = [
+  {
+    title: 'Hechyeomoyeo — In the Press',
+    href: 'https://www.hcmy.org/press',
+    year: '2025',
+  },
+  {
+    title: 'Light that Remains — Verger Gallery',
+    href: 'https://www.vergerartgallery.com/25/?bmode=view&idx=163639384',
+    year: '2025',
+  },
+  {
+    title: 'Itaewon Film Festival Challenges Boundaries That Define, Divide Us — The Korea Times',
+    href: 'https://www.koreatimes.co.kr/southkorea/globalcommunity/20251031/itaewon-film-festival-challenges-boundaries-that-define-divide-us',
+    year: '2025',
+  },
+];
 
 export const magazines = [
   { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls of Leavings', image: '/media/posters/poster-1.jpg' },
@@ -231,8 +268,9 @@ export const soloExhibitions: ExhibitionItem[] = [
 export const groupExhibitions: ExhibitionItem[] = [
   { year: '2026', title: 'Contemporary Venice', venue: 'Venice', city: 'Venice', country: 'Italy' },
   { year: '2025', title: 'Senses International Art Fair', venue: 'Must Museum', city: 'Lecce', country: 'Italy' },
-  { year: '2025', title: 'Hechyeomoyeo 13', venue: 'New York', city: 'New York', country: 'USA' },
-  { year: '2025', title: 'Hechyeomoyeo 14', venue: 'New York', city: 'New York', country: 'USA' },
+  { year: '2025', title: 'Hechyeomoyeo 13', venue: 'The Living Gallery', city: 'New York', country: 'USA' },
+  { year: '2026', title: 'Hechyeomoyeo 14', venue: 'Chinatown Garden', city: 'Washington, DC', country: 'USA' },
+  { year: '2025', title: 'Hechyeomoyeo Mexico', venue: 'Tnumbra Gallery', city: 'Mexicali', country: 'Mexico' },
   { year: '2025', title: 'KINSHIP × Hechyeomoyeo', venue: 'Seoul', city: 'Seoul', country: 'South Korea' },
   { year: '2025', title: 'The Holy Art — London', venue: 'London', city: 'London', country: 'UK' },
   { year: '2025', title: 'The Holy Art — Paris', venue: 'Paris', city: 'Paris', country: 'France' },
