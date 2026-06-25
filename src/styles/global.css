@@ -50,6 +50,10 @@
   --radius-default: 0.25rem;
   --radius-lang-toggle: 0.35rem;
   --radius-lang-btn: 0.2rem;
+
+  /* Small mono uppercase labels — matches exhibition filter buttons */
+  --mag-eyebrow: clamp(0.6875rem, 0.4vw + 0.55rem, 0.8125rem);
+  --mag-eyebrow-track: 0.2em;
 }
 
 /* Warm editorial canvas background */
@@ -409,19 +413,26 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .section-divider-label {
-  font-size: clamp(0.5625rem, 0.45vw + 0.4rem, 0.6875rem);
-  letter-spacing: 0.2em;
+  font-size: var(--mag-eyebrow);
+  letter-spacing: var(--mag-eyebrow-track);
   text-transform: uppercase;
 }
 
 .section-eyebrow {
   font-family: var(--font-heading);
-  font-size: clamp(0.5625rem, 0.45vw + 0.4rem, 0.6875rem);
+  font-size: var(--mag-eyebrow);
   font-weight: 400;
-  letter-spacing: var(--heading-track);
+  letter-spacing: var(--mag-eyebrow-track);
   text-transform: uppercase;
-  color: var(--ink-45);
+  color: var(--ink-55);
   margin-bottom: 1.5rem;
+}
+
+.type-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--mag-eyebrow);
+  letter-spacing: var(--mag-eyebrow-track);
+  text-transform: uppercase;
 }
 
 .section-gap {

@@ -69,8 +69,8 @@
 
 .exhibition-filter {
   font-family: var(--font-mono);
-  font-size: clamp(0.6875rem, 0.4vw + 0.55rem, 0.8125rem);
-  letter-spacing: 0.2em;
+  font-size: var(--mag-eyebrow);
+  letter-spacing: var(--mag-eyebrow-track);
   text-transform: uppercase;
   color: var(--ink-55);
   background: none;
@@ -101,8 +101,8 @@
 
 .art-view-toggle__btn {
   font-family: var(--font-mono);
-  font-size: clamp(0.6875rem, 0.4vw + 0.55rem, 0.8125rem);
-  letter-spacing: 0.16em;
+  font-size: var(--mag-eyebrow);
+  letter-spacing: var(--mag-eyebrow-track);
   text-transform: uppercase;
   min-height: 2.75rem;
   padding: 0.65rem 1.25rem;
@@ -168,8 +168,8 @@
   justify-self: start;
   margin-top: 0.75rem;
   font-family: var(--font-mono);
-  font-size: clamp(0.6875rem, 0.4vw + 0.55rem, 0.8125rem);
-  letter-spacing: 0.18em;
+  font-size: var(--mag-eyebrow);
+  letter-spacing: var(--mag-eyebrow-track);
   text-transform: uppercase;
   color: var(--ink-65);
   background: none;

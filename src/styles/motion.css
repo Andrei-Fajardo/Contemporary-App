@@ -1006,6 +1006,11 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   grid-row: 2;
   text-align: center;
   margin: 0.25rem 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--mag-eyebrow);
+  letter-spacing: var(--mag-eyebrow-track);
+  text-transform: uppercase;
+  color: var(--ink-45);
 }
 
 @media (max-width: 640px) {
