@@ -1,0 +1,25 @@
+---
+import type { LinkItem } from '../data/content';
+
+interface Props {
+  items: LinkItem[];
+  emptyMessage?: string;
+}
+
+const { items, emptyMessage = 'List forthcoming' } = Astro.props;
+---
+
+{items.length > 0 ? (
+  <ul class="editorial-link-list scroll-reveal">
+    {items.map((item) => (
+      <li>
+        <a href={item.href} target="_blank" rel="noopener noreferrer">
+          {item.title}
+        </a>
+        {item.year && <span class="editorial-link-list__meta">{item.year}</span>}
+      </li>
+    ))}
+  </ul>
+) : (
+  <p class="scroll-reveal content-prose text-ink-55">{emptyMessage}</p>
+)}

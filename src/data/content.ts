@@ -171,80 +171,28 @@ export interface PublicationItem {
 
 export const publications: PublicationItem[] = [];
 
-export interface PressItem {
-  id: string;
+export interface LinkItem {
   title: string;
-  venue: string;
-  place: string;
-  date: string;
-  image: string;
+  href: string;
+  year?: string;
 }
 
-/** Exhibition press & promotional posters — image paths match `public/media/press/` filenames. */
-export const pressItems: PressItem[] = [
+/** External press coverage and exhibition listings. */
+export const pressLinks: LinkItem[] = [
   {
-    id: 'with-iam-insa',
-    title: 'Hechyeomoyeo — With IAM Insa',
-    venue: '2025 Insadong Antique & Art Fair',
-    place: 'Annyeong Insa-dong, Insadong, Seoul, South Korea',
-    date: 'September 11–14, 2024',
-    image: '/media/press/with-iam-insa.jpg',
+    title: 'Hechyeomoyeo — In the Press',
+    href: 'https://www.hcmy.org/press',
+    year: '2025',
   },
   {
-    id: 'nyc-hcmy',
-    title: 'New York Art Exhibition — HCMY #12',
-    venue: 'The Living Gallery',
-    place: '1094 Broadway, Bushwick, Brooklyn, New York, USA',
-    date: 'October 11–26, 2025',
-    image: '/media/press/nyc-hcmy.jpg',
+    title: 'Light that Remains — Verger Gallery',
+    href: 'https://www.vergerartgallery.com/25/?bmode=view&idx=163639384',
+    year: '2025',
   },
   {
-    id: 'paris-vandals',
-    title: 'Paris Art Exhibition 2025 — The Vandals',
-    venue: 'Of Nazareth Gallery',
-    place: '46–48 Rue Notre Dame de Nazareth, Le Marais, Paris, France',
-    date: 'October 17–20, 2025',
-    image: '/media/press/paris-vandals.png',
-  },
-  {
-    id: 'vandals-edge-of-now',
-    title: 'The Vandals — Edge of Now',
-    venue: 'The Koppel Project',
-    place: "157 Regent's Park Road, Camden Town, London, United Kingdom",
-    date: 'October 23–26, 2025',
-    image: '/media/press/vandals-edge-of-now.jpg',
-  },
-  {
-    id: 'itaewon-film-festival',
-    title: 'Itaewon Film Festival 2025',
-    venue: 'Bokwang Theater',
-    place: 'Itaewon, Seoul, South Korea',
-    date: 'November 13–16, 2025',
-    image: '/media/press/itaewon-film-festival.png',
-  },
-  {
-    id: 'istanbul-art-show',
-    title: 'Istanbul Art Show',
-    venue: 'Luna Grande Art',
-    place: 'Rasimpaşa Mah. Bayramyeri Sok. No:15/1, Kadıköy, Istanbul, Turkey',
-    date: 'November 15–21, 2025',
-    image: '/media/press/istanbul-art-show.jpg',
-  },
-  {
-    id: 'petit-masterpiece',
-    title: 'PETIT Masterpiece',
-    venue: 'Ahmad Shariff Art Gallery',
-    place: 'Claremont, California, USA',
-    date: 'December 6, 2025',
-    image: '/media/press/petit-masterpiece.jpg',
-  },
-  {
-    id: 'light-that-remains',
-    title: 'Light that Remains',
-    venue: 'D.I.M.O × Verger Gallery',
-    place: 'Yeonnam-dong, Seoul, South Korea',
-    date: 'December 14, 2025 – January 10, 2026',
-    image: '/media/press/light-that-remains.jpg',
+    title: 'Itaewon Film Festival Challenges Boundaries That Define, Divide Us — The Korea Times',
+    href: 'https://www.koreatimes.co.kr/southkorea/globalcommunity/20251031/itaewon-film-festival-challenges-boundaries-that-define-divide-us',
+    year: '2025',
   },
 ];
 

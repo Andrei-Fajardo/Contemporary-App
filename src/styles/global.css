@@ -426,6 +426,40 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   margin-top: 0;
 }
 
+/* Hyperlink lists — publications, research, press */
+.editorial-link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.editorial-link-list li {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.875rem 0;
+}
+
+.editorial-link-list a {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1vw + 0.75rem, 1.1875rem);
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.editorial-link-list a:hover {
+  border-bottom-color: var(--ink-45);
+}
+
+.editorial-link-list__meta {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-45);
+}
+
 /* --- Tabular editorial shell (Layout Number 2) --- */
 .tabular-view {
   width: 100%;
