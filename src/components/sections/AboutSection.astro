@@ -18,21 +18,15 @@ const l = t[locale];
 
     <div class="about-chaos__body">
       <div class="scroll-reveal about-chaos__intro">
-        <p class="content-prose--sans text-ink-55 mb-3">{l.intro}</p>
-        <div class="content-prose space-y-3">
-          <p>{l.bio}</p>
-        </div>
+        <p class="content-prose--sans text-ink-55 mb-2">{l.intro}</p>
+        <p class="content-prose">{l.bio}</p>
       </div>
 
-      <div class="scroll-reveal about-chaos__meta">
-        <div>
-          <p class="section-eyebrow section-eyebrow--blood mb-2">{l.interestsLabel}</p>
-          <ul class="about-chaos__list">
-            {siteCopy.about.interests.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
+      <div class="scroll-reveal about-chaos__meta about-chaos__meta--compact">
+        <p class="section-eyebrow section-eyebrow--blood mb-2">{l.interestsLabel}</p>
+        <p class="content-prose text-ink-60 about-chaos__interests">
+          {siteCopy.about.interests.join(' · ')}
+        </p>
       </div>
 
       <EducationTimeline label={l.education} />

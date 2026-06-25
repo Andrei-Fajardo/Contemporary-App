@@ -187,12 +187,21 @@
 
 .art-section--unified .art-piece .grid {
   gap: 0;
+  align-items: stretch;
 }
 
 .art-section--unified .art-wall-label {
   padding: clamp(1.25rem, 3vw, 2rem);
-  background: var(--canvas);
-  border-top: 1px solid var(--border-subtle);
+  background: var(--canvas-panel, var(--canvas));
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  height: 100%;
+}
+
+.art-section--unified .art-wall-label__block {
+  flex: 1 1 auto;
 }
 
 .art-section--unified .art-piece .cursor-tilt__surface,

@@ -291,15 +291,41 @@
   padding-block: 0.5rem;
 }
 
-.visceral-editorial .about-chaos__list {
-  gap: 0.3rem 0.45rem;
+.visceral-editorial .about-chaos__meta {
+  margin-top: 0.85rem;
+  padding-top: 0;
+  border-top: none;
 }
 
-.visceral-editorial .about-chaos__list li {
-  font-size: 0.8125rem;
-  padding: 0.25rem 0.55rem;
-  border-color: var(--border-section);
-  border-radius: 0;
+.visceral-editorial .about-chaos__meta--compact {
+  max-width: 72ch;
+}
+
+.visceral-editorial .about-chaos__interests {
+  font-size: clamp(0.875rem, 0.55vw + 0.58rem, 0.975rem);
+  line-height: 1.55;
+}
+
+.visceral-editorial .edu-timeline {
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+}
+
+.visceral-editorial .edu-timeline__label {
+  margin-bottom: 0.65rem !important;
+}
+
+.visceral-editorial .edu-timeline__track {
+  padding-top: 1.75rem;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.visceral-editorial .about-chaos__intro {
+  max-width: 72ch;
+}
+
+.visceral-editorial .about-chaos__intro .content-prose--sans {
+  margin-bottom: 0.5rem;
 }
 
 .visceral-editorial .site-footer,
