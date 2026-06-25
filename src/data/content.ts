@@ -1,52 +1,124 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+export type ExhibitionCategory = 'physical' | 'digital' | 'magazine';
+
+const IMAGE_EXT = /\.(jpe?g|png|webp|gif)$/i;
+
+/** Build a URL-safe /media/... path (encodes spaces and special chars). */
+function mediaUrl(...segments: string[]): string {
+  return `/media/${segments.map((segment) => encodeURIComponent(segment)).join('/')}`;
+}
+
+function sortMediaFiles(a: string, b: string): number {
+  const aMain = a.toLowerCase().includes('-main.');
+  const bMain = b.toLowerCase().includes('-main.');
+  if (aMain !== bMain) return aMain ? -1 : 1;
+  return a.localeCompare(b, undefined, { numeric: true });
+}
+
+/** Read all images from a folder under public/media. */
+function imagesFromMediaFolder(...folderSegments: string[]): string[] {
+  const dir = path.join(process.cwd(), 'public', 'media', ...folderSegments);
+  if (!fs.existsSync(dir)) return [];
+
+  return fs
+    .readdirSync(dir)
+    .filter((file) => IMAGE_EXT.test(file))
+    .sort(sortMediaFiles)
+    .map((file) => mediaUrl(...folderSegments, file));
+}
+
+/** Images in public/media/{folder} whose filenames start with {prefix}- or equal {prefix}. */
+function imagesByPrefix(folder: string, prefix: string): string[] {
+  const dir = path.join(process.cwd(), 'public', 'media', folder);
+  if (!fs.existsSync(dir)) return [];
+  const p = prefix.toLowerCase();
+
+  return fs
+    .readdirSync(dir)
+    .filter((file) => {
+      if (!IMAGE_EXT.test(file)) return false;
+      const base = file.toLowerCase();
+      return base.startsWith(`${p}-`) || base.startsWith(`${p}.`) || base === p;
+    })
+    .sort(sortMediaFiles)
+    .map((file) => mediaUrl(folder, file));
+}
+
+/** Pick specific exhibition event photos (attendees only — no artwork/posters). */
+function eventPhotos(...filenames: string[]): string[] {
+  return filenames.map((file) => `/media/exhibitions/${file}`);
+}
+
+/** Virtual folder — match multiple filename prefixes (e.g. soul-gift + clover-anna). */
+function imagesFromVirtual(...prefixes: string[]): string[] {
+  const dir = path.join(process.cwd(), 'public', 'media', 'virtual');
+  if (!fs.existsSync(dir)) return [];
+  const lowered = prefixes.map((x) => x.toLowerCase());
+
+  return fs
+    .readdirSync(dir)
+    .filter((file) => {
+      if (!IMAGE_EXT.test(file)) return false;
+      const base = file.toLowerCase();
+      return lowered.some((p) => base.startsWith(`${p}-`) || base.startsWith(`${p}.`) || base === p);
+    })
+    .sort(sortMediaFiles)
+    .map((file) => mediaUrl('virtual', file));
+}
+
+/** Magazine folder — prefer dedicated files; optional filename hint filter. */
+function magazineImages(...hints: string[]): string[] {
+  const fromFolder = imagesFromMediaFolder('magazine');
+  if (!fromFolder.length) return [];
+  if (!hints.length) return fromFolder;
+
+  const lowered = hints.map((h) => h.toLowerCase());
+  const matched = fromFolder.filter((url) => {
+    const file = decodeURIComponent(url.split('/').pop() ?? '').toLowerCase();
+    return lowered.some((h) => file.includes(h));
+  });
+  return matched.length ? matched : fromFolder;
+}
+
+const hechyeomoyeoMexicoImages = imagesFromMediaFolder('Hechyeomoyeo Mexico');
+
 export interface ExhibitionEntry {
   id: string;
   year: string;
   title: string;
   gallery: string;
   place: string;
-  kind: 'solo' | 'group' | 'museum';
+  category: ExhibitionCategory;
   images: string[];
-  note?: string;
 }
 
-/** Chronological exhibition list — posters & venue imagery only (no personal portraits). */
-export const exhibitionEntries: ExhibitionEntry[] = [
+export interface LinkItem {
+  title: string;
+  href: string;
+  year?: string;
+}
+
+/** Senses first, then alphabetical by title. No 2024-only entries. */
+export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
   {
     id: 'senses',
     year: '2025',
     title: 'Senses International Art Fair',
     gallery: 'MUST Museum',
     place: 'Lecce, Italy',
-    kind: 'museum',
-    images: ['/media/exhibitions/senses-main.jpg', '/media/exhibitions/senses-1.jpg', '/media/exhibitions/senses-2.jpg'],
-    note: 'The only museum presentation in the exhibition record.',
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'senses'),
   },
   {
-    id: 'im-insa',
-    year: '2025',
-    title: 'IM INSA',
-    gallery: 'Insadong',
-    place: 'Seoul, South Korea',
-    kind: 'solo',
-    images: ['/media/exhibitions/im-insa.jpg'],
-  },
-  {
-    id: 'hechyeomoyeo-nyc',
-    year: '2024–2025',
-    title: 'Hechyeomoyeo 12 & 13',
-    gallery: 'Hechyeomoyeo',
-    place: 'New York, USA',
-    kind: 'group',
-    images: ['/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg', '/media/exhibitions/hech-3.jpg', '/media/exhibitions/hech-4.jpg'],
-  },
-  {
-    id: 'kinship',
-    year: '2025',
-    title: 'KINSHIP × Hechyeomoyeo',
-    gallery: 'Collaborative Exhibition',
-    place: 'Seoul, South Korea',
-    kind: 'group',
-    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg', '/media/exhibitions/kinship-3.jpg'],
+    id: 'contemporary-venice',
+    year: '2026',
+    title: 'Contemporary Venice',
+    gallery: 'Contemporary Venice',
+    place: 'Venice, Italy',
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'venice'),
   },
   {
     id: 'dimo',
@@ -54,45 +126,80 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     title: 'DIMO × Verger Gallery',
     gallery: 'Verger Gallery',
     place: 'Seoul, South Korea',
-    kind: 'group',
-    images: ['/media/exhibitions/dimo-main.jpg', '/media/exhibitions/dimo-1.jpg', '/media/exhibitions/dimo-2.jpg'],
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'dimo'),
   },
   {
-    id: 'holy-paris',
+    id: 'hechyeomoyeo-13',
     year: '2025',
-    title: 'The Holy Art — Paris',
-    gallery: 'The Holy Art',
-    place: 'Paris, France',
-    kind: 'group',
-    images: ['/media/posters/paris-poster.png', '/media/exhibitions/holy-paris-main.jpg', '/media/exhibitions/holy-paris-1.webp'],
+    title: 'Hechyeomoyeo 13',
+    gallery: 'The Living Gallery',
+    place: 'New York, USA',
+    category: 'physical',
+    images: eventPhotos('hech-1.jpg', 'hech-2.jpg'),
   },
   {
-    id: 'holy-london',
+    id: 'hechyeomoyeo-14',
+    year: '2026',
+    title: 'Hechyeomoyeo 14',
+    gallery: 'Chinatown Garden',
+    place: 'Washington, DC, USA',
+    category: 'physical',
+    images: eventPhotos('hech-3.jpg', 'hech-4.jpg'),
+  },
+  {
+    id: 'hechyeomoyeo-mexico',
     year: '2025',
-    title: 'The Holy Art — London',
-    gallery: 'The Holy Art',
-    place: 'London, UK',
-    kind: 'group',
-    images: ['/media/exhibitions/holy-london-1.jpg', '/media/exhibitions/holy-london-2.jpg'],
-    note: 'Exhibition documentation & promotional materials.',
+    title: 'Hechyeomoyeo Mexico',
+    gallery: 'Tnumbra Gallery',
+    place: 'Mexicali, Mexico',
+    category: 'physical',
+    images: hechyeomoyeoMexicoImages,
+  },
+  {
+    id: 'im-insa',
+    year: '2025',
+    title: 'IM INSA',
+    gallery: 'Insadong',
+    place: 'Seoul, South Korea',
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'im-insa'),
+  },
+  {
+    id: 'itaewon-film-festival',
+    year: '2025',
+    title: 'Itaewon Film Festival',
+    gallery: 'Bokwang Theater',
+    place: 'Seoul, South Korea',
+    category: 'physical',
+    images: imagesFromMediaFolder('feature'),
+  },
+  {
+    id: 'kinship',
+    year: '2025',
+    title: 'KINSHIP × Hechyeomoyeo',
+    gallery: 'Collaborative Exhibition',
+    place: 'Seoul, South Korea',
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'kinship'),
   },
   {
     id: 'luna',
     year: '2025',
     title: 'Luna Grande Art',
     gallery: 'Luna Grande Art',
-    place: 'Online',
-    kind: 'group',
-    images: ['/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-1.jpg', '/media/exhibitions/luna-2.jpg'],
+    place: 'Istanbul, Turkey',
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'luna'),
   },
   {
-    id: 'venice',
-    year: '2026',
-    title: 'Contemporary Venice',
-    gallery: 'Contemporary Venice',
-    place: 'Venice, Italy',
-    kind: 'group',
-    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
+    id: 'petit-masterpiece',
+    year: '2025',
+    title: 'PETIT Masterpiece',
+    gallery: 'Ahmad Shariff Art Gallery',
+    place: 'Claremont, California, USA',
+    category: 'physical',
+    images: ['/media/press/petit-masterpiece.jpg'],
   },
   {
     id: 'soul-gift',
@@ -100,9 +207,8 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     title: 'Soul Gift',
     gallery: 'Clover Gallery',
     place: 'Virtual Exhibition',
-    kind: 'group',
-    images: ['/media/virtual/clover-anna.jpg', '/media/virtual/soul-gift.jpg', '/media/virtual/soul-gift-poster.png'],
-    note: 'Virtual exhibition at Clover Gallery — digital and material realities.',
+    category: 'digital',
+    images: imagesFromVirtual('soul-gift', 'clover-anna'),
   },
   {
     id: 'the-atrium',
@@ -110,11 +216,95 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     title: 'The Atrium',
     gallery: 'The Atrium',
     place: 'Virtual Exhibition',
-    kind: 'group',
-    images: ['/media/virtual/the-atrium.jpg'],
-    note: 'A virtual space exploring architectural memory and digital presence.',
+    category: 'digital',
+    images: imagesFromVirtual('the-atrium'),
   },
-];
+  {
+    id: 'holy-london',
+    year: '2025',
+    title: 'The Holy Art — London',
+    gallery: 'The Holy Art',
+    place: 'London, UK',
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'holy-london'),
+  },
+  {
+    id: 'holy-paris',
+    year: '2025',
+    title: 'The Holy Art — Paris',
+    gallery: 'The Holy Art',
+    place: 'Paris, France',
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'holy-paris'),
+  },
+  {
+    id: 'astraea-zine',
+    year: '2025',
+    title: 'Astraea Zine — Dreamscape',
+    gallery: 'Astraea Zine',
+    place: 'Issue Eight',
+    category: 'magazine',
+    images: magazineImages('astraea', 'poster-1').length
+      ? magazineImages('astraea', 'poster-1')
+      : ['/media/posters/poster-1.jpg'],
+  },
+  {
+    id: 'hush-magazine',
+    year: '2025',
+    title: 'Hush Magazine — LOST//FOUND',
+    gallery: 'Hush Magazine',
+    place: 'Issue 001',
+    category: 'magazine',
+    images: magazineImages('hush', 'nana-nyc').length
+      ? magazineImages('hush', 'nana-nyc')
+      : ['/media/posters/nana-nyc.jpg'],
+  },
+  {
+    id: 'spellbinder',
+    year: '2026',
+    title: 'Spellbinder Magazine',
+    gallery: 'Spellbinder Magazine',
+    place: 'Spring 2026',
+    category: 'magazine',
+    images: magazineImages('spellbinder', 'paris').length
+      ? magazineImages('spellbinder', 'paris')
+      : ['/media/posters/paris-poster.png'],
+  },
+  {
+    id: 'wildscape',
+    year: '2025',
+    title: 'Wildscape Literary Journal',
+    gallery: 'Wildscape Literary Journal',
+    place: 'Ongoing',
+    category: 'magazine',
+    images: magazineImages('wildscape', 'fish').length
+      ? magazineImages('wildscape', 'fish')
+      : ['/media/the-fish.png'],
+  },
+  {
+    id: 'onart',
+    year: '2025',
+    title: 'Onart Magazine',
+    gallery: 'Onart Magazine',
+    place: 'Feature',
+    category: 'magazine',
+    images: magazineImages('onart', 'itaewon').length
+      ? magazineImages('onart', 'itaewon')
+      : ['/media/posters/itaewon-poster.png'],
+  },
+]);
+
+function sortExhibitions(entries: ExhibitionEntry[]): ExhibitionEntry[] {
+  const senses = entries.filter((e) => e.id === 'senses');
+  const rest = entries
+    .filter((e) => e.id !== 'senses' && !e.year.startsWith('2024'))
+    .sort((a, b) => a.title.localeCompare(b.title, 'en', { sensitivity: 'base' }));
+  return [...senses, ...rest];
+}
+
+export const publicationsList: LinkItem[] = [];
+
+export const researchList: LinkItem[] = [];
 
 export const magazines = [
   { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls of Leavings', image: '/media/posters/poster-1.jpg' },
@@ -126,18 +316,6 @@ export const magazines = [
 
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
 
-export const exhibitions = [
-  { image: "/media/exhibitions/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
-  { image: "/media/exhibitions/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12 & 13", year: "2024–2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
-  { image: "/media/exhibitions/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
-  { image: "/media/exhibitions/holy-london-1.jpg", title: "The Holy Art – London", year: "2025", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2025", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ONLINE", subtitle: "FEATURED ARTIST SHOWCASE" },
-  { image: "/media/exhibitions/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
-];
-
 export interface ExhibitionItem {
   year: string;
   title: string;
@@ -147,18 +325,20 @@ export interface ExhibitionItem {
 }
 
 export const soloExhibitions: ExhibitionItem[] = [
-  { year: "2025", title: "IM INSA", venue: "Insadong", city: "Seoul", country: "South Korea" },
+  { year: '2025', title: 'IM INSA', venue: 'Insadong', city: 'Seoul', country: 'South Korea' },
 ];
 
 export const groupExhibitions: ExhibitionItem[] = [
-  { year: "2026", title: "Contemporary Venice", venue: "Venice", city: "Venice", country: "Italy" },
-  { year: "2025", title: "Senses International Art Fair", venue: "Must Museum", city: "Lecce", country: "Italy" },
-  { year: "2024–2025", title: "Hechyeomoyeo 12 & 13", venue: "New York", city: "New York", country: "USA" },
-  { year: "2025", title: "KINSHIP × Hechyeomoyeo", venue: "Seoul", city: "Seoul", country: "South Korea" },
-  { year: "2025", title: "The Holy Art — London", venue: "London", city: "London", country: "UK" },
-  { year: "2025", title: "The Holy Art — Paris", venue: "Paris", city: "Paris", country: "France" },
-  { year: "2025", title: "DIMO × Verger Gallery", venue: "Verger Gallery", city: "Seoul", country: "South Korea" },
-  { year: "2025", title: "Luna Grande Art", venue: "Online", city: "", country: "" },
+  { year: '2026', title: 'Contemporary Venice', venue: 'Venice', city: 'Venice', country: 'Italy' },
+  { year: '2025', title: 'Senses International Art Fair', venue: 'Must Museum', city: 'Lecce', country: 'Italy' },
+  { year: '2025', title: 'Hechyeomoyeo 13', venue: 'The Living Gallery', city: 'New York', country: 'USA' },
+  { year: '2026', title: 'Hechyeomoyeo 14', venue: 'Chinatown Garden', city: 'Washington, DC', country: 'USA' },
+  { year: '2025', title: 'Hechyeomoyeo Mexico', venue: 'Tnumbra Gallery', city: 'Mexicali', country: 'Mexico' },
+  { year: '2025', title: 'KINSHIP × Hechyeomoyeo', venue: 'Seoul', city: 'Seoul', country: 'South Korea' },
+  { year: '2025', title: 'The Holy Art — London', venue: 'London', city: 'London', country: 'UK' },
+  { year: '2025', title: 'The Holy Art — Paris', venue: 'Paris', city: 'Paris', country: 'France' },
+  { year: '2025', title: 'DIMO × Verger Gallery', venue: 'Verger Gallery', city: 'Seoul', country: 'South Korea' },
+  { year: '2025', title: 'Luna Grande Art', venue: 'Istanbul', city: 'Istanbul', country: 'Turkey' },
 ];
 
 export interface PublicationItem {

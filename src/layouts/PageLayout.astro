@@ -301,7 +301,7 @@ const menuItems: { key: string; href: string; index: string }[] = [
           ))}
         </div>
       </header>
-      <div class="site-main-column min-w-0 pt-14 lg:pt-14 lg:pl-[4.5rem]">
+      <div class="site-main-column min-w-0 pt-14 lg:pt-14">
         <main class="tabular-main motion-main">
           <slot name="content" />
         </main>
@@ -316,6 +316,8 @@ const menuItems: { key: string; href: string; index: string }[] = [
   import { initLangSwitch, syncLangHrefs, syncLangToggle, restoreLangScroll } from "../scripts/lang-switch";
   import { initTabView, resetTabView } from "../scripts/tab-view";
   import { resetGlobalLightbox } from "../scripts/lightbox";
+  import { initArtViewToggle, resetArtViewToggle } from "../scripts/art-view-toggle";
+  import { initExhibitionFilter, resetExhibitionFilter } from "../scripts/exhibition-filter";
 
   function initDrawer() {
     const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -375,6 +377,8 @@ const menuItems: { key: string; href: string; index: string }[] = [
     initLangSwitch();
     initTabView();
     initMotion();
+    initArtViewToggle();
+    initExhibitionFilter();
     restoreLangScroll();
   }
 
@@ -396,6 +400,8 @@ const menuItems: { key: string; href: string; index: string }[] = [
     });
     resetGlobalLightbox();
     resetTabView();
+    resetArtViewToggle();
+    resetExhibitionFilter();
     bootPageScripts();
   });
 

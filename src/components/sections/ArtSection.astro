@@ -12,9 +12,14 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="art" class="scroll-section">
+<section id="art" class="scroll-section art-section--separated utero-layered" data-art-section>
   <div class="mag-shell">
     <MagazineSectionHeader num="II" eyebrow={l.artTag} title={l.nav.art} />
+
+    <div class="art-view-toggle scroll-reveal" role="group" aria-label="Art layout">
+      <button type="button" class="art-view-toggle__btn is-active" data-art-view="separated">{l.artViewSeparated}</button>
+      <button type="button" class="art-view-toggle__btn" data-art-view="unified">{l.artViewUnified}</button>
+    </div>
   </div>
 
   {artworks.map((p, i) => (
@@ -54,8 +59,8 @@ const l = t[locale];
   ))}
 </section>
 
-<style>
-  .mag-art-piece {
-    padding-block: clamp(2rem, 5vw, 3rem);
-  }
-</style>
+<script>
+  import { initArtViewToggle } from "../../scripts/art-view-toggle";
+  initArtViewToggle();
+  document.addEventListener("astro:page-load", initArtViewToggle);
+</script>

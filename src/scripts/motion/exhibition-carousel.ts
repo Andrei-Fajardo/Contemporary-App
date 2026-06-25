@@ -295,6 +295,24 @@ function bindCarousel(root: HTMLElement): void {
       startAutoAnim(state);
     }
   }).observe(track);
+
+  const seeMoreBtn = root.querySelector<HTMLButtonElement>("[data-carousel-see-more]");
+  if (seeMoreBtn && seeMoreBtn.dataset.seeMoreBound !== "true") {
+    seeMoreBtn.dataset.seeMoreBound = "true";
+    seeMoreBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      root.classList.add("is-expanded");
+      root.querySelectorAll(".exhibition-carousel__slide.is-collapsed").forEach((slide) => {
+        slide.classList.remove("is-collapsed");
+      });
+      seeMoreBtn.hidden = true;
+      requestAnimationFrame(() => {
+        updateButtons(state);
+        if (!atEnd(state)) startAutoAnim(state);
+      });
+    });
+  }
 }
 
 export function initExhibitionCarousels(): void {

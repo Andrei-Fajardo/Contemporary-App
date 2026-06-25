@@ -1,12 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400&family=Forum&family=Inter:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.cdnfonts.com/css/armelie');
+@import url('https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400&family=Forum&family=Inter:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
 @import "./chaos.css";
 @import "./editorial-magazine.css";
+@import "./utero.css";
 
-/* Editorial typography — Forum (heads) + Inter (body) */
+/* Editorial typography — Forum (heads) + Inter (body) + Armelie (cursive name) */
 :root {
   color-scheme: light only;
+  --font-handwriting: "Armelie", "Segoe Script", cursive;
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-editorial: "Libre Baskerville", Georgia, serif;
   --font-heading: "Forum", Georgia, "Times New Roman", serif;

@@ -4,36 +4,31 @@ import type { ExhibitionEntry } from '../data/content';
 
 interface Props {
   entries: ExhibitionEntry[];
-  expandLabel?: string;
+  seeMoreLabel?: string;
 }
 
-const { entries, expandLabel = 'View materials' } = Astro.props;
+const { entries, seeMoreLabel = 'See more' } = Astro.props;
 ---
 
 <div class="exhibition-accordion editorial-divider-list">
   {entries.map((entry) => (
-    <details class="exhibition-accordion__item scroll-reveal group">
+    <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
       <summary class="exhibition-accordion__summary">
         <span class="exhibition-accordion__year">{entry.year}</span>
         <span class="exhibition-accordion__title">{entry.title}</span>
         <span class="exhibition-accordion__meta">{entry.gallery} · {entry.place}</span>
-        {entry.kind === 'museum' && (
-          <span class="exhibition-accordion__badge">Museum</span>
-        )}
-        <span class="exhibition-accordion__see-more">{expandLabel} →</span>
+        <span class="exhibition-accordion__see-more">{seeMoreLabel} →</span>
       </summary>
       <div class="exhibition-accordion__panel">
-        {entry.note && (
-          <p class="content-prose text-ink-60 mb-6">{entry.note}</p>
-        )}
         {entry.images.length > 0 && (
           <ExhibitionCarousel
             id={entry.id}
             images={entry.images}
             alt={entry.title}
+            maxVisible={4}
+            seeMoreLabel={seeMoreLabel}
           />
         )}
-        <span class="exhibition-accordion__kind">{entry.kind}</span>
       </div>
     </details>
   ))}
@@ -114,21 +109,12 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     transition: color 0.3s var(--ease-editorial);
   }
 
-  .exhibition-accordion__summary:hover .exhibition-accordion__title {
-    color: var(--ink);
-  }
-
   .exhibition-accordion__meta {
     grid-column: 2;
     font-family: var(--font-body);
     font-size: clamp(0.9375rem, 1vw, 1.0625rem);
     color: var(--ink-55);
-    font-style: italic;
     transition: color 0.3s var(--ease-editorial);
-  }
-
-  .exhibition-accordion__summary:hover .exhibition-accordion__meta {
-    color: var(--ink-65);
   }
 
   .exhibition-accordion__see-more {
@@ -147,34 +133,6 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
   .exhibition-accordion__summary:hover .exhibition-accordion__see-more,
   .exhibition-accordion__item.is-expanded .exhibition-accordion__see-more {
     color: var(--ink);
-  }
-
-  .exhibition-accordion__kind {
-    display: inline-block;
-    margin-top: 1rem;
-    font-size: 0.625rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-45);
-  }
-
-  .exhibition-accordion__badge {
-    grid-column: 2;
-    justify-self: start;
-    font-size: 0.5625rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-55);
-    border: 1px solid var(--border-subtle);
-    padding: 0.15rem 0.45rem;
-    border-radius: var(--radius-lang-btn);
-    transition:
-      border-color 0.3s var(--ease-editorial),
-      background 0.3s var(--ease-editorial);
-  }
-
-  .exhibition-accordion__summary:hover .exhibition-accordion__badge {
-    border-color: var(--border-section);
   }
 
   @media (max-width: 1023px) {

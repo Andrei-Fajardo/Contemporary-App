@@ -12,23 +12,17 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="about" class="scroll-section">
+<section id="about" class="scroll-section utero-layered">
   <div class="mag-shell">
     <MagazineSectionHeader num="I" eyebrow={l.aboutTag} title={l.nav.about} />
 
     <div class="mag-grid">
-      <div class="mag-col-7 scroll-reveal">
+      <div class="mag-col-12 scroll-reveal">
+        <h2 class="about-name-cursive">Anna Dauyl Rockswell</h2>
         <p class="content-prose--sans text-ink-55 mb-4">{l.intro}</p>
         <div class="content-prose space-y-4">
           <p>{l.bio}</p>
         </div>
-      </div>
-
-      <div class="mag-col-5 scroll-reveal">
-        <p class="mag-section-header__eyebrow mb-3">{l.artistStatement}</p>
-        <p class="content-prose italic text-ink-70" style="font-family: var(--font-editorial); line-height: 1.65;">
-          {siteCopy.about.statement}
-        </p>
       </div>
 
       <div class="mag-col-12 scroll-reveal">

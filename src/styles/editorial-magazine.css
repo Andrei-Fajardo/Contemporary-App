@@ -12,51 +12,21 @@
   --accent-red-bright: #C41E3A;
 }
 
-/* ── Collapsible editorial index (sidebar) ── */
+/* ── Always-expanded editorial index (sidebar) ── */
 .editorial-magazine .desktop-sidebar {
-  width: var(--mag-rail);
-  transition: width 0.5s var(--ease-editorial);
-  overflow: hidden;
+  width: var(--mag-rail-expanded);
+  overflow: visible;
   border-right: 1px solid var(--border-section);
 }
 
-.editorial-magazine .desktop-sidebar:hover,
-.editorial-magazine .desktop-sidebar:focus-within {
-  width: var(--mag-rail-expanded);
-}
-
 .editorial-magazine .desktop-sidebar__monogram {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  letter-spacing: 0.08em;
-  color: var(--ink);
-  padding: 1.5rem 0;
-  text-align: center;
-  opacity: 1;
-  transition: opacity 0.35s var(--ease-editorial);
-}
-
-.editorial-magazine .desktop-sidebar:hover .desktop-sidebar__monogram,
-.editorial-magazine .desktop-sidebar:focus-within .desktop-sidebar__monogram {
-  opacity: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
+  display: none;
 }
 
 .editorial-magazine .desktop-sidebar__brand {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s var(--ease-editorial);
-  padding: 1.5rem 1.25rem 1rem !important;
-  min-width: var(--mag-rail-expanded);
-}
-
-.editorial-magazine .desktop-sidebar:hover .desktop-sidebar__brand,
-.editorial-magazine .desktop-sidebar:focus-within .desktop-sidebar__brand {
   opacity: 1;
   pointer-events: auto;
+  padding: 1.5rem 1.25rem 1rem !important;
 }
 
 .editorial-magazine .desktop-sidebar__index-label {
@@ -67,12 +37,6 @@
   color: var(--ink-45);
   margin-bottom: 1.25rem;
   padding-inline: 1.25rem;
-  opacity: 0;
-  transition: opacity 0.35s var(--ease-editorial);
-}
-
-.editorial-magazine .desktop-sidebar:hover .desktop-sidebar__index-label,
-.editorial-magazine .desktop-sidebar:focus-within .desktop-sidebar__index-label {
   opacity: 1;
 }
 
@@ -97,12 +61,6 @@
   color: var(--accent-red);
   min-width: 1.25rem;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.35s var(--ease-editorial);
-}
-
-.editorial-magazine .desktop-sidebar:hover .sidebar-nav-index,
-.editorial-magazine .desktop-sidebar:focus-within .sidebar-nav-index {
   opacity: 1;
 }
 
@@ -111,23 +69,11 @@
   border-bottom: 1px dotted var(--ink-25);
   margin: 0 0.35rem;
   transform: translateY(-0.15em);
-  opacity: 0;
-  transition: opacity 0.35s var(--ease-editorial);
-}
-
-.editorial-magazine .desktop-sidebar:hover .sidebar-nav-leader,
-.editorial-magazine .desktop-sidebar:focus-within .sidebar-nav-leader {
   opacity: 1;
 }
 
 .editorial-magazine .sidebar-nav-label {
   white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.35s var(--ease-editorial);
-}
-
-.editorial-magazine .desktop-sidebar:hover .sidebar-nav-label,
-.editorial-magazine .desktop-sidebar:focus-within .sidebar-nav-label {
   opacity: 1;
 }
 
@@ -141,22 +87,16 @@
 }
 
 .editorial-magazine .desktop-sidebar__footer {
-  opacity: 0;
-  min-width: var(--mag-rail-expanded);
-  transition: opacity 0.35s var(--ease-editorial);
-}
-
-.editorial-magazine .desktop-sidebar:hover .desktop-sidebar__footer,
-.editorial-magazine .desktop-sidebar:focus-within .desktop-sidebar__footer {
   opacity: 1;
+  min-width: var(--mag-rail-expanded);
 }
 
 .editorial-magazine .site-main-column {
-  padding-left: var(--mag-rail) !important;
+  padding-left: var(--mag-rail-expanded) !important;
 }
 
 .editorial-magazine .site-topbar {
-  left: var(--mag-rail);
+  left: var(--mag-rail-expanded);
 }
 
 /* ── Magazine grid shell ── */
