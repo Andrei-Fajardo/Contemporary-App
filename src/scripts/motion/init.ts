@@ -8,8 +8,9 @@ import { initExhibitionCarousels, resetExhibitionCarousels } from "./exhibition-
 import { initExhibitionAccordion, resetExhibitionAccordion } from "./exhibition-accordion";
 import { initNavHover, resetNavHover } from "./nav-hover";
 import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
-import { initPetalDrift, resetPetalDrift, bindPetalDriftTabListener } from "./petal-drift";
 import { initCursorTilt, resetCursorTilt, bindCursorTiltTabListener } from "./cursor-tilt";
+import { initArtViewToggle, resetArtViewToggle } from "../art-view-toggle";
+import { initExhibitionFilter, resetExhibitionFilter } from "../exhibition-filter";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
@@ -33,8 +34,9 @@ export function initMotion(): void {
   resetExhibitionAccordion();
   resetNavHover();
   resetGlobalLightbox();
-  resetPetalDrift();
   resetCursorTilt();
+  resetArtViewToggle();
+  resetExhibitionFilter();
 
   if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
     document.documentElement.classList.add("motion-reduced");
@@ -62,8 +64,8 @@ export function initMotion(): void {
   initExhibitionAccordion();
   initNavHover();
   initGlobalLightbox();
-  bindPetalDriftTabListener();
-  initPetalDrift();
   bindCursorTiltTabListener();
   initCursorTilt();
+  initArtViewToggle();
+  initExhibitionFilter();
 }

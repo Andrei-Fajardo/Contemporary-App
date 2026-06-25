@@ -9,7 +9,14 @@
   --chaos-radius: 0;
 }
 
-/* --- Decorative red splashes (leaf drift inside hero) --- */
+/* Pink/circle petal motion removed — grain-only aesthetic */
+.floating-petals,
+.chaos-splashes,
+.chaos-splash,
+.floating-petal {
+  display: none !important;
+}
+
 .hero-chaos {
   position: relative;
   overflow: visible;
@@ -568,16 +575,6 @@ html.motion-reduced .press-chaos__poster {
 .about-chaos__name {
   position: relative;
   display: inline-block;
-}
-
-.about-chaos__name::before {
-  content: "®";
-  position: absolute;
-  top: -0.15em;
-  right: -1.1em;
-  font-size: 0.45em;
-  color: var(--accent-red);
-  font-family: var(--font-mono);
 }
 
 .about-chaos__meta {

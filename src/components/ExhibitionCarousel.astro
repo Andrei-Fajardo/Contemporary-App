@@ -3,39 +3,21 @@ interface Props {
   images: string[];
   alt: string;
   id: string;
+  maxVisible?: number;
+  seeMoreLabel?: string;
 }
 
-const { images, alt, id } = Astro.props;
+const { images, alt, id, maxVisible = 4, seeMoreLabel = 'See more' } = Astro.props;
 const slides = images.length > 0 ? images : [];
+const hasMore = slides.length > maxVisible;
 ---
 
 {slides.length > 0 && (
-  <>
-  <div
-    class="exhibition-gallery-grid"
-    aria-label={`${alt} exhibition photos`}
-  >
-    {slides.map((src, i) => (
-      <figure class="exhibition-gallery-grid__item">
-        <div class="cursor-tilt">
-          <div class="cursor-tilt__surface exhibition-gallery-grid__tilt" data-cursor-tilt>
-            <img
-              src={src}
-              alt={`${alt} — photo ${i + 1}`}
-              loading="lazy"
-              decoding="async"
-              draggable="false"
-            />
-          </div>
-        </div>
-      </figure>
-    ))}
-  </div>
-
   <div
     class="exhibition-carousel"
     data-exhibition-carousel
     data-carousel-id={id}
+    data-max-visible={maxVisible}
     aria-roledescription="carousel"
     aria-label={`${alt} exhibition photos`}
   >
@@ -50,13 +32,13 @@ const slides = images.length > 0 ? images : [];
     <div class="exhibition-carousel__viewport" tabindex="0">
       <div class="exhibition-carousel__track">
         {slides.map((src, i) => (
-          <figure class="exhibition-carousel__slide">
+          <figure class:list={["exhibition-carousel__slide", hasMore && i >= maxVisible && "is-collapsed"]}>
             <div class="cursor-tilt h-full">
               <div class="cursor-tilt__surface exhibition-carousel__tilt h-full" data-cursor-tilt>
                 <img
                   src={src}
                   alt={`${alt} — photo ${i + 1}`}
-                  loading="eager"
+                  loading={i < maxVisible ? "eager" : "lazy"}
                   decoding="async"
                   fetchpriority={i < 2 ? "high" : "auto"}
                   draggable="false"
@@ -76,13 +58,18 @@ const slides = images.length > 0 ? images : [];
       <span aria-hidden="true">→</span>
     </button>
 
+    {hasMore && (
+      <button type="button" class="exhibition-carousel__see-more" data-carousel-see-more>
+        {seeMoreLabel}
+      </button>
+    )}
+
     {slides.length > 1 && (
       <p class="exhibition-carousel__hint font-mono text-[9px] tracking-[0.2em] uppercase text-ink-35">
-        Drag or use arrows · stops at last image
+        Drag or use arrows
       </p>
     )}
   </div>
-  </>
 )}
 
 <script>

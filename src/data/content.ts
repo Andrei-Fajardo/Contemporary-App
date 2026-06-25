@@ -1,52 +1,40 @@
+export type ExhibitionCategory = 'physical' | 'digital' | 'magazine';
+
 export interface ExhibitionEntry {
   id: string;
   year: string;
   title: string;
   gallery: string;
   place: string;
-  kind: 'solo' | 'group' | 'museum';
+  category: ExhibitionCategory;
   images: string[];
-  note?: string;
 }
 
-/** Chronological exhibition list — posters & venue imagery only (no personal portraits). */
-export const exhibitionEntries: ExhibitionEntry[] = [
+export interface LinkItem {
+  title: string;
+  href: string;
+  year?: string;
+}
+
+/** Senses first, then alphabetical by title. No 2024-dated exhibitions. */
+export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
   {
     id: 'senses',
     year: '2025',
     title: 'Senses International Art Fair',
     gallery: 'MUST Museum',
     place: 'Lecce, Italy',
-    kind: 'museum',
+    category: 'physical',
     images: ['/media/exhibitions/senses-main.jpg', '/media/exhibitions/senses-1.jpg', '/media/exhibitions/senses-2.jpg'],
-    note: 'The only museum presentation in the exhibition record.',
   },
   {
-    id: 'im-insa',
-    year: '2025',
-    title: 'IM INSA',
-    gallery: 'Insadong',
-    place: 'Seoul, South Korea',
-    kind: 'solo',
-    images: ['/media/exhibitions/im-insa.jpg'],
-  },
-  {
-    id: 'hechyeomoyeo-nyc',
-    year: '2024–2025',
-    title: 'Hechyeomoyeo 12 & 13',
-    gallery: 'Hechyeomoyeo',
-    place: 'New York, USA',
-    kind: 'group',
-    images: ['/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg', '/media/exhibitions/hech-3.jpg', '/media/exhibitions/hech-4.jpg'],
-  },
-  {
-    id: 'kinship',
-    year: '2025',
-    title: 'KINSHIP × Hechyeomoyeo',
-    gallery: 'Collaborative Exhibition',
-    place: 'Seoul, South Korea',
-    kind: 'group',
-    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg', '/media/exhibitions/kinship-3.jpg'],
+    id: 'contemporary-venice',
+    year: '2026',
+    title: 'Contemporary Venice',
+    gallery: 'Contemporary Venice',
+    place: 'Venice, Italy',
+    category: 'physical',
+    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
   },
   {
     id: 'dimo',
@@ -54,45 +42,71 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     title: 'DIMO × Verger Gallery',
     gallery: 'Verger Gallery',
     place: 'Seoul, South Korea',
-    kind: 'group',
-    images: ['/media/exhibitions/dimo-main.jpg', '/media/exhibitions/dimo-1.jpg', '/media/exhibitions/dimo-2.jpg'],
+    category: 'physical',
+    images: ['/media/press/light-that-remains.jpg', '/media/exhibitions/dimo-main.jpg', '/media/exhibitions/dimo-1.jpg', '/media/exhibitions/dimo-2.jpg'],
   },
   {
-    id: 'holy-paris',
+    id: 'hechyeomoyeo-13',
     year: '2025',
-    title: 'The Holy Art — Paris',
-    gallery: 'The Holy Art',
-    place: 'Paris, France',
-    kind: 'group',
-    images: ['/media/posters/paris-poster.png', '/media/exhibitions/holy-paris-main.jpg', '/media/exhibitions/holy-paris-1.webp'],
+    title: 'Hechyeomoyeo 13',
+    gallery: 'Hechyeomoyeo',
+    place: 'New York, USA',
+    category: 'physical',
+    images: ['/media/press/nyc-hcmy.jpg', '/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg'],
   },
   {
-    id: 'holy-london',
+    id: 'hechyeomoyeo-14',
     year: '2025',
-    title: 'The Holy Art — London',
-    gallery: 'The Holy Art',
-    place: 'London, UK',
-    kind: 'group',
-    images: ['/media/exhibitions/holy-london-1.jpg', '/media/exhibitions/holy-london-2.jpg'],
-    note: 'Exhibition documentation & promotional materials.',
+    title: 'Hechyeomoyeo 14',
+    gallery: 'Hechyeomoyeo',
+    place: 'New York, USA',
+    category: 'physical',
+    images: ['/media/exhibitions/hech-3.jpg', '/media/exhibitions/hech-4.jpg'],
+  },
+  {
+    id: 'im-insa',
+    year: '2025',
+    title: 'IM INSA',
+    gallery: 'Insadong',
+    place: 'Seoul, South Korea',
+    category: 'physical',
+    images: ['/media/press/with-iam-insa.jpg', '/media/exhibitions/im-insa.jpg'],
+  },
+  {
+    id: 'itaewon-film-festival',
+    year: '2025',
+    title: 'Itaewon Film Festival',
+    gallery: 'Bokwang Theater',
+    place: 'Seoul, South Korea',
+    category: 'physical',
+    images: ['/media/press/itaewon-film-festival.png', '/media/feature/itaewon-film-fest.jpg', '/media/feature/itaewon-1.jpg', '/media/feature/itaewon-2.jpg'],
+  },
+  {
+    id: 'kinship',
+    year: '2025',
+    title: 'KINSHIP × Hechyeomoyeo',
+    gallery: 'Collaborative Exhibition',
+    place: 'Seoul, South Korea',
+    category: 'physical',
+    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg', '/media/exhibitions/kinship-3.jpg'],
   },
   {
     id: 'luna',
     year: '2025',
     title: 'Luna Grande Art',
     gallery: 'Luna Grande Art',
-    place: 'Online',
-    kind: 'group',
-    images: ['/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-1.jpg', '/media/exhibitions/luna-2.jpg'],
+    place: 'Istanbul, Turkey',
+    category: 'digital',
+    images: ['/media/press/istanbul-art-show.jpg', '/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-1.jpg', '/media/exhibitions/luna-2.jpg'],
   },
   {
-    id: 'venice',
-    year: '2026',
-    title: 'Contemporary Venice',
-    gallery: 'Contemporary Venice',
-    place: 'Venice, Italy',
-    kind: 'group',
-    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
+    id: 'petit-masterpiece',
+    year: '2025',
+    title: 'PETIT Masterpiece',
+    gallery: 'Ahmad Shariff Art Gallery',
+    place: 'Claremont, California, USA',
+    category: 'physical',
+    images: ['/media/press/petit-masterpiece.jpg'],
   },
   {
     id: 'soul-gift',
@@ -100,9 +114,8 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     title: 'Soul Gift',
     gallery: 'Clover Gallery',
     place: 'Virtual Exhibition',
-    kind: 'group',
+    category: 'digital',
     images: ['/media/virtual/clover-anna.jpg', '/media/virtual/soul-gift.jpg', '/media/virtual/soul-gift-poster.png'],
-    note: 'Virtual exhibition at Clover Gallery — digital and material realities.',
   },
   {
     id: 'the-atrium',
@@ -110,11 +123,88 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     title: 'The Atrium',
     gallery: 'The Atrium',
     place: 'Virtual Exhibition',
-    kind: 'group',
+    category: 'digital',
     images: ['/media/virtual/the-atrium.jpg'],
-    note: 'A virtual space exploring architectural memory and digital presence.',
   },
-];
+  {
+    id: 'holy-london',
+    year: '2025',
+    title: 'The Holy Art — London',
+    gallery: 'The Holy Art',
+    place: 'London, UK',
+    category: 'physical',
+    images: ['/media/press/vandals-edge-of-now.jpg', '/media/exhibitions/holy-london-1.jpg', '/media/exhibitions/holy-london-2.jpg'],
+  },
+  {
+    id: 'holy-paris',
+    year: '2025',
+    title: 'The Holy Art — Paris',
+    gallery: 'The Holy Art',
+    place: 'Paris, France',
+    category: 'physical',
+    images: ['/media/press/paris-vandals.png', '/media/posters/paris-poster.png', '/media/exhibitions/holy-paris-main.jpg', '/media/exhibitions/holy-paris-1.webp'],
+  },
+  {
+    id: 'astraea-zine',
+    year: '2025',
+    title: 'Astraea Zine — Dreamscape',
+    gallery: 'Astraea Zine',
+    place: 'Issue Eight',
+    category: 'magazine',
+    images: ['/media/posters/poster-1.jpg'],
+  },
+  {
+    id: 'hush-magazine',
+    year: '2025',
+    title: 'Hush Magazine — LOST//FOUND',
+    gallery: 'Hush Magazine',
+    place: 'Issue 001',
+    category: 'magazine',
+    images: ['/media/posters/nana-nyc.jpg'],
+  },
+  {
+    id: 'spellbinder',
+    year: '2026',
+    title: 'Spellbinder Magazine',
+    gallery: 'Spellbinder Magazine',
+    place: 'Spring 2026',
+    category: 'magazine',
+    images: ['/media/posters/paris-poster.png'],
+  },
+  {
+    id: 'wildscape',
+    year: '2025',
+    title: 'Wildscape Literary Journal',
+    gallery: 'Wildscape Literary Journal',
+    place: 'Ongoing',
+    category: 'magazine',
+    images: ['/media/the-fish.png'],
+  },
+  {
+    id: 'onart',
+    year: '2025',
+    title: 'Onart Magazine',
+    gallery: 'Onart Magazine',
+    place: 'Feature',
+    category: 'magazine',
+    images: ['/media/posters/itaewon-poster.png'],
+  },
+]);
+
+function sortExhibitions(entries: ExhibitionEntry[]): ExhibitionEntry[] {
+  const senses = entries.filter((e) => e.id === 'senses');
+  const rest = entries
+    .filter((e) => e.id !== 'senses')
+    .sort((a, b) => a.title.localeCompare(b.title, 'en', { sensitivity: 'base' }));
+  return [...senses, ...rest];
+}
+
+export const publicationsList: LinkItem[] = [];
+
+export const researchList: LinkItem[] = [];
+
+/** Press coverage — hyperlinked list (posters live under Exhibition History). */
+export const pressLinks: LinkItem[] = [];
 
 export const magazines = [
   { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls of Leavings', image: '/media/posters/poster-1.jpg' },
@@ -126,18 +216,6 @@ export const magazines = [
 
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
 
-export const exhibitions = [
-  { image: "/media/exhibitions/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
-  { image: "/media/exhibitions/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12 & 13", year: "2024–2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
-  { image: "/media/exhibitions/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
-  { image: "/media/exhibitions/holy-london-1.jpg", title: "The Holy Art – London", year: "2025", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2025", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ONLINE", subtitle: "FEATURED ARTIST SHOWCASE" },
-  { image: "/media/exhibitions/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
-];
-
 export interface ExhibitionItem {
   year: string;
   title: string;
@@ -147,18 +225,19 @@ export interface ExhibitionItem {
 }
 
 export const soloExhibitions: ExhibitionItem[] = [
-  { year: "2025", title: "IM INSA", venue: "Insadong", city: "Seoul", country: "South Korea" },
+  { year: '2025', title: 'IM INSA', venue: 'Insadong', city: 'Seoul', country: 'South Korea' },
 ];
 
 export const groupExhibitions: ExhibitionItem[] = [
-  { year: "2026", title: "Contemporary Venice", venue: "Venice", city: "Venice", country: "Italy" },
-  { year: "2025", title: "Senses International Art Fair", venue: "Must Museum", city: "Lecce", country: "Italy" },
-  { year: "2024–2025", title: "Hechyeomoyeo 12 & 13", venue: "New York", city: "New York", country: "USA" },
-  { year: "2025", title: "KINSHIP × Hechyeomoyeo", venue: "Seoul", city: "Seoul", country: "South Korea" },
-  { year: "2025", title: "The Holy Art — London", venue: "London", city: "London", country: "UK" },
-  { year: "2025", title: "The Holy Art — Paris", venue: "Paris", city: "Paris", country: "France" },
-  { year: "2025", title: "DIMO × Verger Gallery", venue: "Verger Gallery", city: "Seoul", country: "South Korea" },
-  { year: "2025", title: "Luna Grande Art", venue: "Online", city: "", country: "" },
+  { year: '2026', title: 'Contemporary Venice', venue: 'Venice', city: 'Venice', country: 'Italy' },
+  { year: '2025', title: 'Senses International Art Fair', venue: 'Must Museum', city: 'Lecce', country: 'Italy' },
+  { year: '2025', title: 'Hechyeomoyeo 13', venue: 'New York', city: 'New York', country: 'USA' },
+  { year: '2025', title: 'Hechyeomoyeo 14', venue: 'New York', city: 'New York', country: 'USA' },
+  { year: '2025', title: 'KINSHIP × Hechyeomoyeo', venue: 'Seoul', city: 'Seoul', country: 'South Korea' },
+  { year: '2025', title: 'The Holy Art — London', venue: 'London', city: 'London', country: 'UK' },
+  { year: '2025', title: 'The Holy Art — Paris', venue: 'Paris', city: 'Paris', country: 'France' },
+  { year: '2025', title: 'DIMO × Verger Gallery', venue: 'Verger Gallery', city: 'Seoul', country: 'South Korea' },
+  { year: '2025', title: 'Luna Grande Art', venue: 'Online', city: 'Istanbul', country: 'Turkey' },
 ];
 
 export interface PublicationItem {
@@ -170,83 +249,6 @@ export interface PublicationItem {
 }
 
 export const publications: PublicationItem[] = [];
-
-export interface PressItem {
-  id: string;
-  title: string;
-  venue: string;
-  place: string;
-  date: string;
-  image: string;
-}
-
-/** Exhibition press & promotional posters — image paths match `public/media/press/` filenames. */
-export const pressItems: PressItem[] = [
-  {
-    id: 'with-iam-insa',
-    title: 'Hechyeomoyeo — With IAM Insa',
-    venue: '2025 Insadong Antique & Art Fair',
-    place: 'Annyeong Insa-dong, Insadong, Seoul, South Korea',
-    date: 'September 11–14, 2024',
-    image: '/media/press/with-iam-insa.jpg',
-  },
-  {
-    id: 'nyc-hcmy',
-    title: 'New York Art Exhibition — HCMY #12',
-    venue: 'The Living Gallery',
-    place: '1094 Broadway, Bushwick, Brooklyn, New York, USA',
-    date: 'October 11–26, 2025',
-    image: '/media/press/nyc-hcmy.jpg',
-  },
-  {
-    id: 'paris-vandals',
-    title: 'Paris Art Exhibition 2025 — The Vandals',
-    venue: 'Of Nazareth Gallery',
-    place: '46–48 Rue Notre Dame de Nazareth, Le Marais, Paris, France',
-    date: 'October 17–20, 2025',
-    image: '/media/press/paris-vandals.png',
-  },
-  {
-    id: 'vandals-edge-of-now',
-    title: 'The Vandals — Edge of Now',
-    venue: 'The Koppel Project',
-    place: "157 Regent's Park Road, Camden Town, London, United Kingdom",
-    date: 'October 23–26, 2025',
-    image: '/media/press/vandals-edge-of-now.jpg',
-  },
-  {
-    id: 'itaewon-film-festival',
-    title: 'Itaewon Film Festival 2025',
-    venue: 'Bokwang Theater',
-    place: 'Itaewon, Seoul, South Korea',
-    date: 'November 13–16, 2025',
-    image: '/media/press/itaewon-film-festival.png',
-  },
-  {
-    id: 'istanbul-art-show',
-    title: 'Istanbul Art Show',
-    venue: 'Luna Grande Art',
-    place: 'Rasimpaşa Mah. Bayramyeri Sok. No:15/1, Kadıköy, Istanbul, Turkey',
-    date: 'November 15–21, 2025',
-    image: '/media/press/istanbul-art-show.jpg',
-  },
-  {
-    id: 'petit-masterpiece',
-    title: 'PETIT Masterpiece',
-    venue: 'Ahmad Shariff Art Gallery',
-    place: 'Claremont, California, USA',
-    date: 'December 6, 2025',
-    image: '/media/press/petit-masterpiece.jpg',
-  },
-  {
-    id: 'light-that-remains',
-    title: 'Light that Remains',
-    venue: 'D.I.M.O × Verger Gallery',
-    place: 'Yeonnam-dong, Seoul, South Korea',
-    date: 'December 14, 2025 – January 10, 2026',
-    image: '/media/press/light-that-remains.jpg',
-  },
-];
 
 export interface ResearchItem {
   title: string;
