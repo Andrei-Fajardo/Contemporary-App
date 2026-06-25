@@ -9,7 +9,10 @@ export const siteCopy = {
     basedIn: "Writer & Artist based in Seoul and Almaty",
   },
   about: {
-    literaryGhosts: [
+    influences: [
+      "Mental catharsis",
+    ],
+    inspiration: [
       "Anne Sexton",
       "Sylvia Plath",
       "Chuck Palahniuk",
@@ -50,4 +53,8 @@ export const siteCopy = {
     { label: "ARKO (Korea)", href: "https://www.arko.or.kr/eng/index" },
     { label: "DACS (UK)", href: "https://www.dacs.org.uk/" },
   ],
+  gallery: {
+    label: "Gallery representation",
+    note: "For gallery inquiries and representation, please contact via email.",
+  },
 };

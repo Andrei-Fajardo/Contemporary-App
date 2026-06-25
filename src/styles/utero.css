@@ -19,8 +19,12 @@
 }
 
 @media (max-width: 1023px) {
-  .grain-overlay {
-    display: none;
+  .grain-overlay::before {
+    opacity: 0.028;
+  }
+
+  .grain-overlay::after {
+    opacity: 0.016;
   }
 }
 

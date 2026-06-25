@@ -2,6 +2,7 @@
 import EditorialLinkList from '../EditorialLinkList.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { publicationsList } from '../../data/content';
+import { siteCopy } from '../../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
@@ -17,6 +18,57 @@ const l = t[locale];
     <h2 class="scroll-reveal type-display text-3xl md:text-5xl lg:text-6xl text-ink mb-6">
       {l.publicationsHeading}
     </h2>
-    <EditorialLinkList items={publicationsList} emptyMessage={l.listForthcoming} />
+    <p class="scroll-reveal content-prose text-ink-60 max-w-[58ch] mb-10 md:mb-12">
+      {l.publicationsIntro}
+    </p>
+
+    <div class="publications-section__groups space-y-12 md:space-y-14">
+      <div class="scroll-reveal">
+        <h3 class="type-heading text-[0.6875rem] text-ink-50 mb-5">{l.novelsLabel}</h3>
+        <ul class="editorial-link-list">
+          {siteCopy.publications.novels.map((item) => (
+            <li>
+              <span>{item.title}</span>
+              <span class="editorial-link-list__meta editorial-link-list__badge">{l.comingSoon}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="scroll-reveal">
+        <h3 class="type-heading text-[0.6875rem] text-ink-50 mb-5">{l.poetryLabel}</h3>
+        {siteCopy.publications.poetry.length > 0 ? (
+          <ul class="editorial-link-list">
+            {siteCopy.publications.poetry.map((item) => (
+              <li>
+                <span>{item.title}</span>
+                {item.status === 'coming-soon' && (
+                  <span class="editorial-link-list__meta editorial-link-list__badge">{l.comingSoon}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="content-prose text-ink-55">{l.listForthcoming}</p>
+        )}
+      </div>
+
+      {publicationsList.length > 0 && (
+        <div class="scroll-reveal">
+          <h3 class="type-heading text-[0.6875rem] text-ink-50 mb-5">{l.booksMonographs}</h3>
+          <EditorialLinkList items={publicationsList} />
+        </div>
+      )}
+    </div>
   </div>
 </section>
+
+<style>
+  .editorial-link-list__badge {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+  }
+</style>

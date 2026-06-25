@@ -1,7 +1,10 @@
 ---
 import EducationTimeline from '../EducationTimeline.astro';
+import LazyImage from '../LazyImage.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { siteCopy } from '../../data/site-copy';
+import fs from 'node:fs';
+import path from 'node:path';
 
 interface Props {
   locale?: LocaleKey;
@@ -9,6 +12,9 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+
+const headshotPath = path.join(process.cwd(), 'public', 'media', 'headshot.jpg');
+const hasHeadshot = fs.existsSync(headshotPath);
 ---
 
 <section id="about" class="scroll-section section-gap about-chaos utero-layered">
@@ -16,10 +22,30 @@ const l = t[locale];
     <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.aboutTag}</p>
 
     <div class="about-chaos__body">
-      <div class="scroll-reveal about-chaos__intro">
-        <p class="content-prose--sans text-ink-55 mb-6">{l.intro}</p>
-        <div class="content-prose space-y-5">
-          <p>{l.bio}</p>
+      <div class="about-chaos__profile scroll-reveal">
+        <div class="about-chaos__headshot">
+          {hasHeadshot ? (
+            <LazyImage
+              src="/media/headshot.jpg"
+              alt="Anna Dauyl Rockswell"
+              aspectRatio="3 / 4"
+              parallaxSpeed={0.12}
+              depthTarget={false}
+              eager
+              class="about-chaos__headshot-img"
+            />
+          ) : (
+            <div class="about-chaos__headshot-placeholder" aria-hidden="true">
+              <span class="about-chaos__headshot-monogram font-handwriting">A·R</span>
+            </div>
+          )}
+        </div>
+
+        <div class="about-chaos__intro">
+          <p class="content-prose--sans text-ink-55 mb-6">{l.intro}</p>
+          <div class="content-prose space-y-5">
+            <p>{l.bio}</p>
+          </div>
         </div>
       </div>
 
@@ -32,9 +58,83 @@ const l = t[locale];
             ))}
           </ul>
         </div>
+
+        <div>
+          <p class="section-eyebrow section-eyebrow--blood mb-4">{l.influencesLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.influences.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p class="section-eyebrow section-eyebrow--blood mb-4">{l.inspirationLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.inspiration.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <EducationTimeline label={l.education} />
     </div>
   </div>
 </section>
+
+<style>
+  .about-chaos__profile {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  @media (min-width: 768px) {
+    .about-chaos__profile {
+      grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  .about-chaos__headshot {
+    overflow: clip;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-placeholder);
+  }
+
+  .about-chaos__headshot-img :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .about-chaos__headshot-placeholder {
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      linear-gradient(165deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.06)),
+      var(--surface-placeholder);
+  }
+
+  .about-chaos__headshot-monogram {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    color: var(--ink-35);
+    line-height: 1;
+  }
+
+  .about-chaos__meta {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  @media (min-width: 768px) {
+    .about-chaos__meta {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

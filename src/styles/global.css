@@ -25,6 +25,7 @@
 
   /* Warm editorial canvas — dark ink splashes via .utero-layered, not full dark mode */
   --canvas: #f0eee9;
+  --grain-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --ink: #111111;
   --ink-muted: #555555;
   --ink-tertiary: #888888;
@@ -83,7 +84,7 @@ html {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/grain.gif');
+  background-image: var(--grain-texture, url('/grain.gif'));
   background-repeat: repeat;
   background-size: auto;
   opacity: 0.03;
@@ -95,7 +96,7 @@ html {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/grain.gif');
+  background-image: var(--grain-texture, url('/grain.gif'));
   background-repeat: repeat;
   background-size: auto;
   opacity: 0.02;
@@ -610,9 +611,13 @@ html::-webkit-scrollbar-thumb { background: #111111; }
     opacity: 0.01;
   }
 
-  /* Grain darkens the cream canvas on iOS; keep mobile flat and light */
-  .grain-overlay {
-    display: none;
+  /* Grain on mobile — reduced intensity for 35mm film look without darkening iOS canvas */
+  .grain-overlay::before {
+    opacity: 0.012;
+  }
+
+  .grain-overlay::after {
+    opacity: 0.008;
   }
 
   /* Ensure touch targets are at least 44x44px */
@@ -659,8 +664,9 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: light only;
-    --canvas: #f0eee9;
-    --ink: #111111;
+  --canvas: #f0eee9;
+  --grain-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --ink: #111111;
     --ink-muted: #555555;
     --ink-tertiary: #888888;
     --ink-inverse: #ffffff;

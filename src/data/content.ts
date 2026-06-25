@@ -283,7 +283,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     category: 'magazine',
     images: magazineImages('wildscape', 'fish').length
       ? magazineImages('wildscape', 'fish')
-      : ['/media/the-fish.png'],
+      : ['/media/posters/poster-1.jpg'],
   },
   {
     id: 'onart',
@@ -332,7 +332,7 @@ export const magazines = [
   { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls of Leavings', image: '/media/posters/poster-1.jpg' },
   { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/posters/nana-nyc.jpg' },
   { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/posters/paris-poster.png' },
-  { title: 'Wildsape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
+  { title: 'Wildscape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/posters/poster-1.jpg' },
   { title: 'Onart Magazine', issue: 'TBD', feature: 'Featured', image: '/media/posters/itaewon-poster.png' },
 ];
 

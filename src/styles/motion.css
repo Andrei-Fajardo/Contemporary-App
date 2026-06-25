@@ -865,12 +865,12 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
   @keyframes scroll-mask-reveal {
     0% {
-      clip-path: inset(12% 12% 12% 12% round 6px);
+      clip-path: inset(12% 12% 12% 12%);
       filter: blur(6px);
       opacity: 0.35;
     }
     100% {
-      clip-path: inset(0% 0% 0% 0% round 0px);
+      clip-path: inset(0% 0% 0% 0%);
       filter: blur(0px);
       opacity: 1;
     }
