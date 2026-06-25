@@ -63,10 +63,30 @@
 }
 
 /* Typography roles mapped to reference fonts */
+.font-handwriting,
 .font-cursive {
-  font-family: var(--font-cursive);
+  font-family: var(--font-handwriting);
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+}
+
+/* Section title — red rule tight under the word */
+.section-title-mark {
+  position: relative;
+  display: inline-block;
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+  padding-bottom: 0.12em;
+}
+
+.section-title-mark::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-red);
+  transform: skewX(-8deg);
 }
 
 .font-display {

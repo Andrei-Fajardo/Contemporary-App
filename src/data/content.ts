@@ -10,7 +10,14 @@ function mediaUrl(...segments: string[]): string {
   return `/media/${segments.map((segment) => encodeURIComponent(segment)).join('/')}`;
 }
 
-/** Read image filenames from a folder under public/media at build time. */
+function sortMediaFiles(a: string, b: string): number {
+  const aMain = a.toLowerCase().includes('-main.');
+  const bMain = b.toLowerCase().includes('-main.');
+  if (aMain !== bMain) return aMain ? -1 : 1;
+  return a.localeCompare(b, undefined, { numeric: true });
+}
+
+/** Read all images from a folder under public/media. */
 function imagesFromMediaFolder(...folderSegments: string[]): string[] {
   const dir = path.join(process.cwd(), 'public', 'media', ...folderSegments);
   if (!fs.existsSync(dir)) return [];
@@ -18,9 +25,66 @@ function imagesFromMediaFolder(...folderSegments: string[]): string[] {
   return fs
     .readdirSync(dir)
     .filter((file) => IMAGE_EXT.test(file))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+    .sort(sortMediaFiles)
     .map((file) => mediaUrl(...folderSegments, file));
 }
+
+/** Images in public/media/{folder} whose filenames start with {prefix}- or equal {prefix}. */
+function imagesByPrefix(folder: string, prefix: string): string[] {
+  const dir = path.join(process.cwd(), 'public', 'media', folder);
+  if (!fs.existsSync(dir)) return [];
+  const p = prefix.toLowerCase();
+
+  return fs
+    .readdirSync(dir)
+    .filter((file) => {
+      if (!IMAGE_EXT.test(file)) return false;
+      const base = file.toLowerCase();
+      return base.startsWith(`${p}-`) || base.startsWith(`${p}.`) || base === p;
+    })
+    .sort(sortMediaFiles)
+    .map((file) => mediaUrl(folder, file));
+}
+
+/** Virtual folder — match multiple filename prefixes (e.g. soul-gift + clover-anna). */
+function imagesFromVirtual(...prefixes: string[]): string[] {
+  const dir = path.join(process.cwd(), 'public', 'media', 'virtual');
+  if (!fs.existsSync(dir)) return [];
+  const lowered = prefixes.map((x) => x.toLowerCase());
+
+  return fs
+    .readdirSync(dir)
+    .filter((file) => {
+      if (!IMAGE_EXT.test(file)) return false;
+      const base = file.toLowerCase();
+      return lowered.some((p) => base.startsWith(`${p}-`) || base.startsWith(`${p}.`) || base === p);
+    })
+    .sort(sortMediaFiles)
+    .map((file) => mediaUrl('virtual', file));
+}
+
+/** Magazine folder — prefer dedicated files; optional filename hint filter. */
+function magazineImages(...hints: string[]): string[] {
+  const fromFolder = imagesFromMediaFolder('magazine');
+  if (!fromFolder.length) return [];
+  if (!hints.length) return fromFolder;
+
+  const lowered = hints.map((h) => h.toLowerCase());
+  const matched = fromFolder.filter((url) => {
+    const file = decodeURIComponent(url.split('/').pop() ?? '').toLowerCase();
+    return lowered.some((h) => file.includes(h));
+  });
+  return matched.length ? matched : fromFolder;
+}
+
+const hechyeomoyeo14Images =
+  imagesFromMediaFolder('Hechyeomoyeo 14').length > 0
+    ? imagesFromMediaFolder('Hechyeomoyeo 14')
+    : imagesByPrefix('exhibitions', 'hech').concat(
+        imagesFromMediaFolder('exhibitions').filter((url) =>
+          decodeURIComponent(url).toLowerCase().includes('hechyeomoyeo-nyc'),
+        ),
+      );
 
 const hechyeomoyeoMexicoImages = imagesFromMediaFolder('Hechyeomoyeo Mexico');
 
@@ -40,7 +104,7 @@ export interface LinkItem {
   year?: string;
 }
 
-/** Senses first, then alphabetical by title. No 2024-dated exhibitions. */
+/** Senses first, then alphabetical by title. */
 export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
   {
     id: 'senses',
@@ -49,7 +113,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'MUST Museum',
     place: 'Lecce, Italy',
     category: 'physical',
-    images: ['/media/exhibitions/senses-main.jpg', '/media/exhibitions/senses-1.jpg', '/media/exhibitions/senses-2.jpg'],
+    images: imagesByPrefix('exhibitions', 'senses'),
   },
   {
     id: 'contemporary-venice',
@@ -58,7 +122,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Contemporary Venice',
     place: 'Venice, Italy',
     category: 'physical',
-    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
+    images: imagesByPrefix('exhibitions', 'venice'),
   },
   {
     id: 'dimo',
@@ -67,7 +131,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Verger Gallery',
     place: 'Seoul, South Korea',
     category: 'physical',
-    images: ['/media/press/light-that-remains.jpg', '/media/exhibitions/dimo-main.jpg', '/media/exhibitions/dimo-1.jpg', '/media/exhibitions/dimo-2.jpg'],
+    images: imagesByPrefix('exhibitions', 'dimo'),
   },
   {
     id: 'hechyeomoyeo-13',
@@ -85,13 +149,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Chinatown Garden',
     place: 'Washington, DC, USA',
     category: 'physical',
-    images: [
-      '/media/exhibitions/hech-1.jpg',
-      '/media/exhibitions/hech-2.jpg',
-      '/media/exhibitions/hech-3.jpg',
-      '/media/exhibitions/hech-4.jpg',
-      '/media/exhibitions/hechyeomoyeo-nyc.png',
-    ],
+    images: hechyeomoyeo14Images,
   },
   {
     id: 'hechyeomoyeo-mexico',
@@ -109,7 +167,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Insadong',
     place: 'Seoul, South Korea',
     category: 'physical',
-    images: ['/media/press/with-iam-insa.jpg', '/media/exhibitions/im-insa.jpg'],
+    images: imagesByPrefix('exhibitions', 'im-insa'),
   },
   {
     id: 'itaewon-film-festival',
@@ -118,7 +176,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Bokwang Theater',
     place: 'Seoul, South Korea',
     category: 'physical',
-    images: ['/media/press/itaewon-film-festival.png', '/media/feature/itaewon-film-fest.jpg', '/media/feature/itaewon-1.jpg', '/media/feature/itaewon-2.jpg'],
+    images: imagesFromMediaFolder('feature'),
   },
   {
     id: 'kinship',
@@ -127,7 +185,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Collaborative Exhibition',
     place: 'Seoul, South Korea',
     category: 'physical',
-    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg', '/media/exhibitions/kinship-3.jpg'],
+    images: imagesByPrefix('exhibitions', 'kinship'),
   },
   {
     id: 'luna',
@@ -135,8 +193,8 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     title: 'Luna Grande Art',
     gallery: 'Luna Grande Art',
     place: 'Istanbul, Turkey',
-    category: 'digital',
-    images: ['/media/press/istanbul-art-show.jpg', '/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-1.jpg', '/media/exhibitions/luna-2.jpg'],
+    category: 'physical',
+    images: imagesByPrefix('exhibitions', 'luna'),
   },
   {
     id: 'petit-masterpiece',
@@ -154,7 +212,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Clover Gallery',
     place: 'Virtual Exhibition',
     category: 'digital',
-    images: ['/media/virtual/clover-anna.jpg', '/media/virtual/soul-gift.jpg', '/media/virtual/soul-gift-poster.png'],
+    images: imagesFromVirtual('soul-gift', 'clover-anna'),
   },
   {
     id: 'the-atrium',
@@ -163,7 +221,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'The Atrium',
     place: 'Virtual Exhibition',
     category: 'digital',
-    images: ['/media/virtual/the-atrium.jpg'],
+    images: imagesFromVirtual('the-atrium'),
   },
   {
     id: 'holy-london',
@@ -172,7 +230,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'The Holy Art',
     place: 'London, UK',
     category: 'physical',
-    images: ['/media/press/vandals-edge-of-now.jpg', '/media/exhibitions/holy-london-1.jpg', '/media/exhibitions/holy-london-2.jpg'],
+    images: imagesByPrefix('exhibitions', 'holy-london'),
   },
   {
     id: 'holy-paris',
@@ -181,7 +239,7 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'The Holy Art',
     place: 'Paris, France',
     category: 'physical',
-    images: ['/media/press/paris-vandals.png', '/media/posters/paris-poster.png', '/media/exhibitions/holy-paris-main.jpg', '/media/exhibitions/holy-paris-1.webp'],
+    images: imagesByPrefix('exhibitions', 'holy-paris'),
   },
   {
     id: 'astraea-zine',
@@ -190,7 +248,9 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Astraea Zine',
     place: 'Issue Eight',
     category: 'magazine',
-    images: ['/media/posters/poster-1.jpg'],
+    images: magazineImages('astraea', 'poster-1').length
+      ? magazineImages('astraea', 'poster-1')
+      : ['/media/posters/poster-1.jpg'],
   },
   {
     id: 'hush-magazine',
@@ -199,7 +259,9 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Hush Magazine',
     place: 'Issue 001',
     category: 'magazine',
-    images: ['/media/posters/nana-nyc.jpg'],
+    images: magazineImages('hush', 'nana-nyc').length
+      ? magazineImages('hush', 'nana-nyc')
+      : ['/media/posters/nana-nyc.jpg'],
   },
   {
     id: 'spellbinder',
@@ -208,7 +270,9 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Spellbinder Magazine',
     place: 'Spring 2026',
     category: 'magazine',
-    images: ['/media/posters/paris-poster.png'],
+    images: magazineImages('spellbinder', 'paris').length
+      ? magazineImages('spellbinder', 'paris')
+      : ['/media/posters/paris-poster.png'],
   },
   {
     id: 'wildscape',
@@ -217,7 +281,9 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Wildscape Literary Journal',
     place: 'Ongoing',
     category: 'magazine',
-    images: ['/media/the-fish.png'],
+    images: magazineImages('wildscape', 'fish').length
+      ? magazineImages('wildscape', 'fish')
+      : ['/media/the-fish.png'],
   },
   {
     id: 'onart',
@@ -226,7 +292,9 @@ export const exhibitionEntries: ExhibitionEntry[] = sortExhibitions([
     gallery: 'Onart Magazine',
     place: 'Feature',
     category: 'magazine',
-    images: ['/media/posters/itaewon-poster.png'],
+    images: magazineImages('onart', 'itaewon').length
+      ? magazineImages('onart', 'itaewon')
+      : ['/media/posters/itaewon-poster.png'],
   },
 ]);
 
@@ -242,7 +310,6 @@ export const publicationsList: LinkItem[] = [];
 
 export const researchList: LinkItem[] = [];
 
-/** Press coverage — hyperlinked list (posters live under Exhibition History). */
 export const pressLinks: LinkItem[] = [
   {
     title: 'Hechyeomoyeo — In the Press',
@@ -293,7 +360,7 @@ export const groupExhibitions: ExhibitionItem[] = [
   { year: '2025', title: 'The Holy Art — London', venue: 'London', city: 'London', country: 'UK' },
   { year: '2025', title: 'The Holy Art — Paris', venue: 'Paris', city: 'Paris', country: 'France' },
   { year: '2025', title: 'DIMO × Verger Gallery', venue: 'Verger Gallery', city: 'Seoul', country: 'South Korea' },
-  { year: '2025', title: 'Luna Grande Art', venue: 'Online', city: 'Istanbul', country: 'Turkey' },
+  { year: '2025', title: 'Luna Grande Art', venue: 'Istanbul', city: 'Istanbul', country: 'Turkey' },
 ];
 
 export interface PublicationItem {

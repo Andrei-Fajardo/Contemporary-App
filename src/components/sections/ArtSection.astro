@@ -11,19 +11,18 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="art" class="scroll-section section-gap art-section--separated utero-layered" data-art-section>
+<section id="art" class="scroll-section section-gap art-section--unified utero-layered" data-art-section>
   <div class="section-shell section-shell--wide mb-10 md:mb-14">
     <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.artTag}</p>
-    <h2 class="scroll-reveal type-display text-3xl md:text-5xl lg:text-6xl text-ink mb-5">
+    <h2 class="scroll-reveal type-display text-3xl md:text-5xl lg:text-6xl text-ink section-title-mark">
       {l.nav.art}
     </h2>
-    <hr class="brutal-rule brutal-rule--short scroll-reveal" />
 
     <div class="art-view-toggle scroll-reveal" role="group" aria-label="Art layout view">
-      <button type="button" class="art-view-toggle__btn is-active" data-art-view="separated">
+      <button type="button" class="art-view-toggle__btn" data-art-view="separated">
         {l.artViewSeparated}
       </button>
-      <button type="button" class="art-view-toggle__btn" data-art-view="unified">
+      <button type="button" class="art-view-toggle__btn is-active" data-art-view="unified">
         {l.artViewUnified}
       </button>
     </div>
