@@ -1,0 +1,23 @@
+---
+import EditorialLinkList from '../EditorialLinkList.astro';
+import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { pressLinks } from '../../data/content';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="press" class="scroll-section section-gap press-chaos">
+  <div class="section-shell section-shell--wide">
+    <ManuscriptSectionHeader num="VI" eyebrow={l.pressTag} title={l.nav.press} />
+    <p class="scroll-reveal content-prose text-ink-60 max-w-[58ch] mb-6">
+      {l.pressIntro}
+    </p>
+    <EditorialLinkList items={pressLinks} emptyMessage={l.listForthcoming} />
+  </div>
+</section>

@@ -1,0 +1,17 @@
+---
+export interface Props {
+  message: string;
+  note?: string;
+}
+
+const { message, note } = Astro.props;
+---
+
+<div class="min-h-[32vh] flex flex-col justify-center">
+  <div class="scroll-reveal border border-neutral-900/20 rounded p-10 md:p-14 lg:p-16 max-w-3xl">
+    <p class="content-prose italic text-neutral-700">{message}</p>
+    {note && (
+      <p class="section-divider-label font-mono text-neutral-400 mt-6">{note}</p>
+    )}
+  </div>
+</div>

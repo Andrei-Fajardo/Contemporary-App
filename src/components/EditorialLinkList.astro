@@ -1,0 +1,27 @@
+---
+import type { LinkItem } from '../data/content';
+import SectionEmptyState from './SectionEmptyState.astro';
+
+interface Props {
+  items: LinkItem[];
+  emptyMessage?: string;
+  emptyNote?: string;
+}
+
+const { items, emptyMessage = 'List forthcoming', emptyNote } = Astro.props;
+---
+
+{items.length > 0 ? (
+  <ul class="editorial-link-list scroll-reveal">
+    {items.map((item) => (
+      <li>
+        <a href={item.href} target="_blank" rel="noopener noreferrer">
+          {item.title}
+        </a>
+        {item.year && <span class="editorial-link-list__meta">{item.year}</span>}
+      </li>
+    ))}
+  </ul>
+) : (
+  <SectionEmptyState message={emptyMessage} note={emptyNote} />
+)}

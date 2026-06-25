@@ -1,0 +1,26 @@
+---
+import EducationTimeline from '../EducationTimeline.astro';
+import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
+import { t, type LocaleKey } from '../../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="about" class="scroll-section section-gap about-chaos">
+  <div class="section-shell section-shell--wide">
+    <ManuscriptSectionHeader num="I" eyebrow={l.aboutTag} title={l.nav.about} />
+
+    <div class="about-chaos__body">
+      <div class="scroll-reveal about-chaos__intro">
+        <p class="content-prose">{l.intro} {l.bio}</p>
+      </div>
+
+      <EducationTimeline label={l.education} />
+    </div>
+  </div>
+</section>

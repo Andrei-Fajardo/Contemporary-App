@@ -1,20 +1,32 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import { publications } from '../data/content';
+import { t } from '../data/translations';
+const l = t.en;
+
+const magazines = [
+  { title: "Astraea Zine", issue: "Issue Eight — Dreamscape", type: "FEATURED: The Fish & Souls of Leavings" },
+  { title: "Hush Magazine", issue: "Issue 001 — LOST//FOUND", type: "FEATURED: Souls of Leavings" },
+  { title: "Spellbinder Magazine", issue: "Spring 2026", type: "FEATURED: Souls of Leavings" },
+  { title: "The Knot Spectrum", issue: "Glimpse 01", type: "FEATURED: Souls of Leavings" },
+  { title: "Wildsape Literary Journal", issue: "Ongoing", type: "FEATURED: The Fish" },
+  { title: "Onart Magazine", issue: "TBD", type: "FEATURED" },
+];
 ---
 
-<PageLayout title="Magazines" activeSection="Magazines">
-  <div class="px-8 py-10">
-    <span class="text-[11px] font-mono tracking-wider text-neutral-500 mb-6 block">(MAGAZINES)</span>
-
-    <div class="grid grid-cols-3 gap-px bg-black/[0.15]">
-      {publications.slice(0, 6).map((mag) => (
-        <div class="bg-[#E3E2DA] p-6 flex flex-col items-center justify-center min-h-[200px] border border-black/[0.15]">
-          <span class="text-[10px] font-mono tracking-widest text-neutral-400 uppercase text-center">{mag.issue}</span>
-          <h3 class="font-sans text-sm font-semibold text-neutral-800 mt-3 text-center">{mag.title}</h3>
-          <span class="text-[11px] font-mono text-neutral-500 mt-2">{mag.type}</span>
-        </div>
-      ))}
+<PageLayout title="Magazines" activeSection="publications" locale="en">
+  <div slot="content">
+    <div class="px-4 sm:px-6 md:px-8 py-12 md:py-20">
+      <span class="type-heading text-[10px] text-[#111111]/50 block mb-6">{l.magazinesTag}</span>
+      <h1 class="type-heading text-4xl md:text-6xl lg:text-8xl leading-[0.9] text-[#111111] mb-12 md:mb-16">{l.magazineHeading}</h1>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-px md:bg-black/10">
+        {magazines.map((mag) => (
+          <div class="bg-[#F0EEE9] p-6 md:p-8 border border-black/10 flex flex-col items-center justify-center min-h-[200px] md:min-h-[220px] rounded md:rounded-none">
+            <span class="type-heading text-[9px] text-[#111111]/40 text-center">{mag.issue}</span>
+            <h2 class="type-subheading text-base text-[#111111] mt-4 text-center">{mag.title}</h2>
+            <span class="type-body text-[10px] text-[#111111]/50 mt-2 text-center">{mag.type}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </PageLayout>

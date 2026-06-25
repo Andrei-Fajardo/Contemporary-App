@@ -1,0 +1,157 @@
+---
+import ManuscriptSectionHeader from '../ManuscriptSectionHeader.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { siteCopy } from '../../data/site-copy';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="contacts" class="scroll-section section-gap contacts-chaos">
+  <div class="section-shell section-shell--wide">
+    <ManuscriptSectionHeader
+      num="VII"
+      eyebrow={l.contactTag}
+      title={l.contactHeading}
+    />
+
+    <div class="contacts-chaos__layout">
+      <div class="scroll-reveal contacts-chaos__info">
+        <div class="contacts-chaos__info-block">
+          <span class="section-eyebrow section-eyebrow--blood">{l.email}</span>
+          <a href="mailto:contact@annadauylrockswell.com" class="contacts-chaos__link">
+            contact@annadauylrockswell.com
+          </a>
+          <a href="mailto:support@annadauylrockswell.com" class="contacts-chaos__link">
+            support@annadauylrockswell.com
+          </a>
+        </div>
+
+        <div class="contacts-chaos__info-block">
+          <span class="section-eyebrow section-eyebrow--blood">{l.basedIn}</span>
+          <p class="content-prose text-ink-75">{l.location}</p>
+        </div>
+
+        <div class="contacts-chaos__info-block">
+          <span class="section-eyebrow section-eyebrow--blood">{l.socials}</span>
+          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer" class="contacts-chaos__link">
+            @rockswellnana
+          </a>
+        </div>
+
+        <div class="contacts-chaos__info-block">
+          <span class="section-eyebrow section-eyebrow--blood">{l.licenses}</span>
+          {siteCopy.licenses.map((license) => (
+            <a
+              href={license.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contacts-chaos__link"
+            >
+              {license.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="scroll-reveal contacts-chaos__form-wrap">
+        <form class="contacts-chaos__form" onsubmit="event.preventDefault(); alert('Sent (demo)');">
+          <div>
+            <label class="section-eyebrow section-eyebrow--blood contacts-chaos__label" for="contact-name">{l.nameLabel}</label>
+            <input id="contact-name" type="text" placeholder={l.namePlaceholder} class="contacts-chaos__input" />
+          </div>
+          <div>
+            <label class="section-eyebrow section-eyebrow--blood contacts-chaos__label" for="contact-email">{l.emailLabel}</label>
+            <input id="contact-email" type="email" placeholder={l.emailPlaceholder} class="contacts-chaos__input" />
+          </div>
+          <div>
+            <label class="section-eyebrow section-eyebrow--blood contacts-chaos__label" for="contact-message">{l.messageLabel}</label>
+            <textarea id="contact-message" rows="5" placeholder={l.messagePlaceholder} class="contacts-chaos__input contacts-chaos__input--area resize-none"></textarea>
+          </div>
+          <div class="contacts-chaos__submit-wrap">
+            <button type="submit" class="contacts-chaos__submit contacts-chaos__submit--text">
+              {l.sendMessage}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contacts-chaos__layout {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 768px) {
+    .contacts-chaos__layout {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: start;
+    }
+  }
+
+  .contacts-chaos__info {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .contacts-chaos__info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .contacts-chaos__info-block .section-eyebrow {
+    margin-bottom: 0.15rem;
+  }
+
+  .contacts-chaos__link {
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 0.55vw + 0.62rem, 1.0625rem);
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    width: fit-content;
+    transition: border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .contacts-chaos__link:hover {
+    border-bottom-color: var(--accent-red);
+    color: var(--accent-red);
+  }
+
+  .contacts-chaos__form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .contacts-chaos__label {
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .contacts-chaos__submit-wrap {
+    padding-top: 0.25rem;
+  }
+
+  .contacts-chaos__submit--text {
+    border: none;
+    border-bottom: 1px solid var(--ink);
+    padding: 0 0 0.15rem;
+    letter-spacing: 0.14em;
+  }
+
+  .contacts-chaos__submit--text:hover {
+    background: transparent;
+    color: var(--accent-red);
+    border-bottom-color: var(--accent-red);
+  }
+</style>
