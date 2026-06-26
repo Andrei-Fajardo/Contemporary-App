@@ -359,6 +359,70 @@ export const pressLinks: LinkItem[] = [
   },
 ];
 
+/** Published articles and commentary — PR & academic research links. */
+export const researchLinks: LinkItem[] = [
+  {
+    title: 'Micro-Influencer Marketing Guide: Benefits and Steps — Influencer Marketing Hub',
+    href: 'https://influencermarketinghub.com/micro-influencer-marketing-guide/#toc-6',
+    year: '2024',
+  },
+  {
+    title: 'How do you incorporate storytelling into your advertising strategies, and why do you believe it is important for connecting with customers? Share an example of a successful storytelling campaign. — Grit Daily',
+    href: 'https://gritdaily.com/the-role-of-storytelling-in-advertising/',
+    year: '2024',
+  },
+  {
+    title: 'What is one trend in B2C e-commerce marketing that has really taken off recently, and what can marketers do to leverage this? — FC',
+    href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/10/01/10-emerging-trends-in-b2c-e-commerce-marketers-can-leverage/',
+    year: '2024',
+  },
+  {
+    title: 'Influencer Marketing Trends Predictions Through The End Of 2024 — Forbes',
+    href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/09/17/influencer-marketing-trends-predictions-through-the-end-of-2024/',
+    year: '2024',
+  },
+  {
+    title: 'De-Influencing Trends: How Brands Can Maintain Consumer Trust — Net Influencer',
+    href: 'https://www.netinfluencer.com/the-rise-of-de-influencing-how-brands-can-maintain-consumer-trust/',
+    year: '2024',
+  },
+  {
+    title: 'What Tools or Platforms Are Indispensable for PR and Communications? — Forbes',
+    href: 'https://prthrive.com/qa/what-tools-or-platforms-are-indispensable-for-pr-and-communications/',
+    year: '2024',
+  },
+  {
+    title: 'What To Know About Generation Alpha And Influencer Marketing — Forbes',
+    href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/06/17/what-to-know-about-generation-alpha-and-influencer-marketing/',
+    year: '2024',
+  },
+  {
+    title: 'How To Successfully Enter A New Market With Influencer Marketing — Forbes',
+    href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/04/22/how-to-successfully-enter-a-new-market-with-influencer-marketing/',
+    year: '2024',
+  },
+  {
+    title: 'The Power Of Influencer Marketing: Your Strategic Investment For Success — Forbes',
+    href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/01/05/the-power-of-influencer-marketing-your-strategic-investment-for-success/',
+    year: '2024',
+  },
+  {
+    title: 'The Power Of Livestream Social Commerce — Forbes',
+    href: 'https://www.forbes.com/councils/forbesagencycouncil/2023/07/14/the-power-of-livestream-social-commerce/',
+    year: '2023',
+  },
+  {
+    title: 'Social Responsibility And Ethics In Influencer Marketing — Forbes',
+    href: 'https://www.forbes.com/councils/forbesagencycouncil/2023/01/30/social-responsibility-and-ethics-in-influencer-marketing/',
+    year: '2023',
+  },
+  {
+    title: 'The Hype Factory And Breakthrough Innovations: This Week In Tech History — Forbes',
+    href: 'https://www.forbes.com/sites/gilpress/2016/07/24/the-hype-factory-and-breakthrough-innovations-this-week-in-tech-history/?ctpv=searchpage',
+    year: '2016',
+  },
+];
+
 export interface ResearchItem {
   title: string;
   journal?: string;
