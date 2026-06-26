@@ -47,7 +47,7 @@
   --radius-lang-btn: 0.2rem;
 
   /* Global type scale — bumps all rem-based typography */
-  --type-scale: 1.55;
+  --type-scale: 1.4;
 }
 
 /* Warm editorial canvas background */
@@ -58,6 +58,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 html {
   margin: 0;
@@ -387,8 +390,9 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   font-family: var(--font-body);
   font-weight: 400;
   font-size: clamp(1.0625rem, 1.15vw + 0.65rem, 1.3125rem);
-  line-height: 1.72;
+  line-height: 1.55;
   color: var(--ink-75);
+  text-align: justify;
 }
 
 .content-prose--mono {
@@ -403,8 +407,9 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   font-family: var(--font-body);
   font-weight: 400;
   font-size: clamp(1rem, 0.85vw + 0.7rem, 1.1875rem);
-  line-height: 1.65;
+  line-height: 1.5;
   color: var(--ink-75);
+  text-align: justify;
 }
 
 .section-divider-label {
@@ -420,11 +425,25 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   letter-spacing: var(--heading-track);
   text-transform: uppercase;
   color: var(--ink-45);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+/* Keep interactive UI readable — body text stays justified */
+button,
+input,
+textarea,
+select,
+[role="tablist"] button,
+.lang-toggle button,
+.sidebar-nav a,
+.exhibition-filter,
+.exhibition-accordion__action-label {
+  text-align: left;
 }
 
 .section-gap {
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(1.5rem, 3.5vw, 2.75rem);
 }
 
 .section-gap + .section-gap {
@@ -440,7 +459,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
 .editorial-link-list li {
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.875rem 0;
+  padding: 0.5rem 0;
 }
 
 .editorial-link-list a {
@@ -468,7 +487,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 /* --- Tabular editorial shell (Layout Number 2) --- */
 .tabular-view {
   width: 100%;
-  min-height: calc(100vh - 10rem);
+  min-height: 0;
 }
 
 .tabular-panels {
@@ -489,9 +508,9 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
 /* Compressed editorial density — reference: design2 */
 .editorial-dense {
-  --section-gap-y: clamp(2rem, 4vw, 3.25rem);
+  --section-gap-y: clamp(0.875rem, 2vw, 1.5rem);
   --heading-tight: 0.94;
-  --body-tight: 1.56;
+  --body-tight: 1.48;
 }
 
 .editorial-dense .section-gap {
@@ -526,14 +545,14 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .editorial-dense .section-eyebrow {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   letter-spacing: 0.32em;
 }
 
 .editorial-dense .hero-editorial {
-  padding-top: clamp(2.5rem, 8vh, 4.5rem);
-  padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
-  gap: clamp(2rem, 6vw, 4rem);
+  padding-top: clamp(1rem, 3vh, 2rem);
+  padding-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  gap: clamp(0.75rem, 2vw, 1.5rem);
 }
 
 .editorial-dense .hero-editorial__name {
@@ -555,7 +574,16 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 }
 
 .editorial-dense .art-piece .section-shell {
-  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.editorial-dense :is(h2.type-heading, h2.type-subheading) {
+  margin-bottom: 0.75rem !important;
+}
+
+.editorial-dense .content-prose + .content-prose,
+.editorial-dense p + p {
+  margin-top: 0.5rem;
 }
 
 /* Inverted contact panel — section-inverted */
@@ -594,16 +622,16 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   }
 
   .section-gap {
-    padding-block: clamp(2rem, 5vw, 3rem);
+    padding-block: clamp(1rem, 2.5vw, 1.75rem);
   }
 
   .editorial-dense {
-    --section-gap-y: clamp(1.25rem, 3.5vw, 2rem);
+    --section-gap-y: clamp(0.75rem, 2vw, 1.25rem);
   }
 
   .editorial-dense .hero-editorial {
-    padding-top: clamp(1.25rem, 4vh, 2rem);
-    padding-bottom: clamp(1rem, 3vh, 1.5rem);
+    padding-top: clamp(0.75rem, 2vh, 1.25rem);
+    padding-bottom: clamp(0.5rem, 1.5vh, 1rem);
   }
 
   .editorial-dense .section-shell--wide {
@@ -611,11 +639,11 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   }
 
   .section-eyebrow {
-    margin-bottom: 0.875rem;
+    margin-bottom: 0.5rem;
   }
 
   .section-gap :is(h2.type-heading, h2.type-subheading) {
-    margin-bottom: clamp(1.25rem, 3.5vw, 1.75rem) !important;
+    margin-bottom: 0.75rem !important;
   }
 
   .grain-overlay::before {

@@ -582,9 +582,9 @@ html.motion-reduced .press-chaos__poster {
 
 .about-chaos__meta {
   display: grid;
-  gap: 2rem;
-  margin-top: 2.5rem;
-  padding-top: 2rem;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--border-subtle);
 }
 
