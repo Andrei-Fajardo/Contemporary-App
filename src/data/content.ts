@@ -24,6 +24,21 @@ export interface ExhibitionEntry {
 /** Chronological exhibition list — posters & venue imagery only (no personal portraits). */
 export const exhibitionEntries: ExhibitionEntry[] = [
   {
+    id: 'venice',
+    year: '2026',
+    title: 'Contemporary Venice',
+    gallery: 'Contemporary Venice',
+    place: 'Venice, Italy',
+    kind: 'group',
+    category: 'physical',
+    images: [
+      '/media/exhibitions/venice-1.jpg',
+      '/media/exhibitions/venice-2.jpg',
+      '/media/exhibitions/venice-3.jpg',
+      '/media/exhibitions/venice-4.jpg',
+    ],
+  },
+  {
     id: 'senses',
     year: '2025',
     title: 'Senses International Art Fair',
@@ -31,7 +46,12 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Lecce, Italy',
     kind: 'museum',
     category: 'physical',
-    images: ['/media/exhibitions/senses-main.jpg', '/media/exhibitions/senses-1.jpg', '/media/exhibitions/senses-2.jpg'],
+    images: [
+      '/media/exhibitions/senses-main.jpg',
+      '/media/exhibitions/senses-1.jpg',
+      '/media/exhibitions/senses-2.jpg',
+      '/media/exhibitions/senses-placeholder-4.jpg',
+    ],
     note: 'The only museum presentation in the exhibition record.',
   },
   {
@@ -42,17 +62,12 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Seoul, South Korea',
     kind: 'solo',
     category: 'physical',
-    images: ['/media/exhibitions/im-insa.jpg'],
-  },
-  {
-    id: 'hechyeomoyeo-nyc',
-    year: '2024–2025',
-    title: 'Hechyeomoyeo 12 & 13',
-    gallery: 'Hechyeomoyeo',
-    place: 'New York, USA',
-    kind: 'group',
-    category: 'physical',
-    images: ['/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg', '/media/exhibitions/hech-3.jpg', '/media/exhibitions/hech-4.jpg'],
+    images: [
+      '/media/exhibitions/im-insa.jpg',
+      '/media/exhibitions/im-insa-placeholder-2.jpg',
+      '/media/exhibitions/im-insa-placeholder-3.jpg',
+      '/media/exhibitions/im-insa-placeholder-4.jpg',
+    ],
   },
   {
     id: 'kinship',
@@ -62,7 +77,12 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Seoul, South Korea',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg', '/media/exhibitions/kinship-3.jpg'],
+    images: [
+      '/media/exhibitions/kinship-main.png',
+      '/media/exhibitions/kinship-1.jpg',
+      '/media/exhibitions/kinship-2.jpg',
+      '/media/exhibitions/kinship-3.jpg',
+    ],
   },
   {
     id: 'dimo',
@@ -72,7 +92,12 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Seoul, South Korea',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/dimo-main.jpg', '/media/exhibitions/dimo-1.jpg', '/media/exhibitions/dimo-2.jpg'],
+    images: [
+      '/media/exhibitions/dimo-main.jpg',
+      '/media/exhibitions/dimo-1.jpg',
+      '/media/exhibitions/dimo-2.jpg',
+      '/media/exhibitions/dimo-placeholder-4.jpg',
+    ],
   },
   {
     id: 'holy-paris',
@@ -82,7 +107,12 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Paris, France',
     kind: 'group',
     category: 'physical',
-    images: ['/media/posters/paris-poster.png', '/media/exhibitions/holy-paris-main.jpg', '/media/exhibitions/holy-paris-1.webp'],
+    images: [
+      '/media/posters/paris-poster.png',
+      '/media/exhibitions/holy-paris-main.jpg',
+      '/media/exhibitions/holy-paris-1.webp',
+      '/media/exhibitions/holy-paris-placeholder-4.jpg',
+    ],
   },
   {
     id: 'holy-london',
@@ -92,7 +122,12 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'London, UK',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-london-1.jpg', '/media/exhibitions/holy-london-2.jpg'],
+    images: [
+      '/media/exhibitions/holy-london-1.jpg',
+      '/media/exhibitions/holy-london-2.jpg',
+      '/media/exhibitions/holy-london-placeholder-3.jpg',
+      '/media/exhibitions/holy-london-placeholder-4.jpg',
+    ],
     note: 'Exhibition documentation & promotional materials.',
   },
   {
@@ -100,20 +135,63 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     year: '2025',
     title: 'Luna Grande Art',
     gallery: 'Luna Grande Art',
-    place: 'Online',
-    kind: 'group',
-    category: 'digital',
-    images: ['/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-1.jpg', '/media/exhibitions/luna-2.jpg'],
-  },
-  {
-    id: 'venice',
-    year: '2026',
-    title: 'Contemporary Venice',
-    gallery: 'Contemporary Venice',
-    place: 'Venice, Italy',
+    place: 'Istanbul, Turkey',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
+    images: [
+      '/media/exhibitions/luna-main.jpg',
+      '/media/exhibitions/luna-1.jpg',
+      '/media/exhibitions/luna-2.jpg',
+      '/media/exhibitions/luna-placeholder-4.jpg',
+    ],
+  },
+  {
+    id: 'ahmad-shariff',
+    year: '2025',
+    title: 'Ahmad Shariff Gallery',
+    gallery: 'Ahmad Shariff Gallery',
+    place: 'Claremont, California',
+    kind: 'group',
+    category: 'physical',
+    images: [
+      '/media/exhibitions/ahmad-shariff-placeholder-1.jpg',
+      '/media/exhibitions/ahmad-shariff-placeholder-2.jpg',
+      '/media/exhibitions/ahmad-shariff-placeholder-3.jpg',
+      '/media/exhibitions/ahmad-shariff-placeholder-4.jpg',
+    ],
+    links: {
+      website: 'https://www.ahmadshariffgallery.com/',
+    },
+  },
+  {
+    id: 'hechyeomoyeo-13',
+    year: '2025',
+    title: 'Hechyeomoyeo 13',
+    gallery: 'Hechyeomoyeo',
+    place: 'New York, USA',
+    kind: 'group',
+    category: 'physical',
+    images: [
+      '/media/exhibitions/hech-3.jpg',
+      '/media/exhibitions/hech-4.jpg',
+      '/media/exhibitions/hechyeomoyeo-13-placeholder-3.jpg',
+      '/media/exhibitions/hechyeomoyeo-13-placeholder-4.jpg',
+    ],
+  },
+  {
+    id: 'hechyeomoyeo-12',
+    year: '2024',
+    title: 'Hechyeomoyeo 12',
+    gallery: 'Hechyeomoyeo',
+    place: 'New York, USA',
+    kind: 'group',
+    category: 'physical',
+    images: [
+      '/media/exhibitions/hechyeomoyeo-nyc.png',
+      '/media/exhibitions/hech-1.jpg',
+      '/media/exhibitions/hech-2.jpg',
+      '/media/exhibitions/hechyeomoyeo-12-placeholder-4.jpg',
+    ],
   },
   {
     id: 'soul-gift',
@@ -210,12 +288,14 @@ export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843
 export const exhibitions = [
   { image: "/media/exhibitions/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
   { image: "/media/exhibitions/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12 & 13", year: "2024–2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12", year: "2024", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/hech-3.jpg", title: "Hechyeomoyeo 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/ahmad-shariff-placeholder-1.jpg", title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
   { image: "/media/exhibitions/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
   { image: "/media/exhibitions/holy-london-1.jpg", title: "The Holy Art – London", year: "2025", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
   { image: "/media/exhibitions/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2025", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ONLINE", subtitle: "FEATURED ARTIST SHOWCASE" },
+  { image: "/media/exhibitions/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ISTANBUL, TURKEY", subtitle: "FEATURED ARTIST SHOWCASE" },
   { image: "/media/exhibitions/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
 ];
 
@@ -234,12 +314,14 @@ export const soloExhibitions: ExhibitionItem[] = [
 export const groupExhibitions: ExhibitionItem[] = [
   { year: "2026", title: "Contemporary Venice", venue: "Venice", city: "Venice", country: "Italy" },
   { year: "2025", title: "Senses International Art Fair", venue: "Must Museum", city: "Lecce", country: "Italy" },
-  { year: "2024–2025", title: "Hechyeomoyeo 12 & 13", venue: "New York", city: "New York", country: "USA" },
+  { year: "2025", title: "Hechyeomoyeo 13", venue: "New York", city: "New York", country: "USA" },
+  { year: "2024", title: "Hechyeomoyeo 12", venue: "New York", city: "New York", country: "USA" },
+  { year: "2025", title: "Ahmad Shariff Gallery", venue: "Ahmad Shariff Gallery", city: "Claremont", country: "USA" },
   { year: "2025", title: "KINSHIP × Hechyeomoyeo", venue: "Seoul", city: "Seoul", country: "South Korea" },
   { year: "2025", title: "The Holy Art — London", venue: "London", city: "London", country: "UK" },
   { year: "2025", title: "The Holy Art — Paris", venue: "Paris", city: "Paris", country: "France" },
   { year: "2025", title: "DIMO × Verger Gallery", venue: "Verger Gallery", city: "Seoul", country: "South Korea" },
-  { year: "2025", title: "Luna Grande Art", venue: "Online", city: "", country: "" },
+  { year: "2025", title: "Luna Grande Art", venue: "Luna Grande Art", city: "Istanbul", country: "Turkey" },
 ];
 
 export interface PublicationItem {
