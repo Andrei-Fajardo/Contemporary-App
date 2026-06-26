@@ -340,6 +340,19 @@ export interface LinkItem {
   year?: string;
 }
 
+/** Publications & writing — external links. */
+export const publicationLinks: LinkItem[] = [
+  {
+    title: 'Aetherium Literary Blog — Magazine',
+    href: 'https://www.instagram.com/aetheriumliterary/',
+  },
+  {
+    title: 'Seventeenth Edition of Otherwise Engaged Literature and Arts Journal',
+    href: 'https://www.marziadessi.com/otherwise-engaged',
+    year: '2026',
+  },
+];
+
 /** External press coverage and exhibition listings. */
 export const pressLinks: LinkItem[] = [
   {

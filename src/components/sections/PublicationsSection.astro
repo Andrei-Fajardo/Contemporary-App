@@ -1,5 +1,6 @@
 ---
-import ComingSoon from '../ComingSoon.astro';
+import EditorialLinkList from '../EditorialLinkList.astro';
+import { publicationLinks } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
 interface Props {
@@ -12,12 +13,11 @@ const l = t[locale];
 
 <section id="publications" class="scroll-section section-gap">
   <div class="section-shell section-shell--wide">
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-6">
+    <p class="scroll-reveal section-eyebrow">{l.publicationsTag}</p>
+    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-3">
       {l.publicationsHeading}
     </h2>
-    <ComingSoon
-      message="Published studies and scientific essays will appear here as they become available."
-      note={l.comingSoonNote}
-    />
+
+    <EditorialLinkList items={publicationLinks} />
   </div>
 </section>
