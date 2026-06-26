@@ -1,0 +1,23 @@
+---
+import EditorialLinkList from '../EditorialLinkList.astro';
+import { researchLinks } from '../../data/content';
+import { t, type LocaleKey } from '../../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="research" class="scroll-section section-gap">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.academicTag}</p>
+    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-3">
+      {l.academicHeading}
+    </h2>
+
+    <EditorialLinkList items={researchLinks} />
+  </div>
+</section>

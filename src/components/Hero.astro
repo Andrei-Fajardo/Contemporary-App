@@ -1,0 +1,35 @@
+---
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="home" class="hero-section hero-chaos scroll-section">
+  <div class="hero-editorial hero-chaos__inner">
+    <figure class="hero-chaos__visual scroll-reveal" aria-label="Anna Dauyl Rockswell — artwork portrait">
+      <img
+        src="/media/Untitled-1.png"
+        alt="Anna Dauyl Rockswell — portrait artwork"
+        loading="eager"
+        decoding="async"
+        draggable="false"
+      />
+    </figure>
+
+    <div class="hero-editorial__copy">
+      <div class="scroll-reveal hero-editorial__name-block">
+        <h1 class="hero-editorial__name">
+          <span class="hero-editorial__name-line">{l.heroFirstName}</span>
+          <span class="hero-editorial__surname">{l.heroLastName}</span>
+        </h1>
+      </div>
+
+      <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
+    </div>
+  </div>
+</section>
