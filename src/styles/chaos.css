@@ -538,17 +538,27 @@ html.motion-reduced .press-chaos__poster {
 .hero-chaos__visual img {
   display: block;
   width: 100%;
-  max-height: min(78vh, 52rem);
+  min-height: clamp(18rem, 55vh, 42rem);
+  max-height: min(85vh, 56rem);
   object-fit: cover;
-  object-position: center top;
-  filter: grayscale(1) contrast(1.05);
+  object-position: center center;
 }
 
 .hero-editorial__name,
+.hero-editorial__name-line,
 .hero-editorial__surname,
 .hero-editorial__name-block,
-.hero-editorial__roles {
-  text-align: left;
+.hero-editorial__roles,
+.hero-editorial__copy {
+  text-align: left !important;
+  text-align-last: left;
+}
+
+.desktop-sidebar__title,
+.desktop-sidebar__subtitle,
+.desktop-sidebar__brand a {
+  text-align: left !important;
+  text-align-last: left;
 }
 
 .hero-chaos__aside {

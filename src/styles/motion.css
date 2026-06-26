@@ -239,14 +239,14 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   }
 
   .hero-chaos .hero-editorial {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.55fr);
     align-items: start;
   }
 }
 
 .hero-editorial__copy {
   max-width: 42rem;
-  align-self: end;
+  align-self: start;
 }
 
 @media (max-width: 899px) {
@@ -282,6 +282,14 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   color: var(--ink);
   margin: 0;
   padding-bottom: 0;
+  text-align: left !important;
+  text-align-last: left;
+}
+
+.hero-editorial__name-line {
+  display: block;
+  text-align: left !important;
+  text-align-last: left;
 }
 
 .hero-editorial__name-rule {
@@ -314,6 +322,9 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   color: var(--ink-70);
   margin: 0.25rem 0 0;
   padding-top: 0;
+  display: block;
+  text-align: left !important;
+  text-align-last: left;
 }
 
 .hero-editorial__roles {
