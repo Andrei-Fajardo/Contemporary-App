@@ -1,0 +1,17 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id, class: className = "" } = Astro.props;
+---
+
+<section id={id} class:list={["sticky-section", className]}>
+  <div class="sticky-section__pin">
+    <slot name="pin" />
+  </div>
+  <div class="sticky-section__scroll">
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,28 @@
+---
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+
+const [anna, ...restFirst] = l.heroFirstName.split(" ");
+const restOfFirst = restFirst.join(" ");
+---
+
+<section id="home" class="hero-section hero-chaos scroll-section">
+  <div class="hero-editorial hero-chaos__inner">
+    <div class="hero-editorial__copy">
+      <div class="scroll-reveal hero-editorial__name-block">
+        <h1 class="hero-editorial__name">
+          <span class="hero-editorial__anna">{anna}</span>{restOfFirst ? ` ${restOfFirst}` : ""}
+        </h1>
+        <p class="hero-editorial__surname">{l.heroLastName}</p>
+      </div>
+
+      <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
+    </div>
+  </div>
+</section>
