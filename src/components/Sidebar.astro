@@ -1,52 +1,54 @@
 ---
+import { t, type LocaleKey } from '../data/translations';
+
 export interface Props {
   activeSection: string;
+  locale?: LocaleKey;
 }
 
-const { activeSection } = Astro.props;
+const { activeSection, locale = 'en' } = Astro.props;
+const l = t[locale];
 
-const menuItems = [
-  { label: "Art", href: "/" },
-  { label: "Exhibitions", href: "/exhibitions" },
-  { label: "Publications & Writing", href: "/publications-and-writing" },
-  { label: "Magazines", href: "/magazines" },
-  { label: "Academic Research", href: "/academic-research" },
-  { label: "Press", href: "/press" },
-  { label: "Contact", href: "/contact" },
-  { label: "About", href: "/about" },
+const menuItems: { key: string; href: string }[] = [
+  { key: "home", href: locale === 'en' ? '/' : `/${locale}` },
+  { key: "about", href: `${locale === 'en' ? '' : '/' + locale}/about` },
+  { key: "art", href: `${locale === 'en' ? '' : '/' + locale}/art` },
+  { key: "exhibitions", href: `${locale === 'en' ? '' : '/' + locale}/exhibitions` },
+  { key: "publications", href: `${locale === 'en' ? '' : '/' + locale}/publications` },
+  { key: "research", href: `${locale === 'en' ? '' : '/' + locale}/research` },
+  { key: "press", href: `${locale === 'en' ? '' : '/' + locale}/press` },
+  { key: "contacts", href: `${locale === 'en' ? '' : '/' + locale}/contacts` },
 ];
 ---
 
-<aside class="w-[18vw] min-w-[200px] h-screen fixed left-0 top-0 border-r border-black/[0.15] bg-[#E3E2DA] z-40 flex flex-col px-6">
-  <!-- Top Section: Name -->
-  <div class="pt-12">
-    <h1 class="font-serif italic text-2xl tracking-tight text-neutral-800 leading-snug">Anna Dauyl<br />Rockswell</h1>
-    <span class="font-sans text-[10px] uppercase tracking-[0.2em] text-neutral-500 mt-1 block">Writer &amp; Artist</span>
-  </div>
+<aside class="w-72 xl:w-80 h-screen fixed left-0 top-0 border-r border-black/10 bg-[#F0EEE9] z-40 flex-col px-6 hidden lg:flex">
+  <div class="pt-8">
 
-  <!-- Mid Section: Navigation -->
-  <nav class="mt-12">
-    <p class="font-sans text-[9px] uppercase tracking-[0.2em] text-neutral-400 font-bold mb-4">Navigation</p>
+  <nav class="mt-10">
     {menuItems.map((item) => {
-      const isActive = activeSection === item.label;
+      const isActive = activeSection === item.key;
+      const navKey = item.key as keyof typeof l.nav;
       return (
         <a
-          href={item.href}
-          class={`font-sans text-[13px] py-1.5 block font-medium transition-colors ${
-            isActive
-              ? 'text-neutral-800 underline underline-offset-4 decoration-black/[0.4]'
-              : 'text-neutral-800/70 hover:text-black hover:underline hover:underline-offset-4 hover:decoration-black/[0.2]'
-          }`}
-        >
-          {item.label}
+            href={item.href}
+            class={`group relative font-sans text-[11px] uppercase tracking-wider py-2 block font-medium transition-colors duration-300 ${
+              isActive ? 'text-[#111]' : 'text-[#555]/70 hover:text-[#111]'
+            }`}
+          >
+            {l.nav[navKey]}
+          <!-- Underline glide — left-origin scale line -->
+          <span
+            class={`absolute bottom-0 left-0 w-full h-[1px] bg-neutral-400 origin-left transition-transform duration-500 ease-out ${
+              isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+            }`}
+          />
         </a>
       );
     })}
   </nav>
 
-  <!-- Bottom Section: Location -->
   <div class="mt-auto pb-12">
-    <span class="font-sans text-[9px] uppercase tracking-[0.2em] text-neutral-400 block mb-1">Based in</span>
-    <span class="font-sans text-[12px] text-neutral-700 font-medium">Seoul &middot; Almaty</span>
+    <span class="font-sans text-[8px] uppercase tracking-[0.25em] text-[#555]/50 block mb-1">{l.basedIn}</span>
+    <span class="font-sans text-[11px] text-[#555]/80 font-medium tracking-wide">{l.location}</span>
   </div>
 </aside>
