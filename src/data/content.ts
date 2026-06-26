@@ -1,12 +1,24 @@
+export type ExhibitionCategory = 'physical' | 'digital' | 'magazine';
+
+export interface ExhibitionLinks {
+  website?: string;
+  magazine?: string;
+  magazineLabel?: string;
+  issue?: string;
+  artwork?: string;
+}
+
 export interface ExhibitionEntry {
   id: string;
   year: string;
   title: string;
   gallery: string;
   place: string;
-  kind: 'solo' | 'group' | 'museum';
+  category: ExhibitionCategory;
+  kind?: 'solo' | 'group' | 'museum';
   images: string[];
   note?: string;
+  links?: ExhibitionLinks;
 }
 
 /** Chronological exhibition list — posters & venue imagery only (no personal portraits). */
@@ -18,6 +30,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'MUST Museum',
     place: 'Lecce, Italy',
     kind: 'museum',
+    category: 'physical',
     images: ['/media/exhibitions/senses-main.jpg', '/media/exhibitions/senses-1.jpg', '/media/exhibitions/senses-2.jpg'],
     note: 'The only museum presentation in the exhibition record.',
   },
@@ -28,6 +41,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Insadong',
     place: 'Seoul, South Korea',
     kind: 'solo',
+    category: 'physical',
     images: ['/media/exhibitions/im-insa.jpg'],
   },
   {
@@ -37,6 +51,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Hechyeomoyeo',
     place: 'New York, USA',
     kind: 'group',
+    category: 'physical',
     images: ['/media/exhibitions/hechyeomoyeo-nyc.png', '/media/exhibitions/hech-1.jpg', '/media/exhibitions/hech-2.jpg', '/media/exhibitions/hech-3.jpg', '/media/exhibitions/hech-4.jpg'],
   },
   {
@@ -46,6 +61,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Collaborative Exhibition',
     place: 'Seoul, South Korea',
     kind: 'group',
+    category: 'physical',
     images: ['/media/exhibitions/kinship-main.png', '/media/exhibitions/kinship-1.jpg', '/media/exhibitions/kinship-2.jpg', '/media/exhibitions/kinship-3.jpg'],
   },
   {
@@ -55,6 +71,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Verger Gallery',
     place: 'Seoul, South Korea',
     kind: 'group',
+    category: 'physical',
     images: ['/media/exhibitions/dimo-main.jpg', '/media/exhibitions/dimo-1.jpg', '/media/exhibitions/dimo-2.jpg'],
   },
   {
@@ -64,6 +81,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'The Holy Art',
     place: 'Paris, France',
     kind: 'group',
+    category: 'physical',
     images: ['/media/posters/paris-poster.png', '/media/exhibitions/holy-paris-main.jpg', '/media/exhibitions/holy-paris-1.webp'],
   },
   {
@@ -73,6 +91,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'The Holy Art',
     place: 'London, UK',
     kind: 'group',
+    category: 'physical',
     images: ['/media/exhibitions/holy-london-1.jpg', '/media/exhibitions/holy-london-2.jpg'],
     note: 'Exhibition documentation & promotional materials.',
   },
@@ -83,6 +102,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Luna Grande Art',
     place: 'Online',
     kind: 'group',
+    category: 'digital',
     images: ['/media/exhibitions/luna-main.jpg', '/media/exhibitions/luna-1.jpg', '/media/exhibitions/luna-2.jpg'],
   },
   {
@@ -92,6 +112,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Contemporary Venice',
     place: 'Venice, Italy',
     kind: 'group',
+    category: 'physical',
     images: ['/media/exhibitions/venice-1.jpg', '/media/exhibitions/venice-2.jpg', '/media/exhibitions/venice-3.jpg', '/media/exhibitions/venice-4.jpg', '/media/exhibitions/venice-5.jpg'],
   },
   {
@@ -101,6 +122,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Clover Gallery',
     place: 'Virtual Exhibition',
     kind: 'group',
+    category: 'digital',
     images: ['/media/virtual/clover-anna.jpg', '/media/virtual/soul-gift.jpg', '/media/virtual/soul-gift-poster.png'],
     note: 'Virtual exhibition at Clover Gallery — digital and material realities.',
   },
@@ -111,17 +133,76 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'The Atrium',
     place: 'Virtual Exhibition',
     kind: 'group',
+    category: 'digital',
     images: ['/media/virtual/the-atrium.jpg'],
     note: 'A virtual space exploring architectural memory and digital presence.',
+  },
+  {
+    id: 'wildscape',
+    year: 'Ongoing',
+    title: 'Wildscape Literary Journal',
+    gallery: 'Wildscape Literary Journal',
+    place: 'Ongoing',
+    category: 'magazine',
+    images: ['/media/the-fish.png'],
+    links: {
+      website: 'https://wildscapelit.com/',
+      magazineLabel: 'Ongoing',
+      artwork: 'The Fish',
+    },
+  },
+  {
+    id: 'astraeazine',
+    year: '2025',
+    title: 'Astraeazine',
+    gallery: 'Issue Eight — Dreamscape',
+    place: 'Astraea Zine',
+    category: 'magazine',
+    images: ['/media/posters/poster-1.jpg'],
+    links: {
+      website: 'https://www.instagram.com/astraeazine/',
+      magazine: 'https://www.astraeazine.com/issue-eight',
+      issue: 'Issue Eight — Dreamscape',
+      artwork: 'The Fish and Souls of Leavings',
+    },
+  },
+  {
+    id: 'hush-magazine',
+    year: '2025',
+    title: 'Hush Magazine',
+    gallery: 'Hush Magazine',
+    place: 'Issue 001 — LOST//FOUND',
+    category: 'magazine',
+    images: ['/media/posters/nana-nyc.jpg'],
+    links: {
+      website: 'https://hushmag.co.uk/',
+      magazine: 'https://hushmag.co.uk/collections/all',
+      issue: 'ISSUE 001 LOST//FOUND SUBMISSION',
+      artwork: 'Souls of Leavings',
+    },
+  },
+  {
+    id: 'spellbinder',
+    year: '2026',
+    title: 'Spellbinder Magazine',
+    gallery: 'Spellbinder Magazine',
+    place: 'Spring 2026',
+    category: 'magazine',
+    images: ['/media/posters/paris-poster.png'],
+    links: {
+      website: 'https://www.spellbindermag.com/',
+      magazine: 'https://www.spellbindermag.com/issues/spring-2026/',
+      issue: 'Spring Issue',
+      artwork: 'Souls of Leavings',
+    },
   },
 ];
 
 export const magazines = [
-  { title: 'Astraea Zine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish & Souls of Leavings', image: '/media/posters/poster-1.jpg' },
+  { title: 'Wildscape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
+  { title: 'Astraeazine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish and Souls of Leavings', image: '/media/posters/poster-1.jpg' },
   { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/posters/nana-nyc.jpg' },
   { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/posters/paris-poster.png' },
-  { title: 'Wildsape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
-  { title: 'Onart Magazine', issue: 'TBD', feature: 'Featured', image: '/media/posters/itaewon-poster.png' },
 ];
 
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;

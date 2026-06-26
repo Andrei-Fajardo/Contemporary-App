@@ -12,7 +12,7 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 
 <div class="exhibition-accordion editorial-divider-list">
   {entries.map((entry) => (
-    <details class="exhibition-accordion__item scroll-reveal group">
+    <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
       <summary class="exhibition-accordion__summary" aria-label={`${entry.title} — ${expandLabel}`}>
         <span class="exhibition-accordion__year">{entry.year}</span>
         <span class="exhibition-accordion__title">{entry.title}</span>
@@ -29,6 +29,46 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
         {entry.note && (
           <p class="content-prose text-ink-60 mb-6">{entry.note}</p>
         )}
+        {entry.links && (
+          <dl class="exhibition-accordion__links">
+            {entry.links.website && (
+              <div class="exhibition-accordion__link-row">
+                <dt>Website</dt>
+                <dd>
+                  <a href={entry.links.website} target="_blank" rel="noopener noreferrer" class="exhibition-accordion__link">
+                    {entry.links.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                  </a>
+                </dd>
+              </div>
+            )}
+            {(entry.links.magazine || entry.links.magazineLabel) && (
+              <div class="exhibition-accordion__link-row">
+                <dt>Magazine</dt>
+                <dd>
+                  {entry.links.magazine ? (
+                    <a href={entry.links.magazine} target="_blank" rel="noopener noreferrer" class="exhibition-accordion__link">
+                      {entry.links.magazineLabel ?? entry.links.magazine.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                    </a>
+                  ) : (
+                    <span class="content-prose text-ink-75">{entry.links.magazineLabel}</span>
+                  )}
+                </dd>
+              </div>
+            )}
+            {entry.links.issue && (
+              <div class="exhibition-accordion__link-row">
+                <dt>Issue</dt>
+                <dd><span class="content-prose text-ink-75">{entry.links.issue}</span></dd>
+              </div>
+            )}
+            {entry.links.artwork && (
+              <div class="exhibition-accordion__link-row">
+                <dt>Artwork</dt>
+                <dd><span class="content-prose text-ink-75">{entry.links.artwork}</span></dd>
+              </div>
+            )}
+          </dl>
+        )}
         {entry.images.length > 0 && (
           <ExhibitionCarousel
             id={entry.id}
@@ -36,7 +76,9 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
             alt={entry.title}
           />
         )}
-        <span class="exhibition-accordion__kind">{entry.kind}</span>
+        {entry.kind && entry.category !== 'magazine' && (
+          <span class="exhibition-accordion__kind">{entry.kind}</span>
+        )}
       </div>
     </details>
   ))}
@@ -204,6 +246,46 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 
   .exhibition-accordion__summary:hover .exhibition-accordion__badge {
     border-color: var(--border-section);
+  }
+
+  .exhibition-accordion__item.is-filtered-out {
+    display: none;
+  }
+
+  .exhibition-accordion__links {
+    display: grid;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .exhibition-accordion__link-row {
+    display: grid;
+    grid-template-columns: minmax(5rem, 7rem) 1fr;
+    gap: 0.75rem 1.25rem;
+    align-items: baseline;
+  }
+
+  .exhibition-accordion__link-row dt {
+    font-family: var(--font-heading);
+    font-size: 0.625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+  }
+
+  .exhibition-accordion__link {
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 1vw, 1.0625rem);
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s ease, color 0.25s ease;
+    word-break: break-word;
+  }
+
+  .exhibition-accordion__link:hover {
+    border-bottom-color: var(--ink-45);
+    color: var(--ink-75);
   }
 
   @media (max-width: 1023px) {

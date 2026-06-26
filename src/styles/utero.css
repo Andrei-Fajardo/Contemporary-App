@@ -111,3 +111,45 @@
 .edu-timeline__node--accent .edu-timeline__title {
   color: var(--ink);
 }
+
+/* Exhibition category filters */
+.exhibition-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.exhibition-filter {
+  font-family: var(--font-heading);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.75rem);
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  color: var(--ink-45);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.35rem 0;
+  cursor: pointer;
+  transition:
+    color 0.35s var(--ease-editorial),
+    border-color 0.35s var(--ease-editorial),
+    transform 0.35s var(--ease-editorial);
+}
+
+.exhibition-filter:hover {
+  color: var(--ink-70);
+  transform: translateY(-1px);
+}
+
+.exhibition-filter.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.exhibition-filter:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}

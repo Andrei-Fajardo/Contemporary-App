@@ -6,6 +6,7 @@ import { initAnchorNav, initScrollSpy, resetScrollSpy } from "./scroll-spy";
 import { initDepthField, resetDepthField, updateDepthField } from "./depth-field";
 import { initExhibitionCarousels, resetExhibitionCarousels } from "./exhibition-carousel";
 import { initExhibitionAccordion, resetExhibitionAccordion } from "./exhibition-accordion";
+import { initExhibitionFilter, resetExhibitionFilter } from "../exhibition-filter";
 import { initNavHover, resetNavHover } from "./nav-hover";
 import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
 import { initCursorTilt, resetCursorTilt, bindCursorTiltTabListener } from "./cursor-tilt";
@@ -30,6 +31,7 @@ export function initMotion(): void {
   resetDepthField();
   resetExhibitionCarousels();
   resetExhibitionAccordion();
+  resetExhibitionFilter();
   resetNavHover();
   resetGlobalLightbox();
   resetCursorTilt();
@@ -58,6 +60,7 @@ export function initMotion(): void {
   }
   initExhibitionCarousels();
   initExhibitionAccordion();
+  initExhibitionFilter();
   initNavHover();
   initGlobalLightbox();
   bindCursorTiltTabListener();
