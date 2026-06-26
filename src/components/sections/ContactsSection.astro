@@ -12,41 +12,41 @@ const l = t[locale];
 
 <section id="contacts" class="scroll-section section-gap contacts-chaos">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.contactTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-12 md:mb-16 chaos-title-mark">
+    <p class="scroll-reveal section-eyebrow">{l.contactTag}</p>
+    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-12 md:mb-16">
       {l.contactHeading}
     </h2>
 
     <div class="grid md:grid-cols-2 gap-14 md:gap-20 lg:gap-24">
       <div class="scroll-reveal space-y-10">
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.email}</span>
-          <a href="mailto:contact@annadauylrockswell.com" class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
+          <span class="section-divider-label section-eyebrow block mb-3">{l.email}</span>
+          <a href="mailto:contact@annadauylrockswell.com" class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all">
             contact@annadauylrockswell.com
           </a>
-          <a href="mailto:support@annadauylrockswell.com" class="content-prose block mt-3 underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
+          <a href="mailto:support@annadauylrockswell.com" class="content-prose block mt-3 underline underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all">
             support@annadauylrockswell.com
           </a>
         </div>
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.basedIn}</span>
+          <span class="section-divider-label section-eyebrow block mb-3">{l.basedIn}</span>
           <p class="content-prose text-ink-75">{l.location}</p>
         </div>
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.socials}</span>
-          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer" class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all">
+          <span class="section-divider-label section-eyebrow block mb-3">{l.socials}</span>
+          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer" class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all">
             @rockswellnana
           </a>
         </div>
         <div>
-          <span class="section-divider-label section-eyebrow--blood block mb-3">{l.licenses}</span>
+          <span class="section-divider-label section-eyebrow block mb-3">{l.licenses}</span>
           <div class="flex flex-col gap-3">
             {siteCopy.licenses.map((license) => (
               <a
                 href={license.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--accent-red)] transition-all"
+                class="content-prose underline underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all"
               >
                 {license.label}
               </a>
@@ -58,15 +58,15 @@ const l = t[locale];
       <div class="scroll-reveal">
         <form class="contacts-chaos__form space-y-8" onsubmit="event.preventDefault(); alert('Sent (demo)');">
           <div>
-            <span class="section-divider-label section-eyebrow--blood block mb-3">{l.nameLabel}</span>
+            <span class="section-divider-label section-eyebrow block mb-3">{l.nameLabel}</span>
             <input type="text" placeholder={l.namePlaceholder} class="contacts-chaos__input" />
           </div>
           <div>
-            <span class="section-divider-label section-eyebrow--blood block mb-3">{l.emailLabel}</span>
+            <span class="section-divider-label section-eyebrow block mb-3">{l.emailLabel}</span>
             <input type="email" placeholder={l.emailPlaceholder} class="contacts-chaos__input" />
           </div>
           <div>
-            <span class="section-divider-label section-eyebrow--blood block mb-3">{l.messageLabel}</span>
+            <span class="section-divider-label section-eyebrow block mb-3">{l.messageLabel}</span>
             <textarea rows="4" placeholder={l.messagePlaceholder} class="contacts-chaos__input contacts-chaos__input--area resize-none"></textarea>
           </div>
           <div class="pt-2">

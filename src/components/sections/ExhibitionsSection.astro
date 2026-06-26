@@ -9,16 +9,43 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+
+const filters = [
+  { id: 'physical', label: l.physical },
+  { id: 'digital', label: l.digitalFilter },
+  { id: 'magazine', label: l.magazineFilter },
+] as const;
 ---
 
 <section id="exhibitions" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow section-eyebrow--blood">{l.exhibitionsTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-6 chaos-title-mark" set:html={l.exhibitionHistory}></h2>
-    <p class="scroll-reveal content-prose text-ink-60 max-w-[62ch] mb-8 md:mb-16">
-      Chronological record of exhibitions — expand each entry to view posters, promotional materials, and documentation.
+  <div class="section-shell section-shell--wide" data-exhibition-filter-root>
+    <p class="scroll-reveal section-eyebrow">{l.exhibitionsTag}</p>
+    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-6" set:html={l.exhibitionHistory}></h2>
+
+    <p class="scroll-reveal content-prose text-ink-60 max-w-[62ch] mb-4">
+      {l.exhibitionsIntro}
     </p>
 
-    <ExhibitionAccordion entries={exhibitionEntries} />
+    <div class="exhibition-filters scroll-reveal" role="tablist" aria-label="Exhibition categories">
+      {filters.map((filter, index) => (
+        <button
+          type="button"
+          class:list={["exhibition-filter", index === 0 && "is-active"]}
+          data-exhibition-filter={filter.id}
+          role="tab"
+          aria-selected={index === 0 ? "true" : "false"}
+        >
+          {filter.label}
+        </button>
+      ))}
+    </div>
+
+    <ExhibitionAccordion entries={exhibitionEntries} expandLabel={l.viewMore} />
   </div>
 </section>
+
+<script>
+  import { initExhibitionFilter } from "../../scripts/exhibition-filter";
+  initExhibitionFilter();
+  document.addEventListener("astro:page-load", initExhibitionFilter);
+</script>

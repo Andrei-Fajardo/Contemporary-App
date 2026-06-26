@@ -1,0 +1,155 @@
+/* From Utero — grainy literary chapbook surface (no pink/circle motion) */
+
+:root {
+  --utero-dark: #0f0e0c;
+  --utero-ink-wash: rgba(15, 14, 12, 0.04);
+  --utero-splash: rgba(15, 14, 12, 0.06);
+  --utero-layer: rgba(26, 22, 20, 0.04);
+}
+
+/* Grain always visible — warm paper texture */
+.grain-overlay::before {
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+}
+
+.grain-overlay::after {
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+}
+
+/* Subtle ink depth on sections — static, not animated */
+.scroll-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.scroll-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 38% 24% at 6% 14%, var(--utero-splash) 0%, transparent 72%),
+    linear-gradient(180deg, transparent 70%, var(--utero-ink-wash) 100%);
+  opacity: 0.45;
+}
+
+.scroll-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Literary chapbook title treatment — thin ink rule, no skew */
+.chaos-title-mark::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.12em;
+  width: 100%;
+  height: 1px;
+  background: var(--ink-35);
+  transform: none;
+}
+
+.hero-editorial__anna::after {
+  height: 1px;
+  background: var(--ink-35);
+  transform: none;
+}
+
+.brutal-rule {
+  background: var(--ink-35);
+}
+
+/* Disable decorative pink/circle layers */
+.floating-petals,
+.chaos-splashes,
+.chaos-encircle__ring {
+  display: none !important;
+}
+
+.section-eyebrow--blood,
+.about-chaos .section-eyebrow {
+  color: var(--ink-45) !important;
+}
+
+.sidebar-nav-link.nav-link--active::before {
+  background: var(--ink) !important;
+}
+
+.sidebar-nav-link.nav-link--active {
+  color: var(--ink) !important;
+}
+
+.contacts-chaos__input:focus {
+  border-bottom-color: var(--ink-45);
+}
+
+.contacts-chaos__submit {
+  color: var(--ink);
+  border-color: var(--ink-35);
+}
+
+.contacts-chaos__submit:hover {
+  background: var(--ink);
+  color: var(--canvas);
+  border-color: var(--ink);
+}
+
+.hero-editorial__motto-emphasis {
+  font-style: italic;
+  color: var(--ink-70);
+}
+
+.edu-timeline__node--accent .edu-timeline__dot {
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--canvas), 0 0 0 4px var(--ink-35);
+}
+
+.edu-timeline__node--accent .edu-timeline__title {
+  color: var(--ink);
+}
+
+/* Exhibition category filters */
+.exhibition-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.exhibition-filter {
+  font-family: var(--font-heading);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.75rem);
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  color: var(--ink-45);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.35rem 0;
+  cursor: pointer;
+  transition:
+    color 0.35s var(--ease-editorial),
+    border-color 0.35s var(--ease-editorial),
+    transform 0.35s var(--ease-editorial);
+}
+
+.exhibition-filter:hover {
+  color: var(--ink-70);
+  transform: translateY(-1px);
+}
+
+.exhibition-filter.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.exhibition-filter:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}

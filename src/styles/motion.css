@@ -343,6 +343,11 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   font-size: clamp(0.75rem, 1vw, 0.875rem);
   letter-spacing: 0.06em;
   color: var(--ink-50);
+  margin-bottom: 1rem;
+}
+
+.hero-editorial__intro {
+  max-width: 42ch;
   margin-bottom: 1.25rem;
 }
 
@@ -1173,8 +1178,8 @@ html {
 .lang-toggle--drawer .lang-btn {
   min-width: 0;
   width: 100%;
-  padding: 0.55rem 0.25rem;
-  font-size: 0.625rem;
+  padding: 0.7rem 0.4rem;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 1023px) {
@@ -1193,15 +1198,15 @@ html {
 }
 
 .lang-toggle--desktop .lang-btn {
-  min-width: 2.65rem;
-  padding: 0.65rem 0.85rem;
-  font-size: 0.72rem;
+  min-width: 3.35rem;
+  padding: 0.85rem 1.1rem;
+  font-size: 1rem;
 }
 
 .lang-toggle--mobile .lang-btn {
-  min-width: 2.1rem;
-  padding: 0.5rem 0.55rem;
-  font-size: 0.62rem;
+  min-width: 2.65rem;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.9rem;
 }
 
 .lang-btn__label {

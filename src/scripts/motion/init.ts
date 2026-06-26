@@ -6,9 +6,9 @@ import { initAnchorNav, initScrollSpy, resetScrollSpy } from "./scroll-spy";
 import { initDepthField, resetDepthField, updateDepthField } from "./depth-field";
 import { initExhibitionCarousels, resetExhibitionCarousels } from "./exhibition-carousel";
 import { initExhibitionAccordion, resetExhibitionAccordion } from "./exhibition-accordion";
+import { initExhibitionFilter, resetExhibitionFilter } from "../exhibition-filter";
 import { initNavHover, resetNavHover } from "./nav-hover";
 import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
-import { initPetalDrift, resetPetalDrift, bindPetalDriftTabListener } from "./petal-drift";
 import { initCursorTilt, resetCursorTilt, bindCursorTiltTabListener } from "./cursor-tilt";
 import { prefersReducedMotion } from "./utils";
 
@@ -31,9 +31,9 @@ export function initMotion(): void {
   resetDepthField();
   resetExhibitionCarousels();
   resetExhibitionAccordion();
+  resetExhibitionFilter();
   resetNavHover();
   resetGlobalLightbox();
-  resetPetalDrift();
   resetCursorTilt();
 
   if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
@@ -60,10 +60,9 @@ export function initMotion(): void {
   }
   initExhibitionCarousels();
   initExhibitionAccordion();
+  initExhibitionFilter();
   initNavHover();
   initGlobalLightbox();
-  bindPetalDriftTabListener();
-  initPetalDrift();
   bindCursorTiltTabListener();
   initCursorTilt();
 }
