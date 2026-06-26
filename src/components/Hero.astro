@@ -7,19 +7,14 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-
-const [anna, ...restFirst] = l.heroFirstName.split(" ");
-const restOfFirst = restFirst.join(" ");
 ---
 
 <section id="home" class="hero-section hero-chaos scroll-section">
   <div class="hero-editorial hero-chaos__inner">
     <figure class="hero-chaos__visual scroll-reveal" aria-label="Anna Dauyl Rockswell — artwork portrait">
       <img
-        src="/media/hero-portrait.jpg"
-        alt="Anna Dauyl Rockswell — Souls & Leavings"
-        width="1200"
-        height="1500"
+        src="/media/Untitled-1.png"
+        alt="Anna Dauyl Rockswell — portrait artwork"
         loading="eager"
         decoding="async"
         draggable="false"
@@ -29,9 +24,9 @@ const restOfFirst = restFirst.join(" ");
     <div class="hero-editorial__copy">
       <div class="scroll-reveal hero-editorial__name-block">
         <h1 class="hero-editorial__name">
-          <span class="hero-editorial__anna">{anna}</span>{restOfFirst ? ` ${restOfFirst}` : ""}
+          <span class="hero-editorial__name-line">{l.heroFirstName}</span>
+          <span class="hero-editorial__surname">{l.heroLastName}</span>
         </h1>
-        <p class="hero-editorial__surname">{l.heroLastName}</p>
       </div>
 
       <p class="scroll-reveal hero-editorial__roles">{l.heroRoles}</p>
