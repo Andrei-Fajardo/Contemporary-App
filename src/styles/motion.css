@@ -232,20 +232,31 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 
 @container hero (min-width: 900px) {
   .hero-editorial {
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(1rem, 3vw, 2rem);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
     align-items: start;
     padding-top: clamp(1.25rem, 4vh, 2.5rem);
   }
 
   .hero-chaos .hero-editorial {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     align-items: start;
   }
 }
 
 .hero-editorial__copy {
   max-width: 42rem;
+  align-self: end;
+}
+
+@media (max-width: 899px) {
+  .hero-chaos__visual img {
+    max-height: min(62vh, 36rem);
+  }
+
+  .hero-editorial__copy {
+    align-self: start;
+  }
 }
 
 .hero-editorial__tagline {

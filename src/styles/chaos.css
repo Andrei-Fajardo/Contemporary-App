@@ -21,7 +21,7 @@
 }
 
 .hero-chaos .hero-editorial__copy,
-.hero-chaos .hero-chaos__aside {
+.hero-chaos .hero-chaos__visual {
   position: relative;
   z-index: 1;
 }
@@ -525,6 +525,30 @@ html.motion-reduced .press-chaos__poster {
 .hero-chaos__ghost:nth-child(5n) {
   border-width: 2px;
   border-color: var(--accent-red);
+}
+
+/* Hero portrait — replaces former quote aside */
+.hero-chaos__visual {
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  justify-self: start;
+}
+
+.hero-chaos__visual img {
+  display: block;
+  width: 100%;
+  max-height: min(78vh, 52rem);
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(1) contrast(1.05);
+}
+
+.hero-editorial__name,
+.hero-editorial__surname,
+.hero-editorial__name-block,
+.hero-editorial__roles {
+  text-align: left;
 }
 
 .hero-chaos__aside {

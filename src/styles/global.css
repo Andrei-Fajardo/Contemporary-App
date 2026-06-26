@@ -568,6 +568,12 @@ select,
   height: 2px;
 }
 
+.editorial-dense .hero-editorial__name,
+.editorial-dense .hero-editorial__surname,
+.editorial-dense .hero-editorial__roles {
+  text-align: left;
+}
+
 .editorial-dense .hero-editorial__surname {
   font-size: clamp(1.75rem, 4.5vw, 3rem);
   line-height: 0.92;
