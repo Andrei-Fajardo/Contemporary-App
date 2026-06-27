@@ -230,12 +230,6 @@
   isolation: isolate;
 }
 
-.site-main-column .tabular-main,
-.site-main-column > main {
-  position: relative;
-  z-index: 1;
-}
-
 /* Editorial images sit above the petal layer */
 .cursor-tilt,
 .press-chaos__tilt-wrap,
@@ -366,6 +360,56 @@ html.motion-reduced .press-chaos__poster {
   .press-chaos__tilt {
     transform: none !important;
     will-change: auto;
+  }
+}
+
+/* --- Academic Research — right-side anna sample 4 decor --- */
+.research-section {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.research-section__art {
+  position: absolute;
+  right: clamp(-1.5rem, -3vw, 0rem);
+  top: clamp(0.25rem, 1.5vh, 1rem);
+  width: clamp(18rem, 42vw, 34rem);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.research-section__art-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: right top;
+  filter: grayscale(1) contrast(1.03);
+  opacity: 0.9;
+  mix-blend-mode: multiply;
+  cursor: default;
+  pointer-events: none;
+}
+
+.research-section__content {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1023px) {
+  .research-section__art {
+    width: clamp(12rem, 44vw, 20rem);
+    right: clamp(-1rem, -2vw, 0rem);
+    top: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .research-section__art {
+    width: 40vw;
+    opacity: 0.75;
   }
 }
 

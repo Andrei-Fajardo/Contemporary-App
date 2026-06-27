@@ -11,8 +11,20 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="research" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide">
+<section id="research" class="scroll-section section-gap research-section">
+  <div class="research-section__art" aria-hidden="true">
+    <img
+      src="/media/anna-sample-4.png"
+      alt=""
+      class="research-section__art-img"
+      loading="lazy"
+      decoding="async"
+      draggable="false"
+      data-lightbox-ignore
+    />
+  </div>
+
+  <div class="section-shell section-shell--wide research-section__content">
     <p class="scroll-reveal section-eyebrow">{l.academicTag}</p>
     <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-3">
       {l.academicHeading}
