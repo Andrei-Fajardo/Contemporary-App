@@ -17,22 +17,48 @@ const { locale } = Astro.props;
 
 <div class="tabular-view editorial-dense" data-tabular-view>
   <div class="tabular-panels" role="tabpanels">
+
+    <!-- ── ABOUT ───────────────────────────────────────────── -->
     <div class="tabular-panel is-active" data-tab-panel="about" id="panel-about" role="tabpanel" aria-labelledby="nav-about">
       <AboutPanelStack locale={locale} />
     </div>
 
+    <!-- ── ART ────────────────────────────────────────────── -->
     <div class="tabular-panel" data-tab-panel="art" id="panel-art" role="tabpanel" hidden aria-hidden="true">
       <ArtSection locale={locale} />
     </div>
 
+    <!-- ── EXHIBITIONS ────────────────────────────────────── -->
     <div class="tabular-panel" data-tab-panel="exhibitions" id="panel-exhibitions" role="tabpanel" hidden aria-hidden="true">
       <ExhibitionsSection locale={locale} />
     </div>
 
+    <!-- ── PUBLICATIONS — anna-sample-2: draped marble figure ─
+         The ascending figure bleeds off the right edge at ghost
+         opacity. Text flows IN FRONT of the image (z-index 1+).
+         Mirrors the From Utero manuscript: text and image share
+         the same plane — neither obscures the other.
+    ──────────────────────────────────────────────────────── -->
     <div class="tabular-panel publications-panel" data-tab-panel="publications" id="panel-publications" role="tabpanel" hidden aria-hidden="true">
+      <div class="publications-panel__art" aria-hidden="true">
+        <img
+          src="/media/anan sample 2.png"
+          alt=""
+          class="publications-panel__art-img"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
+      </div>
       <PublicationsSection locale={locale} />
     </div>
 
+    <!-- ── RESEARCH — anna-sample-4: leaf+body collage ────────
+         Primary: large lower-left botanical decay.
+         Echo: same leaf mirrored, top-right, very faint.
+         Two presences like a chapbook fold-open spread.
+    ──────────────────────────────────────────────────────── -->
     <div class="tabular-panel research-panel" data-tab-panel="research" id="panel-research" role="tabpanel" hidden aria-hidden="true">
       <div class="research-panel__art" aria-hidden="true">
         <img
@@ -45,15 +71,58 @@ const { locale } = Astro.props;
           data-lightbox-ignore
         />
       </div>
+      <div class="research-panel__art-echo" aria-hidden="true">
+        <img
+          src="/media/anna-sample-4.png"
+          alt=""
+          class="research-panel__art-echo-img"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
+      </div>
       <ResearchSection locale={locale} />
     </div>
 
+    <!-- ── PRESS — anna-sample-3: fragmented/void face mask ───
+         The dissected face sits top-right, half out-of-frame.
+         The "cut" void faces the text — press frames the artist
+         the way the mask frames the void.
+    ──────────────────────────────────────────────────────── -->
     <div class="tabular-panel press-panel" data-tab-panel="press" id="panel-press" role="tabpanel" hidden aria-hidden="true">
+      <div class="press-panel__art" aria-hidden="true">
+        <img
+          src="/media/anna-sample-3.png"
+          alt=""
+          class="press-panel__art-img"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
+      </div>
       <PressSection locale={locale} />
     </div>
 
-    <div class="tabular-panel" data-tab-panel="contacts" id="panel-contacts" role="tabpanel" hidden aria-hidden="true">
+    <!-- ── CONTACTS — anna-sample-2: faint centered watermark ─
+         The figure is centered and very faint — the artist's
+         presence behind the act of reaching out.
+    ──────────────────────────────────────────────────────── -->
+    <div class="tabular-panel contacts-panel" data-tab-panel="contacts" id="panel-contacts" role="tabpanel" hidden aria-hidden="true">
+      <div class="contacts-panel__art" aria-hidden="true">
+        <img
+          src="/media/anan sample 2.png"
+          alt=""
+          class="contacts-panel__art-img"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
+      </div>
       <ContactsSection locale={locale} />
     </div>
+
   </div>
 </div>

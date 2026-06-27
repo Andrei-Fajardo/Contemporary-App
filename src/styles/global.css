@@ -5,6 +5,7 @@
 @import "./utero.css";
 @import "./gothic.css";
 @import "./about-panel.css";
+@import "./utero-layers.css";
 
 /* Editorial typography — Forum (heads) + Inter (body) */
 :root {

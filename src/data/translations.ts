@@ -19,7 +19,7 @@ export const t = {
     heroMottoEmphasis: "I am.",
     heroBasedIn: "Writer & Artist based in Seoul and Almaty",
     selected: "Anna Dauyl", works: "Rockswell",
-    heroIntro: "NANA (Anna Dauyl Rockswell) is a Kazakh multidisciplinary artist based in Seoul.",
+    heroIntro: "A Kazakh multidisciplinary artist based in Seoul.",
     aboutLead: "A Kazakh multidisciplinary artist based in Seoul.",
     bio: "Heavily influenced by background in writing, dark expressionism, transgressive literature, counterculture movements, and Jungian psychoanalysis, her themes often circle the edges of contrarian art, visceral imagery, feminine experience, mental health interiority, and raw political & social commentary.",
     heroDesc: "Freedom of speech, freedom of expression, contrarianist inspired, transgressive literature, counterculture.",

@@ -1,0 +1,256 @@
+/* ============================================================
+   From Utero — manuscript-inspired layered image system
+   Artwork bleeds into text space at ghost opacity.
+   Every panel image is:
+     - position: absolute (never in flow)
+     - pointer-events: none / aria-hidden (purely decorative)
+     - mix-blend-mode: multiply (fuses with warm canvas)
+     - opacity 0.12–0.22 (texture, not obstruction)
+     - z-index: 0 (content always z-index 1+)
+   ============================================================ */
+
+/* ── PUBLICATIONS PANEL — anna-sample-2 (draped marble figure) ── */
+/*
+  Positioned RIGHT side, bleeding off-canvas ~30%.
+  The figure's upward gesture echoes "lift" and aspiration —
+  correct thematic counterpart to poetry/writing.
+  The figure floods the right column at ghost opacity so the
+  editorial link list text reads clearly on top of it.
+*/
+.publications-panel {
+  position: relative;
+  isolation: isolate;
+}
+
+.publications-panel__art {
+  position: absolute;
+  /* Bleed 28% off the right edge — crops naturally at overflow:hidden */
+  right: -6%;
+  top: clamp(-2rem, -4vh, -1rem);
+  width: clamp(20rem, 44vw, 38rem);
+  /* Keep tall enough to fill the section height */
+  max-height: none;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  /* Slight counter-clockwise tilt — manuscript feel */
+  transform: rotate(-3deg);
+  transform-origin: right top;
+}
+
+.publications-panel__art-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: right top;
+  filter: grayscale(1) contrast(1.08) brightness(0.96);
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Content layer sits above the art */
+.publications-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── PRESS PANEL — anna-sample-3 (fragmented face/void mask) ── */
+/*
+  The dissected face is cropped top-right, half out-of-frame.
+  This mirrors how press/media "frames" the artist — the face
+  looking inward, partly hidden. Low opacity + slight rotation
+  creates a palimpsest watermark that doesn't compete with text.
+*/
+.press-panel {
+  position: relative;
+  isolation: isolate;
+}
+
+.press-panel__art {
+  position: absolute;
+  top: clamp(-3rem, -6vh, -1.5rem);
+  right: clamp(-4rem, -8vw, -2rem);
+  width: clamp(16rem, 30vw, 26rem);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  /* Slight CW rotation so the void cut faces inward toward text */
+  transform: rotate(6deg);
+  transform-origin: top right;
+}
+
+.press-panel__art-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: top right;
+  filter: grayscale(1) contrast(1.1) brightness(1.02);
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Content sits above art */
+.press-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── RESEARCH PANEL — anna-sample-4 (leaf+body collage) ── */
+/*
+  Enhanced from previous: art is now larger and more present,
+  bottom-left with a secondary echo panel top-right (same image,
+  mirrored + very faint) to create the manuscript "bleed through"
+  effect seen in From Utero where imagery repeats across folds.
+*/
+.research-panel__art {
+  /* Override previous small size — now more editorial */
+  width: clamp(11rem, 20vw, 16rem);
+  bottom: clamp(4rem, 12vh, 8rem);
+  left: var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
+  transform: rotate(-2deg);
+  transform-origin: left bottom;
+}
+
+.research-panel__art-img {
+  /* Slightly more present than before */
+  opacity: 0.55;
+  filter: grayscale(1) contrast(1.04) brightness(0.98);
+  mix-blend-mode: multiply;
+}
+
+/* Secondary echo: same leaf, faint, top-right corner */
+.research-panel__art-echo {
+  position: absolute;
+  top: clamp(0rem, 2vh, 1rem);
+  right: clamp(-2rem, -4vw, -1rem);
+  width: clamp(8rem, 14vw, 12rem);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  transform: rotate(8deg) scaleX(-1);
+  transform-origin: top right;
+}
+
+.research-panel__art-echo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.02);
+  opacity: 0.10;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ── CONTACTS PANEL — subtle centered figure watermark ── */
+/*
+  For the contact form, anna-sample-2 appears centered and very
+  faint — like the artist's presence behind the "reach out" act.
+  This is the most restrained use: pure watermark.
+*/
+.contacts-panel {
+  position: relative;
+  isolation: isolate;
+}
+
+.contacts-panel__art {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -46%) rotate(1deg);
+  width: clamp(14rem, 28vw, 22rem);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.contacts-panel__art-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.06);
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Content layer sits above */
+.contacts-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── RESPONSIVE — reduce art on tablet/mobile ─────────────── */
+@media (max-width: 1023px) {
+  .publications-panel__art {
+    width: clamp(14rem, 48vw, 26rem);
+    right: -10%;
+    opacity: 0.95; /* drives the img opacity lower still */
+  }
+  .publications-panel__art-img { opacity: 0.13; }
+
+  .press-panel__art {
+    width: clamp(11rem, 34vw, 18rem);
+    right: -5%;
+    top: clamp(-1.5rem, -4vh, -0.5rem);
+  }
+  .press-panel__art-img { opacity: 0.10; }
+
+  .research-panel__art {
+    width: clamp(8rem, 18vw, 12rem);
+  }
+  .research-panel__art-echo {
+    display: none; /* too cluttered at tablet */
+  }
+
+  .contacts-panel__art {
+    width: clamp(10rem, 36vw, 16rem);
+  }
+  .contacts-panel__art-img { opacity: 0.07; }
+}
+
+@media (max-width: 639px) {
+  .publications-panel__art {
+    width: 70vw;
+    right: -15%;
+    top: 0;
+  }
+  .publications-panel__art-img { opacity: 0.10; }
+
+  .press-panel__art {
+    width: 52vw;
+    right: -8%;
+    top: -1rem;
+    transform: rotate(4deg);
+  }
+  .press-panel__art-img { opacity: 0.09; }
+
+  .research-panel__art {
+    width: clamp(6rem, 24vw, 9rem);
+  }
+
+  .contacts-panel__art {
+    width: 55vw;
+  }
+}
+
+/* ── Reduced motion — disable entrance animation only ────── */
+@media (prefers-reduced-motion: reduce) {
+  .publications-panel__art,
+  .press-panel__art,
+  .research-panel__art,
+  .research-panel__art-echo,
+  .contacts-panel__art {
+    animation: none !important;
+    transform: none !important;
+  }
+}
