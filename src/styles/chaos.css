@@ -386,7 +386,7 @@ html.motion-reduced .press-chaos__poster {
   right: clamp(3rem, 8vw, 8rem);
   bottom: clamp(6rem, 14vh, 12rem);
   left: auto;
-  width: clamp(28rem, 40vw, 46rem);
+  width: clamp(25rem, 36vw, 42rem);
   /* Above footer and sidebar stacking contexts */
   z-index: 50;
   pointer-events: none;
@@ -415,17 +415,17 @@ html.motion-reduced .press-chaos__poster {
 
 @media (max-width: 1023px) {
   .research-panel__art {
-    width: clamp(20rem, 48vw, 34rem);
+    width: clamp(18rem, 44vw, 31rem);
   }
 }
 
 @media (max-width: 639px) {
   .research-panel__art {
-    width: clamp(14rem, 60vw, 22rem);
+    width: clamp(13rem, 56vw, 20rem);
   }
 
   .research-panel__art-img {
-    opacity: 0.55;
+    opacity: 0.68;
   }
 }
 
