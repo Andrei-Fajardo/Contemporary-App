@@ -19,7 +19,7 @@ const { locale } = Astro.props;
   <div class="tabular-panels" role="tabpanels">
 
     <!-- ── ABOUT ───────────────────────────────────────────── -->
-    <div class="tabular-panel is-active" data-tab-panel="about" id="panel-about" role="tabpanel" aria-labelledby="nav-about">
+    <div class="tabular-panel about-panel is-active" data-tab-panel="about" id="panel-about" role="tabpanel" aria-labelledby="nav-about">
       <AboutPanelStack locale={locale} />
     </div>
 
@@ -29,7 +29,7 @@ const { locale } = Astro.props;
     </div>
 
     <!-- ── EXHIBITIONS ────────────────────────────────────── -->
-    <div class="tabular-panel" data-tab-panel="exhibitions" id="panel-exhibitions" role="tabpanel" hidden aria-hidden="true">
+    <div class="tabular-panel exhibitions-panel" data-tab-panel="exhibitions" id="panel-exhibitions" role="tabpanel" hidden aria-hidden="true">
       <ExhibitionsSection locale={locale} />
     </div>
 

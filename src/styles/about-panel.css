@@ -8,6 +8,9 @@
   position: relative;
   isolation: isolate;
   background: var(--canvas, #F0EEE9);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Portrait beside name ? centered cluster */
@@ -130,6 +133,7 @@
 .about-panel-stack__content {
   position: relative;
   z-index: 4;
+  flex: 1 1 auto;
   padding-top: clamp(5rem, 14vh, 9rem);
   margin-top: clamp(-8rem, -18vh, -5rem);
 }

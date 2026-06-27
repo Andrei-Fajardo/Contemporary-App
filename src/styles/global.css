@@ -604,14 +604,25 @@ select,
 .tabular-panel.publications-panel.is-active,
 .tabular-panel.research-panel.is-active,
 .tabular-panel.press-panel.is-active,
-.tabular-panel.contacts-panel.is-active {
+.tabular-panel.contacts-panel.is-active,
+.tabular-panel.exhibitions-panel.is-active,
+.tabular-panel.about-panel.is-active {
   flex: 1;
 }
 
 .tabular-panel.publications-panel.is-active > .scroll-section,
 .tabular-panel.research-panel.is-active > .research-section,
 .tabular-panel.press-panel.is-active > .scroll-section,
-.tabular-panel.contacts-panel.is-active > .scroll-section {
+.tabular-panel.contacts-panel.is-active > .scroll-section,
+.tabular-panel.exhibitions-panel.is-active > .scroll-section {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: var(--canvas);
+}
+
+.tabular-panel.about-panel.is-active > .about-panel-stack {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
