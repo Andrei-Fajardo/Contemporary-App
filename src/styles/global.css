@@ -344,6 +344,9 @@ html {
 .art-wall-label .type-body {
   font-family: var(--font-body);
   font-weight: 400;
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
 }
 
 /* Staggered fade-in reveal */
