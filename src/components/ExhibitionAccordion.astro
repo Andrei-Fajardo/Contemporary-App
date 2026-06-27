@@ -9,16 +9,19 @@ interface Props {
 
 const { entries, expandLabel = 'View materials' } = Astro.props;
 
-const THUMB_COUNT = 4; // thumbnails shown before "View All"
+const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
 ---
 
 <div class="exhibition-accordion editorial-divider-list">
   {entries.map((entry) => {
     const display  = formatExhibitionDisplay(entry);
     const thumbs   = entry.images.slice(0, THUMB_COUNT);
-    const total    = entry.images.length;
+    // All images passed to "View all": accordion thumbs + any extra gallery images
+    const allGalleryImages = [...entry.images, ...(entry.galleryImages ?? [])];
+    const total    = allGalleryImages.length;
     const hasMore  = total > THUMB_COUNT;
-    const imagesEncoded = entry.images.join('|');
+    // Encode full gallery set for the overlay
+    const imagesEncoded = allGalleryImages.join('|');
 
     return (
     <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
@@ -116,11 +119,11 @@ const THUMB_COUNT = 4; // thumbnails shown before "View All"
               ))}
             </div>
 
-            {total > 0 && (
-              <div class="exg-thumb-strip__footer">
-                <span class="exg-thumb-strip__total">
-                  {total} photo{total !== 1 ? 's' : ''}
-                </span>
+        {allGalleryImages.length > 0 && (
+          <div class="exg-thumb-strip__footer">
+            <span class="exg-thumb-strip__total">
+              {allGalleryImages.length} photo{allGalleryImages.length !== 1 ? 's' : ''}
+            </span>
                 <button
                   type="button"
                   class="exg-thumb-strip__view-all"

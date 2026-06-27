@@ -92,14 +92,14 @@
   z-index: 10100;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
-  /* entry: slide up from bottom */
+  justify-content: flex-end; /* panel anchored to right edge */
 }
 
 .exg-overlay[hidden] {
   display: none;
 }
 
+/* Backdrop covers the full viewport including the sidebar */
 .exg-overlay__backdrop {
   position: absolute;
   inset: 0;
@@ -109,12 +109,16 @@
   cursor: zoom-out;
 }
 
-/* ===== Panel ===== */
+/* ===== Panel =====
+   On desktop (≥1024px) the sidebar is 15rem wide on the left.
+   The panel must never overlap it — start from the sidebar's right edge.
+   On mobile the panel is full-width (sidebar is hidden).
+*/
 .exg-overlay__panel {
   position: relative;
   z-index: 1;
+  /* Mobile: full width */
   width: 100%;
-  max-width: 100vw;
   height: 96dvh;
   max-height: 96dvh;
   background: var(--canvas, #F0EEE9);
@@ -125,6 +129,15 @@
   transform: translateY(100%);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
+}
+
+/* Desktop: panel occupies only the main content column */
+@media (min-width: 1024px) {
+  .exg-overlay__panel {
+    /* Sidebar is exactly 15rem — panel starts right of it */
+    width: calc(100vw - 15rem);
+    border-radius: 1.25rem 0 0 0; /* only top-left rounded, flush right */
+  }
 }
 
 .exg-overlay.is-open .exg-overlay__panel {
@@ -354,15 +367,29 @@
   aspect-ratio: 4/3;
 }
 
-/* ===== Lightbox ===== */
+/* ===== Lightbox =====
+   On mobile the fixed header is 3.5rem (56px) tall.
+   On desktop the topbar is ~3rem. We push inset-top accordingly
+   so the close button and counter never sit behind those bars.
+*/
 .exg-lightbox {
   position: fixed;
   inset: 0;
+  /* push content below mobile topbar */
+  padding-top: 3.5rem;
   z-index: 10200;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding-inline: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .exg-lightbox {
+    /* desktop topbar ~3rem + breathing room */
+    padding-top: 4rem;
+  }
 }
 
 .exg-lightbox[hidden] {
@@ -439,7 +466,8 @@
 
 .exg-lightbox__close {
   position: absolute;
-  top: 0;
+  /* sit above the image, clear of the topbar */
+  top: -3rem;
   right: 0;
   display: flex;
   align-items: center;
@@ -461,7 +489,7 @@
 
 .exg-lightbox__counter {
   position: absolute;
-  bottom: 0;
+  bottom: -1.75rem;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-mono, monospace);

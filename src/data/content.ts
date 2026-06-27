@@ -16,7 +16,14 @@ export interface ExhibitionEntry {
   place: string;
   category: ExhibitionCategory;
   kind?: 'solo' | 'group' | 'museum';
+  /** Thumbnail images shown in the accordion strip (max 4 displayed). */
   images: string[];
+  /**
+   * Extra images shown ONLY in the "View all" full-screen gallery.
+   * Drop files into /public/media/exhibitions/<id>/gallery/ and list paths here.
+   * These are appended after `images` when the overlay opens.
+   */
+  galleryImages?: string[];
   note?: string;
   links?: ExhibitionLinks;
 }
