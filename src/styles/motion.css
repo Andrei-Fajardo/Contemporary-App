@@ -616,6 +616,16 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 /* --- Desktop persistent sidebar --- */
+/* Sidebar must never justify text — especially long labels like "Publications & Writing" */
+.desktop-sidebar,
+.desktop-sidebar__inner,
+.desktop-sidebar__nav,
+.sidebar-nav,
+#mobile-drawer nav {
+  text-align: left;
+  hyphens: none;
+}
+
 .desktop-sidebar {
   position: fixed;
   top: 0;
@@ -753,7 +763,12 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   position: relative;
   display: block;
   padding-left: 0.25rem;
-  text-align: left;
+  /* Explicitly left — never justified, even for long labels like "Publications & Writing" */
+  text-align: left !important;
+  text-align-last: left;
+  hyphens: none;
+  white-space: normal;
+  word-break: normal;
   transition: color 0.4s var(--ease-editorial);
   will-change: transform;
 }
@@ -793,7 +808,9 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   width: 100%;
   opacity: 0.72;
   letter-spacing: 0.01em;
-  text-align: left;
+  text-align: left !important;
+  text-align-last: left;
+  hyphens: none;
   transition: opacity 0.35s var(--ease-editorial);
 }
 

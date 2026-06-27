@@ -1,4 +1,4 @@
-/* About tab ? layered hero + anna sample 4 overlapping bio */
+/* About tab — layered hero + portrait overlapping bio */
 
 .about-panel-stack {
   position: relative;
@@ -6,11 +6,12 @@
 }
 
 /* z-index stack: rule (1) < art (3) < name/content (4) < grain overlay (9999) */
+/* Portrait is absolute — never in document flow, never crops the hero grid */
 .about-panel-stack__art {
   position: absolute;
   left: var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
   top: 0;
-  width: clamp(20rem, 48vw, 40rem);
+  width: clamp(18rem, 42vw, 36rem);
   z-index: 3;
   pointer-events: none;
   user-select: none;
@@ -20,6 +21,7 @@
   display: block;
   width: 100%;
   height: auto;
+  /* object-fit: contain preserves full portrait — no horizontal crop */
   max-height: clamp(40rem, 85vh, 58rem);
   object-fit: contain;
   object-position: left top;
@@ -36,22 +38,37 @@
   min-height: clamp(20rem, 52vh, 38rem);
 }
 
+/*
+  Grid layout: col 1 = ghost placeholder matching portrait width (the absolute portrait
+  sits over it), col 2 = name area. The name is centered within col 2 but shifted
+  left via justify-self: start + margin-left so it lands near the horizontal center
+  of the full main column rather than flush to the right half.
+*/
 .hero-about-layer__inner {
   position: relative;
   z-index: 4;
   display: grid;
-  grid-template-columns: clamp(20rem, 48vw, 40rem) 1fr;
+  grid-template-columns: clamp(18rem, 42vw, 36rem) 1fr;
   align-items: center;
-  column-gap: clamp(1rem, 3vw, 2.5rem);
+  column-gap: clamp(0.5rem, 2vw, 1.5rem);
   min-height: clamp(18rem, 48vh, 34rem);
   padding-block: clamp(1.5rem, 4vh, 3rem);
+  /* prevent overflow on any viewport width */
+  max-width: 100%;
+  overflow: hidden;
 }
 
+/*
+  Name: sits in col 2, pushed toward the center of the full row.
+  justify-self: start keeps it left-aligned within col 2;
+  a modest negative margin-left draws it toward center of the whole grid.
+*/
 .hero-about-layer__name {
   grid-column: 2;
-  justify-self: center;
-  width: min(100%, 34rem);
+  justify-self: start;
+  width: min(100%, 30rem);
   margin: 0;
+  margin-left: clamp(-2rem, -4vw, -1rem);
   text-align: left;
 }
 
@@ -72,6 +89,7 @@
   max-width: 24ch;
 }
 
+/* Divider rule sits above art (z-index 1 < art z-index 3) */
 .hero-about-layer__rule {
   position: relative;
   z-index: 1;
@@ -80,6 +98,7 @@
   margin: 0 var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
 }
 
+/* Bio content overlaps the lower portion of the portrait */
 .about-panel-stack__content {
   position: relative;
   z-index: 4;
@@ -87,9 +106,11 @@
   margin-top: clamp(-9rem, -20vh, -6.5rem);
 }
 
+/* Bio indented to sit right of portrait column */
 .about-panel-stack__content-inner {
-  margin-left: clamp(36%, 38vw, 42%);
-  max-width: min(42rem, 56vw);
+  margin-left: clamp(32%, 35vw, 40%);
+  max-width: min(44rem, 58vw);
+  padding-right: clamp(1rem, 3vw, 2rem);
 }
 
 .about-panel-stack__content .section-eyebrow {
@@ -104,9 +125,10 @@
   font-size: clamp(2.5rem, 7vw, 5.5rem);
 }
 
+/* === Tablet (768–1023px) === */
 @media (max-width: 1023px) {
   .about-panel-stack__art {
-    width: clamp(14rem, 50vw, 24rem);
+    width: clamp(13rem, 46vw, 22rem);
     left: var(--shell-pad-inline, clamp(0.625rem, 2.5vw, 1.125rem));
   }
 
@@ -119,12 +141,14 @@
   }
 
   .hero-about-layer__inner {
-    grid-template-columns: clamp(14rem, 50vw, 24rem) 1fr;
+    grid-template-columns: clamp(13rem, 46vw, 22rem) 1fr;
+    column-gap: clamp(0.25rem, 1.5vw, 1rem);
     min-height: clamp(14rem, 40vh, 24rem);
   }
 
   .hero-about-layer__name {
-    width: min(100%, 22rem);
+    width: min(100%, 20rem);
+    margin-left: clamp(-1rem, -2vw, -0.5rem);
   }
 
   .hero-about-layer__name .hero-editorial__name {
@@ -136,14 +160,17 @@
   }
 
   .about-panel-stack__content-inner {
-    margin-left: clamp(38%, 40vw, 46%);
+    margin-left: clamp(30%, 36vw, 42%);
     max-width: none;
+    padding-right: clamp(0.75rem, 2.5vw, 1.5rem);
   }
 }
 
+/* === Mobile (<640px) === */
 @media (max-width: 639px) {
   .about-panel-stack__art {
-    width: 52vw;
+    width: 50vw;
+    left: 0;
   }
 
   .hero-about-layer {
@@ -151,12 +178,24 @@
   }
 
   .hero-about-layer__inner {
-    grid-template-columns: 52vw 1fr;
+    grid-template-columns: 50vw 1fr;
+    column-gap: 0;
     min-height: clamp(11rem, 32vh, 16rem);
+    padding-block: clamp(1rem, 3vh, 2rem);
   }
 
   .hero-about-layer__name {
-    width: min(100%, 18rem);
+    width: min(100%, 16rem);
+    /* On small screens, no negative margin — the right half is already central enough */
+    margin-left: 0;
+  }
+
+  .hero-about-layer__name .hero-editorial__name {
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
+  }
+
+  .hero-about-layer__name .hero-editorial__surname {
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
   }
 
   .about-panel-stack__content {
@@ -165,6 +204,8 @@
   }
 
   .about-panel-stack__content-inner {
-    margin-left: 42%;
+    margin-left: 40%;
+    max-width: none;
+    padding-right: clamp(0.5rem, 2vw, 1rem);
   }
 }
