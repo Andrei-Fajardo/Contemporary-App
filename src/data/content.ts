@@ -32,10 +32,11 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/venice-1.jpg',
-      '/media/exhibitions/venice-2.jpg',
-      '/media/exhibitions/venice-3.jpg',
-      '/media/exhibitions/venice-4.jpg',
+      '/media/exhibitions/venice/venice-1.jpg',
+      '/media/exhibitions/venice/venice-2.jpg',
+      '/media/exhibitions/venice/venice-3.jpg',
+      '/media/exhibitions/venice/venice-4.jpg',
+      '/media/exhibitions/venice/venice-5.jpg',
     ],
   },
   {
@@ -47,10 +48,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'museum',
     category: 'physical',
     images: [
-      '/media/exhibitions/senses-main.jpg',
-      '/media/exhibitions/senses-1.jpg',
-      '/media/exhibitions/senses-2.jpg',
-      '/media/exhibitions/senses-placeholder-4.jpg',
+      '/media/exhibitions/senses/senses-main.jpg',
+      '/media/exhibitions/senses/senses-1.jpg',
+      '/media/exhibitions/senses/senses-2.jpg',
+      '/media/exhibitions/senses/senses-placeholder-4.jpg',
     ],
     note: 'The only museum presentation in the exhibition record.',
   },
@@ -63,10 +64,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'solo',
     category: 'physical',
     images: [
-      '/media/exhibitions/im-insa.jpg',
-      '/media/exhibitions/im-insa-placeholder-2.jpg',
-      '/media/exhibitions/im-insa-placeholder-3.jpg',
-      '/media/exhibitions/im-insa-placeholder-4.jpg',
+      '/media/exhibitions/im-insa/im-insa.jpg',
+      '/media/exhibitions/im-insa/im-insa-placeholder-2.jpg',
+      '/media/exhibitions/im-insa/im-insa-placeholder-3.jpg',
+      '/media/exhibitions/im-insa/im-insa-placeholder-4.jpg',
     ],
   },
   {
@@ -78,10 +79,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/kinship-main.png',
-      '/media/exhibitions/kinship-1.jpg',
-      '/media/exhibitions/kinship-2.jpg',
-      '/media/exhibitions/kinship-3.jpg',
+      '/media/exhibitions/kinship/kinship-main.png',
+      '/media/exhibitions/kinship/kinship-1.jpg',
+      '/media/exhibitions/kinship/kinship-2.jpg',
+      '/media/exhibitions/kinship/kinship-3.jpg',
     ],
   },
   {
@@ -93,10 +94,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/dimo-main.jpg',
-      '/media/exhibitions/dimo-1.jpg',
-      '/media/exhibitions/dimo-2.jpg',
-      '/media/exhibitions/dimo-placeholder-4.jpg',
+      '/media/exhibitions/dimo/dimo-main.jpg',
+      '/media/exhibitions/dimo/dimo-1.jpg',
+      '/media/exhibitions/dimo/dimo-2.jpg',
+      '/media/exhibitions/dimo/dimo-placeholder-4.jpg',
     ],
   },
   {
@@ -109,9 +110,9 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     category: 'physical',
     images: [
       '/media/posters/paris-poster.png',
-      '/media/exhibitions/holy-paris-main.jpg',
-      '/media/exhibitions/holy-paris-1.webp',
-      '/media/exhibitions/holy-paris-placeholder-4.jpg',
+      '/media/exhibitions/holy-paris/holy-paris-main.jpg',
+      '/media/exhibitions/holy-paris/holy-paris-1.webp',
+      '/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg',
     ],
   },
   {
@@ -123,10 +124,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/holy-london-1.jpg',
-      '/media/exhibitions/holy-london-2.jpg',
-      '/media/exhibitions/holy-london-placeholder-3.jpg',
-      '/media/exhibitions/holy-london-placeholder-4.jpg',
+      '/media/exhibitions/holy-london/holy-london-1.jpg',
+      '/media/exhibitions/holy-london/holy-london-2.jpg',
+      '/media/exhibitions/holy-london/holy-london-placeholder-3.jpg',
+      '/media/exhibitions/holy-london/holy-london-placeholder-4.jpg',
     ],
     note: 'Exhibition documentation & promotional materials.',
   },
@@ -138,7 +139,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'London, UK',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-london-1.jpg'],
+    images: ['/media/exhibitions/holy-london/holy-london-1.jpg'],
   },
   {
     id: 'holy-milan',
@@ -148,7 +149,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Milan, Italy',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris-placeholder-4.jpg'],
+    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
   },
   {
     id: 'holy-tokyo',
@@ -158,7 +159,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Tokyo, Japan',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris-placeholder-4.jpg'],
+    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
   },
   {
     id: 'holy-athens',
@@ -168,7 +169,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Athens, Greece',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris-placeholder-4.jpg'],
+    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
   },
   {
     id: 'holy-amsterdam',
@@ -178,7 +179,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Amsterdam, Netherlands',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris-placeholder-4.jpg'],
+    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
   },
   {
     id: 'arrival-osaka-2026',
@@ -188,7 +189,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Osaka, Japan',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/venice-1.jpg'],
+    images: ['/media/exhibitions/venice/venice-1.jpg'],
   },
   {
     id: 'arrival-brighton-2026',
@@ -198,7 +199,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Brighton, UK',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/venice-2.jpg'],
+    images: ['/media/exhibitions/venice/venice-2.jpg'],
   },
   {
     id: 'lumiere-2026',
@@ -208,7 +209,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'International',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/luna-placeholder-4.jpg'],
+    images: ['/media/exhibitions/luna/luna-placeholder-4.jpg'],
   },
   {
     id: 'select-art-fair-2026',
@@ -218,7 +219,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'International',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/senses-placeholder-4.jpg'],
+    images: ['/media/exhibitions/senses/senses-placeholder-4.jpg'],
   },
   {
     id: 'hechyeomoyeo-mexico-2026',
@@ -228,7 +229,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Mexico',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/hechyeomoyeo-nyc.png'],
+    images: ['/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.png'],
   },
   {
     id: 'luna',
@@ -239,10 +240,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/luna-main.jpg',
-      '/media/exhibitions/luna-1.jpg',
-      '/media/exhibitions/luna-2.jpg',
-      '/media/exhibitions/luna-placeholder-4.jpg',
+      '/media/exhibitions/luna/luna-main.jpg',
+      '/media/exhibitions/luna/luna-1.jpg',
+      '/media/exhibitions/luna/luna-2.jpg',
+      '/media/exhibitions/luna/luna-placeholder-4.jpg',
     ],
   },
   {
@@ -254,10 +255,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/ahmad-shariff-placeholder-1.jpg',
-      '/media/exhibitions/ahmad-shariff-placeholder-2.jpg',
-      '/media/exhibitions/ahmad-shariff-placeholder-3.jpg',
-      '/media/exhibitions/ahmad-shariff-placeholder-4.jpg',
+      '/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-1.jpg',
+      '/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-2.jpg',
+      '/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-3.jpg',
+      '/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-4.jpg',
     ],
     links: {
       website: 'https://www.ahmadshariffgallery.com/',
@@ -272,10 +273,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/hech-3.jpg',
-      '/media/exhibitions/hech-4.jpg',
-      '/media/exhibitions/hechyeomoyeo-13-placeholder-3.jpg',
-      '/media/exhibitions/hechyeomoyeo-13-placeholder-4.jpg',
+      '/media/exhibitions/hechyeomoyeo-13/hech-3.jpg',
+      '/media/exhibitions/hechyeomoyeo-13/hech-4.jpg',
+      '/media/exhibitions/hechyeomoyeo-13/hechyeomoyeo-13-placeholder-3.jpg',
+      '/media/exhibitions/hechyeomoyeo-13/hechyeomoyeo-13-placeholder-4.jpg',
     ],
   },
   {
@@ -287,10 +288,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/hechyeomoyeo-nyc.png',
-      '/media/exhibitions/hech-1.jpg',
-      '/media/exhibitions/hech-2.jpg',
-      '/media/exhibitions/hechyeomoyeo-12-placeholder-4.jpg',
+      '/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.png',
+      '/media/exhibitions/hechyeomoyeo-12/hech-1.jpg',
+      '/media/exhibitions/hechyeomoyeo-12/hech-2.jpg',
+      '/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-12-placeholder-4.jpg',
     ],
   },
   {
@@ -397,17 +398,17 @@ export const magazines = [
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
 
 export const exhibitions = [
-  { image: "/media/exhibitions/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
-  { image: "/media/exhibitions/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12", year: "2024", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/hech-3.jpg", title: "Hechyeomoyeo 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/ahmad-shariff-placeholder-1.jpg", title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
-  { image: "/media/exhibitions/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
-  { image: "/media/exhibitions/holy-london-1.jpg", title: "The Holy Art – London", year: "2026", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2026", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ISTANBUL, TURKEY", subtitle: "FEATURED ARTIST SHOWCASE" },
-  { image: "/media/exhibitions/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
+  { image: "/media/exhibitions/senses/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
+  { image: "/media/exhibitions/venice/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
+  { image: "/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12", year: "2024", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/hechyeomoyeo-13/hech-3.jpg", title: "Hechyeomoyeo 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-1.jpg", title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/kinship/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
+  { image: "/media/exhibitions/dimo/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
+  { image: "/media/exhibitions/holy-london/holy-london-1.jpg", title: "The Holy Art – London", year: "2026", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
+  { image: "/media/exhibitions/holy-paris/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2026", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
+  { image: "/media/exhibitions/luna/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ISTANBUL, TURKEY", subtitle: "FEATURED ARTIST SHOWCASE" },
+  { image: "/media/exhibitions/im-insa/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
 ];
 
 export interface ExhibitionItem {

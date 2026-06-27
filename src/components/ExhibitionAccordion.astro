@@ -1,5 +1,4 @@
 ---
-import ExhibitionCarousel from './ExhibitionCarousel.astro';
 import type { ExhibitionEntry } from '../data/content';
 import { formatExhibitionDisplay } from '../data/exhibition-display';
 
@@ -9,11 +8,18 @@ interface Props {
 }
 
 const { entries, expandLabel = 'View materials' } = Astro.props;
+
+const THUMB_COUNT = 4; // thumbnails shown before "View All"
 ---
 
 <div class="exhibition-accordion editorial-divider-list">
   {entries.map((entry) => {
-    const display = formatExhibitionDisplay(entry);
+    const display  = formatExhibitionDisplay(entry);
+    const thumbs   = entry.images.slice(0, THUMB_COUNT);
+    const total    = entry.images.length;
+    const hasMore  = total > THUMB_COUNT;
+    const imagesEncoded = entry.images.join('|');
+
     return (
     <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
       <summary class="exhibition-accordion__summary" aria-label={`${display.heading} — ${display.subheading} — ${expandLabel}`}>
@@ -28,10 +34,12 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
           <span class="exhibition-accordion__chevron">+</span>
         </span>
       </summary>
+
       <div class="exhibition-accordion__panel">
         {entry.note && (
-          <p class="content-prose text-ink-60 mb-6">{entry.note}</p>
+          <p class="content-prose text-ink-60 mb-4">{entry.note}</p>
         )}
+
         {entry.links && (
           <dl class="exhibition-accordion__links">
             {entry.links.website && (
@@ -72,13 +80,66 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
             )}
           </dl>
         )}
-        {entry.images.length > 0 && (
-          <ExhibitionCarousel
-            id={entry.id}
-            images={entry.images}
-            alt={entry.links?.artwork ?? entry.title}
-          />
+
+        {/* ── Thumbnail strip + View All ── */}
+        {thumbs.length > 0 && (
+          <div class="exg-thumb-strip">
+            <div class="exg-thumb-strip__grid">
+              {thumbs.map((src, i) => (
+                <button
+                  type="button"
+                  class="exg-thumb-strip__cell"
+                  data-gallery-open
+                  data-gallery-images={imagesEncoded}
+                  data-gallery-title={entry.title}
+                  data-gallery-place={entry.place}
+                  aria-label={`Open gallery for ${entry.title}, photo ${i + 1}`}
+                >
+                  {/* Skeleton shimmer shown while image loads */}
+                  <span class="exg-thumb-strip__skeleton" aria-hidden="true"></span>
+                  <img
+                    src={src}
+                    alt={`${entry.title} — photo ${i + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                    class="exg-thumb-strip__img"
+                    onload="this.previousElementSibling.style.display='none';this.classList.add('is-loaded')"
+                  />
+                  {/* Last thumbnail: overlay showing "+N more" if hasMore */}
+                  {hasMore && i === THUMB_COUNT - 1 && (
+                    <span class="exg-thumb-strip__more" aria-hidden="true">
+                      +{total - THUMB_COUNT}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {total > 0 && (
+              <div class="exg-thumb-strip__footer">
+                <span class="exg-thumb-strip__total">
+                  {total} photo{total !== 1 ? 's' : ''}
+                </span>
+                <button
+                  type="button"
+                  class="exg-thumb-strip__view-all"
+                  data-gallery-open
+                  data-gallery-images={imagesEncoded}
+                  data-gallery-title={entry.title}
+                  data-gallery-place={entry.place}
+                  aria-label={`View all ${total} photos for ${entry.title}`}
+                >
+                  View all
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="4 2 8 6 4 10"/>
+                  </svg>
+                </button>
+              </div>
+            )}
+          </div>
         )}
+
         {entry.kind && entry.category !== 'magazine' && (
           <span class="exhibition-accordion__kind">{entry.kind}</span>
         )}
@@ -266,6 +327,153 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     display: none;
   }
 
+  /* ── Thumbnail strip ─────────────────────────────────────── */
+  .exg-thumb-strip {
+    margin-top: 1rem;
+  }
+
+  .exg-thumb-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.375rem;
+  }
+
+  @media (max-width: 639px) {
+    .exg-thumb-strip__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Each thumbnail is a button for a11y */
+  .exg-thumb-strip__cell {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    cursor: zoom-in;
+    background: rgba(17,17,17,0.05);
+    border: none;
+    padding: 0;
+    display: block;
+    transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .exg-thumb-strip__cell:hover {
+    transform: scale(1.03);
+  }
+
+  .exg-thumb-strip__cell:focus-visible {
+    outline: 2px solid var(--ink, #111);
+    outline-offset: 2px;
+  }
+
+  /* Skeleton shimmer inside each thumbnail cell */
+  .exg-thumb-strip__skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(17,17,17,0.05) 0%,
+      rgba(17,17,17,0.12) 50%,
+      rgba(17,17,17,0.05) 100%
+    );
+    background-size: 200% 100%;
+    animation: exg-thumb-shimmer 1.5s ease-in-out infinite;
+    border-radius: inherit;
+  }
+
+  @keyframes exg-thumb-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .exg-thumb-strip__img {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.15);
+    opacity: 0;
+    transition: opacity 0.35s ease, filter 0.3s ease;
+  }
+
+  .exg-thumb-strip__img.is-loaded {
+    opacity: 1;
+  }
+
+  .exg-thumb-strip__cell:hover .exg-thumb-strip__img {
+    filter: grayscale(0);
+  }
+
+  /* "+N more" overlay on last thumbnail */
+  .exg-thumb-strip__more {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(17,17,17,0.52);
+    color: rgba(240,238,233,0.92);
+    font-family: var(--font-heading, "Forum", serif);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    backdrop-filter: blur(1px);
+  }
+
+  /* Footer: photo count + View All button */
+  .exg-thumb-strip__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.625rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(17,17,17,0.07);
+  }
+
+  .exg-thumb-strip__total {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-45, rgba(17,17,17,0.45));
+  }
+
+  .exg-thumb-strip__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-heading, "Forum", serif);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #111);
+    background: transparent;
+    border: 1px solid rgba(17,17,17,0.18);
+    border-radius: 0.2rem;
+    padding: 0.35rem 0.75rem 0.35rem 0.75rem;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .exg-thumb-strip__view-all:hover {
+    background: var(--ink, #111);
+    color: var(--canvas, #F0EEE9);
+    border-color: var(--ink, #111);
+  }
+
+  .exg-thumb-strip__view-all:focus-visible {
+    outline: 2px solid var(--ink, #111);
+    outline-offset: 2px;
+  }
+
   .exhibition-accordion__links {
     display: grid;
     gap: 0.85rem;
@@ -339,6 +547,13 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 
 <script>
   import { initExhibitionAccordion } from "../scripts/motion/exhibition-accordion";
-  initExhibitionAccordion();
-  document.addEventListener("astro:page-load", initExhibitionAccordion);
+  import { initExhibitionGallery } from "../scripts/exhibition-gallery";
+
+  function boot() {
+    initExhibitionAccordion();
+    initExhibitionGallery();
+  }
+
+  boot();
+  document.addEventListener("astro:page-load", boot);
 </script>

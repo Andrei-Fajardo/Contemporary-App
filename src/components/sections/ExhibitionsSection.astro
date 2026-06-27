@@ -1,5 +1,6 @@
 ---
 import ExhibitionAccordion from '../ExhibitionAccordion.astro';
+import ExhibitionGalleryOverlay from '../ExhibitionGalleryOverlay.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { exhibitionEntries } from '../../data/content';
 import { sortExhibitionEntries } from '../../data/exhibition-display';
@@ -45,6 +46,9 @@ const filters = [
     <ExhibitionAccordion entries={sortedExhibitions} expandLabel={l.viewMore} />
   </div>
 </section>
+
+{/* Gallery overlay — rendered once, shown/hidden via JS */}
+<ExhibitionGalleryOverlay />
 
 <script>
   import { initExhibitionFilter } from "../../scripts/exhibition-filter";
