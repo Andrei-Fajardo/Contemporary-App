@@ -1,0 +1,266 @@
+/* Visceral Gothic / From Utero — layered composition + chapbook grain */
+
+:root {
+  --gothic-blood-wash: rgba(143, 34, 49, 0.06);
+  --gothic-ink-bleed: rgba(15, 14, 12, 0.08);
+  --gothic-womb-shadow: rgba(26, 18, 22, 0.12);
+  --gothic-grain-opacity: 0.042;
+  --gothic-grain-chapbook: 0.058;
+}
+
+/* SVG fractal noise — works without grain.gif */
+@supports (background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E")) {
+  .grain-noise,
+  .grain-local::after,
+  .grain-chapbook::after {
+    --gothic-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+}
+
+/* Subtle organic grain — sections, cards, image wells */
+.grain-noise {
+  position: relative;
+  isolation: isolate;
+}
+
+.grain-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background-image: var(--gothic-noise, url('/grain.gif'));
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  opacity: var(--gothic-grain-opacity);
+  mix-blend-mode: multiply;
+}
+
+/* Stronger chapbook grain — literary surfaces */
+.grain-chapbook {
+  position: relative;
+  isolation: isolate;
+}
+
+.grain-chapbook::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background-image: var(--gothic-noise, url('/grain.gif'));
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  opacity: var(--gothic-grain-chapbook);
+  mix-blend-mode: multiply;
+}
+
+.grain-chapbook::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: var(--gothic-noise, url('/grain.gif'));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.022;
+  mix-blend-mode: overlay;
+}
+
+/* Local grain inside layered pages */
+.grain-local {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.grain-local::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--gothic-noise, url('/grain.gif'));
+  background-repeat: repeat;
+  background-size: 170px 170px;
+  opacity: var(--gothic-grain-opacity);
+  mix-blend-mode: multiply;
+}
+
+/* --- Layered composition --- */
+.gothic-layer-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gothic-layer-fg {
+  position: relative;
+  z-index: 10;
+}
+
+.gothic-img-wash {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+  filter: grayscale(1) sepia(0.12) contrast(1.08);
+  mix-blend-mode: multiply;
+  background-blend-mode: multiply;
+}
+
+.gothic-img-wash--overlay {
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}
+
+.gothic-ink-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 40% at 12% 18%, var(--gothic-blood-wash) 0%, transparent 68%),
+    linear-gradient(185deg, transparent 55%, var(--gothic-ink-bleed) 100%);
+  mix-blend-mode: multiply;
+}
+
+/* Typography bleeding over imagery */
+.gothic-text-bleed {
+  mix-blend-mode: difference;
+  color: var(--ink);
+}
+
+.gothic-text-legible {
+  color: var(--ink);
+  text-shadow:
+    0 0 1px var(--canvas),
+    0 1px 24px rgba(240, 238, 233, 0.65);
+}
+
+.gothic-text-inverse {
+  color: var(--ink-inverse);
+  mix-blend-mode: difference;
+}
+
+/* Chapbook title — tracked Forum, ink rule */
+.gothic-epigraph {
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 0.5vw + 0.7rem, 0.9375rem);
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-55);
+  border-left: 1px solid var(--ink-25);
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+  max-width: 42ch;
+}
+
+.gothic-title-bleed {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--heading-track);
+  line-height: 1.02;
+  mix-blend-mode: difference;
+}
+
+/* Text flows around organic silhouettes */
+.gothic-shape-float {
+  float: left;
+  width: clamp(7rem, 28vw, 14rem);
+  margin: 0 1.25rem 0.75rem 0;
+  shape-margin: 0.85rem;
+  shape-outside: ellipse(48% 58% at 42% 48%);
+  filter: grayscale(1) sepia(0.15) contrast(1.1);
+  opacity: 0.82;
+  mix-blend-mode: multiply;
+}
+
+.gothic-shape-float--right {
+  float: right;
+  margin: 0 0 0.75rem 1.25rem;
+  shape-outside: ellipse(52% 56% at 58% 44%);
+}
+
+.gothic-prose-flow::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Page container shell */
+.page-container {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: min(70vh, 100%);
+}
+
+.page-container__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background-color: var(--canvas);
+  background-blend-mode: multiply;
+}
+
+.page-container__content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.page-container--dense .gothic-img-wash {
+  opacity: 0.32;
+}
+
+@media (max-width: 768px) {
+  .gothic-text-bleed,
+  .gothic-title-bleed {
+    mix-blend-mode: normal;
+    color: var(--ink);
+  }
+
+  .gothic-shape-float,
+  .gothic-shape-float--right {
+    float: none;
+    width: min(72%, 16rem);
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    display: block;
+    shape-outside: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gothic-img-wash {
+    filter: grayscale(1);
+  }
+}
+
+/* Tailwind v4 utility aliases */
+@utility grain-noise {
+  position: relative;
+  isolation: isolate;
+}
+
+@utility grain-chapbook {
+  position: relative;
+  isolation: isolate;
+}
+
+@utility gothic-text-bleed {
+  mix-blend-mode: difference;
+  color: var(--ink);
+}
+
+@utility gothic-text-legible {
+  color: var(--ink);
+  text-shadow:
+    0 0 1px var(--canvas),
+    0 1px 24px rgba(240, 238, 233, 0.65);
+}

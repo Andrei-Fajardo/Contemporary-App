@@ -3,6 +3,7 @@
 @import "./motion.css";
 @import "./chaos.css";
 @import "./utero.css";
+@import "./gothic.css";
 
 /* Editorial typography — Forum (heads) + Inter (body) */
 :root {
@@ -81,15 +82,17 @@ html {
   z-index: 9999;
 }
 
-/* Layer 1: Micro-Dark Grit — ultra-subtle so the paper tone stays clean */
+/* Layer 1: Micro-Dark Grit — SVG noise fallback when grain.gif is absent */
 .grain-overlay::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/grain.gif');
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E"),
+    url('/grain.gif');
   background-repeat: repeat;
-  background-size: auto;
-  opacity: 0.03;
+  background-size: 180px 180px, auto;
+  opacity: 0.035;
   mix-blend-mode: multiply;
 }
 
@@ -98,9 +101,11 @@ html {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/grain.gif');
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
+    url('/grain.gif');
   background-repeat: repeat;
-  background-size: auto;
+  background-size: 200px 200px, auto;
   opacity: 0.02;
   mix-blend-mode: overlay;
 }

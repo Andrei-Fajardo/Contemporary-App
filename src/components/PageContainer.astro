@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import { getUnsplashBg } from '../data/unsplash-bg';
+
+export interface Props {
+  pageTitle?: string;
+  bgKeyword: string;
+  epigraph?: string;
+  id?: string;
+  class?: string;
+  dense?: boolean;
+  blendMode?: 'multiply' | 'overlay';
+}
+
+const {
+  pageTitle,
+  bgKeyword,
+  epigraph,
+  id,
+  class: className = '',
+  dense = false,
+  blendMode = 'multiply',
+} = Astro.props;
+
+const bgUrl = getUnsplashBg(bgKeyword);
+const washClass =
+  blendMode === 'overlay' ? 'gothic-img-wash gothic-img-wash--overlay' : 'gothic-img-wash';
+---
+
+<section
+  id={id}
+  class:list={[
+    'page-container scroll-section grain-chapbook',
+    dense && 'page-container--dense',
+    className,
+  ]}
+>
+  <div class="page-container__bg gothic-layer-bg" aria-hidden="true">
+    <Image
+      src={bgUrl}
+      alt=""
+      width={1920}
+      height={1080}
+      class={washClass}
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="gothic-ink-veil" />
+    <div class="grain-local" />
+  </div>
+
+  <div class="page-container__content gothic-layer-fg section-shell section-shell--wide">
+    {epigraph && <p class="gothic-epigraph gothic-text-legible">{epigraph}</p>}
+    {pageTitle && (
+      <h1 class="gothic-title-bleed type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-6">
+        {pageTitle}
+      </h1>
+    )}
+    <slot />
+  </div>
+</section>
