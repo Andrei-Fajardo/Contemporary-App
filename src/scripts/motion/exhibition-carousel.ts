@@ -3,6 +3,7 @@
  * and arrow navigation. Uses Motion for smooth programmatic scroll.
  */
 import { animate } from "motion";
+import { blockLightboxForCarouselDrag } from "../lightbox";
 
 const AUTO_SPEED = 0.5;
 const RESUME_MS = 3500;
@@ -23,6 +24,7 @@ type CarouselState = {
   dragging: boolean;
   dragStartX: number;
   dragStartScroll: number;
+  pointerMoved: number;
   slideCount: number;
   hasActivated: boolean;
 };
@@ -211,6 +213,7 @@ function bindCarousel(root: HTMLElement): void {
     dragging: false,
     dragStartX: 0,
     dragStartScroll: 0,
+    pointerMoved: 0,
     slideCount: slides.length,
     hasActivated: false,
   };
@@ -235,6 +238,7 @@ function bindCarousel(root: HTMLElement): void {
     state.dragging = true;
     state.dragStartX = e.clientX;
     state.dragStartScroll = viewport.scrollLeft;
+    state.pointerMoved = 0;
     pause(state, true);
     viewport.setPointerCapture(e.pointerId);
     viewport.classList.add("is-dragging");
@@ -242,6 +246,7 @@ function bindCarousel(root: HTMLElement): void {
 
   viewport.addEventListener("pointermove", (e) => {
     if (!state.dragging) return;
+    state.pointerMoved = Math.max(state.pointerMoved, Math.abs(e.clientX - state.dragStartX));
     e.preventDefault();
     const dx = e.clientX - state.dragStartX;
     viewport.scrollLeft = clampScroll(viewport, state.dragStartScroll - dx);
@@ -250,10 +255,14 @@ function bindCarousel(root: HTMLElement): void {
 
   const endDrag = () => {
     if (!state.dragging) return;
+    const scrolled = Math.abs(state.viewport.scrollLeft - state.dragStartScroll);
     state.dragging = false;
     viewport.classList.remove("is-dragging");
     viewport.scrollLeft = clampScroll(viewport, viewport.scrollLeft);
     updateButtons(state);
+    if (state.pointerMoved > 6 || scrolled > 6) {
+      blockLightboxForCarouselDrag(state.viewport);
+    }
     scheduleResume(state);
   };
 

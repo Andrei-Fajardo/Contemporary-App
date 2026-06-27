@@ -132,8 +132,13 @@ html {
 
 .lazy-media img,
 .exhibition-carousel__slide img,
+.exhibition-gallery-grid__item img,
 .media-card img,
-.gallery-item img {
+.gallery-item img,
+.hero-chaos__visual img,
+.art-piece img,
+.site-shell main img,
+.site-main-column img {
   cursor: zoom-in;
 }
 

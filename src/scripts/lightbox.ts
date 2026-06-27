@@ -2,7 +2,25 @@ let bound = false;
 let keyHandler: ((e: KeyboardEvent) => void) | null = null;
 let clickHandler: ((e: Event) => void) | null = null;
 
-function getImageSrc(img: HTMLImageElement): string {
+const CONTENT_ROOT_SELECTOR =
+  ".site-shell, .site-main-column, main, .tabular-main, .hero-section, .exhibition-accordion";
+
+const IMAGE_WRAPPER_SELECTOR = [
+  ".lazy-media",
+  ".media-card",
+  ".exhibition-carousel__slide",
+  ".exhibition-gallery-grid__item",
+  ".interactive-image-container",
+  ".hero-chaos__visual",
+  ".cursor-tilt__surface",
+  ".press-chaos__tilt",
+  ".press-chaos__media",
+  ".art-piece",
+].join(", ");
+
+const carouselDragBlock = new WeakSet<HTMLElement>();
+
+export function getLightboxImageSrc(img: HTMLImageElement): string {
   return img.currentSrc || img.src || img.dataset.src || "";
 }
 
@@ -10,10 +28,56 @@ function isExcluded(img: HTMLImageElement): boolean {
   if (img.closest("#global-lightbox")) return true;
   if (img.closest(".lang-toggle")) return true;
   if (img.closest("button")) return true;
+  if (img.closest("summary")) return true;
   if (img.width > 0 && img.width < 24 && img.height < 24) return true;
-  const src = getImageSrc(img);
+  const src = getLightboxImageSrc(img);
   if (!src || src.startsWith("data:")) return true;
   return false;
+}
+
+function isInContentRoot(el: Element): boolean {
+  return Boolean(el.closest(CONTENT_ROOT_SELECTOR));
+}
+
+function isCarouselDragBlocked(img: HTMLImageElement): boolean {
+  const viewport = img.closest<HTMLElement>(".exhibition-carousel__viewport");
+  return viewport ? carouselDragBlock.has(viewport) : false;
+}
+
+/** Skip lightbox when the user just dragged a carousel strip. */
+export function blockLightboxForCarouselDrag(viewport: HTMLElement): void {
+  carouselDragBlock.add(viewport);
+  window.setTimeout(() => carouselDragBlock.delete(viewport), 80);
+}
+
+function resolveImageFromEvent(target: EventTarget | null): HTMLImageElement | null {
+  if (!(target instanceof Element)) return null;
+
+  if (target instanceof HTMLImageElement) {
+    if (isExcluded(target) || !isInContentRoot(target)) return null;
+    return target;
+  }
+
+  const wrapper = target.closest(IMAGE_WRAPPER_SELECTOR);
+  if (wrapper) {
+    const img = wrapper.querySelector("img");
+    if (img && !isExcluded(img) && isInContentRoot(img)) return img;
+  }
+
+  const img = target.closest("img");
+  if (img && !isExcluded(img) && isInContentRoot(img)) return img;
+  return null;
+}
+
+function openFromImage(img: HTMLImageElement, e: Event): void {
+  if (isCarouselDragBlocked(img)) return;
+
+  const src = getLightboxImageSrc(img);
+  if (!src) return;
+
+  e.preventDefault();
+  e.stopPropagation();
+  openLightbox(src, img.alt || "");
 }
 
 function ensureLightbox(): HTMLElement {
@@ -86,17 +150,9 @@ export function initGlobalLightbox(): void {
   if (bound) return;
 
   clickHandler = (e) => {
-    const target = e.target;
-    if (!(target instanceof HTMLImageElement)) return;
-    if (isExcluded(target)) return;
-    if (!target.closest("main, .tabular-main, .site-main-column")) return;
-
-    const src = getImageSrc(target);
-    if (!src) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-    openLightbox(src, target.alt || "");
+    const img = resolveImageFromEvent(e.target);
+    if (!img) return;
+    openFromImage(img, e);
   };
 
   document.addEventListener("click", clickHandler, true);
@@ -111,3 +167,8 @@ export function resetGlobalLightbox(): void {
   bound = false;
   closeLightbox();
 }
+
+document.addEventListener("astro:page-load", () => {
+  resetGlobalLightbox();
+  initGlobalLightbox();
+});
