@@ -613,13 +613,32 @@ select,
 .tabular-panel.publications-panel.is-active > .scroll-section,
 .tabular-panel.research-panel.is-active > .research-section,
 .tabular-panel.press-panel.is-active > .scroll-section,
-.tabular-panel.contacts-panel.is-active > .scroll-section,
 .tabular-panel.exhibitions-panel.is-active > .scroll-section {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   min-height: 100%;
   background-color: var(--canvas);
+}
+
+.tabular-panel.contacts-panel.is-active {
+  overflow: visible;
+}
+
+.tabular-panel.contacts-panel.is-active > .scroll-section {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: var(--canvas);
+  overflow: visible;
+  padding-bottom: clamp(10rem, 22vh, 16rem);
+}
+
+.tabular-view:has(.contacts-panel.is-active),
+.tabular-panels:has(.contacts-panel.is-active),
+.tabular-main:has(.contacts-panel.is-active) {
+  overflow: visible;
 }
 
 .tabular-panel.about-panel.is-active > .about-panel-stack {

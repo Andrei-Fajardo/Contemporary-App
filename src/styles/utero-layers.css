@@ -89,7 +89,7 @@
 
 /* ── 1. EDITORIAL OVERLAP — PRESS ────────────────────────────
    Same structural pattern as Publications.
-   Image: anna-sample-3 (fragmented face/void mask) — left frame.
+   Image: anna-sample-6 — left frame.
    Text box overlaps from the right, starting ~60% across the image.
    ──────────────────────────────────────────────────────────── */
 .press-overlap {
@@ -166,20 +166,23 @@
 
 .contacts-panel__art {
   position: absolute;
-  /* Bottom-left cluster — nudged right and up from the corner */
+  /* Bottom-left cluster — large, with room to show the full figure */
   left: clamp(3rem, 10vw, 8rem);
-  bottom: clamp(2rem, 10vh, 6rem);
-  width: clamp(20rem, 36vw, 32rem);
+  bottom: clamp(-1rem, 2vh, 3rem);
+  width: clamp(30rem, 52vw, 48rem);
+  max-width: calc(100% - clamp(3rem, 10vw, 8rem));
   /* Above the footer's z-index so it overlaps it */
   z-index: 10;
   pointer-events: none;
   user-select: none;
+  overflow: visible;
 }
 
 .contacts-panel__art-img {
   display: block;
   width: 100%;
   height: auto;
+  max-height: none;
   object-fit: contain;
   object-position: left bottom;
   /* High opacity — prominent presence, not a watermark */
@@ -233,9 +236,9 @@
 
 
   .contacts-panel__art {
-    width: clamp(16rem, 44vw, 24rem);
+    width: clamp(22rem, 56vw, 34rem);
     left: clamp(2rem, 8vw, 5rem);
-    bottom: clamp(1.5rem, 8vh, 4rem);
+    bottom: clamp(-0.5rem, 3vh, 2rem);
   }
 }
 
@@ -278,9 +281,9 @@
   }
 
   .contacts-panel__art {
-    width: 58vw;
+    width: min(72vw, 28rem);
     left: clamp(0.5rem, 4vw, 2rem);
-    bottom: clamp(1rem, 6vh, 3rem);
+    bottom: clamp(0rem, 4vh, 2rem);
   }
 }
 
