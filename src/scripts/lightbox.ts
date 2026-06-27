@@ -26,6 +26,7 @@ export function getLightboxImageSrc(img: HTMLImageElement): string {
 
 function isExcluded(img: HTMLImageElement): boolean {
   if (img.closest("#global-lightbox")) return true;
+  if (img.closest("#exhibition-gallery-overlay")) return true;
   if (img.closest(".lang-toggle")) return true;
   if (img.closest("button")) return true;
   if (img.closest("summary")) return true;

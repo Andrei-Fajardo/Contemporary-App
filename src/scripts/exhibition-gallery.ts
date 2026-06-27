@@ -45,7 +45,6 @@ function refs() {
     lbPrev:    document.getElementById('exg-lb-prev') as HTMLButtonElement,
     lbNext:    document.getElementById('exg-lb-next') as HTMLButtonElement,
     lbClose:   document.getElementById('exg-lb-close')!,
-    lbCounter: document.getElementById('exg-lb-counter')!,
   };
 }
 
@@ -146,7 +145,7 @@ function buildGrid(r: ReturnType<typeof refs>, images: string[], alt: string) {
     item.dataset.src = src;
     item.setAttribute('role', 'listitem');
     item.setAttribute('tabindex', '0');
-    item.setAttribute('aria-label', `${isVideo(src) ? 'Video' : 'Photo'} ${i + 1} of ${images.length}`);
+    item.setAttribute('aria-label', isVideo(src) ? `Play video from ${alt}` : `View image from ${alt}`);
 
     const media: HTMLImageElement | HTMLVideoElement = isVideo(src)
       ? document.createElement('video')
@@ -158,19 +157,18 @@ function buildGrid(r: ReturnType<typeof refs>, images: string[], alt: string) {
       media.preload = 'metadata';
       media.loop = true;
     } else {
-      media.alt = `${alt} — photo ${i + 1}`;
+      media.alt = alt;
     }
 
-    const overlay = document.createElement('div');
-    overlay.className = 'exg-grid__item-overlay';
-    overlay.innerHTML = `<span class="exg-grid__item-num">${String(i + 1).padStart(2, '0')}</span>`;
-
     item.appendChild(media);
-    item.appendChild(overlay);
     r.grid.appendChild(item);
 
-    // Click to open lightbox
-    item.addEventListener('click', () => openLightbox(i));
+    // Click to open lightbox (stop global lightbox from intercepting)
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openLightbox(i);
+    });
     item.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -217,10 +215,9 @@ function renderLightbox(r: ReturnType<typeof refs>) {
     r.lbImg.hidden = false;
     r.lbImg.src = '';
     r.lbImg.src = src;
-    r.lbImg.alt = `Photo ${lbIndex + 1} of ${images.length}`;
+    r.lbImg.alt = state.title;
   }
 
-  r.lbCounter.textContent = `${lbIndex + 1} / ${images.length}`;
   r.lbPrev.disabled = lbIndex === 0;
   r.lbNext.disabled = lbIndex === images.length - 1;
 }
@@ -245,8 +242,20 @@ function bindOverlayEvents(r: ReturnType<typeof refs>) {
   // Lightbox nav
   r.lbBackdrop.onclick = () => closeLightbox(r);
   r.lbClose.onclick    = () => closeLightbox(r);
-  r.lbPrev.onclick     = () => { state.lbIndex = Math.max(0, state.lbIndex - 1); renderLightbox(r); };
-  r.lbNext.onclick     = () => { state.lbIndex = Math.min(state.images.length - 1, state.lbIndex + 1); renderLightbox(r); };
+  r.lbPrev.onclick = (e) => {
+    e.stopPropagation();
+    if (state.lbIndex > 0) {
+      state.lbIndex -= 1;
+      renderLightbox(r);
+    }
+  };
+  r.lbNext.onclick = (e) => {
+    e.stopPropagation();
+    if (state.lbIndex < state.images.length - 1) {
+      state.lbIndex += 1;
+      renderLightbox(r);
+    }
+  };
 
   // Keyboard
   document.addEventListener('keydown', handleKeydown);
@@ -265,8 +274,16 @@ function handleKeydown(e: KeyboardEvent) {
   }
 
   if (lbOpen) {
-    if (e.key === 'ArrowLeft')  { state.lbIndex = Math.max(0, state.lbIndex - 1); renderLightbox(r); }
-    if (e.key === 'ArrowRight') { state.lbIndex = Math.min(state.images.length - 1, state.lbIndex + 1); renderLightbox(r); }
+    if (e.key === 'ArrowLeft' && state.lbIndex > 0) {
+      e.preventDefault();
+      state.lbIndex -= 1;
+      renderLightbox(r);
+    }
+    if (e.key === 'ArrowRight' && state.lbIndex < state.images.length - 1) {
+      e.preventDefault();
+      state.lbIndex += 1;
+      renderLightbox(r);
+    }
   }
 }
 
