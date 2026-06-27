@@ -206,9 +206,9 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
   gap: clamp(1rem, 3vw, 2rem);
   align-items: end;
   width: 100%;
-  max-width: min(96rem, calc(100vw - clamp(1rem, 4vw, 3rem)));
-  margin-inline: auto;
-  padding: clamp(1rem, 3vh, 2rem) clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 2vh, 1.5rem);
+  max-width: 100%;
+  margin-inline: 0;
+  padding: clamp(0.5rem, 1.5vh, 1rem) clamp(0.5rem, 1.25vw, 1rem) clamp(0.5rem, 1.5vh, 0.875rem);
 }
 
 @media (max-width: 1023px) {
@@ -652,7 +652,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   z-index: 30;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem clamp(1rem, 3vw, 2.5rem);
+  padding: 0.5rem clamp(0.5rem, 1.25vw, 1rem);
   margin-left: 0;
   background: color-mix(in srgb, var(--canvas) 92%, transparent);
   backdrop-filter: blur(10px);

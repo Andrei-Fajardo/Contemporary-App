@@ -12,9 +12,9 @@ const l = t[locale];
 ---
 
 <section id="art" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide mb-10 md:mb-14">
+  <div class="section-shell section-shell--wide mb-4 md:mb-6">
     <p class="scroll-reveal section-eyebrow">{l.artTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-5">
+    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-2">
       {l.nav.art}
     </h2>
     <hr class="brutal-rule brutal-rule--short scroll-reveal" />
@@ -22,8 +22,8 @@ const l = t[locale];
 
   {artworks.map((p, i) => (
     <article class="art-piece depth-target" data-popup-title={p.title}>
-      <div class="section-shell section-shell--wide py-8 md:py-12 lg:py-14">
-        <div class={`grid md:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-start`}>
+      <div class="section-shell section-shell--wide py-4 md:py-6">
+        <div class={`grid md:grid-cols-2 gap-6 lg:gap-10 items-start`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
             <MediaPopup
               imageSrc={p.image}
@@ -33,7 +33,7 @@ const l = t[locale];
               aspectRatio={p.contain ? "auto" : "3 / 2"}
               parallaxSpeed={0.18}
               contain={p.contain}
-              imageClass={p.contain ? "w-full h-auto max-h-[72vh] object-contain mx-auto" : "w-full h-[50vh] md:h-[60vh] object-cover"}
+              imageClass={p.contain ? "w-full h-auto max-h-[80vh] object-contain mx-auto" : "w-full h-[55vh] md:h-[68vh] object-cover"}
             />
           </div>
 
