@@ -376,16 +376,18 @@ html.motion-reduced .press-chaos__poster {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
+  /* overflow: visible lets the image bleed off the right and bottom edges */
+  overflow: visible;
 }
 
 .research-panel__art {
-  position: absolute;
-  right: clamp(5rem, 14vw, 10rem);
-  bottom: clamp(4rem, 12vh, 9rem);
+  position: fixed;
+  /* Anchor to the bottom-right of the viewport, behind the sidebar */
+  right: 0;
+  bottom: 0;
   left: auto;
-  width: clamp(30rem, 48vw, 46rem);
+  /* Large enough to be a dominant visual presence */
+  width: clamp(28rem, 40vw, 46rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
@@ -413,17 +415,13 @@ html.motion-reduced .press-chaos__poster {
 
 @media (max-width: 1023px) {
   .research-panel__art {
-    width: clamp(24rem, 50vw, 36rem);
-    right: clamp(3rem, 10vw, 6rem);
-    bottom: clamp(3rem, 10vh, 7rem);
+    width: clamp(20rem, 48vw, 34rem);
   }
 }
 
 @media (max-width: 639px) {
   .research-panel__art {
-    width: clamp(18rem, 64vw, 28rem);
-    right: clamp(1.5rem, 6vw, 3rem);
-    bottom: clamp(2.5rem, 8vh, 5rem);
+    width: clamp(14rem, 60vw, 22rem);
   }
 
   .research-panel__art-img {
