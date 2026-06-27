@@ -700,8 +700,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 #mobile-drawer .sidebar-nav-link {
-  text-align: justify;
-  text-align-last: left;
+  text-align: left;
   position: relative;
 }
 
@@ -754,8 +753,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   position: relative;
   display: block;
   padding-left: 0.25rem;
-  text-align: justify;
-  text-align-last: left;
+  text-align: left;
   transition: color 0.4s var(--ease-editorial);
   will-change: transform;
 }
@@ -795,8 +793,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   width: 100%;
   opacity: 0.72;
   letter-spacing: 0.01em;
-  text-align: justify;
-  text-align-last: left;
+  text-align: left;
   transition: opacity 0.35s var(--ease-editorial);
 }
 

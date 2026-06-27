@@ -363,18 +363,16 @@ html.motion-reduced .press-chaos__poster {
   }
 }
 
-/* --- Academic Research — right-side anna sample 4 decor --- */
+/* --- Academic Research — anna sample 4 decor (background only, no layout impact) --- */
 .research-section {
   position: relative;
-  isolation: isolate;
-  overflow: visible;
 }
 
 .research-section__art {
-  position: absolute;
-  right: clamp(-1.5rem, -3vw, 0rem);
-  top: clamp(0.25rem, 1.5vh, 1rem);
-  width: clamp(18rem, 42vw, 34rem);
+  position: fixed;
+  right: clamp(0.75rem, 2.5vw, 2rem);
+  bottom: clamp(5rem, 14vh, 9rem);
+  width: clamp(5.5rem, 12vw, 9.5rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
@@ -385,9 +383,9 @@ html.motion-reduced .press-chaos__poster {
   width: 100%;
   height: auto;
   object-fit: contain;
-  object-position: right top;
-  filter: grayscale(1) contrast(1.03);
-  opacity: 0.9;
+  object-position: right bottom;
+  filter: grayscale(1) contrast(1.02);
+  opacity: 0.58;
   mix-blend-mode: multiply;
   cursor: default;
   pointer-events: none;
@@ -400,16 +398,22 @@ html.motion-reduced .press-chaos__poster {
 
 @media (max-width: 1023px) {
   .research-section__art {
-    width: clamp(12rem, 44vw, 20rem);
-    right: clamp(-1rem, -2vw, 0rem);
-    top: 0;
+    width: clamp(4.5rem, 16vw, 7.5rem);
+    bottom: clamp(4rem, 12vh, 7rem);
+    opacity: 0.85;
   }
 }
 
 @media (max-width: 639px) {
   .research-section__art {
-    width: 40vw;
-    opacity: 0.75;
+    width: clamp(3.75rem, 22vw, 6rem);
+    right: 0.5rem;
+    bottom: clamp(3.5rem, 10vh, 5.5rem);
+    opacity: 0.7;
+  }
+
+  .research-section__art-img {
+    opacity: 0.5;
   }
 }
 
