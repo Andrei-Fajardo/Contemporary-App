@@ -16,6 +16,8 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
   {entries.map((entry) => {
     const display  = formatExhibitionDisplay(entry);
     const thumbs   = entry.images.slice(0, THUMB_COUNT);
+    const carouselImages = thumbs;
+    const carouselEncoded = carouselImages.join('|');
     // All images passed to "View all": accordion thumbs + any extra gallery images
     const allGalleryImages = [...entry.images, ...(entry.galleryImages ?? [])];
     const total    = allGalleryImages.length;
@@ -84,15 +86,20 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
         {thumbs.length > 0 && (
           <div class="exg-thumb-strip">
             <div class="exg-thumb-strip__grid">
-              {thumbs.map((src, i) => (
+              {thumbs.map((src, i) => {
+                const isViewAllCell = hasMore && i === THUMB_COUNT - 1;
+                return (
                 <button
                   type="button"
                   class="exg-thumb-strip__cell"
-                  data-gallery-open
-                  data-gallery-images={imagesEncoded}
                   data-gallery-title={entry.title}
                   data-gallery-place={entry.place}
-                  aria-label={`Open gallery for ${entry.title}, photo ${i + 1}`}
+                  data-gallery-images={isViewAllCell ? imagesEncoded : carouselEncoded}
+                  data-gallery-index={i}
+                  {...(isViewAllCell ? { 'data-gallery-open': true } : { 'data-gallery-preview': true })}
+                  aria-label={isViewAllCell
+                    ? `View all photos for ${entry.title}`
+                    : `View ${entry.title} image ${i + 1}`}
                 >
                   {/* Skeleton shimmer shown while image loads */}
                   <span class="exg-thumb-strip__skeleton" aria-hidden="true"></span>
@@ -112,7 +119,8 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
                     </span>
                   )}
                 </button>
-              ))}
+                );
+              })}
             </div>
 
         {allGalleryImages.length > 0 && (

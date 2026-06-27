@@ -15,6 +15,7 @@ interface GalleryState {
 
 let state: GalleryState = { images: [], title: '', place: '', lbIndex: 0 };
 let overlayBound = false;
+let previewOnly = false;
 let lockedScrollY = 0;
 let scrollLockCount = 0;
 
@@ -116,8 +117,11 @@ function stopLightboxVideo(r: ReturnType<typeof refs>): void {
 
 // ── Open overlay ─────────────────────────────────────────────────────────────
 export function openGallery(images: string[], title: string, place: string) {
+  previewOnly = false;
   state = { images, title, place, lbIndex: 0 };
   const r = refs();
+
+  r.overlay.classList.remove('exg-overlay--preview-only');
 
   // Populate header
   r.eyebrow.textContent = place;
@@ -149,9 +153,26 @@ export function openGallery(images: string[], title: string, place: string) {
   bindOverlayEvents(r);
 }
 
+/** Open a single carousel image fullscreen (thumbnails 1–3) without the grid. */
+export function openGalleryPreview(images: string[], startIndex: number, title: string, place: string) {
+  previewOnly = true;
+  state = { images, title, place, lbIndex: startIndex };
+  const r = refs();
+
+  r.overlay.classList.add('exg-overlay--preview-only');
+  r.overlay.removeAttribute('hidden');
+  r.overlay.setAttribute('aria-hidden', 'false');
+  lockPageScroll();
+
+  openLightbox(startIndex);
+  bindOverlayEvents(r);
+}
+
 // ── Close overlay ────────────────────────────────────────────────────────────
 function closeGallery() {
+  previewOnly = false;
   const r = refs();
+  r.overlay.classList.remove('exg-overlay--preview-only');
   r.overlay.classList.remove('is-open');
   r.overlay.setAttribute('aria-hidden', 'true');
   unlockPageScroll();
@@ -287,6 +308,14 @@ function closeLightbox(r: ReturnType<typeof refs>) {
   r.lbImg.src = '';
   r.lbImg.hidden = true;
   stopLightboxVideo(r);
+
+  if (previewOnly) {
+    previewOnly = false;
+    r.overlay.classList.remove('exg-overlay--preview-only');
+    r.overlay.setAttribute('aria-hidden', 'true');
+    r.overlay.setAttribute('hidden', '');
+    unlockPageScroll();
+  }
 }
 
 // ── Events ────────────────────────────────────────────────────────────────────
@@ -298,9 +327,16 @@ function bindOverlayEvents(r: ReturnType<typeof refs>) {
   r.backdrop.onclick   = closeGallery;
   r.closeBtn.onclick   = closeGallery;
 
-  // Lightbox nav
+  // Lightbox nav — backdrop and empty stage area close fullscreen
   r.lbBackdrop.onclick = () => closeLightbox(r);
   r.lbClose.onclick    = () => closeLightbox(r);
+  r.lightbox.onclick = (e) => {
+    if (e.target === r.lightbox) closeLightbox(r);
+  };
+  const stage = r.lightbox.querySelector('.exg-lightbox__stage');
+  stage?.addEventListener('click', (e) => {
+    if (e.target === stage) closeLightbox(r);
+  });
   r.lbPrev.onclick = (e) => {
     e.stopPropagation();
     if (state.lbIndex > 0) {
@@ -330,7 +366,7 @@ function handleKeydown(e: KeyboardEvent) {
   const lbOpen = !r.lightbox.hasAttribute('hidden');
 
   if (e.key === 'Escape') {
-    if (lbOpen) { closeLightbox(r); } else { closeGallery(); }
+    if (lbOpen) { closeLightbox(r); } else if (!previewOnly) { closeGallery(); }
     return;
   }
 
@@ -348,19 +384,26 @@ function handleKeydown(e: KeyboardEvent) {
   }
 }
 
-// ── Init: wire up all "View All" buttons already in the DOM ─────────────────
+// ── Init: wire thumbnail preview + View All buttons ───────────────────────────
 export function initExhibitionGallery() {
-  document.querySelectorAll<HTMLButtonElement>('[data-gallery-open]').forEach((btn) => {
+  document.querySelectorAll<HTMLButtonElement>('[data-gallery-open], [data-gallery-preview]').forEach((btn) => {
     if (btn.dataset.galleryBound) return;
     btn.dataset.galleryBound = 'true';
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
+      e.preventDefault();
       const imagesRaw = btn.dataset.galleryImages ?? '';
       const images    = imagesRaw ? imagesRaw.split('|').filter(Boolean) : [];
       const title     = btn.dataset.galleryTitle  ?? '';
       const place     = btn.dataset.galleryPlace  ?? '';
-      openGallery(images, title, place);
+
+      if (btn.hasAttribute('data-gallery-preview')) {
+        const index = Number(btn.dataset.galleryIndex ?? 0);
+        openGalleryPreview(images, index, title, place);
+      } else {
+        openGallery(images, title, place);
+      }
     });
   });
 }

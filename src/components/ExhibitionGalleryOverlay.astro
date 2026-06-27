@@ -158,6 +158,17 @@
   transform: translateY(0);
 }
 
+/* Preview-only: lightbox without the grid panel */
+.exg-overlay--preview-only .exg-overlay__panel {
+  display: none;
+}
+
+.exg-overlay--preview-only .exg-overlay__backdrop {
+  background: rgba(17, 17, 17, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
 /* Lock page scroll while gallery is open */
 :global(html.exg-scroll-lock),
 :global(html.exg-scroll-lock body) {
