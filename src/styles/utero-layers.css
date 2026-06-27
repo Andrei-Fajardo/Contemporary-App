@@ -159,6 +159,9 @@
   isolation: isolate;
   /* Allow art to bleed over the footer below */
   overflow: visible;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .contacts-panel__art {
