@@ -1,4 +1,4 @@
-/* About tab ? layered hero + anna sample 2 overlapping bio */
+/* About tab ? layered hero + anna sample 4 overlapping bio */
 
 .about-panel-stack {
   position: relative;
@@ -42,14 +42,15 @@
   z-index: 4;
   display: flex;
   justify-content: flex-end;
-  align-items: flex-start;
+  align-items: center;
   min-height: clamp(18rem, 48vh, 34rem);
-  padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  padding-block: clamp(1.5rem, 4vh, 3rem);
 }
 
 .hero-about-layer__name {
   width: min(54%, 36rem);
   margin-left: auto;
+  margin-top: clamp(0.5rem, 2vh, 1.5rem);
   text-align: left;
 }
 
