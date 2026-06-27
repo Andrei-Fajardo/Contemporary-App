@@ -143,49 +143,7 @@
 }
 
 
-/* ── 2. GHOST WATERMARK — RESEARCH ───────────────────────────
-   Primary: large lower-left botanical decay.
-   Echo: same leaf mirrored, top-right, very faint.
-   Two presences like a chapbook fold-open spread.
-   ──────────────────────────────────────────────────────────── */
-.research-panel__art {
-  width: clamp(11rem, 20vw, 16rem);
-  bottom: clamp(4rem, 12vh, 8rem);
-  left: var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
-  transform: rotate(-2deg);
-  transform-origin: left bottom;
-}
-
-.research-panel__art-img {
-  opacity: 0.55;
-  filter: grayscale(1) contrast(1.04) brightness(0.98);
-  mix-blend-mode: multiply;
-}
-
-/* Secondary echo: mirrored top-right */
-.research-panel__art-echo {
-  position: absolute;
-  top: clamp(0rem, 2vh, 1rem);
-  right: clamp(-2rem, -4vw, -1rem);
-  width: clamp(8rem, 14vw, 12rem);
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-  transform: rotate(8deg) scaleX(-1);
-  transform-origin: top right;
-}
-
-.research-panel__art-echo-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: grayscale(1) contrast(1.02);
-  opacity: 0.10;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  cursor: default;
-}
+/* Research panel art positioning is defined in chaos.css */
 
 
 /* ── 2. GHOST WATERMARK — CONTACTS ───────────────────────────
@@ -255,12 +213,6 @@
     top: clamp(1.5rem, 4vh, 2.5rem);
   }
 
-  .research-panel__art {
-    width: clamp(8rem, 18vw, 12rem);
-  }
-  .research-panel__art-echo {
-    display: none;
-  }
 
   .contacts-panel__art {
     width: clamp(10rem, 36vw, 16rem);
@@ -304,10 +256,6 @@
     background: var(--canvas);
     padding-inline: 0;
     padding-block: clamp(1rem, 3vh, 1.5rem);
-  }
-
-  .research-panel__art {
-    width: clamp(6rem, 24vw, 9rem);
   }
 
   .contacts-panel__art {
