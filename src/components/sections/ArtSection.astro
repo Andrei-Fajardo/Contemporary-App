@@ -12,7 +12,7 @@ const l = t[locale];
 ---
 
 <section id="art" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide mb-4 md:mb-6">
+  <div class="section-shell section-shell--wide mb-6 md:mb-8">
     <p class="scroll-reveal section-eyebrow">{l.artTag}</p>
     <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-2">
       {l.nav.art}
@@ -21,9 +21,9 @@ const l = t[locale];
   </div>
 
   {artworks.map((p, i) => (
-    <article class="art-piece depth-target" data-popup-title={p.title}>
-      <div class="section-shell section-shell--wide py-4 md:py-6">
-        <div class={`grid md:grid-cols-2 gap-6 lg:gap-10 items-start`}>
+    <article class="art-piece" data-popup-title={p.title}>
+      <div class="section-shell section-shell--wide py-6 md:py-8">
+        <div class={`grid md:grid-cols-2 gap-8 lg:gap-12 items-start`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
             <MediaPopup
               imageSrc={p.image}
@@ -31,8 +31,9 @@ const l = t[locale];
               title={p.title}
               subtitle={p.dimensions}
               aspectRatio={p.contain ? "auto" : "3 / 2"}
-              parallaxSpeed={0.18}
+              parallaxSpeed={0}
               contain={p.contain}
+              eager={true}
               imageClass={p.contain ? "w-full h-auto max-h-[80vh] object-contain mx-auto" : "w-full h-[55vh] md:h-[68vh] object-cover"}
             />
           </div>
@@ -46,7 +47,7 @@ const l = t[locale];
               <p class="type-heading text-[0.6875rem] text-ink-50 mb-4">About</p>
               <div class="space-y-4">
                 {p.aboutParagraphs.map((para) => (
-                  <p class="content-prose text-ink-75 max-w-[58ch]">{para}</p>
+                  <p class="content-prose text-ink-75 max-w-[58ch] text-justify">{para}</p>
                 ))}
               </div>
             </div>

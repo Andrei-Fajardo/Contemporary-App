@@ -456,7 +456,7 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   font-weight: 400;
   color: var(--ink-70);
   line-height: 1.55;
-  text-align: left;
+  text-align: justify;
 }
 
 .section-divider-label {
@@ -587,10 +587,10 @@ select,
   min-height: 0;
 }
 
-/* Compressed editorial density — content-first spacing */
+/* Compressed editorial density — reduced but not flush to edges */
 .editorial-dense {
-  --section-gap-y: clamp(0.5rem, 1.25vw, 0.875rem);
-  --shell-pad-inline: clamp(0.5rem, 1.25vw, 1rem);
+  --section-gap-y: clamp(0.75rem, 1.75vw, 1.25rem);
+  --shell-pad-inline: clamp(0.75rem, 2vw, 1.5rem);
   --heading-tight: 0.94;
   --body-tight: 1.48;
 }
@@ -601,7 +601,7 @@ select,
 
 .editorial-dense .section-shell,
 .editorial-dense .section-shell--wide {
-  max-width: 100%;
+  max-width: min(92rem, calc(100% - var(--shell-pad-inline) * 2));
   padding-inline: var(--shell-pad-inline);
 }
 
@@ -635,9 +635,9 @@ select,
 }
 
 .editorial-dense .hero-editorial {
-  padding-top: clamp(0.5rem, 1.5vh, 1rem);
-  padding-bottom: clamp(0.5rem, 1.5vh, 0.875rem);
-  gap: clamp(0.5rem, 1.5vw, 1rem);
+  padding-top: clamp(0.75rem, 2vh, 1.5rem);
+  padding-bottom: clamp(0.625rem, 1.75vh, 1.125rem);
+  gap: clamp(0.625rem, 1.75vw, 1.25rem);
 }
 
 .editorial-dense .hero-editorial__name {
@@ -665,7 +665,7 @@ select,
 }
 
 .editorial-dense .art-piece .section-shell {
-  padding-block: clamp(0.375rem, 1vw, 0.75rem);
+  padding-block: clamp(0.625rem, 1.5vw, 1.125rem);
 }
 
 .editorial-dense :is(h2.type-heading, h2.type-subheading) {
@@ -726,18 +726,18 @@ select,
   }
 
   .editorial-dense {
-    --section-gap-y: clamp(0.375rem, 1vw, 0.75rem);
-    --shell-pad-inline: clamp(0.375rem, 2vw, 0.75rem);
+    --section-gap-y: clamp(0.625rem, 1.5vw, 1rem);
+    --shell-pad-inline: clamp(0.625rem, 2.5vw, 1.125rem);
   }
 
   .editorial-dense .hero-editorial {
-    padding-top: clamp(0.375rem, 1vh, 0.75rem);
-    padding-bottom: clamp(0.375rem, 1vh, 0.625rem);
+    padding-top: clamp(0.625rem, 1.5vh, 1.125rem);
+    padding-bottom: clamp(0.5rem, 1.25vh, 0.875rem);
   }
 
   .editorial-dense .section-shell,
   .editorial-dense .section-shell--wide {
-    max-width: 100%;
+    max-width: min(92rem, calc(100% - var(--shell-pad-inline) * 2));
   }
 
   .section-eyebrow {
