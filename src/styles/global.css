@@ -48,8 +48,8 @@
   --radius-lang-toggle: 0.35rem;
   --radius-lang-btn: 0.2rem;
 
-  /* Global type scale — bumps all rem-based typography */
-  --type-scale: 1.4;
+  /* Global type scale — 1 = 16px root; was 1.4 (too large at 100% zoom) */
+  --type-scale: 1;
 }
 
 /* Warm editorial canvas background */
@@ -403,14 +403,14 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   max-width: min(96rem, calc(100vw - clamp(1rem, 4vw, 3rem)));
 }
 
-/* Body copy — larger; section titles / H1–H2 unchanged */
+/* Body copy */
 .content-prose {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: clamp(1.0625rem, 1.15vw + 0.65rem, 1.3125rem);
+  font-size: clamp(0.9375rem, 0.85vw + 0.55rem, 1.0625rem);
   line-height: 1.55;
   color: var(--ink-75);
-  text-align: justify;
+  text-align: left;
 }
 
 .content-prose--mono {
@@ -424,10 +424,39 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 .content-prose--sans {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: clamp(1rem, 0.85vw + 0.7rem, 1.1875rem);
+  font-size: clamp(0.875rem, 0.7vw + 0.55rem, 1rem);
   line-height: 1.5;
   color: var(--ink-75);
-  text-align: justify;
+  text-align: left;
+}
+
+/* Exhibition-matched editorial type (accordion title / meta / body) */
+.editorial-lead {
+  font-family: var(--font-heading);
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.25;
+  text-align: left;
+}
+
+.editorial-meta {
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 0.85vw, 0.9375rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-55);
+  line-height: 1.55;
+  text-align: left;
+}
+
+.editorial-body {
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 0.75vw + 0.5rem, 0.9375rem);
+  font-weight: 400;
+  color: var(--ink-70);
+  line-height: 1.55;
+  text-align: left;
 }
 
 .section-divider-label {
@@ -575,6 +604,7 @@ select,
 
 .editorial-dense .type-heading.text-3xl,
 .editorial-dense h2.type-heading {
+  font-size: clamp(1.75rem, 4vw, 2.75rem) !important;
   line-height: var(--heading-tight);
   letter-spacing: var(--heading-track);
 }
@@ -608,8 +638,8 @@ select,
 }
 
 .editorial-dense .hero-editorial__name {
-  font-size: clamp(2.75rem, 7.5vw, 5.25rem);
-  line-height: 0.88;
+  font-size: clamp(2.25rem, 6vw, 4.25rem);
+  line-height: 0.9;
 }
 
 .editorial-dense .hero-editorial__name-rule {
@@ -627,8 +657,8 @@ select,
 }
 
 .editorial-dense .hero-editorial__surname {
-  font-size: clamp(1.75rem, 4.5vw, 3rem);
-  line-height: 0.92;
+  font-size: clamp(1.5rem, 3.75vw, 2.5rem);
+  line-height: 0.94;
 }
 
 .editorial-dense .art-piece .section-shell {

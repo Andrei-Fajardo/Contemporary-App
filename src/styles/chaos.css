@@ -541,8 +541,8 @@ html.motion-reduced .press-chaos__poster {
 .hero-chaos__visual img {
   display: block;
   width: 100%;
-  min-height: clamp(18rem, 55vh, 42rem);
-  max-height: min(85vh, 56rem);
+  min-height: clamp(12rem, 38vh, 28rem);
+  max-height: min(62vh, 40rem);
   object-fit: cover;
   object-position: center center;
 }
@@ -664,7 +664,7 @@ html.motion-reduced .press-chaos__poster {
 
 .about-chaos__list li {
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: var(--ink-60);
   border: 1px solid var(--border-subtle);
   padding: 0.35rem 0.65rem;

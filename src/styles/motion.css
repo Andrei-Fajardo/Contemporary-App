@@ -275,7 +275,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 
 .hero-editorial__name {
   font-family: var(--font-heading);
-  font-size: clamp(3.25rem, 9vw, 6.5rem);
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
   font-weight: 400;
   line-height: 0.88;
   letter-spacing: normal;
@@ -315,7 +315,7 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 
 .hero-editorial__surname {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  font-size: clamp(1.625rem, 4.25vw, 2.75rem);
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: normal;
@@ -330,11 +330,12 @@ html.motion-live .art-piece.is-focused .lazy-media.is-loaded img {
 .hero-editorial__roles {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  line-height: 1.45;
-  color: var(--ink-65);
+  font-size: clamp(0.8125rem, 0.85vw, 0.9375rem);
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-55);
   margin-top: clamp(0.5rem, 1.5vh, 0.85rem);
-  margin-bottom: clamp(1.25rem, 3vh, 2rem);
+  margin-bottom: clamp(1rem, 2.5vh, 1.5rem);
   max-width: 28ch;
 }
 
