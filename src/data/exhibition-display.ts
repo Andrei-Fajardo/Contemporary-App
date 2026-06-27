@@ -17,6 +17,14 @@ export interface ExhibitionDisplay {
 
 /** Venue-first labels with deduped exhibition titles in the subheading. */
 export function formatExhibitionDisplay(entry: ExhibitionEntry): ExhibitionDisplay {
+  if (entry.category === 'magazine') {
+    return {
+      heading: entry.title,
+      subheading:
+        entry.links?.issue ?? entry.links?.magazineLabel ?? entry.place,
+    };
+  }
+
   const heading = entry.gallery;
   const { title, gallery, place } = entry;
 

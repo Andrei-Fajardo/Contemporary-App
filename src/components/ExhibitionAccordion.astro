@@ -183,11 +183,13 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
   .exhibition-accordion__action {
     grid-row: 1 / 3;
     grid-column: 3;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.625rem;
     justify-self: end;
     flex-shrink: 0;
+    line-height: 1;
+    align-self: center;
   }
 
   .exhibition-accordion__action-label {
@@ -198,6 +200,10 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     text-transform: uppercase;
     color: var(--ink-45);
     white-space: nowrap;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    height: 1.25rem;
     transition: color 0.3s var(--ease-editorial);
   }
 
@@ -211,9 +217,13 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
     font-size: 1.25rem;
     line-height: 1;
     color: var(--ink-35);
-    display: inline-block;
-    transform-origin: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
     flex-shrink: 0;
+    transform-origin: center;
   }
 
   .exhibition-accordion__summary:hover .exhibition-accordion__chevron {
