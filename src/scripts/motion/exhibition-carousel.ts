@@ -3,7 +3,7 @@
  * and arrow navigation. Uses Motion for smooth programmatic scroll.
  */
 import { animate } from "motion";
-import { blockLightboxForCarouselDrag } from "../lightbox";
+import { getLightboxImageSrc, openLightbox } from "../lightbox";
 
 const AUTO_SPEED = 0.5;
 const RESUME_MS = 3500;
@@ -21,10 +21,12 @@ type CarouselState = {
   paused: boolean;
   userPaused: boolean;
   open: boolean;
+  dragPending: boolean;
   dragging: boolean;
   dragStartX: number;
   dragStartScroll: number;
   pointerMoved: number;
+  activePointerId: number;
   slideCount: number;
   hasActivated: boolean;
 };
@@ -187,6 +189,31 @@ function deactivate(state: CarouselState): void {
   pause(state);
 }
 
+function openCarouselImage(img: HTMLImageElement): void {
+  const src = getLightboxImageSrc(img);
+  if (!src) return;
+  openLightbox(src, img.alt || "");
+}
+
+function imageFromPointer(viewport: HTMLElement, clientX: number, clientY: number): HTMLImageElement | null {
+  const hit = document.elementFromPoint(clientX, clientY);
+  if (!(hit instanceof Element)) return null;
+  const img = hit instanceof HTMLImageElement ? hit : hit.closest("img");
+  if (!img || !viewport.contains(img)) return null;
+  return img;
+}
+
+function bindCarouselImages(root: HTMLElement): void {
+  root.querySelectorAll<HTMLImageElement>(".exhibition-carousel img, .exhibition-gallery-grid img").forEach((img) => {
+    if (img.dataset.lightboxBound === "true") return;
+    img.dataset.lightboxBound = "true";
+    img.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openCarouselImage(img);
+    });
+  });
+}
 function bindCarousel(root: HTMLElement): void {
   if (root.dataset.carouselBound === "true") return;
 
@@ -196,6 +223,7 @@ function bindCarousel(root: HTMLElement): void {
 
   root.dataset.carouselBound = "true";
   viewport.style.scrollBehavior = "auto";
+  bindCarouselImages(root);
 
   const slides = track.querySelectorAll(".exhibition-carousel__slide");
   const state: CarouselState = {
@@ -210,10 +238,12 @@ function bindCarousel(root: HTMLElement): void {
     paused: true,
     userPaused: false,
     open: false,
+    dragPending: false,
     dragging: false,
     dragStartX: 0,
     dragStartScroll: 0,
     pointerMoved: 0,
+    activePointerId: -1,
     slideCount: slides.length,
     hasActivated: false,
   };
@@ -235,40 +265,63 @@ function bindCarousel(root: HTMLElement): void {
     if (e.button !== 0) return;
     stopAutoAnim(state);
     state.scrollAnim?.stop();
-    state.dragging = true;
+    state.dragPending = true;
+    state.dragging = false;
     state.dragStartX = e.clientX;
     state.dragStartScroll = viewport.scrollLeft;
     state.pointerMoved = 0;
+    state.activePointerId = e.pointerId;
     pause(state, true);
-    viewport.setPointerCapture(e.pointerId);
-    viewport.classList.add("is-dragging");
   });
 
   viewport.addEventListener("pointermove", (e) => {
-    if (!state.dragging) return;
+    if (!state.dragPending && !state.dragging) return;
+
     state.pointerMoved = Math.max(state.pointerMoved, Math.abs(e.clientX - state.dragStartX));
+
+    if (!state.dragging && state.pointerMoved > 6) {
+      state.dragging = true;
+      viewport.setPointerCapture(e.pointerId);
+      viewport.classList.add("is-dragging");
+    }
+
+    if (!state.dragging) return;
+
     e.preventDefault();
     const dx = e.clientX - state.dragStartX;
     viewport.scrollLeft = clampScroll(viewport, state.dragStartScroll - dx);
     updateButtons(state);
   });
 
-  const endDrag = () => {
-    if (!state.dragging) return;
-    const scrolled = Math.abs(state.viewport.scrollLeft - state.dragStartScroll);
+  const endPointer = (e: PointerEvent) => {
+    if (!state.dragPending && !state.dragging) return;
+
+    const wasTap = state.pointerMoved <= 6 && !state.dragging;
+
+    if (state.dragging) {
+      try {
+        viewport.releasePointerCapture(e.pointerId);
+      } catch {
+        /* pointer may already be released */
+      }
+      viewport.classList.remove("is-dragging");
+    }
+
+    state.dragPending = false;
     state.dragging = false;
-    viewport.classList.remove("is-dragging");
     viewport.scrollLeft = clampScroll(viewport, viewport.scrollLeft);
     updateButtons(state);
-    if (state.pointerMoved > 6 || scrolled > 6) {
-      blockLightboxForCarouselDrag(state.viewport);
+
+    if (wasTap) {
+      const img = imageFromPointer(viewport, e.clientX, e.clientY);
+      if (img) openCarouselImage(img);
     }
+
     scheduleResume(state);
   };
 
-  viewport.addEventListener("pointerup", endDrag);
-  viewport.addEventListener("pointercancel", endDrag);
-  viewport.addEventListener("lostpointercapture", endDrag);
+  viewport.addEventListener("pointerup", endPointer);
+  viewport.addEventListener("pointercancel", endPointer);
 
   viewport.addEventListener(
     "wheel",
@@ -291,7 +344,11 @@ function bindCarousel(root: HTMLElement): void {
 
   const details = root.closest("details");
   if (details) {
-    details.addEventListener("toggle", () => (details.open ? activate(state) : deactivate(state)));
+    details.addEventListener("toggle", () => {
+      bindCarouselImages(root);
+      if (details.open) activate(state);
+      else deactivate(state);
+    });
     if (details.open) activate(state);
   } else {
     activate(state);
@@ -319,6 +376,9 @@ export function resetExhibitionCarousels(): void {
       if (state.resumeTimer) clearTimeout(state.resumeTimer);
     }
     delete root.dataset.carouselBound;
+    root.querySelectorAll<HTMLImageElement>("img[data-lightbox-bound]").forEach((img) => {
+      delete img.dataset.lightboxBound;
+    });
   });
 }
 

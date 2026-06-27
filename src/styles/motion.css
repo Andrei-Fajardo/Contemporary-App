@@ -934,6 +934,10 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   cursor: grabbing;
 }
 
+.exhibition-carousel__viewport.is-dragging img {
+  cursor: grabbing;
+}
+
 .exhibition-carousel__viewport::-webkit-scrollbar {
   height: 3px;
 }
@@ -973,6 +977,8 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   min-width: 12rem;
   object-fit: cover;
   image-rendering: auto;
+  cursor: zoom-in;
+  pointer-events: auto;
 }
 
 .exhibition-carousel__btn {
