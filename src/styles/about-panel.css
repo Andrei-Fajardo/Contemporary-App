@@ -5,12 +5,13 @@
   isolation: isolate;
 }
 
+/* z-index stack: rule (1) < art (3) < name/content (4) < grain overlay (9999) */
 .about-panel-stack__art {
   position: absolute;
   left: var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
   top: 0;
-  width: clamp(13rem, 36vw, 26rem);
-  z-index: 1;
+  width: clamp(16rem, 42vw, 32rem);
+  z-index: 3;
   pointer-events: none;
   user-select: none;
 }
@@ -19,8 +20,8 @@
   display: block;
   width: 100%;
   height: auto;
-  min-height: clamp(22rem, 52vh, 34rem);
-  max-height: clamp(28rem, 68vh, 44rem);
+  min-height: clamp(28rem, 62vh, 42rem);
+  max-height: clamp(36rem, 78vh, 54rem);
   object-fit: cover;
   object-position: center top;
   filter: grayscale(1) contrast(1.04);
@@ -32,45 +33,46 @@
 
 .hero-about-layer {
   position: relative;
-  z-index: 2;
-  padding-block: clamp(0.75rem, 2vh, 1.5rem) 0;
-  min-height: clamp(13rem, 34vh, 20rem);
+  padding-block: clamp(1rem, 2.5vh, 2rem) 0;
+  min-height: clamp(20rem, 52vh, 38rem);
 }
 
 .hero-about-layer__inner {
+  position: relative;
+  z-index: 4;
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
-  min-height: clamp(12rem, 32vh, 18rem);
-  padding-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  min-height: clamp(18rem, 48vh, 34rem);
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
 }
 
 .hero-about-layer__name {
-  width: min(56%, 34rem);
+  width: min(54%, 36rem);
   margin-left: auto;
   text-align: left;
 }
 
 .hero-about-layer__name .hero-editorial__name {
-  font-size: clamp(3.25rem, 9.5vw, 7.25rem);
+  font-size: clamp(3.5rem, 10.5vw, 8rem);
   line-height: 0.86;
 }
 
 .hero-about-layer__name .hero-editorial__surname {
-  font-size: clamp(2.5rem, 7.5vw, 5.75rem);
+  font-size: clamp(2.75rem, 8vw, 6.25rem);
   line-height: 0.9;
   color: var(--ink);
   margin-top: 0.1rem;
 }
 
 .hero-about-layer__name .hero-editorial__roles {
-  margin-top: clamp(0.65rem, 1.5vh, 1rem);
-  max-width: 22ch;
+  margin-top: clamp(0.75rem, 1.75vh, 1.25rem);
+  max-width: 24ch;
 }
 
 .hero-about-layer__rule {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   border: 0;
   border-top: 1px solid var(--border-subtle);
   margin: 0 var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
@@ -78,14 +80,14 @@
 
 .about-panel-stack__content {
   position: relative;
-  z-index: 3;
-  padding-top: clamp(5rem, 14vh, 8.5rem);
-  margin-top: clamp(-7rem, -16vh, -5rem);
+  z-index: 4;
+  padding-top: clamp(6rem, 17vh, 10rem);
+  margin-top: clamp(-9rem, -20vh, -6.5rem);
 }
 
 .about-panel-stack__content-inner {
-  margin-left: clamp(34%, 36vw, 40%);
-  max-width: min(42rem, 58vw);
+  margin-left: clamp(36%, 38vw, 42%);
+  max-width: min(42rem, 56vw);
 }
 
 .about-panel-stack__content .section-eyebrow {
@@ -93,34 +95,42 @@
 }
 
 .editorial-dense .hero-about-layer__name .hero-editorial__name {
-  font-size: clamp(3rem, 8.5vw, 6.5rem);
+  font-size: clamp(3.25rem, 9vw, 7rem);
 }
 
 .editorial-dense .hero-about-layer__name .hero-editorial__surname {
-  font-size: clamp(2.35rem, 6.5vw, 5.25rem);
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
 }
 
 @media (max-width: 1023px) {
   .about-panel-stack__art {
-    width: clamp(10rem, 44vw, 16rem);
+    width: clamp(12rem, 46vw, 20rem);
     left: var(--shell-pad-inline, clamp(0.625rem, 2.5vw, 1.125rem));
   }
 
   .about-panel-stack__art-img {
-    min-height: clamp(16rem, 40vh, 24rem);
-    max-height: clamp(20rem, 48vh, 28rem);
+    min-height: clamp(20rem, 48vh, 30rem);
+    max-height: clamp(26rem, 58vh, 38rem);
+  }
+
+  .hero-about-layer {
+    min-height: clamp(16rem, 44vh, 28rem);
+  }
+
+  .hero-about-layer__inner {
+    min-height: clamp(14rem, 40vh, 24rem);
   }
 
   .hero-about-layer__name {
-    width: min(62%, 20rem);
+    width: min(60%, 22rem);
   }
 
   .hero-about-layer__name .hero-editorial__name {
-    font-size: clamp(2.5rem, 11vw, 4.25rem);
+    font-size: clamp(2.75rem, 11vw, 4.75rem);
   }
 
   .hero-about-layer__name .hero-editorial__surname {
-    font-size: clamp(2rem, 9vw, 3.25rem);
+    font-size: clamp(2.25rem, 9vw, 3.5rem);
   }
 
   .about-panel-stack__content-inner {
@@ -131,21 +141,24 @@
 
 @media (max-width: 639px) {
   .about-panel-stack__art {
-    width: 46vw;
-    opacity: 0.85;
+    width: 48vw;
+  }
+
+  .hero-about-layer {
+    min-height: clamp(13rem, 36vh, 20rem);
   }
 
   .hero-about-layer__inner {
-    min-height: clamp(10rem, 28vh, 14rem);
+    min-height: clamp(11rem, 32vh, 16rem);
   }
 
   .hero-about-layer__name {
-    width: 58%;
+    width: 56%;
   }
 
   .about-panel-stack__content {
-    padding-top: clamp(3.5rem, 12vh, 5rem);
-    margin-top: clamp(-4rem, -10vh, -2.5rem);
+    padding-top: clamp(4rem, 14vh, 6rem);
+    margin-top: clamp(-5rem, -12vh, -3rem);
   }
 
   .about-panel-stack__content-inner {
