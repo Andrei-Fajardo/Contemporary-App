@@ -20,6 +20,7 @@ let lockedScrollY = 0;
 let scrollLockCount = 0;
 
 const SCROLL_LOCK_CLASS = 'exg-scroll-lock';
+const GALLERY_OPEN_CLASS = 'exg-gallery-open';
 
 function lockPageScroll(): void {
   if (scrollLockCount === 0) {
@@ -136,6 +137,7 @@ export function openGallery(images: string[], title: string, place: string) {
   // Show overlay
   r.overlay.removeAttribute('hidden');
   r.overlay.setAttribute('aria-hidden', 'false');
+  document.documentElement.classList.add(GALLERY_OPEN_CLASS);
   lockPageScroll();
   // Scroll grid to top
   r.body.scrollTop = 0;
@@ -172,6 +174,7 @@ export function openGalleryPreview(images: string[], startIndex: number, title: 
 function closeGallery() {
   previewOnly = false;
   const r = refs();
+  document.documentElement.classList.remove(GALLERY_OPEN_CLASS);
   r.overlay.classList.remove('exg-overlay--preview-only');
   r.overlay.classList.remove('is-open');
   r.overlay.setAttribute('aria-hidden', 'true');
