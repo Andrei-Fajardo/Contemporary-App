@@ -382,13 +382,13 @@ html.motion-reduced .press-chaos__poster {
 
 .research-panel__art {
   position: fixed;
-  /* Anchor to the bottom-right of the viewport, behind the sidebar */
-  right: 0;
-  bottom: 0;
+  /* Inward from right edge, raised above footer */
+  right: clamp(3rem, 8vw, 8rem);
+  bottom: clamp(6rem, 14vh, 12rem);
   left: auto;
-  /* Large enough to be a dominant visual presence */
   width: clamp(28rem, 40vw, 46rem);
-  z-index: 0;
+  /* Above footer and sidebar stacking contexts */
+  z-index: 50;
   pointer-events: none;
   user-select: none;
 }
