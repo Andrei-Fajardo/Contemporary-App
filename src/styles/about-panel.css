@@ -22,8 +22,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
   width: 100%;
   max-width: 100%;
+  transform: translateX(clamp(-3.5rem, -6vw, -2rem));
 }
 
 .hero-about-layer__art {
@@ -32,7 +34,6 @@
   z-index: 2;
   pointer-events: none;
   user-select: none;
-  margin-right: clamp(-5rem, -11vw, -3rem);
 }
 
 .hero-about-layer__art-img {
@@ -135,7 +136,7 @@
 
 /* Bio text starts to the right of the centered portrait */
 .about-panel-stack__content-inner {
-  margin-left: clamp(46%, 50vw, 54%);
+  margin-left: clamp(44%, 48vw, 52%);
   max-width: min(42rem, 52vw);
   padding-right: clamp(1rem, 3vw, 2rem);
 }
@@ -153,7 +154,11 @@
 @media (max-width: 1023px) {
   .hero-about-layer__art {
     width: clamp(16rem, 46vw, 24rem);
-    margin-right: clamp(-3.5rem, -8vw, -2rem);
+  }
+
+  .hero-about-layer__cluster {
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    transform: translateX(clamp(-2rem, -4vw, -1rem));
   }
 
   .hero-about-layer__art-img {
@@ -185,7 +190,11 @@
 @media (max-width: 639px) {
   .hero-about-layer__art {
     width: clamp(11rem, 40vw, 15rem);
-    margin-right: clamp(-2rem, -6vw, -1rem);
+  }
+
+  .hero-about-layer__cluster {
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+    transform: translateX(clamp(-1rem, -3vw, -0.5rem));
   }
 
   .hero-about-layer__art-img {
