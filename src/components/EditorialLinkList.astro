@@ -4,16 +4,18 @@ import type { LinkItem } from '../data/content';
 interface Props {
   items: LinkItem[];
   emptyMessage?: string;
+  showYear?: boolean;
 }
 
-const { items, emptyMessage = 'List forthcoming' } = Astro.props;
+const { items, emptyMessage = 'List forthcoming', showYear = true } = Astro.props;
+const listClass = showYear ? 'editorial-link-list editorial-row-list scroll-reveal' : 'editorial-link-list editorial-row-list editorial-row-list--no-year scroll-reveal';
 ---
 
 {items.length > 0 ? (
-  <ul class="editorial-link-list editorial-row-list scroll-reveal">
+  <ul class={listClass}>
     {items.map((item) => (
       <li class="editorial-row-list__item">
-        <span class="editorial-row-list__year">{item.year ?? ''}</span>
+        {showYear && <span class="editorial-row-list__year">{item.year ?? ''}</span>}
         <a href={item.href} target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
           {item.title}
         </a>

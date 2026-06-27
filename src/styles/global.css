@@ -516,6 +516,10 @@ select,
   border-bottom: 1px solid var(--border-subtle);
 }
 
+.editorial-row-list--no-year .editorial-row-list__item {
+  grid-template-columns: 1fr;
+}
+
 .editorial-row-list__year {
   grid-row: 1 / 2;
   font-family: var(--font-mono);

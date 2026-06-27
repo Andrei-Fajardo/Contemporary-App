@@ -483,7 +483,6 @@ export const publicationLinks: LinkItem[] = [
   {
     title: 'Seventeenth Edition of Otherwise Engaged Literature and Arts Journal',
     href: 'https://www.marziadessi.com/otherwise-engaged',
-    year: '2026',
   },
 ];
 
