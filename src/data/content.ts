@@ -181,10 +181,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
   },
   {
     id: 'hechyeomoyeo-12',
-    year: '2024',
+    year: '2025',
     title: 'Hechyeomoyeo 12',
-    gallery: 'Hechyeomoyeo',
-    place: 'New York, USA',
+    gallery: 'Living Gallery',
+    place: 'Brooklyn, New York, USA',
     kind: 'group',
     category: 'physical',
     images: [
@@ -300,7 +300,7 @@ export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843
 export const exhibitions = [
   { image: "/media/exhibitions/senses/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
   { image: "/media/exhibitions/venice/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.JPG", title: "Hechyeomoyeo 12", year: "2024", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.JPG", title: "Hechyeomoyeo 12", year: "2025", location: "LIVING GALLERY, BROOKLYN, NEW YORK", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/hechyeomoyeo-13/hech-3.jpg", title: "Hechyeomoyeo 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-1.jpg", title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/kinship/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
@@ -327,7 +327,7 @@ export const groupExhibitions: ExhibitionItem[] = [
   { year: "2026", title: "Contemporary Venice", venue: "Venice", city: "Venice", country: "Italy" },
   { year: "2025", title: "Senses International Art Fair", venue: "Must Museum", city: "Lecce", country: "Italy" },
   { year: "2025", title: "Hechyeomoyeo 13", venue: "New York", city: "New York", country: "USA" },
-  { year: "2024", title: "Hechyeomoyeo 12", venue: "New York", city: "New York", country: "USA" },
+  { year: "2025", title: "Hechyeomoyeo 12", venue: "Living Gallery", city: "Brooklyn", country: "USA" },
   { year: "2025", title: "Ahmad Shariff Gallery", venue: "Ahmad Shariff Gallery", city: "Claremont", country: "USA" },
   { year: "2025", title: "KINSHIP × Hechyeomoyeo", venue: "Seoul", city: "Seoul", country: "South Korea" },
   { year: "2026", title: "The Holy Art — Paris", venue: "Paris", city: "Paris", country: "France" },
