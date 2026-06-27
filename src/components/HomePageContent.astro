@@ -33,24 +33,8 @@ const { locale } = Astro.props;
       <ExhibitionsSection locale={locale} />
     </div>
 
-    <!-- ── PUBLICATIONS — anna-sample-2: draped marble figure ─
-         The ascending figure bleeds off the right edge at ghost
-         opacity. Text flows IN FRONT of the image (z-index 1+).
-         Mirrors the From Utero manuscript: text and image share
-         the same plane — neither obscures the other.
-    ──────────────────────────────────────────────────────── -->
+    <!-- ── PUBLICATIONS — editorial overlap layout inside section ─ -->
     <div class="tabular-panel publications-panel" data-tab-panel="publications" id="panel-publications" role="tabpanel" hidden aria-hidden="true">
-      <div class="publications-panel__art" aria-hidden="true">
-        <img
-          src="/media/anan sample 2.png"
-          alt=""
-          class="publications-panel__art-img"
-          loading="lazy"
-          decoding="async"
-          draggable="false"
-          data-lightbox-ignore
-        />
-      </div>
       <PublicationsSection locale={locale} />
     </div>
 
@@ -85,23 +69,8 @@ const { locale } = Astro.props;
       <ResearchSection locale={locale} />
     </div>
 
-    <!-- ── PRESS — anna-sample-3: fragmented/void face mask ───
-         The dissected face sits top-right, half out-of-frame.
-         The "cut" void faces the text — press frames the artist
-         the way the mask frames the void.
-    ──────────────────────────────────────────────────────── -->
+    <!-- ── PRESS — editorial overlap layout inside section ────── -->
     <div class="tabular-panel press-panel" data-tab-panel="press" id="panel-press" role="tabpanel" hidden aria-hidden="true">
-      <div class="press-panel__art" aria-hidden="true">
-        <img
-          src="/media/anna-sample-3.png"
-          alt=""
-          class="press-panel__art-img"
-          loading="lazy"
-          decoding="async"
-          draggable="false"
-          data-lightbox-ignore
-        />
-      </div>
       <PressSection locale={locale} />
     </div>
 

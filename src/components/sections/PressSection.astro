@@ -11,13 +11,32 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="press" class="scroll-section section-gap press-chaos">
-  <div class="section-shell section-shell--wide">
+<section id="press" class="scroll-section section-gap press-overlap">
+
+  <!-- ── Image layer — fragmented face, decorative ─────────────
+       The dissected mask sits left, bled off the bottom edge.
+       The text content box overlaps from the right, crossing the
+       image boundary — same editorial overlap as Publications.
+  ──────────────────────────────────────────────────────────── -->
+  <div class="press-overlap__frame" aria-hidden="true">
+    <img
+      src="/media/anna-sample-3.png"
+      alt=""
+      class="press-overlap__img"
+      loading="lazy"
+      decoding="async"
+      draggable="false"
+      data-lightbox-ignore
+    />
+  </div>
+
+  <!-- ── Text content box — overlaps the image's right edge ── -->
+  <div class="press-overlap__content section-shell section-shell--wide">
     <p class="scroll-reveal section-eyebrow">{l.pressTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-3">
+    <h2 class="scroll-reveal type-heading press-overlap__heading">
       {l.nav.press}
     </h2>
-
     <EditorialLinkList items={pressLinks} />
   </div>
+
 </section>

@@ -1,115 +1,159 @@
 /* ============================================================
    From Utero — manuscript-inspired layered image system
-   Artwork bleeds into text space at ghost opacity.
-   Every panel image is:
-     - position: absolute (never in flow)
-     - pointer-events: none / aria-hidden (purely decorative)
-     - mix-blend-mode: multiply (fuses with warm canvas)
-     - opacity 0.12–0.22 (texture, not obstruction)
-     - z-index: 0 (content always z-index 1+)
+   ============================================================
+
+   Two distinct layering patterns are used:
+
+   1. EDITORIAL OVERLAP (Publications, Press)
+      A fixed-size image frame sits left-anchored at z-index 0.
+      A text content box overlaps the image's right edge via
+      absolute positioning + left offset — the image and text
+      share the same vertical band of space.
+      Text box has a semi-transparent canvas bg so it reads
+      cleanly where it crosses the image boundary.
+
+   2. GHOST WATERMARK (Research, Contacts)
+      Artwork is absolutely positioned, opacity 0.09–0.55,
+      mix-blend-mode multiply — purely textural, never in flow.
+
+   All artwork: pointer-events:none, aria-hidden, z-index 0.
+   All content: position relative, z-index 1+.
    ============================================================ */
 
-/* ── PUBLICATIONS PANEL — anna-sample-2 (draped marble figure) ── */
-/*
-  Positioned RIGHT side, bleeding off-canvas ~30%.
-  The figure's upward gesture echoes "lift" and aspiration —
-  correct thematic counterpart to poetry/writing.
-  The figure floods the right column at ghost opacity so the
-  editorial link list text reads clearly on top of it.
-*/
-.publications-panel {
+
+/* ── 1. EDITORIAL OVERLAP — PUBLICATIONS ─────────────────────
+   Layout:
+     .pubs-overlap          position:relative, isolation:isolate
+     .pubs-overlap__frame   left-anchored image box, fixed size
+     .pubs-overlap__img     grayscale, mix-blend multiply, cover
+     .pubs-overlap__content absolute, starts at ~35% of width
+                            overlaps the image's right boundary
+   ──────────────────────────────────────────────────────────── */
+.pubs-overlap {
   position: relative;
   isolation: isolate;
+  /* Needs explicit height room so the absolutely-positioned
+     content box doesn't collapse the parent to 0 */
+  min-height: clamp(22rem, 50vh, 40rem);
 }
 
-.publications-panel__art {
+/* Image frame: left-anchored, fixed-proportion box */
+.pubs-overlap__frame {
   position: absolute;
-  /* Bleed 28% off the right edge — crops naturally at overflow:hidden */
-  right: -6%;
-  top: clamp(-2rem, -4vh, -1rem);
-  width: clamp(20rem, 44vw, 38rem);
-  /* Keep tall enough to fill the section height */
-  max-height: none;
+  top: 0;
+  left: 0;
+  /* Width of the image block — content overlaps from ~60% of this */
+  width: clamp(14rem, 32vw, 26rem);
+  /* Tall enough to anchor the composition */
+  height: clamp(22rem, 52vh, 42rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  /* Slight counter-clockwise tilt — manuscript feel */
-  transform: rotate(-3deg);
-  transform-origin: right top;
+  overflow: hidden;
 }
 
-.publications-panel__art-img {
+.pubs-overlap__img {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: right top;
-  filter: grayscale(1) contrast(1.08) brightness(0.96);
-  opacity: 0.18;
+  height: 100%;
+  /* Cover fill within frame box — never letterboxed */
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(1) contrast(1.06) brightness(0.97);
+  opacity: 0.72;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
 }
 
-/* Content layer sits above the art */
-.publications-panel > * {
-  position: relative;
-  z-index: 1;
+/* Text box: overlaps the image's right ~40% */
+.pubs-overlap__content {
+  position: absolute;
+  /* Start at 55% of the image width — intentional overlap */
+  left: clamp(8rem, 18vw, 15rem);
+  top: clamp(2rem, 5vh, 3.5rem);
+  /* Width extends to full right edge */
+  right: 0;
+  z-index: 2;
+  /* Warm translucent bg — text stays legible over image zone */
+  background: rgba(240, 238, 233, 0.88);
+  /* Generous left padding pushes text past the image overlap zone */
+  padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 2vw, 1.5rem);
+  padding-block: clamp(1.25rem, 3vh, 2rem);
 }
 
-/* ── PRESS PANEL — anna-sample-3 (fragmented face/void mask) ── */
-/*
-  The dissected face is cropped top-right, half out-of-frame.
-  This mirrors how press/media "frames" the artist — the face
-  looking inward, partly hidden. Low opacity + slight rotation
-  creates a palimpsest watermark that doesn't compete with text.
-*/
-.press-panel {
+.pubs-overlap__heading {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+
+/* ── 1. EDITORIAL OVERLAP — PRESS ────────────────────────────
+   Same structural pattern as Publications.
+   Image: anna-sample-3 (fragmented face/void mask) — left frame.
+   Text box overlaps from the right, starting ~60% across the image.
+   ──────────────────────────────────────────────────────────── */
+.press-overlap {
   position: relative;
   isolation: isolate;
+  min-height: clamp(22rem, 50vh, 40rem);
 }
 
-.press-panel__art {
+.press-overlap__frame {
   position: absolute;
-  top: clamp(-3rem, -6vh, -1.5rem);
-  right: clamp(-4rem, -8vw, -2rem);
-  width: clamp(16rem, 30vw, 26rem);
+  top: 0;
+  left: 0;
+  width: clamp(14rem, 32vw, 26rem);
+  height: clamp(22rem, 52vh, 42rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  /* Slight CW rotation so the void cut faces inward toward text */
-  transform: rotate(6deg);
-  transform-origin: top right;
+  overflow: hidden;
 }
 
-.press-panel__art-img {
+.press-overlap__img {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: top right;
-  filter: grayscale(1) contrast(1.1) brightness(1.02);
-  opacity: 0.14;
+  height: 100%;
+  object-fit: cover;
+  /* For the face mask: position center-top to show the face */
+  object-position: center 15%;
+  filter: grayscale(1) contrast(1.08) brightness(0.98);
+  opacity: 0.68;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
 }
 
-/* Content sits above art */
-.press-panel > * {
-  position: relative;
-  z-index: 1;
+.press-overlap__content {
+  position: absolute;
+  left: clamp(8rem, 18vw, 15rem);
+  top: clamp(2rem, 5vh, 3.5rem);
+  right: 0;
+  z-index: 2;
+  background: rgba(240, 238, 233, 0.88);
+  padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 2vw, 1.5rem);
+  padding-block: clamp(1.25rem, 3vh, 2rem);
 }
 
-/* ── RESEARCH PANEL — anna-sample-4 (leaf+body collage) ── */
-/*
-  Enhanced from previous: art is now larger and more present,
-  bottom-left with a secondary echo panel top-right (same image,
-  mirrored + very faint) to create the manuscript "bleed through"
-  effect seen in From Utero where imagery repeats across folds.
-*/
+.press-overlap__heading {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+
+/* ── 2. GHOST WATERMARK — RESEARCH ───────────────────────────
+   Primary: large lower-left botanical decay.
+   Echo: same leaf mirrored, top-right, very faint.
+   Two presences like a chapbook fold-open spread.
+   ──────────────────────────────────────────────────────────── */
 .research-panel__art {
-  /* Override previous small size — now more editorial */
   width: clamp(11rem, 20vw, 16rem);
   bottom: clamp(4rem, 12vh, 8rem);
   left: var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
@@ -118,13 +162,12 @@
 }
 
 .research-panel__art-img {
-  /* Slightly more present than before */
   opacity: 0.55;
   filter: grayscale(1) contrast(1.04) brightness(0.98);
   mix-blend-mode: multiply;
 }
 
-/* Secondary echo: same leaf, faint, top-right corner */
+/* Secondary echo: mirrored top-right */
 .research-panel__art-echo {
   position: absolute;
   top: clamp(0rem, 2vh, 1rem);
@@ -149,12 +192,11 @@
   cursor: default;
 }
 
-/* ── CONTACTS PANEL — subtle centered figure watermark ── */
-/*
-  For the contact form, anna-sample-2 appears centered and very
-  faint — like the artist's presence behind the "reach out" act.
-  This is the most restrained use: pure watermark.
-*/
+
+/* ── 2. GHOST WATERMARK — CONTACTS ───────────────────────────
+   anna-sample-2: faint centered watermark — the artist's
+   presence behind the act of reaching out.
+   ──────────────────────────────────────────────────────────── */
 .contacts-panel {
   position: relative;
   isolation: isolate;
@@ -183,33 +225,44 @@
   cursor: default;
 }
 
-/* Content layer sits above */
 .contacts-panel > * {
   position: relative;
   z-index: 1;
 }
 
-/* ── RESPONSIVE — reduce art on tablet/mobile ─────────────── */
-@media (max-width: 1023px) {
-  .publications-panel__art {
-    width: clamp(14rem, 48vw, 26rem);
-    right: -10%;
-    opacity: 0.95; /* drives the img opacity lower still */
-  }
-  .publications-panel__art-img { opacity: 0.13; }
 
-  .press-panel__art {
-    width: clamp(11rem, 34vw, 18rem);
-    right: -5%;
-    top: clamp(-1.5rem, -4vh, -0.5rem);
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  /* Overlap layout: collapse image to smaller, text offset follows */
+  .pubs-overlap {
+    min-height: clamp(20rem, 56vh, 36rem);
   }
-  .press-panel__art-img { opacity: 0.10; }
+  .pubs-overlap__frame {
+    width: clamp(11rem, 36vw, 20rem);
+    height: clamp(20rem, 56vh, 34rem);
+  }
+  .pubs-overlap__content {
+    left: clamp(6rem, 20vw, 12rem);
+    top: clamp(1.5rem, 4vh, 2.5rem);
+  }
+
+  .press-overlap {
+    min-height: clamp(20rem, 56vh, 36rem);
+  }
+  .press-overlap__frame {
+    width: clamp(11rem, 36vw, 20rem);
+    height: clamp(20rem, 56vh, 34rem);
+  }
+  .press-overlap__content {
+    left: clamp(6rem, 20vw, 12rem);
+    top: clamp(1.5rem, 4vh, 2.5rem);
+  }
 
   .research-panel__art {
     width: clamp(8rem, 18vw, 12rem);
   }
   .research-panel__art-echo {
-    display: none; /* too cluttered at tablet */
+    display: none;
   }
 
   .contacts-panel__art {
@@ -219,20 +272,42 @@
 }
 
 @media (max-width: 639px) {
-  .publications-panel__art {
-    width: 70vw;
-    right: -15%;
+  /* On mobile the overlap layout stacks: image top, text below */
+  .pubs-overlap {
+    min-height: 0;
+  }
+  .pubs-overlap__frame {
+    position: relative;
+    width: 100%;
+    height: clamp(14rem, 42vw, 22rem);
+  }
+  .pubs-overlap__content {
+    position: relative;
+    left: 0;
     top: 0;
+    right: 0;
+    background: var(--canvas);
+    padding-inline: 0;
+    padding-block: clamp(1rem, 3vh, 1.5rem);
   }
-  .publications-panel__art-img { opacity: 0.10; }
 
-  .press-panel__art {
-    width: 52vw;
-    right: -8%;
-    top: -1rem;
-    transform: rotate(4deg);
+  .press-overlap {
+    min-height: 0;
   }
-  .press-panel__art-img { opacity: 0.09; }
+  .press-overlap__frame {
+    position: relative;
+    width: 100%;
+    height: clamp(14rem, 42vw, 22rem);
+  }
+  .press-overlap__content {
+    position: relative;
+    left: 0;
+    top: 0;
+    right: 0;
+    background: var(--canvas);
+    padding-inline: 0;
+    padding-block: clamp(1rem, 3vh, 1.5rem);
+  }
 
   .research-panel__art {
     width: clamp(6rem, 24vw, 9rem);
@@ -243,10 +318,8 @@
   }
 }
 
-/* ── Reduced motion — disable entrance animation only ────── */
+/* ── Reduced motion ──────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .publications-panel__art,
-  .press-panel__art,
   .research-panel__art,
   .research-panel__art-echo,
   .contacts-panel__art {
