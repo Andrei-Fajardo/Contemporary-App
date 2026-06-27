@@ -24,7 +24,6 @@ export interface ExhibitionEntry {
    * These are appended after `images` when the overlay opens.
    */
   galleryImages?: string[];
-  note?: string;
   links?: ExhibitionLinks;
 }
 
@@ -101,7 +100,6 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/senses/senses-2.jpg',
       '/media/exhibitions/senses/senses-placeholder-4.jpg',
     ],
-    note: 'The only museum presentation in the exhibition record.',
     galleryImages: [
       exGallery('senses', '600498341_1325565339616884_5953681650824118580_n.jpg'),
       exGallery('senses', '605117074_1325562712950480_120582964007890023_n.jpg'),
@@ -330,7 +328,6 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'digital',
     images: ['/media/virtual/the-atrium.jpg'],
-    note: '04/10/2026 — 04/30/2026',
   },
   {
     id: 'soul-gift',
@@ -341,7 +338,6 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'digital',
     images: ['/media/virtual/clover-anna.jpg', '/media/virtual/soul-gift.jpg', '/media/virtual/soul-gift-poster.png'],
-    note: 'Virtual exhibition at Clover Gallery — digital and material realities.',
   },
   {
     id: 'the-atrium',
@@ -352,7 +348,6 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'digital',
     images: ['/media/virtual/the-atrium.jpg'],
-    note: 'A virtual space exploring architectural memory and digital presence.',
   },
   {
     id: 'wildscape',
