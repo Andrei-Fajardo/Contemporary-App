@@ -25,6 +25,9 @@ export interface ExhibitionEntry {
 export const holyParisJournal = (n: 1 | 3 | 5 | 12) =>
   `/media/exhibitions/holy-paris/Myth\u2011Busting The Holy Art Gallery \u2013 The Holy Art Journal (${n}).jpeg`;
 
+export const exhibitionPoster = (filename: string) =>
+  `/media/posters/${encodeURIComponent(filename)}`;
+
 const HOLY_PARIS_IMAGES = [
   '/media/posters/paris-poster.png',
   holyParisJournal(1),
@@ -100,6 +103,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
+      exhibitionPoster('Vergr Gallery.jpg'),
       '/media/exhibitions/dimo/dimo-main.jpg',
       '/media/exhibitions/dimo/dimo-1.jpg',
       '/media/exhibitions/dimo/dimo-2.jpg',
@@ -140,6 +144,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
+      exhibitionPoster('Istanbul Art Show.jpg'),
       '/media/exhibitions/luna/luna-main.jpg',
       '/media/exhibitions/luna/luna-1.jpg',
       '/media/exhibitions/luna/luna-2.jpg',
@@ -155,6 +160,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
+      exhibitionPoster('Ahmad Shariff.jpg'),
       '/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-1.jpg',
       '/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-2.jpg',
       '/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-3.jpg',
@@ -188,6 +194,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
+      exhibitionPoster('HCMY 12.jpg'),
       '/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.JPG',
       '/media/exhibitions/hechyeomoyeo-12/hech-1.jpg',
       '/media/exhibitions/hechyeomoyeo-12/hech-2.jpg',
@@ -300,14 +307,14 @@ export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843
 export const exhibitions = [
   { image: "/media/exhibitions/senses/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
   { image: "/media/exhibitions/venice/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.JPG", title: "Hechyeomoyeo 12", year: "2025", location: "LIVING GALLERY, BROOKLYN, NEW YORK", subtitle: "GROUP EXHIBITION" },
+  { image: exhibitionPoster('HCMY 12.jpg'), title: "Hechyeomoyeo 12", year: "2025", location: "LIVING GALLERY, BROOKLYN, NEW YORK", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/hechyeomoyeo-13/hech-3.jpg", title: "Hechyeomoyeo 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-1.jpg", title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
+  { image: exhibitionPoster('Ahmad Shariff.jpg'), title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/kinship/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
-  { image: "/media/exhibitions/dimo/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
+  { image: exhibitionPoster('Vergr Gallery.jpg'), title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
   { image: "/media/exhibitions/holy-london/holy-london-1.jpg", title: "The Holy Art – London", year: "2026", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
   { image: holyParisJournal(1), title: "The Holy Art – Paris", year: "2026", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/luna/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ISTANBUL, TURKEY", subtitle: "FEATURED ARTIST SHOWCASE" },
+  { image: exhibitionPoster('Istanbul Art Show.jpg'), title: "Luna Grande Art", year: "2025", location: "ISTANBUL, TURKEY", subtitle: "FEATURED ARTIST SHOWCASE" },
   { image: "/media/exhibitions/im-insa/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
 ];
 
