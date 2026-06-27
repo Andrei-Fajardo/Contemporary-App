@@ -373,19 +373,21 @@ html.motion-reduced .press-chaos__poster {
 .research-panel {
   position: relative;
   isolation: isolate;
+  /* flex: 1 lets the panel stretch to fill available tab height */
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
+  /* overflow: visible so the art isn't clipped */
+  overflow: visible;
 }
 
 .research-panel__art {
   position: absolute;
-  right: clamp(5rem, 14vw, 10rem);
-  bottom: clamp(4rem, 12vh, 9rem);
+  /* Bottom-right: bleed slightly off the right and bottom edges */
+  right: clamp(-3rem, -5vw, -1rem);
+  bottom: 0;
   left: auto;
-  width: clamp(30rem, 48vw, 46rem);
+  width: clamp(18rem, 28vw, 26rem);
   /* z-index 0: decorative, behind all content */
   z-index: 0;
   pointer-events: none;
@@ -399,7 +401,6 @@ html.motion-reduced .press-chaos__poster {
   object-fit: contain;
   object-position: right bottom;
   filter: grayscale(1) contrast(1.05) brightness(0.97);
-  /* Higher opacity — visible presence matching the reference */
   opacity: 0.72;
   mix-blend-mode: multiply;
   cursor: default;
@@ -415,17 +416,17 @@ html.motion-reduced .press-chaos__poster {
 
 @media (max-width: 1023px) {
   .research-panel__art {
-    width: clamp(24rem, 50vw, 36rem);
-    right: clamp(3rem, 10vw, 6rem);
-    bottom: clamp(3rem, 10vh, 7rem);
+    width: clamp(14rem, 32vw, 20rem);
+    right: clamp(-2rem, -4vw, -0.5rem);
+    bottom: 0;
   }
 }
 
 @media (max-width: 639px) {
   .research-panel__art {
-    width: clamp(18rem, 64vw, 28rem);
-    right: clamp(1.5rem, 6vw, 3rem);
-    bottom: clamp(2.5rem, 8vh, 5rem);
+    width: clamp(10rem, 48vw, 16rem);
+    right: -1rem;
+    bottom: 0;
   }
 
   .research-panel__art-img {
