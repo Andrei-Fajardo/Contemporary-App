@@ -33,7 +33,18 @@ const { locale } = Astro.props;
       <PublicationsSection locale={locale} />
     </div>
 
-    <div class="tabular-panel" data-tab-panel="research" id="panel-research" role="tabpanel" hidden aria-hidden="true">
+    <div class="tabular-panel research-panel" data-tab-panel="research" id="panel-research" role="tabpanel" hidden aria-hidden="true">
+      <div class="research-panel__art" aria-hidden="true">
+        <img
+          src="/media/anna-sample-4.png"
+          alt=""
+          class="research-panel__art-img"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
+      </div>
       <ResearchSection locale={locale} />
     </div>
 
