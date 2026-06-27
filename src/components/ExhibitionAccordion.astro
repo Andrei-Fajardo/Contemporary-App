@@ -1,6 +1,7 @@
 ---
 import ExhibitionCarousel from './ExhibitionCarousel.astro';
 import type { ExhibitionEntry } from '../data/content';
+import { formatExhibitionDisplay } from '../data/exhibition-display';
 
 interface Props {
   entries: ExhibitionEntry[];
@@ -11,12 +12,14 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
 ---
 
 <div class="exhibition-accordion editorial-divider-list">
-  {entries.map((entry) => (
+  {entries.map((entry) => {
+    const display = formatExhibitionDisplay(entry);
+    return (
     <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
-      <summary class="exhibition-accordion__summary" aria-label={`${entry.title} — ${expandLabel}`}>
+      <summary class="exhibition-accordion__summary" aria-label={`${display.heading} — ${display.subheading} — ${expandLabel}`}>
         <span class="exhibition-accordion__year">{entry.year}</span>
-        <span class="exhibition-accordion__title">{entry.title}</span>
-        <span class="exhibition-accordion__meta">{entry.gallery} · {entry.place}</span>
+        <span class="exhibition-accordion__title">{display.heading}</span>
+        <span class="exhibition-accordion__meta">{display.subheading}</span>
         {entry.kind === 'museum' && (
           <span class="exhibition-accordion__badge">Museum</span>
         )}
@@ -81,7 +84,8 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
         )}
       </div>
     </details>
-  ))}
+    );
+  })}
 </div>
 
 <style>

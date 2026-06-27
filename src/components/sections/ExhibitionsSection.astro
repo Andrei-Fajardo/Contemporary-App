@@ -2,6 +2,7 @@
 import ExhibitionAccordion from '../ExhibitionAccordion.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { exhibitionEntries } from '../../data/content';
+import { sortExhibitionEntries } from '../../data/exhibition-display';
 
 interface Props {
   locale?: LocaleKey;
@@ -9,6 +10,7 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const sortedExhibitions = sortExhibitionEntries(exhibitionEntries);
 
 const filters = [
   { id: 'physical', label: l.physical },
@@ -40,7 +42,7 @@ const filters = [
       ))}
     </div>
 
-    <ExhibitionAccordion entries={exhibitionEntries} expandLabel={l.viewMore} />
+    <ExhibitionAccordion entries={sortedExhibitions} expandLabel={l.viewMore} />
   </div>
 </section>
 
