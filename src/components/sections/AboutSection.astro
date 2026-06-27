@@ -1,5 +1,4 @@
 ---
-import PageContainer from '../PageContainer.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { siteCopy } from '../../data/site-copy';
 
@@ -9,35 +8,37 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+
+const heroIntroHtml = l.heroIntro.replace(
+  /Anna Dauyl Rockswell/g,
+  '<span class="font-name-cursive">Anna Dauyl Rockswell</span>',
+);
 ---
 
-<PageContainer
-  id="about"
-  bgKeyword="uterus"
-  epigraph="uterō (abl. of uterus): from the womb; out of the belly."
-  class="section-gap about-chaos"
->
-  <p class="scroll-reveal section-eyebrow gothic-text-legible">{l.aboutTag}</p>
+<section id="about" class="scroll-section section-gap about-chaos">
+  <div class="section-shell section-shell--wide">
+    <p class="scroll-reveal section-eyebrow">{l.aboutTag}</p>
 
-  <div class="about-chaos__body gothic-prose-flow">
-    <div class="scroll-reveal about-chaos__intro">
-      <p class="content-prose--sans text-ink-55 mb-3 gothic-text-legible">{l.heroBasedIn}</p>
-      <p class="content-prose text-ink-55 mb-3 gothic-text-legible">{l.heroIntro}</p>
-      <p class="content-prose text-ink-45 text-sm mb-4 gothic-text-legible">{l.heroDesc}</p>
-      <div class="content-prose space-y-3 gothic-text-legible">
-        <p>{l.bio}</p>
+    <div class="about-chaos__body">
+      <div class="scroll-reveal about-chaos__intro">
+        <p class="content-prose--sans text-ink-55 mb-3">{l.heroBasedIn}</p>
+        <p class="content-prose text-ink-55 mb-3" set:html={heroIntroHtml} />
+        <p class="content-prose text-ink-45 text-sm mb-4">{l.heroDesc}</p>
+        <div class="content-prose space-y-3">
+          <p>{l.bio}</p>
+        </div>
       </div>
-    </div>
 
-    <div class="scroll-reveal about-chaos__meta">
-      <div>
-        <p class="section-eyebrow mb-3 gothic-text-legible">{l.interestsLabel}</p>
-        <ul class="about-chaos__list gothic-text-legible">
-          {siteCopy.about.interests.map((item) => (
-            <li>{item}</li>
-          ))}
-        </ul>
+      <div class="scroll-reveal about-chaos__meta">
+        <div>
+          <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.interests.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</PageContainer>
+</section>

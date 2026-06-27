@@ -544,6 +544,27 @@ html.motion-reduced .press-chaos__poster {
   object-position: center center;
 }
 
+.gothic-hero-art {
+  filter: grayscale(1) sepia(0.1) contrast(1.06);
+  opacity: 0.88;
+  mix-blend-mode: multiply;
+}
+
+.hero-editorial__name--cursive,
+.hero-editorial__name--cursive .hero-editorial__name-line,
+.hero-editorial__name--cursive .hero-editorial__surname {
+  font-family: var(--font-name-cursive);
+  font-style: italic;
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+}
+
+.hero-editorial__name--cursive .hero-editorial__surname {
+  letter-spacing: 0.04em;
+}
+
 .hero-editorial__name,
 .hero-editorial__name-line,
 .hero-editorial__surname,

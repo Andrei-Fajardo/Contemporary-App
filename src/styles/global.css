@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Forum&family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Forum&family=Inter:wght@400;600&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
 @import "./chaos.css";
@@ -12,6 +12,7 @@
   --font-subheading: "Forum", Georgia, "Times New Roman", serif;
   --font-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-name-cursive: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --heading-track: 0.1em;
 
   /* Legacy aliases */
@@ -284,6 +285,13 @@ html {
 .font-subheading { font-family: var(--font-subheading); }
 .font-body { font-family: var(--font-body); }
 .font-forum { font-family: var(--font-forum); }
+
+.font-name-cursive {
+  font-family: var(--font-name-cursive);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
 
 /* Forum heading — ALL CAPS + tracked */
 .type-heading {
