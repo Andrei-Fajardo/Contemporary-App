@@ -10,7 +10,7 @@
   position: absolute;
   left: var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
   top: 0;
-  width: clamp(16rem, 42vw, 32rem);
+  width: clamp(20rem, 48vw, 40rem);
   z-index: 3;
   pointer-events: none;
   user-select: none;
@@ -20,10 +20,9 @@
   display: block;
   width: 100%;
   height: auto;
-  min-height: clamp(28rem, 62vh, 42rem);
-  max-height: clamp(36rem, 78vh, 54rem);
-  object-fit: cover;
-  object-position: center top;
+  max-height: clamp(40rem, 85vh, 58rem);
+  object-fit: contain;
+  object-position: left top;
   filter: grayscale(1) contrast(1.04);
   opacity: 0.9;
   mix-blend-mode: multiply;
@@ -40,17 +39,19 @@
 .hero-about-layer__inner {
   position: relative;
   z-index: 4;
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: clamp(20rem, 48vw, 40rem) 1fr;
   align-items: center;
+  column-gap: clamp(1rem, 3vw, 2.5rem);
   min-height: clamp(18rem, 48vh, 34rem);
   padding-block: clamp(1.5rem, 4vh, 3rem);
 }
 
 .hero-about-layer__name {
-  width: min(54%, 36rem);
-  margin-left: auto;
-  margin-top: clamp(0.5rem, 2vh, 1.5rem);
+  grid-column: 2;
+  justify-self: center;
+  width: min(100%, 34rem);
+  margin: 0;
   text-align: left;
 }
 
@@ -105,13 +106,12 @@
 
 @media (max-width: 1023px) {
   .about-panel-stack__art {
-    width: clamp(12rem, 46vw, 20rem);
+    width: clamp(14rem, 50vw, 24rem);
     left: var(--shell-pad-inline, clamp(0.625rem, 2.5vw, 1.125rem));
   }
 
   .about-panel-stack__art-img {
-    min-height: clamp(20rem, 48vh, 30rem);
-    max-height: clamp(26rem, 58vh, 38rem);
+    max-height: clamp(28rem, 62vh, 42rem);
   }
 
   .hero-about-layer {
@@ -119,11 +119,12 @@
   }
 
   .hero-about-layer__inner {
+    grid-template-columns: clamp(14rem, 50vw, 24rem) 1fr;
     min-height: clamp(14rem, 40vh, 24rem);
   }
 
   .hero-about-layer__name {
-    width: min(60%, 22rem);
+    width: min(100%, 22rem);
   }
 
   .hero-about-layer__name .hero-editorial__name {
@@ -142,7 +143,7 @@
 
 @media (max-width: 639px) {
   .about-panel-stack__art {
-    width: 48vw;
+    width: 52vw;
   }
 
   .hero-about-layer {
@@ -150,11 +151,12 @@
   }
 
   .hero-about-layer__inner {
+    grid-template-columns: 52vw 1fr;
     min-height: clamp(11rem, 32vh, 16rem);
   }
 
   .hero-about-layer__name {
-    width: 56%;
+    width: min(100%, 18rem);
   }
 
   .about-panel-stack__content {
