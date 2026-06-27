@@ -380,9 +380,10 @@ html.motion-reduced .press-chaos__poster {
   border: none;
   border-bottom: 1px solid rgba(17, 17, 17, 0.15);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 0.85vw + 0.7rem, 1.1875rem);
-  line-height: 1.5;
-  color: var(--ink);
+  font-size: clamp(0.9375rem, 1vw, 1.0625rem);
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-75);
   padding: 0.5rem 0;
   transition: border-color 0.25s ease;
 }
@@ -401,21 +402,23 @@ html.motion-reduced .press-chaos__poster {
 }
 
 .contacts-chaos__submit {
-  font-family: var(--font-subheading);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-family: var(--font-heading);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.75rem);
+  font-weight: 400;
+  letter-spacing: var(--heading-track);
   text-transform: uppercase;
-  color: var(--accent-red);
+  color: var(--ink);
   background: transparent;
-  border: 1px solid var(--accent-red);
+  border: 1px solid var(--ink-35);
   padding: 0.875rem 2rem;
   cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
 .contacts-chaos__submit:hover {
-  background: var(--accent-red);
+  background: var(--ink);
   color: var(--canvas);
+  border-color: var(--ink);
 }
 
 @media (prefers-reduced-motion: reduce) {

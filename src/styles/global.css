@@ -468,38 +468,72 @@ select,
   margin-top: 0;
 }
 
-/* Hyperlink lists — publications, research, press */
+/* Hyperlink lists — publications, research, press (matches exhibition accordion) */
 .editorial-link-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.editorial-link-list li {
+.editorial-row-list .editorial-row-list__item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  grid-template-rows: auto;
+  gap: 0.2rem 1.25rem;
+  align-items: center;
+  padding: 1.25rem 0.75rem;
+  margin-inline: -0.75rem;
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.5rem 0;
 }
 
-.editorial-link-list a {
-  font-family: var(--font-body);
-  font-size: clamp(1rem, 1vw + 0.75rem, 1.1875rem);
+.editorial-row-list__year {
+  grid-row: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-45);
+}
+
+.editorial-row-list__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  font-weight: 400;
   color: var(--ink);
+  line-height: 1.2;
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
-.editorial-link-list a:hover {
+.editorial-row-list__title:hover {
   border-bottom-color: var(--ink-45);
 }
 
-.editorial-link-list__meta {
-  display: block;
-  margin-top: 0.25rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
-  color: var(--ink-45);
+.editorial-row-list__meta {
+  grid-column: 2;
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 1vw, 1.0625rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-55);
+  line-height: 1.55;
+}
+
+.editorial-contact-block + .editorial-contact-block {
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 1023px) {
+  .editorial-row-list .editorial-row-list__item {
+    grid-template-columns: 2.75rem 1fr;
+    gap: 0.15rem 0.75rem;
+    padding: 0.875rem 0.25rem;
+    margin-inline: 0;
+  }
+
+  .editorial-row-list__title {
+    font-size: 1.0625rem;
+  }
 }
 
 /* --- Tabular editorial shell (Layout Number 2) --- */

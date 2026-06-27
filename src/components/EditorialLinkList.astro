@@ -10,13 +10,13 @@ const { items, emptyMessage = 'List forthcoming' } = Astro.props;
 ---
 
 {items.length > 0 ? (
-  <ul class="editorial-link-list scroll-reveal">
+  <ul class="editorial-link-list editorial-row-list scroll-reveal">
     {items.map((item) => (
-      <li>
-        <a href={item.href} target="_blank" rel="noopener noreferrer">
+      <li class="editorial-row-list__item">
+        <span class="editorial-row-list__year">{item.year ?? ''}</span>
+        <a href={item.href} target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
           {item.title}
         </a>
-        {item.year && <span class="editorial-link-list__meta">{item.year}</span>}
       </li>
     ))}
   </ul>
