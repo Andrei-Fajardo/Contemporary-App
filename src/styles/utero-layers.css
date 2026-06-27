@@ -34,16 +34,16 @@
   isolation: isolate;
   /* Needs explicit height room so the absolutely-positioned
      content box doesn't collapse the parent to 0 */
-  min-height: clamp(22rem, 50vh, 40rem);
+  min-height: clamp(28rem, 58vh, 48rem);
 }
 
 /* Image frame: nudged toward center, wide enough to show full artwork */
 .pubs-overlap__frame {
   position: absolute;
   top: 0;
-  left: clamp(3rem, 11vw, 9rem);
-  width: clamp(20rem, 44vw, 38rem);
-  height: clamp(24rem, 56vh, 46rem);
+  left: clamp(2rem, 9vw, 7rem);
+  width: clamp(26rem, 52vw, 48rem);
+  height: clamp(30rem, 66vh, 54rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
@@ -66,7 +66,7 @@
 /* Text box: overlaps the image's right edge */
 .pubs-overlap__content {
   position: absolute;
-  left: clamp(14rem, 34vw, 28rem);
+  left: clamp(18rem, 40vw, 34rem);
   top: clamp(2rem, 5vh, 3.5rem);
   /* Width extends to full right edge */
   right: 0;
@@ -95,15 +95,15 @@
 .press-overlap {
   position: relative;
   isolation: isolate;
-  min-height: clamp(22rem, 50vh, 40rem);
+  min-height: clamp(28rem, 58vh, 48rem);
 }
 
 .press-overlap__frame {
   position: absolute;
   top: 0;
-  left: clamp(3rem, 11vw, 9rem);
-  width: clamp(18rem, 40vw, 34rem);
-  height: clamp(24rem, 56vh, 46rem);
+  left: clamp(2rem, 9vw, 7rem);
+  width: clamp(24rem, 48vw, 44rem);
+  height: clamp(30rem, 66vh, 54rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
@@ -125,7 +125,7 @@
 
 .press-overlap__content {
   position: absolute;
-  left: clamp(13rem, 32vw, 26rem);
+  left: clamp(17rem, 38vw, 32rem);
   top: clamp(2rem, 5vh, 3.5rem);
   right: 0;
   z-index: 2;
@@ -160,7 +160,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -46%) rotate(1deg);
-  width: clamp(14rem, 28vw, 22rem);
+  width: clamp(18rem, 36vw, 30rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
@@ -188,34 +188,34 @@
 @media (max-width: 1023px) {
   /* Overlap layout: collapse image to smaller, text offset follows */
   .pubs-overlap {
-    min-height: clamp(20rem, 56vh, 36rem);
+    min-height: clamp(24rem, 62vh, 42rem);
   }
   .pubs-overlap__frame {
-    left: clamp(2rem, 8vw, 5rem);
-    width: clamp(16rem, 48vw, 28rem);
-    height: clamp(22rem, 58vh, 38rem);
+    left: clamp(1.5rem, 6vw, 4rem);
+    width: clamp(20rem, 54vw, 34rem);
+    height: clamp(26rem, 64vh, 44rem);
   }
   .pubs-overlap__content {
-    left: clamp(11rem, 30vw, 20rem);
+    left: clamp(14rem, 34vw, 24rem);
     top: clamp(1.5rem, 4vh, 2.5rem);
   }
 
   .press-overlap {
-    min-height: clamp(20rem, 56vh, 36rem);
+    min-height: clamp(24rem, 62vh, 42rem);
   }
   .press-overlap__frame {
-    left: clamp(2rem, 8vw, 5rem);
-    width: clamp(15rem, 44vw, 26rem);
-    height: clamp(22rem, 58vh, 38rem);
+    left: clamp(1.5rem, 6vw, 4rem);
+    width: clamp(19rem, 50vw, 32rem);
+    height: clamp(26rem, 64vh, 44rem);
   }
   .press-overlap__content {
-    left: clamp(10rem, 28vw, 18rem);
+    left: clamp(13rem, 32vw, 22rem);
     top: clamp(1.5rem, 4vh, 2.5rem);
   }
 
 
   .contacts-panel__art {
-    width: clamp(10rem, 36vw, 16rem);
+    width: clamp(14rem, 44vw, 22rem);
   }
   .contacts-panel__art-img { opacity: 0.07; }
 }
@@ -228,7 +228,7 @@
   .pubs-overlap__frame {
     position: relative;
     width: 100%;
-    height: clamp(14rem, 42vw, 22rem);
+    height: clamp(18rem, 50vw, 28rem);
   }
   .pubs-overlap__content {
     position: relative;
@@ -246,7 +246,7 @@
   .press-overlap__frame {
     position: relative;
     width: 100%;
-    height: clamp(14rem, 42vw, 22rem);
+    height: clamp(18rem, 50vw, 28rem);
   }
   .press-overlap__content {
     position: relative;
@@ -259,7 +259,7 @@
   }
 
   .contacts-panel__art {
-    width: 55vw;
+    width: 68vw;
   }
 }
 
