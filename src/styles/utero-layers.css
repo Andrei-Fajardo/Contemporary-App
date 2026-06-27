@@ -57,7 +57,7 @@
   object-fit: contain;
   object-position: left center;
   filter: grayscale(1) contrast(1.06) brightness(0.97);
-  opacity: 0.88;
+  opacity: 0.52;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
@@ -95,27 +95,29 @@
 .press-overlap {
   position: relative;
   isolation: isolate;
-  min-height: clamp(28rem, 58vh, 48rem);
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .press-overlap__frame {
   position: absolute;
-  top: 0;
-  left: clamp(2rem, 9vw, 7rem);
-  width: clamp(24rem, 48vw, 44rem);
-  height: clamp(30rem, 66vh, 54rem);
+  top: clamp(-8rem, -14vh, -3rem);
+  left: clamp(-4rem, -6vw, 0rem);
+  width: clamp(42rem, 88vw, 76rem);
+  height: clamp(52rem, 118vh, 96rem);
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .press-overlap__img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: left top;
+  object-fit: cover;
+  object-position: left center;
   filter: grayscale(1) contrast(1.08) brightness(0.98);
   opacity: 0.85;
   mix-blend-mode: multiply;
@@ -157,8 +159,7 @@
 .contacts-panel {
   position: relative;
   isolation: isolate;
-  /* Allow art to bleed over the footer below */
-  overflow: visible;
+  overflow: hidden;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -166,16 +167,14 @@
 
 .contacts-panel__art {
   position: absolute;
-  /* Bottom-left cluster — large, with room to show the full figure */
   left: clamp(3rem, 10vw, 8rem);
   bottom: clamp(-1rem, 2vh, 3rem);
   width: clamp(30rem, 52vw, 48rem);
   max-width: calc(100% - clamp(3rem, 10vw, 8rem));
-  /* Above the footer's z-index so it overlaps it */
   z-index: 10;
   pointer-events: none;
   user-select: none;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .contacts-panel__art-img {
@@ -185,9 +184,8 @@
   max-height: none;
   object-fit: contain;
   object-position: left bottom;
-  /* High opacity — prominent presence, not a watermark */
   filter: grayscale(1) contrast(1.08) brightness(0.96);
-  opacity: 0.82;
+  opacity: 0.52;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
@@ -222,12 +220,13 @@
   }
 
   .press-overlap {
-    min-height: clamp(24rem, 62vh, 42rem);
+    min-height: 0;
   }
   .press-overlap__frame {
-    left: clamp(1.5rem, 6vw, 4rem);
-    width: clamp(19rem, 50vw, 32rem);
-    height: clamp(26rem, 64vh, 44rem);
+    top: clamp(-5rem, -10vh, -2rem);
+    left: clamp(-2rem, -4vw, 0.5rem);
+    width: clamp(34rem, 92vw, 52rem);
+    height: clamp(40rem, 105vh, 64rem);
   }
   .press-overlap__content {
     left: clamp(13rem, 32vw, 22rem);
@@ -264,11 +263,14 @@
 
   .press-overlap {
     min-height: 0;
+    overflow: hidden;
   }
   .press-overlap__frame {
-    position: relative;
-    width: 100%;
-    height: clamp(18rem, 50vw, 28rem);
+    position: absolute;
+    top: clamp(-4rem, -8vh, -1rem);
+    left: clamp(-1.5rem, -3vw, 0rem);
+    width: clamp(30rem, 105vw, 44rem);
+    height: clamp(36rem, 90vh, 52rem);
   }
   .press-overlap__content {
     position: relative;

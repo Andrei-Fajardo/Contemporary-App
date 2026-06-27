@@ -373,10 +373,11 @@ html.motion-reduced .press-chaos__poster {
 .research-panel {
   position: relative;
   isolation: isolate;
-  /* Stretch to fill the active panel area so bottom: ... resolves correctly */
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .research-panel__art {
