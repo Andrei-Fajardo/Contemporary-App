@@ -21,6 +21,18 @@ export interface ExhibitionEntry {
   links?: ExhibitionLinks;
 }
 
+/** Holy Paris Myth-Busting journal scans (filenames use U+2011 / U+2013 dashes). */
+export const holyParisJournal = (n: 1 | 3 | 5 | 12) =>
+  `/media/exhibitions/holy-paris/Myth\u2011Busting The Holy Art Gallery \u2013 The Holy Art Journal (${n}).jpeg`;
+
+const HOLY_PARIS_IMAGES = [
+  '/media/posters/paris-poster.png',
+  holyParisJournal(1),
+  holyParisJournal(3),
+  holyParisJournal(5),
+  holyParisJournal(12),
+] as const;
+
 /** Chronological exhibition list — posters & venue imagery only (no personal portraits). */
 export const exhibitionEntries: ExhibitionEntry[] = [
   {
@@ -35,7 +47,6 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/venice/venice-1.jpg',
       '/media/exhibitions/venice/venice-2.jpg',
       '/media/exhibitions/venice/venice-3.jpg',
-      '/media/exhibitions/venice/venice-4.jpg',
       '/media/exhibitions/venice/venice-5.jpg',
     ],
   },
@@ -63,12 +74,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Seoul, South Korea',
     kind: 'solo',
     category: 'physical',
-    images: [
-      '/media/exhibitions/im-insa/im-insa.jpg',
-      '/media/exhibitions/im-insa/im-insa-placeholder-2.jpg',
-      '/media/exhibitions/im-insa/im-insa-placeholder-3.jpg',
-      '/media/exhibitions/im-insa/im-insa-placeholder-4.jpg',
-    ],
+    images: ['/media/exhibitions/im-insa/im-insa.jpg'],
   },
   {
     id: 'kinship',
@@ -108,12 +114,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Paris, France',
     kind: 'group',
     category: 'physical',
-    images: [
-      '/media/posters/paris-poster.png',
-      '/media/exhibitions/holy-paris/holy-paris-main.jpg',
-      '/media/exhibitions/holy-paris/holy-paris-1.webp',
-      '/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg',
-    ],
+    images: [...HOLY_PARIS_IMAGES],
   },
   {
     id: 'holy-london',
@@ -149,7 +150,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Milan, Italy',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
+    images: [holyParisJournal(12)],
   },
   {
     id: 'holy-tokyo',
@@ -159,7 +160,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Tokyo, Japan',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
+    images: [holyParisJournal(12)],
   },
   {
     id: 'holy-athens',
@@ -169,7 +170,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Athens, Greece',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
+    images: [holyParisJournal(12)],
   },
   {
     id: 'holy-amsterdam',
@@ -179,7 +180,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Amsterdam, Netherlands',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/holy-paris/holy-paris-placeholder-4.jpg'],
+    images: [holyParisJournal(12)],
   },
   {
     id: 'arrival-osaka-2026',
@@ -229,7 +230,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Mexico',
     kind: 'group',
     category: 'physical',
-    images: ['/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.png'],
+    images: ['/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.JPG'],
   },
   {
     id: 'luna',
@@ -288,7 +289,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [
-      '/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.png',
+      '/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.JPG',
       '/media/exhibitions/hechyeomoyeo-12/hech-1.jpg',
       '/media/exhibitions/hechyeomoyeo-12/hech-2.jpg',
       '/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-12-placeholder-4.jpg',
@@ -400,13 +401,13 @@ export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843
 export const exhibitions = [
   { image: "/media/exhibitions/senses/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
   { image: "/media/exhibitions/venice/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: "/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.png", title: "Hechyeomoyeo 12", year: "2024", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-nyc.JPG", title: "Hechyeomoyeo 12", year: "2024", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/hechyeomoyeo-13/hech-3.jpg", title: "Hechyeomoyeo 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/ahmad-shariff/ahmad-shariff-placeholder-1.jpg", title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
   { image: "/media/exhibitions/kinship/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
   { image: "/media/exhibitions/dimo/dimo-main.jpg", title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
   { image: "/media/exhibitions/holy-london/holy-london-1.jpg", title: "The Holy Art – London", year: "2026", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
-  { image: "/media/exhibitions/holy-paris/holy-paris-main.jpg", title: "The Holy Art – Paris", year: "2026", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
+  { image: holyParisJournal(1), title: "The Holy Art – Paris", year: "2026", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
   { image: "/media/exhibitions/luna/luna-main.jpg", title: "Luna Grande Art", year: "2025", location: "ISTANBUL, TURKEY", subtitle: "FEATURED ARTIST SHOWCASE" },
   { image: "/media/exhibitions/im-insa/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
 ];

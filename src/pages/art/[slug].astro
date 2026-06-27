@@ -2,6 +2,7 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { artworks } from '../../data/artworks';
+import { holyParisJournal } from '../../data/content';
 
 export interface Props {
   locale?: LocaleKey;
@@ -23,8 +24,8 @@ if (!painting) {
 }
 
 const additionalMedia: Record<string, string[]> = {
-  "the-fish": ["/media/exhibitions/senses-1.jpg", "/media/feature/itaewon-1.jpg"],
-  "the-souls-of-leavings": ["/media/exhibitions/kinship-1.jpg", "/media/exhibitions/holy-paris-1.webp"],
+  "the-fish": ["/media/exhibitions/senses/senses-1.jpg", "/media/feature/itaewon-1.jpg"],
+  "the-souls-of-leavings": ["/media/exhibitions/kinship/kinship-1.jpg", holyParisJournal(3)],
 };
 ---
 
