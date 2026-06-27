@@ -1,16 +1,16 @@
 /* ============================================================
-   About tab — hero layout matching reference image
+   About tab ? hero layout matching reference image
    Portrait left (absolute, decorative), large italic name right
    ============================================================ */
 
-/* ── Outer stack wrapper ────────────────────────────────────── */
+/* ?? Outer stack wrapper ?????????????????????????????????????? */
 .about-panel-stack {
   position: relative;
   isolation: isolate;
   background: var(--canvas, #F0EEE9);
 }
 
-/* ── Portrait (absolute, decorative, never in flow) ─────────── */
+/* Portrait beside name ? centered cluster */
 /*
   z-index stack:
     rule         z-index 1
@@ -18,31 +18,36 @@
     name/content z-index 4
     grain        z-index 9999
 */
-.about-panel-stack__art {
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* Portrait occupies ~42% of the content column on desktop */
-  width: clamp(16rem, 40vw, 34rem);
+.hero-about-layer__cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.hero-about-layer__art {
+  flex: 0 0 auto;
+  width: clamp(22rem, 48vw, 52rem);
   z-index: 2;
   pointer-events: none;
   user-select: none;
+  margin-right: clamp(-5rem, -11vw, -3rem);
 }
 
-.about-panel-stack__art-img {
+.hero-about-layer__art-img {
   display: block;
   width: 100%;
   height: auto;
-  /* Full image visible — no crop */
-  max-height: clamp(38rem, 82vh, 56rem);
+  max-height: clamp(44rem, 86vh, 64rem);
   object-fit: contain;
-  object-position: left top;
+  object-position: left center;
   filter: grayscale(1) contrast(1.05);
   opacity: 0.88;
   mix-blend-mode: multiply;
   cursor: default;
   pointer-events: none;
-  /* Subtle entrance */
+  margin-bottom: clamp(-10rem, -22vh, -6rem);
   animation: hero-portrait-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -51,40 +56,31 @@
   to   { opacity: 0.88; transform: translateY(0); }
 }
 
-/* ── Hero section ───────────────────────────────────────────── */
+/* ?? Hero section ????????????????????????????????????????????? */
 .hero-about-layer {
   position: relative;
-  /* tall enough for the portrait + name to breathe */
-  min-height: clamp(22rem, 55vh, 40rem);
+  min-height: clamp(22rem, 55vh, 42rem);
 }
 
-/* ── Inner grid: col 1 = ghost placeholder for portrait,
-      col 2 = name area that bleeds slightly left over portrait ─ */
+/* Inner shell: centers portrait + name as one unit */
 .hero-about-layer__inner {
   position: relative;
   z-index: 4;
-  display: grid;
-  /*
-    col 1 width matches portrait width so the name starts at the
-    portrait's right edge, then a negative margin on the name
-    pulls it left to create the editorial overlap / bleed.
-  */
-  grid-template-columns: clamp(16rem, 40vw, 34rem) 1fr;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  min-height: clamp(20rem, 52vh, 38rem);
+  min-height: clamp(22rem, 55vh, 42rem);
   padding-block: clamp(2rem, 5vh, 3.5rem);
   max-width: 100%;
 }
 
-/* ── Name block ─────────────────────────────────────────────── */
+/* Name block */
 .hero-about-layer__name {
-  grid-column: 2;
-  /* Bleed leftward: overlap the portrait's right ~25% */
-  margin-left: clamp(-6rem, -14vw, -3rem);
-  /* Keep text left-aligned within its slot */
-  text-align: left;
-  /* Prevent the name from running off-screen */
+  flex: 0 1 auto;
   min-width: 0;
+  text-align: left;
+  position: relative;
+  z-index: 4;
 }
 
 /*
@@ -95,7 +91,7 @@
   font-family: var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
   font-style: italic;
   font-weight: 300;
-  /* Very large — matches reference where name dominates the hero */
+  /* Very large ? matches reference where name dominates the hero */
   font-size: clamp(4.5rem, 13vw, 10rem);
   line-height: 0.88;
   letter-spacing: -0.01em;
@@ -119,7 +115,7 @@
   margin-left: 0.1em;
 }
 
-/* Divider rule — sits BELOW portrait z-index */
+/* Divider rule ? sits BELOW portrait z-index */
 .hero-about-layer__rule {
   position: relative;
   z-index: 1;
@@ -128,7 +124,7 @@
   margin: 0 var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
 }
 
-/* ── Bio section ────────────────────────────────────────────── */
+/* ?? Bio section ?????????????????????????????????????????????? */
 /* Bio overlaps the lower half of the portrait vertically */
 .about-panel-stack__content {
   position: relative;
@@ -137,10 +133,10 @@
   margin-top: clamp(-8rem, -18vh, -5rem);
 }
 
-/* Bio text starts at the portrait's right edge */
+/* Bio text starts to the right of the centered portrait */
 .about-panel-stack__content-inner {
-  margin-left: clamp(30%, 33vw, 38%);
-  max-width: min(46rem, 60vw);
+  margin-left: clamp(46%, 50vw, 54%);
+  max-width: min(42rem, 52vw);
   padding-right: clamp(1rem, 3vw, 2rem);
 }
 
@@ -148,19 +144,21 @@
   margin-bottom: 0.5rem;
 }
 
-/* ── editorial-dense overrides ──────────────────────────────── */
+/* ?? editorial-dense overrides ???????????????????????????????? */
 .editorial-dense .hero-about-layer__heading {
   font-size: clamp(4rem, 11vw, 8.5rem);
 }
 
-/* ── Tablet (768–1023px) ────────────────────────────────────── */
+/* ?? Tablet (768?1023px) ?????????????????????????????????????? */
 @media (max-width: 1023px) {
-  .about-panel-stack__art {
-    width: clamp(12rem, 44vw, 20rem);
+  .hero-about-layer__art {
+    width: clamp(16rem, 46vw, 24rem);
+    margin-right: clamp(-3.5rem, -8vw, -2rem);
   }
 
-  .about-panel-stack__art-img {
-    max-height: clamp(26rem, 60vh, 38rem);
+  .hero-about-layer__art-img {
+    max-height: clamp(30rem, 64vh, 42rem);
+    margin-bottom: clamp(-7rem, -16vh, -4rem);
   }
 
   .hero-about-layer {
@@ -168,13 +166,8 @@
   }
 
   .hero-about-layer__inner {
-    grid-template-columns: clamp(12rem, 44vw, 20rem) 1fr;
-    min-height: clamp(16rem, 42vh, 26rem);
+    min-height: clamp(16rem, 42vh, 28rem);
     padding-block: clamp(1.5rem, 4vh, 2.5rem);
-  }
-
-  .hero-about-layer__name {
-    margin-left: clamp(-4rem, -10vw, -2rem);
   }
 
   .hero-about-layer__heading {
@@ -182,21 +175,22 @@
   }
 
   .about-panel-stack__content-inner {
-    margin-left: clamp(28%, 33vw, 38%);
+    margin-left: clamp(42%, 46vw, 50%);
     max-width: none;
     padding-right: clamp(0.75rem, 2.5vw, 1.5rem);
   }
 }
 
-/* ── Mobile (<640px) ─────────────────────────────────────────── */
+/* ?? Mobile (<640px) ??????????????????????????????????????????? */
 @media (max-width: 639px) {
-  .about-panel-stack__art {
-    width: 48vw;
-    left: 0;
+  .hero-about-layer__art {
+    width: clamp(11rem, 40vw, 15rem);
+    margin-right: clamp(-2rem, -6vw, -1rem);
   }
 
-  .about-panel-stack__art-img {
-    max-height: clamp(20rem, 56vh, 30rem);
+  .hero-about-layer__art-img {
+    max-height: clamp(22rem, 56vh, 32rem);
+    margin-bottom: clamp(-5rem, -12vh, -3rem);
   }
 
   .hero-about-layer {
@@ -204,14 +198,8 @@
   }
 
   .hero-about-layer__inner {
-    grid-template-columns: 48vw 1fr;
     min-height: clamp(12rem, 34vh, 18rem);
     padding-block: clamp(1rem, 3vh, 1.75rem);
-  }
-
-  .hero-about-layer__name {
-    /* On mobile the right half is narrow — pull left gently */
-    margin-left: clamp(-2.5rem, -7vw, -1rem);
   }
 
   .hero-about-layer__heading {
@@ -230,15 +218,15 @@
   }
 
   .about-panel-stack__content-inner {
-    margin-left: 38%;
+    margin-left: clamp(44%, 48vw, 52%);
     max-width: none;
     padding-right: clamp(0.5rem, 2vw, 1rem);
   }
 }
 
-/* ── Reduced motion ──────────────────────────────────────────── */
+/* ?? Reduced motion ???????????????????????????????????????????? */
 @media (prefers-reduced-motion: reduce) {
-  .about-panel-stack__art-img {
+  .hero-about-layer__art-img {
     animation: none;
     opacity: 0.88;
   }

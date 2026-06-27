@@ -11,14 +11,26 @@ const l = t[locale];
 
 <section id="home" class="hero-section hero-about-layer scroll-section">
   <div class="hero-about-layer__inner section-shell section-shell--wide">
-    <div class="hero-editorial__copy hero-about-layer__name">
+    <div class="hero-about-layer__cluster">
+      <div class="hero-about-layer__art" aria-hidden="true">
+        <img
+          src="/media/anna-sample-1.png"
+          alt=""
+          class="hero-about-layer__art-img"
+          loading="eager"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
+      </div>
 
-      <h1 class="hero-about-layer__heading scroll-reveal">
-        {l.heroFirstName}<br />{l.heroLastName}
-      </h1>
+      <div class="hero-editorial__copy hero-about-layer__name">
+        <h1 class="hero-about-layer__heading scroll-reveal">
+          {l.heroFirstName}<br />{l.heroLastName}
+        </h1>
 
-      <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
-
+        <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
+      </div>
     </div>
   </div>
   <hr class="hero-about-layer__rule scroll-reveal" />
