@@ -15,6 +15,64 @@ interface GalleryState {
 
 let state: GalleryState = { images: [], title: '', place: '', lbIndex: 0 };
 let overlayBound = false;
+let lockedScrollY = 0;
+let scrollLockCount = 0;
+
+const SCROLL_LOCK_CLASS = 'exg-scroll-lock';
+
+function lockPageScroll(): void {
+  if (scrollLockCount === 0) {
+    lockedScrollY = window.scrollY;
+    document.documentElement.classList.add(SCROLL_LOCK_CLASS);
+    document.body.classList.add(SCROLL_LOCK_CLASS);
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+  scrollLockCount += 1;
+}
+
+function unlockPageScroll(): void {
+  if (scrollLockCount <= 0) return;
+  scrollLockCount -= 1;
+  if (scrollLockCount > 0) return;
+
+  document.documentElement.classList.remove(SCROLL_LOCK_CLASS);
+  document.body.classList.remove(SCROLL_LOCK_CLASS);
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, lockedScrollY);
+}
+
+function isLightboxOpen(r: ReturnType<typeof refs>): boolean {
+  return !r.lightbox.hasAttribute('hidden');
+}
+
+function isGalleryOpen(r: ReturnType<typeof refs>): boolean {
+  return !r.overlay.hasAttribute('hidden');
+}
+
+function preventBackgroundScroll(e: Event): void {
+  const r = refs();
+  if (!isGalleryOpen(r)) return;
+
+  if (isLightboxOpen(r)) {
+    e.preventDefault();
+    return;
+  }
+
+  const target = e.target;
+  if (!(target instanceof Node) || !r.body.contains(target)) {
+    e.preventDefault();
+  }
+}
 
 const VIDEO_EXT = /\.(mp4|webm|mov|m4v)(\?.*)?$/i;
 
@@ -74,8 +132,8 @@ export function openGallery(images: string[], title: string, place: string) {
   // Show overlay
   r.overlay.removeAttribute('hidden');
   r.overlay.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-  // Scroll body to top
+  lockPageScroll();
+  // Scroll grid to top
   r.body.scrollTop = 0;
 
   // Animate in (next frame so transition fires)
@@ -96,7 +154,7 @@ function closeGallery() {
   const r = refs();
   r.overlay.classList.remove('is-open');
   r.overlay.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  unlockPageScroll();
   closeLightbox(r);
 
   // Wait for slide-down animation then fully hide
@@ -192,6 +250,7 @@ function buildGrid(r: ReturnType<typeof refs>, images: string[], alt: string) {
 function openLightbox(index: number) {
   state.lbIndex = index;
   const r = refs();
+  r.body.scrollTop = 0;
   r.lightbox.removeAttribute('hidden');
   r.lightbox.setAttribute('aria-hidden', 'false');
   renderLightbox(r);
@@ -259,6 +318,8 @@ function bindOverlayEvents(r: ReturnType<typeof refs>) {
 
   // Keyboard
   document.addEventListener('keydown', handleKeydown);
+  document.addEventListener('touchmove', preventBackgroundScroll, { passive: false });
+  document.addEventListener('wheel', preventBackgroundScroll, { passive: false });
 }
 
 function handleKeydown(e: KeyboardEvent) {

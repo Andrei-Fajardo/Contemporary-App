@@ -138,8 +138,6 @@
   transform: translateY(100%);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
-  /* Clear fixed mobile header so count + close are not tucked under it */
-  padding-top: 3.5rem;
   box-sizing: border-box;
 }
 
@@ -149,8 +147,10 @@
     /* Sidebar is exactly 15rem — panel starts right of it */
     width: calc(100vw - 15rem);
     border-radius: 1.25rem 0 0 0; /* only top-left rounded, flush right */
-    /* Desktop topbar + lang row (~3rem) + breathing room */
-    padding-top: 4rem;
+  }
+
+  .exg-overlay__header {
+    padding-top: calc(4rem + 1.25rem);
   }
 }
 
@@ -158,15 +158,27 @@
   transform: translateY(0);
 }
 
-/* ===== Header ===== */
+/* Lock page scroll while gallery is open */
+:global(html.exg-scroll-lock),
+:global(html.exg-scroll-lock body) {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+/* ===== Header — pinned above scrollable grid ===== */
 .exg-overlay__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   padding: 1.25rem 1.5rem 0.875rem;
+  padding-top: calc(3.5rem + 1.25rem);
   border-bottom: 1px solid rgba(17,17,17,0.08);
   flex-shrink: 0;
   gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--canvas, #F0EEE9);
 }
 
 .exg-overlay__eyebrow {
@@ -227,6 +239,7 @@
 /* ===== Body / scroll area ===== */
 .exg-overlay__body {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
@@ -388,7 +401,6 @@
 .exg-lightbox {
   position: fixed;
   inset: 0;
-  /* push content below mobile topbar */
   padding-top: 3.5rem;
   z-index: 10200;
   display: flex;
@@ -396,6 +408,8 @@
   justify-content: center;
   padding-inline: 1.5rem;
   padding-bottom: 1.5rem;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 @media (min-width: 1024px) {
