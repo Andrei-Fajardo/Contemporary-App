@@ -347,7 +347,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Issue Eight — Dreamscape',
     place: 'Astraea Zine',
     category: 'magazine',
-    images: ['/media/posters/poster-1.jpg'],
+    images: ['/media/the-fish.png', '/media/souls-and-leavings.jpg'],
     links: {
       website: 'https://www.instagram.com/astraeazine/',
       magazine: 'https://www.astraeazine.com/issue-eight',
@@ -362,7 +362,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Hush Magazine',
     place: 'Issue 001 — LOST//FOUND',
     category: 'magazine',
-    images: ['/media/posters/nana-nyc.jpg'],
+    images: ['/media/souls-and-leavings.jpg'],
     links: {
       website: 'https://hushmag.co.uk/',
       magazine: 'https://hushmag.co.uk/collections/all',
@@ -377,7 +377,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     gallery: 'Spellbinder Magazine',
     place: 'Spring 2026',
     category: 'magazine',
-    images: ['/media/posters/paris-poster.png'],
+    images: ['/media/souls-and-leavings.jpg'],
     links: {
       website: 'https://www.spellbindermag.com/',
       magazine: 'https://www.spellbindermag.com/issues/spring-2026/',
@@ -389,9 +389,9 @@ export const exhibitionEntries: ExhibitionEntry[] = [
 
 export const magazines = [
   { title: 'Wildscape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
-  { title: 'Astraeazine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish and Souls of Leavings', image: '/media/posters/poster-1.jpg' },
-  { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/posters/nana-nyc.jpg' },
-  { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/posters/paris-poster.png' },
+  { title: 'Astraeazine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish and Souls of Leavings', image: '/media/the-fish.png' },
+  { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/souls-and-leavings.jpg' },
+  { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/souls-and-leavings.jpg' },
 ];
 
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;

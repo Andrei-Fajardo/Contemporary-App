@@ -58,7 +58,7 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
                 </dd>
               </div>
             )}
-            {entry.links.issue && (
+            {entry.links.issue && entry.category !== 'magazine' && (
               <div class="exhibition-accordion__link-row">
                 <dt>Issue</dt>
                 <dd><span class="content-prose text-ink-75">{entry.links.issue}</span></dd>
@@ -76,7 +76,7 @@ const { entries, expandLabel = 'View materials' } = Astro.props;
           <ExhibitionCarousel
             id={entry.id}
             images={entry.images}
-            alt={entry.title}
+            alt={entry.links?.artwork ?? entry.title}
           />
         )}
         {entry.kind && entry.category !== 'magazine' && (
