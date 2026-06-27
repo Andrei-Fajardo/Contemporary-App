@@ -15,7 +15,6 @@ const IMAGE_WRAPPER_SELECTOR = [
   ".cursor-tilt__surface",
   ".press-chaos__tilt",
   ".press-chaos__media",
-  ".art-piece",
 ].join(", ");
 
 const carouselDragBlock = new WeakSet<HTMLElement>();
