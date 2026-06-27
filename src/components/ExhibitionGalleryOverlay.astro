@@ -68,7 +68,15 @@
           <polyline points="13 4 7 10 13 16"/>
         </svg>
       </button>
-      <img class="exg-lightbox__img" id="exg-lb-img" src="" alt="" />
+      <img class="exg-lightbox__img" id="exg-lb-img" src="" alt="" hidden />
+      <video
+        id="exg-lb-video"
+        class="exg-lightbox__video"
+        controls
+        playsinline
+        muted
+        hidden
+      ></video>
       <button type="button" class="exg-lightbox__nav exg-lightbox__nav--next" id="exg-lb-next" aria-label="Next photo">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="7 4 13 10 7 16"/>
@@ -317,7 +325,8 @@
   transform: translateY(0);
 }
 
-.exg-grid__item img {
+.exg-grid__item img,
+.exg-grid__item video {
   display: block;
   width: 100%;
   height: auto;
@@ -326,8 +335,28 @@
   transition: filter 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
 }
 
+.exg-grid__item--video::after {
+  content: "▶";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(17, 17, 17, 0.55);
+  color: rgba(240, 238, 233, 0.92);
+  font-size: 0.75rem;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+}
+
 @media (hover: hover) {
-  .exg-grid__item:hover img {
+  .exg-grid__item:hover img,
+  .exg-grid__item:hover video {
     filter: grayscale(0);
     transform: scale(1.025);
   }
@@ -416,7 +445,8 @@
   max-width: min(96vw, 1600px);
 }
 
-.exg-lightbox__img {
+.exg-lightbox__img,
+.exg-lightbox__video {
   display: block;
   max-width: min(92vw, 1400px);
   max-height: min(90dvh, 900px);
@@ -426,6 +456,11 @@
   border-radius: 0.25rem;
   box-shadow: 0 32px 96px rgba(0,0,0,0.6);
   animation: exg-lb-in 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+.exg-lightbox__img[hidden],
+.exg-lightbox__video[hidden] {
+  display: none;
 }
 
 @keyframes exg-lb-in {

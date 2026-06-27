@@ -3,6 +3,7 @@
  * Opens a full-screen Google Photos style grid when "View All" is clicked.
  * Images load lazily via IntersectionObserver, each showing a skeleton shimmer
  * while loading. Clicking any image opens a full-screen lightbox.
+ * Videos always start muted; the user unmutes via native player controls.
  */
 
 interface GalleryState {
@@ -14,6 +15,16 @@ interface GalleryState {
 
 let state: GalleryState = { images: [], title: '', place: '', lbIndex: 0 };
 let overlayBound = false;
+
+const VIDEO_EXT = /\.(mp4|webm|mov|m4v)(\?.*)?$/i;
+
+function isVideo(src: string): boolean {
+  return VIDEO_EXT.test(src);
+}
+
+function mediaLabel(count: number): string {
+  return `${count} item${count !== 1 ? 's' : ''}`;
+}
 
 // ── DOM refs (resolved once on first open) ──────────────────────────────────
 function refs() {
@@ -30,11 +41,20 @@ function refs() {
     lightbox:  document.getElementById('exg-lightbox')!,
     lbBackdrop:document.getElementById('exg-lightbox-backdrop')!,
     lbImg:     document.getElementById('exg-lb-img') as HTMLImageElement,
+    lbVideo:   document.getElementById('exg-lb-video') as HTMLVideoElement,
     lbPrev:    document.getElementById('exg-lb-prev') as HTMLButtonElement,
     lbNext:    document.getElementById('exg-lb-next') as HTMLButtonElement,
     lbClose:   document.getElementById('exg-lb-close')!,
     lbCounter: document.getElementById('exg-lb-counter')!,
   };
+}
+
+function stopLightboxVideo(r: ReturnType<typeof refs>): void {
+  r.lbVideo.pause();
+  r.lbVideo.removeAttribute('src');
+  r.lbVideo.load();
+  r.lbVideo.hidden = true;
+  r.lbVideo.muted = true;
 }
 
 // ── Open overlay ─────────────────────────────────────────────────────────────
@@ -45,7 +65,7 @@ export function openGallery(images: string[], title: string, place: string) {
   // Populate header
   r.eyebrow.textContent = place;
   r.titleEl.textContent = title;
-  r.count.textContent   = `${images.length} photo${images.length !== 1 ? 's' : ''}`;
+  r.count.textContent   = mediaLabel(images.length);
 
   // Show skeleton, hide real grid
   r.skeleton.classList.remove('is-hidden');
@@ -69,11 +89,6 @@ export function openGallery(images: string[], title: string, place: string) {
   // Build the grid with lazy loading
   buildGrid(r, images, title);
 
-  // Bind overlay-level events once
-  if (!overlayBound) {
-    bindOverlayEvents(r);
-    overlayBound = false; // reset flag managed inside bindOverlayEvents
-  }
   bindOverlayEvents(r);
 }
 
@@ -105,35 +120,52 @@ function buildGrid(r: ReturnType<typeof refs>, images: string[], alt: string) {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const item = entry.target as HTMLElement;
-        const img  = item.querySelector('img')!;
         const src  = item.dataset.src!;
-        img.src = src;
-        img.onload = () => item.classList.add('is-loaded');
-        img.onerror = () => item.classList.add('is-loaded'); // show broken gracefully
+        const media = item.querySelector('img, video')!;
+
+        if (media instanceof HTMLVideoElement) {
+          media.src = src;
+          media.onloadeddata = () => item.classList.add('is-loaded');
+          media.onerror = () => item.classList.add('is-loaded');
+        } else {
+          media.src = src;
+          media.onload = () => item.classList.add('is-loaded');
+          media.onerror = () => item.classList.add('is-loaded');
+        }
+
         io.unobserve(item);
       });
     },
     { root: r.body, rootMargin: '200px' }
   );
 
-  // Build all items (images not yet loaded — src assigned by IO)
+  // Build all items (media not yet loaded — src assigned by IO)
   images.forEach((src, i) => {
     const item = document.createElement('div');
-    item.className = 'exg-grid__item';
+    item.className = isVideo(src) ? 'exg-grid__item exg-grid__item--video' : 'exg-grid__item';
     item.dataset.src = src;
     item.setAttribute('role', 'listitem');
     item.setAttribute('tabindex', '0');
-    item.setAttribute('aria-label', `Photo ${i + 1} of ${images.length}`);
+    item.setAttribute('aria-label', `${isVideo(src) ? 'Video' : 'Photo'} ${i + 1} of ${images.length}`);
 
-    const img = document.createElement('img');
-    img.alt = `${alt} — photo ${i + 1}`;
-    img.decoding = 'async';
+    const media: HTMLImageElement | HTMLVideoElement = isVideo(src)
+      ? document.createElement('video')
+      : document.createElement('img');
+
+    if (media instanceof HTMLVideoElement) {
+      media.muted = true;
+      media.playsInline = true;
+      media.preload = 'metadata';
+      media.loop = true;
+    } else {
+      media.alt = `${alt} — photo ${i + 1}`;
+    }
 
     const overlay = document.createElement('div');
     overlay.className = 'exg-grid__item-overlay';
     overlay.innerHTML = `<span class="exg-grid__item-num">${String(i + 1).padStart(2, '0')}</span>`;
 
-    item.appendChild(img);
+    item.appendChild(media);
     item.appendChild(overlay);
     r.grid.appendChild(item);
 
@@ -170,22 +202,42 @@ function openLightbox(index: number) {
 function renderLightbox(r: ReturnType<typeof refs>) {
   const { images, lbIndex } = state;
   const src = images[lbIndex];
-  r.lbImg.src  = '';
-  r.lbImg.src  = src;
-  r.lbImg.alt  = `Photo ${lbIndex + 1} of ${images.length}`;
+
+  if (isVideo(src)) {
+    stopLightboxVideo(r);
+    r.lbImg.hidden = true;
+    r.lbImg.removeAttribute('src');
+    r.lbVideo.hidden = false;
+    r.lbVideo.src = src;
+    r.lbVideo.muted = true;
+    r.lbVideo.currentTime = 0;
+    void r.lbVideo.play().catch(() => {});
+  } else {
+    stopLightboxVideo(r);
+    r.lbImg.hidden = false;
+    r.lbImg.src = '';
+    r.lbImg.src = src;
+    r.lbImg.alt = `Photo ${lbIndex + 1} of ${images.length}`;
+  }
+
   r.lbCounter.textContent = `${lbIndex + 1} / ${images.length}`;
-  (r.lbPrev as HTMLButtonElement).disabled = lbIndex === 0;
-  (r.lbNext as HTMLButtonElement).disabled = lbIndex === images.length - 1;
+  r.lbPrev.disabled = lbIndex === 0;
+  r.lbNext.disabled = lbIndex === images.length - 1;
 }
 
 function closeLightbox(r: ReturnType<typeof refs>) {
   r.lightbox.setAttribute('hidden', '');
   r.lightbox.setAttribute('aria-hidden', 'true');
   r.lbImg.src = '';
+  r.lbImg.hidden = true;
+  stopLightboxVideo(r);
 }
 
 // ── Events ────────────────────────────────────────────────────────────────────
 function bindOverlayEvents(r: ReturnType<typeof refs>) {
+  if (overlayBound) return;
+  overlayBound = true;
+
   // Close on backdrop
   r.backdrop.onclick   = closeGallery;
   r.closeBtn.onclick   = closeGallery;

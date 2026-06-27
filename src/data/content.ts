@@ -35,6 +35,22 @@ export const holyParisJournal = (n: 1 | 3 | 5 | 12) =>
 export const exhibitionPoster = (filename: string) =>
   `/media/posters/${encodeURIComponent(filename)}`;
 
+/** Path to an extra file in /public/media/exhibitions/<id>/gallery/ */
+const exGallery = (id: string, filename: string) =>
+  `/media/exhibitions/${id}/gallery/${encodeURIComponent(filename)}`;
+
+/** Path to a file directly under /public/media/exhibitions/<id>/ */
+const exMedia = (id: string, filename: string) =>
+  `/media/exhibitions/${id}/${encodeURIComponent(filename)}`;
+
+const holyParisGalleryJournal = (n?: number) =>
+  n == null
+    ? `/media/exhibitions/holy-paris/gallery/Myth\u2011Busting The Holy Art Gallery \u2013 The Holy Art Journal.jpeg`
+    : `/media/exhibitions/holy-paris/gallery/Myth\u2011Busting The Holy Art Gallery \u2013 The Holy Art Journal (${n}).jpeg`;
+
+const holyLondonGalleryJournal = (n: number) =>
+  `/media/exhibitions/holy-london/gallery/Myth\u2011Busting The Holy Art Gallery \u2013 The Holy Art Journal (${n}).jpeg`;
+
 const HOLY_PARIS_IMAGES = [
   '/media/posters/paris-poster.png',
   holyParisJournal(1),
@@ -59,6 +75,17 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/venice/venice-3.jpg',
       '/media/exhibitions/venice/venice-5.jpg',
     ],
+    galleryImages: [
+      exGallery('venice', '648918206_1383772560462828_3767331331641185718_n.jpg'),
+      exGallery('venice', '648927189_1383778160462268_449361638300043152_n.jpg'),
+      exGallery('venice', '648937250_1383776017129149_1338640970781817569_n.jpg'),
+      exGallery('venice', '649193839_1383776833795734_84500885255901354_n.jpg'),
+      exGallery('venice', '649799305_1383775067129244_8500890639962005552_n.jpg'),
+      exGallery('venice', '649904384_1383775150462569_1383897816535690786_n.jpg'),
+      exGallery('venice', '649989713_1383776813795736_4609840621063356518_n.jpg'),
+      exGallery('venice', '650129293_1383777807128970_5333815825146644245_n.jpg'),
+      exGallery('venice', '651198882_1383776300462454_8223465552476024227_n.jpg'),
+    ],
   },
   {
     id: 'senses',
@@ -75,6 +102,17 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/senses/senses-placeholder-4.jpg',
     ],
     note: 'The only museum presentation in the exhibition record.',
+    galleryImages: [
+      exGallery('senses', '600498341_1325565339616884_5953681650824118580_n.jpg'),
+      exGallery('senses', '605117074_1325562712950480_120582964007890023_n.jpg'),
+      exGallery('senses', '605237721_1325564542950297_7107043999578019759_n.jpg'),
+      exGallery('senses', '605537738_1325561569617261_2951130361631858173_n.jpg'),
+      exGallery('senses', '605710631_1325563999617018_503610719837108647_n.jpg'),
+      exGallery('senses', '605945269_1325565766283508_3939212514806002408_n.jpg'),
+      exGallery('senses', '606452544_1325564489616969_9169987387974060894_n.jpg'),
+      exGallery('senses', '606644304_1325564262950325_2978085870174958552_n.jpg'),
+      exGallery('senses', '607470750_1325564126283672_3269575574160197472_n.jpg'),
+    ],
   },
   {
     id: 'im-insa',
@@ -100,6 +138,17 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/kinship/kinship-2.jpg',
       '/media/exhibitions/kinship/kinship-3.jpg',
     ],
+    galleryImages: [
+      exGallery('kinship', 'IMG_9196.jpg'),
+      exGallery('kinship', 'IMG_9199.JPG'),
+      exGallery('kinship', 'IMG_9200.jpg'),
+      exGallery('kinship', 'IMG_9222.jpg'),
+      exGallery('kinship', 'IMG_9224.jpg'),
+      exGallery('kinship', 'IMG_9240.JPG'),
+      exGallery('kinship', 'IMG_9261.JPG'),
+      exGallery('kinship', 'IMG_9289.jpg'),
+      exGallery('kinship', 'IMG_9814.JPG'),
+    ],
   },
   {
     id: 'dimo',
@@ -116,6 +165,12 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/dimo/dimo-2.jpg',
       '/media/exhibitions/dimo/dimo-placeholder-4.jpg',
     ],
+    galleryImages: [
+      exGallery('dimo', '627694813_17908333197339918_3303511495045958106_n.jpg'),
+      exGallery('dimo', '627753295_17908333200339918_598721757060089469_n.jpg'),
+      exGallery('dimo', '629753598_17908333182339918_5341498475658114308_n.jpg'),
+      exGallery('dimo', 'AQNXoUOYLgxJ0hzAtS0rGcPR-06fRYShLT2KqYXYUJxOtphig2x51avg2K7vJ6rXFs20hKz_5phbwQuOzfDgw7mnCRMTbtAWkHa658k.mp4'),
+    ],
   },
   {
     id: 'holy-paris',
@@ -126,6 +181,15 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     kind: 'group',
     category: 'physical',
     images: [...HOLY_PARIS_IMAGES],
+    galleryImages: [
+      holyParisGalleryJournal(),
+      holyParisGalleryJournal(2),
+      holyParisGalleryJournal(4),
+      holyParisGalleryJournal(6),
+      holyParisGalleryJournal(7),
+      holyParisGalleryJournal(8),
+      holyParisGalleryJournal(9),
+    ],
   },
   {
     id: 'holy-london',
@@ -140,6 +204,17 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/holy-london/holy-london-2.jpg',
       '/media/exhibitions/holy-london/holy-london-placeholder-3.jpg',
       '/media/exhibitions/holy-london/holy-london-placeholder-4.jpg',
+    ],
+    galleryImages: [
+      holyLondonGalleryJournal(14),
+      holyLondonGalleryJournal(17),
+      holyLondonGalleryJournal(19),
+      holyLondonGalleryJournal(20),
+      holyLondonGalleryJournal(21),
+      holyLondonGalleryJournal(22),
+      holyLondonGalleryJournal(25),
+      holyLondonGalleryJournal(26),
+      holyLondonGalleryJournal(27),
     ],
   },
   {
@@ -156,6 +231,14 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/luna/luna-1.jpg',
       '/media/exhibitions/luna/luna-2.jpg',
       '/media/exhibitions/luna/luna-placeholder-4.jpg',
+    ],
+    galleryImages: [
+      exGallery('luna', '612055407_17906287035300192_5021257629024911006_n.webp'),
+      exGallery('luna', '612472749_17906730204300192_3385564492688447115_n.jpg'),
+      exGallery('luna', '613657185_17906730201300192_8900950335141590506_n.jpg'),
+      exGallery('luna', '614901475_17906730159300192_6536720511991204364_n.jpg'),
+      exGallery('luna', '615016919_17906730213300192_4583022350825479870_n.jpg'),
+      exGallery('luna', '615381305_17906730168300192_8600490978590841302_n.jpg'),
     ],
   },
   {
@@ -176,6 +259,15 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     links: {
       website: 'https://www.ahmadshariffgallery.com/',
     },
+    galleryImages: [
+      exGallery('ahmad-shariff', 'unnamed.jpg'),
+      exGallery('ahmad-shariff', 'unnamed (1).jpg'),
+      exGallery('ahmad-shariff', 'unnamed (3).jpg'),
+      exGallery('ahmad-shariff', 'unnamed (6).jpg'),
+      exGallery('ahmad-shariff', 'unnamed (8).jpg'),
+      exGallery('ahmad-shariff', 'unnamed (10).jpg'),
+      exGallery('ahmad-shariff', 'unnamed (11).jpg'),
+    ],
   },
   {
     id: 'hechyeomoyeo-13',
@@ -190,6 +282,13 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/hechyeomoyeo-13/hech-4.jpg',
       '/media/exhibitions/hechyeomoyeo-13/hechyeomoyeo-13-placeholder-3.jpg',
       '/media/exhibitions/hechyeomoyeo-13/hechyeomoyeo-13-placeholder-4.jpg',
+    ],
+    galleryImages: [
+      exMedia('hechyeomoyeo-13', '622425943_18551201602044854_3078568027569955925_n.jpg'),
+      exMedia('hechyeomoyeo-13', 'AQOsWP1wuB76-TWuCjUihIpYn713e2pOgy4KJ0Y-4YPyePpVNxeANIRgBHMpsrPeNqAFF3o0Guo1SU6-WYtMm4lc.mp4'),
+      exMedia('hechyeomoyeo-13', 'AQP3Ly0b7GkGZF_GFXdR1cwJ5PbDKyhKzlUg-rfwO3HFXyalZNuztaMVQcmsi7eZARbB3cWYdsQhzZ4y4OIeqAZFcZAzFjLJmXj8UHM.mp4'),
+      exMedia('hechyeomoyeo-13', 'AQP3sqdHKENiUrMFWBIzYYdpLWDBvQTI7fs6QHrFyE9MnFeGyU1jRvCsfvjvXJ0iwtCptkZuhOYPx3OblbjOjkyfib81LRvX8X3NBk4.mp4'),
+      exMedia('hechyeomoyeo-13', 'AQPXIkXG8iGoCVNJsH5bUhYymTp6lpQ4jzTFUceIV8qHsfCW-hxCqcnWsWRnFpaOeHPoXp-lorKZRHCeomLVpg6Ht4cEhbiXIlxnrAo.mp4'),
     ],
   },
   {
@@ -206,6 +305,20 @@ export const exhibitionEntries: ExhibitionEntry[] = [
       '/media/exhibitions/hechyeomoyeo-12/hech-1.jpg',
       '/media/exhibitions/hechyeomoyeo-12/hech-2.jpg',
       '/media/exhibitions/hechyeomoyeo-12/hechyeomoyeo-12-placeholder-4.jpg',
+    ],
+    galleryImages: [
+      exGallery('hechyeomoyeo-12', 'IMG_0298.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_0625.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_0639.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_0685.jpg'),
+      exGallery('hechyeomoyeo-12', 'IMG_0700.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_0710.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_0730 (1).JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_0743.jpg'),
+      exGallery('hechyeomoyeo-12', 'IMG_9965.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_9968.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_9979.JPG'),
+      exGallery('hechyeomoyeo-12', 'IMG_9993.JPG'),
     ],
   },
   {
