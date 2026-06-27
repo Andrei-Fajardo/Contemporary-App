@@ -29,6 +29,8 @@ function isExcluded(img: HTMLImageElement): boolean {
   if (img.closest(".lang-toggle")) return true;
   if (img.closest("button")) return true;
   if (img.closest("summary")) return true;
+  if (img.closest(".about-panel-stack__art")) return true;
+  if (img.dataset.lightboxIgnore !== undefined) return true;
   if (img.width > 0 && img.width < 24 && img.height < 24) return true;
   const src = getLightboxImageSrc(img);
   if (!src || src.startsWith("data:")) return true;

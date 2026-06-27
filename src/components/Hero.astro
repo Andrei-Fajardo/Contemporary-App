@@ -9,20 +9,9 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="home" class="hero-section hero-chaos scroll-section">
-  <div class="hero-editorial hero-chaos__inner">
-    <figure class="hero-chaos__visual scroll-reveal" aria-label="Anna Dauyl Rockswell — visceral artwork">
-      <img
-        src="/media/from-utero-body.png"
-        alt="Visceral body horror artwork — hands and anatomical fibers"
-        class="gothic-hero-art"
-        loading="eager"
-        decoding="async"
-        draggable="false"
-      />
-    </figure>
-
-    <div class="hero-editorial__copy">
+<section id="home" class="hero-section hero-about-layer scroll-section">
+  <div class="hero-about-layer__inner section-shell section-shell--wide">
+    <div class="hero-editorial__copy hero-about-layer__name">
       <div class="scroll-reveal hero-editorial__name-block">
         <h1 class="hero-editorial__name hero-editorial__name--cursive">
           <span class="hero-editorial__name-line">{l.heroFirstName}</span>
@@ -33,4 +22,5 @@ const l = t[locale];
       <p class="scroll-reveal hero-editorial__roles editorial-meta">{l.heroRoles}</p>
     </div>
   </div>
+  <hr class="hero-about-layer__rule scroll-reveal" />
 </section>
