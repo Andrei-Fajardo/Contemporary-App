@@ -400,7 +400,7 @@ html.motion-reduced .press-chaos__poster {
   object-fit: contain;
   object-position: right bottom;
   filter: grayscale(1) contrast(1.05) brightness(0.97);
-  opacity: 0.84;
+  opacity: 0.6;
   mix-blend-mode: multiply;
   cursor: default;
   pointer-events: none;
@@ -425,7 +425,7 @@ html.motion-reduced .press-chaos__poster {
   }
 
   .research-panel__art-img {
-    opacity: 0.68;
+    opacity: 0.5;
   }
 }
 
