@@ -21,7 +21,13 @@ const l = t[locale];
   </div>
 
   {artworks.map((p, i) => (
-    <article class="art-piece" data-popup-title={p.title}>
+    <>
+      {i > 0 && (
+        <div class="section-shell section-shell--wide art-piece-divider-wrap">
+          <hr class="art-piece-divider scroll-reveal" aria-hidden="true" />
+        </div>
+      )}
+      <article class="art-piece" data-popup-title={p.title}>
       <div class="section-shell section-shell--wide py-6 md:py-8">
         <div class={`grid md:grid-cols-2 gap-8 lg:gap-12 items-start`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
@@ -55,11 +61,25 @@ const l = t[locale];
         </div>
       </div>
     </article>
+    </>
   ))}
 </section>
 
 <style>
   .art-wall-label__block {
     margin-top: 0.25rem;
+  }
+
+  .art-piece-divider-wrap {
+    padding-block: 0;
+  }
+
+  .art-piece-divider {
+    display: block;
+    width: 100%;
+    height: 0;
+    border: 0;
+    border-top: 1px solid var(--border-section, rgba(17, 17, 17, 0.2));
+    margin: clamp(1.25rem, 3vh, 2rem) 0;
   }
 </style>
