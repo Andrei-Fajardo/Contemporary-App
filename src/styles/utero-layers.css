@@ -209,89 +209,143 @@
 }
 
 
-/* ── RESPONSIVE ───────────────────────────────────────────── */
+/* ── RESPONSIVE ─────────────────────────────────────────────
+   TABLET  (640px – 1023px): tighten the overlap sizes
+   MOBILE  (<640px)        : full stacked layout — image above,
+                             content below, both in normal flow.
+                             artwork images reduced to opacity 0.4
+   ─────────────────────────────────────────────────────────── */
+
 @media (max-width: 1023px) {
-  /* Overlap layout: collapse image to smaller, text offset follows */
+  /* Tablet: shrink the overlap frame, keep the editorial offset */
   .pubs-overlap {
-    min-height: clamp(24rem, 62vh, 42rem);
+    min-height: clamp(24rem, 52vh, 38rem);
   }
   .pubs-overlap__frame {
-    left: clamp(1.5rem, 6vw, 4rem);
-    width: clamp(20rem, 54vw, 34rem);
-    height: clamp(26rem, 64vh, 44rem);
+    left: clamp(1rem, 5vw, 3rem);
+    width: clamp(18rem, 46vw, 28rem);
+    height: clamp(22rem, 54vh, 38rem);
   }
   .pubs-overlap__content {
-    left: clamp(14rem, 34vw, 24rem);
-    top: clamp(1.5rem, 4vh, 2.5rem);
+    left: clamp(12rem, 30vw, 20rem);
+    top: clamp(1rem, 3vh, 2rem);
   }
 
   .press-overlap {
     min-height: 0;
   }
   .press-overlap__frame {
-    top: clamp(-1rem, 4vh, 2rem);
-    left: clamp(-2rem, -4vw, 0.5rem);
-    width: clamp(34rem, 92vw, 52rem);
-    height: clamp(40rem, 105vh, 64rem);
+    top: clamp(-1rem, 3vh, 1.5rem);
+    left: clamp(-2rem, -3vw, 0rem);
+    width: clamp(28rem, 78vw, 44rem);
+    height: clamp(34rem, 90vh, 56rem);
   }
   .press-overlap__content {
-    left: clamp(13rem, 32vw, 22rem);
-    top: clamp(1.5rem, 4vh, 2.5rem);
+    left: clamp(11rem, 26vw, 18rem);
+    top: clamp(1rem, 3vh, 2rem);
   }
 
-
   .contacts-panel__art {
-    width: clamp(28rem, 68vw, 44rem);
-    left: clamp(1.5rem, 6vw, 4rem);
-    bottom: clamp(-1.5rem, 1vh, 1rem);
+    width: clamp(24rem, 58vw, 38rem);
+    left: clamp(1rem, 4vw, 3rem);
+    bottom: clamp(-1rem, 1vh, 0.5rem);
+  }
+
+  /* Artwork images: reduce opacity on tablet */
+  .pubs-overlap__img,
+  .press-overlap__img,
+  .contacts-panel__art-img {
+    opacity: 0.4;
   }
 }
 
 @media (max-width: 639px) {
-  /* On mobile the overlap layout stacks: image top, text below */
+  /* ── PUBLICATIONS: full stacked layout on mobile ── */
   .pubs-overlap {
+    /* Switch to normal flow — no positioning tricks */
+    position: relative;
+    isolation: isolate;
     min-height: 0;
-  }
-  .pubs-overlap__frame {
-    position: relative;
-    width: 100%;
-    height: clamp(18rem, 50vw, 28rem);
-  }
-  .pubs-overlap__content {
-    position: relative;
-    left: 0;
-    top: 0;
-    right: 0;
-    background: var(--canvas);
-    padding-inline: 0;
-    padding-block: clamp(1rem, 3vh, 1.5rem);
+    display: flex;
+    flex-direction: column;
   }
 
-  .press-overlap {
-    min-height: 0;
+  .pubs-overlap__frame {
+    /* In-flow, full-width image strip at top */
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: clamp(14rem, 55vw, 22rem);
     overflow: hidden;
   }
-  .press-overlap__frame {
-    position: absolute;
-    top: clamp(0rem, 5vh, 3rem);
-    left: clamp(-1.5rem, -3vw, 0rem);
-    width: clamp(30rem, 105vw, 44rem);
-    height: clamp(36rem, 90vh, 52rem);
-  }
-  .press-overlap__content {
-    position: relative;
-    left: 0;
-    top: 0;
-    right: 0;
-    background: var(--canvas);
-    padding-inline: 0;
-    padding-block: clamp(1rem, 3vh, 1.5rem);
+
+  .pubs-overlap__img {
+    object-fit: cover;
+    object-position: center 30%;
+    opacity: 0.4;
   }
 
+  .pubs-overlap__content {
+    /* Back to normal flow — sits below the image */
+    position: relative;
+    left: auto;
+    top: auto;
+    right: auto;
+    width: 100%;
+    background: var(--canvas);
+    padding-inline: 1rem;
+    padding-block: clamp(1.25rem, 4vw, 2rem);
+    z-index: 2;
+  }
+
+  /* ── PRESS: full stacked layout on mobile ── */
+  .press-overlap {
+    position: relative;
+    isolation: isolate;
+    min-height: 0;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .press-overlap__frame {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: clamp(14rem, 55vw, 22rem);
+    overflow: hidden;
+  }
+
+  .press-overlap__img {
+    object-fit: cover;
+    object-position: center 40%;
+    opacity: 0.4;
+  }
+
+  .press-overlap__content {
+    position: relative;
+    left: auto;
+    top: auto;
+    right: auto;
+    width: 100%;
+    background: var(--canvas);
+    padding-inline: 1rem;
+    padding-block: clamp(1.25rem, 4vw, 2rem);
+    z-index: 2;
+  }
+
+  /* ── CONTACTS art: smaller, lower opacity on mobile ── */
   .contacts-panel__art {
-    width: min(88vw, 40rem);
-    left: clamp(0.25rem, 3vw, 1.5rem);
-    bottom: clamp(-1rem, 2vh, 0.5rem);
+    width: min(72vw, 22rem);
+    left: clamp(-0.5rem, 2vw, 1rem);
+    bottom: clamp(-0.5rem, 1vh, 0.5rem);
+    opacity: 0.4;
+  }
+
+  .contacts-panel__art-img {
+    opacity: 0.4;
   }
 }
 

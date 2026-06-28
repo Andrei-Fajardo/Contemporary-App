@@ -54,11 +54,13 @@
   --type-scale: 1;
 }
 
-/* Warm editorial canvas background */
+/* Warm editorial canvas background — force light mode even on dark-mode devices */
 body {
   background-color: var(--canvas) !important;
+  background: var(--canvas) !important;
   color: var(--ink) !important;
   color-scheme: light only;
+  -webkit-color-scheme: light;
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
@@ -69,9 +71,34 @@ body {
 html {
   margin: 0;
   padding: 0;
-  background-color: var(--canvas);
+  background-color: var(--canvas) !important;
+  background: var(--canvas) !important;
   color-scheme: light only;
+  -webkit-color-scheme: light;
   font-size: calc(16px * var(--type-scale));
+}
+
+/* Hard override for dark-mode OS preference — always render as light */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #F0EEE9;
+    --ink: #111111;
+    --ink-muted: #555555;
+    color-scheme: light only;
+    -webkit-color-scheme: light;
+  }
+  html, body {
+    background-color: #F0EEE9 !important;
+    background: #F0EEE9 !important;
+    color: #111111 !important;
+    color-scheme: light only !important;
+    -webkit-color-scheme: light !important;
+  }
+  /* Grain blends must stay multiply on light canvas, never darken a faked-dark background */
+  .grain-overlay::before,
+  .grain-overlay::after {
+    mix-blend-mode: multiply;
+  }
 }
 
 /* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
@@ -608,6 +635,11 @@ select,
   .editorial-row-list__title {
     font-size: 1.0625rem;
   }
+
+  /* No hover arrow on touch devices */
+  .editorial-row-list__item::after {
+    display: none;
+  }
 }
 
 /* --- Tabular editorial shell (Layout Number 2) --- */
@@ -678,75 +710,121 @@ select,
   overflow: hidden;
 }
 
-/* Non-scroll editorial panels — short content fits one viewport */
-body[data-layout="tabular"]:has(.about-panel.is-active),
-body[data-layout="tabular"]:has(.publications-panel.is-active),
-body[data-layout="tabular"]:has(.research-panel.is-active),
-body[data-layout="tabular"]:has(.press-panel.is-active),
-body[data-layout="tabular"]:has(.contacts-panel.is-active) {
-  overflow: hidden;
-  height: 100dvh;
-  max-height: 100dvh;
+/* Non-scroll editorial panels — desktop only (short content fits one viewport).
+   On mobile we allow normal scrolling so content is not cut off by the
+   fixed header/footer. */
+@media (min-width: 1024px) {
+  body[data-layout="tabular"]:has(.about-panel.is-active),
+  body[data-layout="tabular"]:has(.publications-panel.is-active),
+  body[data-layout="tabular"]:has(.research-panel.is-active),
+  body[data-layout="tabular"]:has(.press-panel.is-active),
+  body[data-layout="tabular"]:has(.contacts-panel.is-active) {
+    overflow: hidden;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  .site-main-column:has(.about-panel.is-active),
+  .site-main-column:has(.publications-panel.is-active),
+  .site-main-column:has(.research-panel.is-active),
+  .site-main-column:has(.press-panel.is-active),
+  .site-main-column:has(.contacts-panel.is-active) {
+    overflow: hidden;
+    max-height: 100dvh;
+  }
+
+  .tabular-main:has(.about-panel.is-active),
+  .tabular-main:has(.publications-panel.is-active),
+  .tabular-main:has(.research-panel.is-active),
+  .tabular-main:has(.press-panel.is-active),
+  .tabular-main:has(.contacts-panel.is-active) {
+    overflow: hidden;
+  }
+
+  .tabular-view:has(.about-panel.is-active),
+  .tabular-view:has(.publications-panel.is-active),
+  .tabular-view:has(.research-panel.is-active),
+  .tabular-view:has(.press-panel.is-active),
+  .tabular-view:has(.contacts-panel.is-active),
+  .tabular-panels:has(.about-panel.is-active),
+  .tabular-panels:has(.publications-panel.is-active),
+  .tabular-panels:has(.research-panel.is-active),
+  .tabular-panels:has(.press-panel.is-active),
+  .tabular-panels:has(.contacts-panel.is-active) {
+    overflow: hidden;
+    min-height: 0;
+    flex: 1;
+  }
+
+  .tabular-panel.about-panel.is-active,
+  .tabular-panel.publications-panel.is-active,
+  .tabular-panel.research-panel.is-active,
+  .tabular-panel.press-panel.is-active,
+  .tabular-panel.contacts-panel.is-active {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .tabular-panel.publications-panel.is-active > .scroll-section,
+  .tabular-panel.research-panel.is-active > .research-section,
+  .tabular-panel.press-panel.is-active > .scroll-section,
+  .tabular-panel.contacts-panel.is-active > .scroll-section {
+    overflow: hidden;
+  }
+
+  .tabular-panel.publications-panel.is-active .pubs-overlap,
+  .tabular-panel.press-panel.is-active .press-overlap,
+  .tabular-panel.research-panel.is-active {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .tabular-panel.publications-panel.is-active .pubs-overlap {
+    height: 100%;
+    min-height: 0;
+  }
 }
 
-.site-main-column:has(.about-panel.is-active),
-.site-main-column:has(.publications-panel.is-active),
-.site-main-column:has(.research-panel.is-active),
-.site-main-column:has(.press-panel.is-active),
-.site-main-column:has(.contacts-panel.is-active) {
-  overflow: hidden;
-  max-height: 100dvh;
-}
+/* Mobile: all panels scroll freely */
+@media (max-width: 1023px) {
+  body[data-layout="tabular"] {
+    overflow-y: auto !important;
+    height: auto !important;
+    max-height: none !important;
+  }
 
-.tabular-main:has(.about-panel.is-active),
-.tabular-main:has(.publications-panel.is-active),
-.tabular-main:has(.research-panel.is-active),
-.tabular-main:has(.press-panel.is-active),
-.tabular-main:has(.contacts-panel.is-active) {
-  overflow: hidden;
-}
+  .site-main-column,
+  .tabular-main,
+  .tabular-view,
+  .tabular-panels,
+  .tabular-panel,
+  .tabular-panel.is-active,
+  .tabular-panel.about-panel.is-active,
+  .tabular-panel.publications-panel.is-active,
+  .tabular-panel.research-panel.is-active,
+  .tabular-panel.press-panel.is-active,
+  .tabular-panel.contacts-panel.is-active {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+  }
 
-.tabular-view:has(.about-panel.is-active),
-.tabular-view:has(.publications-panel.is-active),
-.tabular-view:has(.research-panel.is-active),
-.tabular-view:has(.press-panel.is-active),
-.tabular-view:has(.contacts-panel.is-active),
-.tabular-panels:has(.about-panel.is-active),
-.tabular-panels:has(.publications-panel.is-active),
-.tabular-panels:has(.research-panel.is-active),
-.tabular-panels:has(.press-panel.is-active),
-.tabular-panels:has(.contacts-panel.is-active) {
-  overflow: hidden;
-  min-height: 0;
-  flex: 1;
-}
+  .tabular-panel.publications-panel.is-active > .scroll-section,
+  .tabular-panel.research-panel.is-active > .research-section,
+  .tabular-panel.press-panel.is-active > .scroll-section,
+  .tabular-panel.contacts-panel.is-active > .scroll-section,
+  .tabular-panel.publications-panel.is-active .pubs-overlap,
+  .tabular-panel.press-panel.is-active .press-overlap {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
 
-.tabular-panel.about-panel.is-active,
-.tabular-panel.publications-panel.is-active,
-.tabular-panel.research-panel.is-active,
-.tabular-panel.press-panel.is-active,
-.tabular-panel.contacts-panel.is-active {
-  overflow: hidden;
-  min-height: 0;
-}
-
-.tabular-panel.publications-panel.is-active > .scroll-section,
-.tabular-panel.research-panel.is-active > .research-section,
-.tabular-panel.press-panel.is-active > .scroll-section,
-.tabular-panel.contacts-panel.is-active > .scroll-section {
-  overflow: hidden;
-}
-
-.tabular-panel.publications-panel.is-active .pubs-overlap,
-.tabular-panel.press-panel.is-active .press-overlap,
-.tabular-panel.research-panel.is-active {
-  overflow: hidden;
-  min-height: 0;
-}
-
-.tabular-panel.publications-panel.is-active .pubs-overlap {
-  height: 100%;
-  min-height: 0;
+  .about-panel-stack {
+    overflow: visible !important;
+    height: auto !important;
+  }
 }
 
 .tabular-main {
