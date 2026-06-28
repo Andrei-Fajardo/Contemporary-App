@@ -26,6 +26,8 @@ interface ParallaxTarget {
 }
 
 const LERP_FACTOR = 0.055; // lower = smoother / slower catch-up
+/** Scales cursor displacement for all decorative artwork (0.5 ≈ half as sensitive). */
+const GLOBAL_SENSITIVITY = 0.5;
 
 function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
@@ -69,8 +71,8 @@ export function initArtworkParallax(): void {
     let anyMoving = false;
 
     for (const t of targets) {
-      t.targetX = Math.max(-t.maxPx, Math.min(t.maxPx, mouseX * t.maxPx * (t.strength / 0.04)));
-      t.targetY = Math.max(-t.maxPx, Math.min(t.maxPx, mouseY * t.maxPx * (t.strength / 0.04)));
+      t.targetX = Math.max(-t.maxPx, Math.min(t.maxPx, mouseX * t.maxPx * (t.strength / 0.04) * GLOBAL_SENSITIVITY));
+      t.targetY = Math.max(-t.maxPx, Math.min(t.maxPx, mouseY * t.maxPx * (t.strength / 0.04) * GLOBAL_SENSITIVITY));
 
       const newX = lerp(t.currentX, t.targetX, LERP_FACTOR);
       const newY = lerp(t.currentY, t.targetY, LERP_FACTOR);
