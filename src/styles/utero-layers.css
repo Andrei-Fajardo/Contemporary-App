@@ -289,41 +289,51 @@
     opacity: 0.4;
   }
 
-  /* Text — in-flow, full screen width, no section-shell constraints */
+  /* Text — full screen width. Strip every section-shell constraint. */
   .pubs-overlap__content {
     position: static !important;
     left: auto !important;
     top: auto !important;
     right: auto !important;
+    /* Use 100vw minus the mobile header safe zone */
     width: 100% !important;
-    max-width: 100% !important;
-    /* Zero out ALL section-shell padding — we set our own */
-    padding: 1.25rem 1rem !important;
+    max-width: none !important;   /* kill section-shell--wide max-width */
+    padding: 1.25rem 1rem !important;  /* our own even padding */
     margin: 0 !important;
     background: transparent;
     box-sizing: border-box;
-    z-index: 2;
+    display: block !important;
   }
 
-  /* List rows: year col + full-width title — same as Academic Research */
-  .pubs-overlap__content .editorial-row-list__item,
-  .pubs-overlap .editorial-row-list__item {
-    display: grid !important;
-    grid-template-columns: 2.75rem 1fr !important;
+  /* The ul itself must be full width */
+  .pubs-overlap .editorial-link-list,
+  .pubs-overlap .editorial-row-list {
     width: 100% !important;
-    box-sizing: border-box !important;
-    margin-inline: 0 !important;
-    padding-inline: 0 !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Each row: no-year variant → just 1fr for title */
+  .pubs-overlap .editorial-row-list__item {
+    display: block !important;   /* drop grid entirely — title is the whole row */
+    width: 100% !important;
+    padding: 0.875rem 0 !important;
+    margin: 0 !important;
+    border-bottom: 1px solid rgba(17,17,17,0.1);
   }
 
   .pubs-overlap .editorial-row-list__title {
-    min-width: 0;
-    text-align: left;
-    hyphens: none;
-    -webkit-hyphens: none;
-    word-break: normal;
-    overflow-wrap: break-word;
-    white-space: normal;
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
   }
 
   /* ── PRESS: same full-width stacked approach ── */
@@ -357,32 +367,45 @@
     top: auto !important;
     right: auto !important;
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: none !important;
     padding: 1.25rem 1rem !important;
     margin: 0 !important;
     background: transparent;
     box-sizing: border-box;
-    z-index: 2;
+    display: block !important;
   }
 
-  .press-overlap__content .editorial-row-list__item,
+  .press-overlap .editorial-link-list,
+  .press-overlap .editorial-row-list {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Press has showYear=true → keep year column */
   .press-overlap .editorial-row-list__item {
     display: grid !important;
     grid-template-columns: 2.75rem 1fr !important;
     width: 100% !important;
+    gap: 0.15rem 0.75rem !important;
+    padding: 0.875rem 0 !important;
+    margin: 0 !important;
     box-sizing: border-box !important;
-    margin-inline: 0 !important;
-    padding-inline: 0 !important;
+    border-bottom: 1px solid rgba(17,17,17,0.1);
   }
 
   .press-overlap .editorial-row-list__title {
-    min-width: 0;
-    text-align: left;
-    hyphens: none;
-    -webkit-hyphens: none;
-    word-break: normal;
-    overflow-wrap: break-word;
-    white-space: normal;
+    display: block !important;
+    min-width: 0 !important;
+    text-align: left !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
   }
 
   /* ── CONTACTS art: smaller, lower opacity on mobile ── */
