@@ -61,6 +61,8 @@
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
+  will-change: transform;
+  transition: transform 0.1s linear;
 }
 
 /* Text box: overlaps the image's right edge */
@@ -123,6 +125,8 @@
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
+  will-change: transform;
+  transition: transform 0.1s linear;
 }
 
 .press-overlap__content {
@@ -189,6 +193,8 @@
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
+  will-change: transform;
+  transition: transform 0.1s linear;
 }
 
 /* Content stays above the art */

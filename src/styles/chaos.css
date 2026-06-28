@@ -404,6 +404,8 @@ html.motion-reduced .press-chaos__poster {
   mix-blend-mode: multiply;
   cursor: default;
   pointer-events: none;
+  will-change: transform;
+  transition: transform 0.1s linear;
 }
 
 /* Content sits above the art layer */

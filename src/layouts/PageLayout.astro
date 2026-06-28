@@ -309,6 +309,7 @@ const menuItems: { key: string; href: string }[] = [
   import { initLangSwitch, syncLangHrefs, syncLangToggle, restoreLangScroll } from "../scripts/lang-switch";
   import { initTabView, resetTabView } from "../scripts/tab-view";
   import { resetGlobalLightbox } from "../scripts/lightbox";
+  import { initArtworkParallax } from "../scripts/artwork-parallax";
 
   function initDrawer() {
     const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -368,6 +369,7 @@ const menuItems: { key: string; href: string }[] = [
     initLangSwitch();
     initTabView();
     initMotion();
+    initArtworkParallax();
     restoreLangScroll();
   }
 
