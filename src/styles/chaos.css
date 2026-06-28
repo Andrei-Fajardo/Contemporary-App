@@ -683,6 +683,18 @@ html.motion-reduced .press-chaos__poster {
   max-width: 62ch;
 }
 
+.about-chaos__intro .content-prose {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+
+.about-chaos__intro .type-subheading {
+  font-family: var(--font-heading);
+  letter-spacing: normal;
+  line-height: 1.15;
+}
+
 .about-chaos__name {
   position: relative;
   display: inline-block;
@@ -724,7 +736,9 @@ html.motion-reduced .press-chaos__poster {
 
 .about-chaos__list li {
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: clamp(0.9375rem, 0.85vw + 0.55rem, 1.0625rem);
+  font-weight: 400;
+  font-style: normal;
   color: var(--ink-60);
   border: 1px solid var(--border-subtle);
   padding: 0.35rem 0.65rem;

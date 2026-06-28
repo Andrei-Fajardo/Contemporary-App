@@ -8,11 +8,6 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-
-const heroIntroHtml = l.heroIntro.replace(
-  /Anna Dauyl Rockswell/g,
-  '<span class="font-name-cursive">Anna Dauyl Rockswell</span>',
-);
 ---
 
 <section id="about" class="scroll-section about-chaos about-panel-stack__content">
@@ -21,10 +16,12 @@ const heroIntroHtml = l.heroIntro.replace(
 
     <div class="about-chaos__body">
       <div class="scroll-reveal about-chaos__intro">
-        <p class="editorial-meta mb-2">{l.heroBasedIn}</p>
-        <p class="editorial-lead mb-2" set:html={heroIntroHtml} />
-        <p class="editorial-meta mb-4">{l.heroDesc}</p>
-        <p class="editorial-body">{l.bio}</p>
+        <p class="content-prose text-ink-60 mb-2">{l.heroBasedIn}</p>
+        <h2 class="type-subheading text-2xl md:text-3xl lg:text-4xl text-ink mb-2">
+          {l.heroIntro}
+        </h2>
+        <p class="content-prose text-ink-60 mb-4">{l.heroDesc}</p>
+        <p class="content-prose text-ink-75">{l.bio}</p>
       </div>
 
       <div class="scroll-reveal about-chaos__meta">
