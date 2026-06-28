@@ -152,7 +152,7 @@
 /* Research panel art positioning is defined in chaos.css */
 
 
-/* ── CONTACTS — anna-sample-5: bottom-left, over footer ──────
+/* ── CONTACTS — anna-sample-7: bottom-left, over footer ──────
    Large figure anchored bottom-left, bleeding off the left
    edge and down over the footer. overflow:visible on the panel
    lets the art cross into the footer zone. z-index 10 places
@@ -189,7 +189,7 @@
   object-fit: contain;
   object-position: left bottom;
   filter: grayscale(1) contrast(1.08) brightness(0.96);
-  opacity: 0.52;
+  opacity: 0.6;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
