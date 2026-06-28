@@ -85,19 +85,11 @@ html {
     --ink: #111111;
     --ink-muted: #555555;
     color-scheme: light only;
-    -webkit-color-scheme: light;
   }
   html, body {
     background-color: #F0EEE9 !important;
-    background: #F0EEE9 !important;
     color: #111111 !important;
-    color-scheme: light only !important;
-    -webkit-color-scheme: light !important;
-  }
-  /* Grain blends must stay multiply on light canvas, never darken a faked-dark background */
-  .grain-overlay::before,
-  .grain-overlay::after {
-    mix-blend-mode: multiply;
+    color-scheme: light only;
   }
 }
 

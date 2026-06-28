@@ -47,62 +47,15 @@ const menuItems: { key: string; href: string }[] = [
     <meta name="theme-color" content="#F0EEE9" media="(prefers-color-scheme: dark)" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <style is:inline>
-      /* ── Force light mode unconditionally — bypass device dark mode ── */
-      :root {
-        color-scheme: light only;
-        -webkit-color-scheme: light;
-        forced-color-adjust: none;
-      }
-      html {
-        color-scheme: light only;
-        -webkit-color-scheme: light;
-        background-color: #f0eee9 !important;
-        background: #f0eee9 !important;
-      }
-      body {
-        background-color: #f0eee9 !important;
-        background: #f0eee9 !important;
-        color: #111111 !important;
-        color-scheme: light only;
-        -webkit-color-scheme: light;
-      }
-      /* Override every dark-mode recolouring browsers auto-apply */
+      /* Force light mode — bypass device dark mode preference */
+      html { color-scheme: light only; background-color: #f0eee9; }
+      body { background-color: #f0eee9 !important; color: #111111 !important; color-scheme: light only; }
       @media (prefers-color-scheme: dark) {
-        :root {
-          color-scheme: light only;
-          -webkit-color-scheme: light;
-          forced-color-adjust: none;
-        }
-        html,
-        body,
-        * {
-          color-scheme: light only !important;
-          -webkit-color-scheme: light !important;
-        }
-        html,
-        body,
-        .site-shell,
-        .site-main-column,
-        .tabular-main,
-        .tabular-view,
-        .tabular-panel,
-        #mobile-drawer,
-        .mobile-drawer__footer,
-        header,
-        footer,
-        .desktop-sidebar,
-        .desktop-sidebar__inner,
-        .grain-overlay,
-        .floating-petals,
-        .about-panel-stack,
-        .pubs-overlap,
-        .press-overlap,
-        .contacts-panel,
-        .research-panel {
-          background-color: #f0eee9 !important;
-          background: #f0eee9 !important;
-          color: #111111 !important;
-        }
+        html { background-color: #f0eee9 !important; color-scheme: light only; }
+        body { background-color: #f0eee9 !important; color: #111111 !important; color-scheme: light only; }
+        .site-shell, .site-main-column, .tabular-main, .tabular-view, .tabular-panel,
+        #mobile-drawer, .mobile-drawer__footer, header, footer,
+        .desktop-sidebar, .desktop-sidebar__inner { background-color: #f0eee9 !important; color: #111111 !important; }
       }
     </style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
