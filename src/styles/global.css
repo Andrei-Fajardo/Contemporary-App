@@ -783,6 +783,30 @@ select,
   }
 }
 
+/* Mobile: hide all decorative anna-sample artwork images */
+@media (max-width: 1023px) {
+  /* Hide every artwork wrapper — cleaner mobile layout without the images */
+  .research-panel__art,
+  .contacts-panel__art,
+  .hero-about-layer__art,
+  [data-artwork-parallax] {
+    display: none !important;
+  }
+
+  /* Publications and Press: remove the image frame entirely on mobile */
+  .pubs-overlap__frame,
+  .press-overlap__frame {
+    display: none !important;
+  }
+
+  /* Since image is gone, content becomes the only child — remove top gap */
+  .pubs-overlap,
+  .press-overlap {
+    padding-top: 0 !important;
+    min-height: 0 !important;
+  }
+}
+
 /* Mobile: all panels scroll freely */
 @media (max-width: 1023px) {
   body[data-layout="tabular"] {

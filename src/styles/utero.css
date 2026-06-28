@@ -19,6 +19,24 @@
   mix-blend-mode: overlay;
 }
 
+/* Dark-mode OS preference: switch grain blend to normal so it never
+   darkens the forced-light #f0eee9 canvas on iOS Safari / Android */
+@media (prefers-color-scheme: dark) {
+  .grain-overlay::before {
+    mix-blend-mode: normal;
+    opacity: 0.03;
+  }
+  .grain-overlay::after {
+    mix-blend-mode: normal;
+    opacity: 0.02;
+  }
+  /* All scroll-section depth layers — also use multiply on light canvas */
+  .scroll-section::before {
+    mix-blend-mode: normal;
+    opacity: 0.02;
+  }
+}
+
 /* Subtle ink depth on sections — static, not animated */
 .scroll-section {
   position: relative;
