@@ -57,7 +57,7 @@
   object-fit: contain;
   object-position: left center;
   filter: grayscale(1) contrast(1.06) brightness(0.97);
-  opacity: 0.52;
+  opacity: 0.5;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
@@ -121,7 +121,7 @@
   object-fit: cover;
   object-position: left 58%;
   filter: grayscale(1) contrast(1.08) brightness(0.98);
-  opacity: 0.85;
+  opacity: 0.5;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
@@ -189,7 +189,7 @@
   object-fit: contain;
   object-position: left bottom;
   filter: grayscale(1) contrast(1.08) brightness(0.96);
-  opacity: 0.6;
+  opacity: 0.5;
   mix-blend-mode: multiply;
   pointer-events: none;
   cursor: default;
@@ -251,11 +251,11 @@
     bottom: clamp(-1rem, 1vh, 0.5rem);
   }
 
-  /* Artwork images: reduce opacity on tablet */
+  /* Artwork images: consistent opacity on tablet */
   .pubs-overlap__img,
   .press-overlap__img,
   .contacts-panel__art-img {
-    opacity: 0.4;
+    opacity: 0.5;
   }
 }
 
@@ -286,7 +286,7 @@
   .pubs-overlap__img {
     object-fit: cover;
     object-position: center 30%;
-    opacity: 0.4;
+    opacity: 0.5;
   }
 
   /* Text — full screen width. Strip every section-shell constraint. */
@@ -358,7 +358,7 @@
   .press-overlap__img {
     object-fit: cover;
     object-position: center 40%;
-    opacity: 0.4;
+    opacity: 0.5;
   }
 
   .press-overlap__content {
@@ -408,16 +408,15 @@
     line-height: 1.4 !important;
   }
 
-  /* ── CONTACTS art: smaller, lower opacity on mobile ── */
+  /* ── CONTACTS art: smaller on mobile ── */
   .contacts-panel__art {
     width: min(72vw, 22rem);
     left: clamp(-0.5rem, 2vw, 1rem);
     bottom: clamp(-0.5rem, 1vh, 0.5rem);
-    opacity: 0.4;
   }
 
   .contacts-panel__art-img {
-    opacity: 0.4;
+    opacity: 0.5;
   }
 }
 
