@@ -260,24 +260,27 @@
 }
 
 @media (max-width: 639px) {
-  /* ── PUBLICATIONS: full stacked layout on mobile ── */
+  /* ── PUBLICATIONS: full-width stacked layout on mobile ───────
+     Image strip at top, then text spanning the full screen width.
+     We override the desktop absolute/overlap positioning entirely.
+  ──────────────────────────────────────────────────────────── */
   .pubs-overlap {
-    /* Switch to normal flow — no positioning tricks */
-    position: relative;
+    position: static !important;
+    display: block !important;
     isolation: isolate;
     min-height: 0;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
   }
 
+  /* Image — in-flow, full-width thumbnail strip */
   .pubs-overlap__frame {
-    /* In-flow, full-width image strip at top */
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    height: clamp(14rem, 55vw, 22rem);
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: clamp(12rem, 50vw, 20rem) !important;
     overflow: hidden;
+    opacity: 1;
   }
 
   .pubs-overlap__img {
@@ -286,57 +289,59 @@
     opacity: 0.4;
   }
 
+  /* Text — in-flow, full screen width, no section-shell constraints */
   .pubs-overlap__content {
-    /* Back to normal flow — sits below the image */
-    position: relative;
-    left: auto;
-    top: auto;
-    right: auto;
-    /* Full width — override the desktop absolute right:0 */
-    width: 100%;
-    max-width: 100%;
-    background: var(--canvas);
-    /* Override any section-shell padding so we control it ourselves */
-    padding-inline: clamp(1rem, 4vw, 1.5rem) !important;
-    padding-block: clamp(1.25rem, 4vw, 2rem);
-    z-index: 2;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    /* Zero out ALL section-shell padding — we set our own */
+    padding: 1.25rem 1rem !important;
+    margin: 0 !important;
+    background: transparent;
     box-sizing: border-box;
+    z-index: 2;
   }
 
-  /* Ensure link list rows use the full mobile width */
-  .pubs-overlap__content .editorial-row-list .editorial-row-list__item {
-    width: 100%;
-    box-sizing: border-box;
-    /* Drop the negative margin-inline that causes overflow on mobile */
-    margin-inline: 0;
-    padding-inline: 0.25rem;
-    /* Full two-column: year + title spanning the whole row */
-    grid-template-columns: 2.75rem 1fr;
+  /* List rows: year col + full-width title — same as Academic Research */
+  .pubs-overlap__content .editorial-row-list__item,
+  .pubs-overlap .editorial-row-list__item {
+    display: grid !important;
+    grid-template-columns: 2.75rem 1fr !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
   }
 
   .pubs-overlap .editorial-row-list__title {
-    /* Ensure text wraps naturally, never in a single-character column */
     min-width: 0;
+    text-align: left;
+    hyphens: none;
+    -webkit-hyphens: none;
     word-break: normal;
     overflow-wrap: break-word;
+    white-space: normal;
   }
 
-  /* ── PRESS: full stacked layout on mobile ── */
+  /* ── PRESS: same full-width stacked approach ── */
   .press-overlap {
-    position: relative;
+    position: static !important;
+    display: block !important;
     isolation: isolate;
     min-height: 0;
+    width: 100%;
     overflow: visible;
-    display: flex;
-    flex-direction: column;
   }
 
   .press-overlap__frame {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
-    height: clamp(14rem, 55vw, 22rem);
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: clamp(12rem, 50vw, 20rem) !important;
     overflow: hidden;
   }
 
@@ -347,31 +352,37 @@
   }
 
   .press-overlap__content {
-    position: relative;
-    left: auto;
-    top: auto;
-    right: auto;
-    width: 100%;
-    max-width: 100%;
-    background: var(--canvas);
-    padding-inline: clamp(1rem, 4vw, 1.5rem) !important;
-    padding-block: clamp(1.25rem, 4vw, 2rem);
-    z-index: 2;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1.25rem 1rem !important;
+    margin: 0 !important;
+    background: transparent;
     box-sizing: border-box;
+    z-index: 2;
   }
 
-  .press-overlap__content .editorial-row-list .editorial-row-list__item {
-    width: 100%;
-    box-sizing: border-box;
-    margin-inline: 0;
-    padding-inline: 0.25rem;
-    grid-template-columns: 2.75rem 1fr;
+  .press-overlap__content .editorial-row-list__item,
+  .press-overlap .editorial-row-list__item {
+    display: grid !important;
+    grid-template-columns: 2.75rem 1fr !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
   }
 
   .press-overlap .editorial-row-list__title {
     min-width: 0;
+    text-align: left;
+    hyphens: none;
+    -webkit-hyphens: none;
     word-break: normal;
     overflow-wrap: break-word;
+    white-space: normal;
   }
 
   /* ── CONTACTS art: smaller, lower opacity on mobile ── */

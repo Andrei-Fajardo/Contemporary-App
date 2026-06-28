@@ -426,7 +426,6 @@ html.motion-reduced .press-chaos__poster {
     right: clamp(0.5rem, 3vw, 2rem);
     bottom: clamp(4rem, 10vh, 7rem);
     width: clamp(10rem, 42vw, 16rem);
-    /* Kill any JS-applied transform so the fixed image stays truly still */
     transform: none !important;
   }
 
@@ -434,6 +433,16 @@ html.motion-reduced .press-chaos__poster {
     opacity: 0.4;
     will-change: auto;
     transform: none !important;
+  }
+}
+
+/* Touch devices — disable ALL parallax transforms on artwork via CSS
+   (belt-and-suspenders alongside the JS pointer:fine guard) */
+@media (pointer: coarse) {
+  [data-artwork-parallax] {
+    transform: none !important;
+    will-change: auto !important;
+    transition: none !important;
   }
 }
 
