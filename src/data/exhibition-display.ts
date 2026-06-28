@@ -30,8 +30,9 @@ export function formatExhibitionDisplay(entry: ExhibitionEntry): ExhibitionDispl
 
   const normalizedTitle = normalizeLabel(title);
   const normalizedGallery = normalizeLabel(gallery);
+  const titleWithYear = normalizeLabel(`${gallery} ${entry.year}`);
 
-  if (normalizedTitle === normalizedGallery) {
+  if (normalizedTitle === normalizedGallery || normalizedTitle === titleWithYear) {
     return { heading, subheading: place };
   }
 
