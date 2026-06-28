@@ -692,7 +692,7 @@ html.motion-reduced .press-chaos__poster {
 }
 
 .about-chaos__intro .type-subheading {
-  font-family: var(--font-heading);
+  font-family: var(--font-subheading);
   letter-spacing: normal;
   line-height: 1.15;
 }

@@ -65,7 +65,7 @@
 /* ?? Hero section ????????????????????????????????????????????? */
 .hero-about-layer {
   position: relative;
-  min-height: clamp(14rem, 36vh, 26rem);
+  min-height: clamp(16rem, 42vh, 30rem);
 }
 
 /* Inner shell: centers portrait + name as one unit */
@@ -75,8 +75,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: clamp(14rem, 36vh, 26rem);
-  padding-block: clamp(1rem, 2.5vh, 1.75rem);
+  min-height: clamp(16rem, 42vh, 30rem);
+  padding-top: clamp(2.25rem, 5.5vh, 3.75rem);
+  padding-bottom: clamp(1rem, 2.5vh, 1.75rem);
   max-width: 100%;
 }
 
@@ -171,12 +172,13 @@
   }
 
   .hero-about-layer {
-    min-height: clamp(12rem, 32vh, 20rem);
+    min-height: clamp(14rem, 36vh, 24rem);
   }
 
   .hero-about-layer__inner {
-    min-height: clamp(12rem, 30vh, 18rem);
-    padding-block: clamp(0.875rem, 2vh, 1.25rem);
+    min-height: clamp(14rem, 34vh, 22rem);
+    padding-top: clamp(1.75rem, 4.5vh, 3rem);
+    padding-bottom: clamp(0.875rem, 2vh, 1.25rem);
   }
 
   .hero-about-layer__heading {
@@ -207,12 +209,13 @@
   }
 
   .hero-about-layer {
-    min-height: clamp(10rem, 28vh, 16rem);
+    min-height: clamp(12rem, 32vh, 18rem);
   }
 
   .hero-about-layer__inner {
-    min-height: clamp(10rem, 26vh, 14rem);
-    padding-block: clamp(0.75rem, 1.5vh, 1.25rem);
+    min-height: clamp(12rem, 30vh, 16rem);
+    padding-top: clamp(1.5rem, 4vh, 2.5rem);
+    padding-bottom: clamp(0.75rem, 1.5vh, 1.25rem);
   }
 
   .hero-about-layer__heading {

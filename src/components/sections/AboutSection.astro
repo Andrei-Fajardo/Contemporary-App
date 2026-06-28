@@ -17,11 +17,13 @@ const l = t[locale];
     <div class="about-chaos__body">
       <div class="scroll-reveal about-chaos__intro">
         <p class="content-prose text-ink-60 mb-2">{l.heroBasedIn}</p>
-        <h2 class="type-subheading text-2xl md:text-3xl lg:text-4xl text-ink mb-2">
+        <h2 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-3">
           {l.heroIntro}
         </h2>
-        <p class="content-prose text-ink-60 mb-4">{l.heroDesc}</p>
-        <p class="content-prose text-ink-75">{l.bio}</p>
+        <div class="space-y-4">
+          <p class="content-prose text-ink-75">{l.heroDesc}</p>
+          <p class="content-prose text-ink-75">{l.bio}</p>
+        </div>
       </div>
 
       <div class="scroll-reveal about-chaos__meta">
