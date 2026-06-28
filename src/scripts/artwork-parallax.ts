@@ -35,6 +35,9 @@ function lerp(a: number, b: number, t: number): number {
 
 export function initArtworkParallax(): void {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Touch / mobile — no cursor to track, and transform on position:fixed
+  // elements causes scroll jank. Skip entirely on non-pointer devices.
+  if (!window.matchMedia('(pointer: fine)').matches) return;
 
   const targets: ParallaxTarget[] = [];
 

@@ -570,8 +570,14 @@ select,
   font-size: clamp(1.125rem, 1.5vw, 1.375rem);
   font-weight: 400;
   color: var(--ink);
-  line-height: 1.2;
+  line-height: 1.35;
   text-decoration: none;
+  /* Prevent hyphenation and justification inherited from body */
+  text-align: left;
+  hyphens: none;
+  -webkit-hyphens: none;
+  word-break: normal;
+  overflow-wrap: break-word;
   transition: color 0.3s var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
