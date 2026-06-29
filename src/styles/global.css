@@ -705,14 +705,13 @@ select,
   flex-direction: column;
   min-height: 100%;
   background-color: var(--canvas);
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Non-scroll editorial panels — desktop only (short content fits one viewport).
    On mobile we allow normal scrolling so content is not cut off by the
    fixed header/footer. */
 @media (min-width: 1024px) {
-  body[data-layout="tabular"]:has(.about-panel.is-active),
   body[data-layout="tabular"]:has(.publications-panel.is-active),
   body[data-layout="tabular"]:has(.research-panel.is-active),
   body[data-layout="tabular"]:has(.press-panel.is-active),
@@ -722,7 +721,6 @@ select,
     max-height: 100dvh;
   }
 
-  .site-main-column:has(.about-panel.is-active),
   .site-main-column:has(.publications-panel.is-active),
   .site-main-column:has(.research-panel.is-active),
   .site-main-column:has(.press-panel.is-active),
@@ -731,7 +729,6 @@ select,
     max-height: 100dvh;
   }
 
-  .tabular-main:has(.about-panel.is-active),
   .tabular-main:has(.publications-panel.is-active),
   .tabular-main:has(.research-panel.is-active),
   .tabular-main:has(.press-panel.is-active),
@@ -739,12 +736,10 @@ select,
     overflow: hidden;
   }
 
-  .tabular-view:has(.about-panel.is-active),
   .tabular-view:has(.publications-panel.is-active),
   .tabular-view:has(.research-panel.is-active),
   .tabular-view:has(.press-panel.is-active),
   .tabular-view:has(.contacts-panel.is-active),
-  .tabular-panels:has(.about-panel.is-active),
   .tabular-panels:has(.publications-panel.is-active),
   .tabular-panels:has(.research-panel.is-active),
   .tabular-panels:has(.press-panel.is-active),
@@ -754,13 +749,41 @@ select,
     flex: 1;
   }
 
-  .tabular-panel.about-panel.is-active,
   .tabular-panel.publications-panel.is-active,
   .tabular-panel.research-panel.is-active,
   .tabular-panel.press-panel.is-active,
   .tabular-panel.contacts-panel.is-active {
     overflow: hidden;
     min-height: 0;
+  }
+
+  /* About tab — scrollable so interests/bio are never clipped */
+  body[data-layout="tabular"]:has(.about-panel.is-active) {
+    overflow: hidden;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  .site-main-column:has(.about-panel.is-active) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100dvh;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabular-main:has(.about-panel.is-active),
+  .tabular-view:has(.about-panel.is-active),
+  .tabular-panels:has(.about-panel.is-active),
+  .tabular-panel.about-panel.is-active {
+    overflow: visible;
+    min-height: 0;
+    height: auto;
+  }
+
+  .tabular-panel.about-panel.is-active > .about-panel-stack {
+    overflow: visible;
+    min-height: auto;
+    padding-bottom: clamp(2.5rem, 6vh, 5rem);
   }
 
   .tabular-panel.publications-panel.is-active > .scroll-section,

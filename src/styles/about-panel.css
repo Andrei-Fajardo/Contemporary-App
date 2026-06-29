@@ -33,7 +33,7 @@
 
 .hero-about-layer__art {
   flex: 0 0 auto;
-  width: clamp(22rem, 42vw, 38rem);
+  width: clamp(28rem, 52vw, 46rem);
   z-index: 2;
   pointer-events: none;
   user-select: none;
@@ -134,6 +134,7 @@
   z-index: 4;
   flex: 1 1 auto;
   padding-top: clamp(1.5rem, 3vh, 2.5rem);
+  padding-bottom: clamp(2rem, 5vh, 4rem);
   margin-top: 0;
 }
 
@@ -156,7 +157,7 @@
 /* ?? Tablet (768?1023px) ?????????????????????????????????????? */
 @media (max-width: 1023px) {
   .hero-about-layer__art {
-    width: clamp(18rem, 46vw, 28rem);
+    width: clamp(22rem, 54vw, 36rem);
   }
 
   .hero-about-layer__cluster {
