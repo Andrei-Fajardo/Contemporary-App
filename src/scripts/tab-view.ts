@@ -57,7 +57,7 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
     history.replaceState(null, "", `${base}#${tab}`);
   }
 
-  const FADE_MS = 160;
+  const FADE_MS = 80;
 
   const doSwap = () => {
     panels.forEach((panel) => {
