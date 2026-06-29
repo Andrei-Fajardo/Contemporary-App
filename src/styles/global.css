@@ -573,7 +573,8 @@ select,
 .editorial-row-list__item::after {
   content: "→";
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
+  line-height: 1;
   color: var(--ink-35);
   opacity: 0;
   transform: translateX(-6px);
@@ -585,6 +586,11 @@ select,
   grid-column: 3;
   align-self: center;
   justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .editorial-row-list .editorial-row-list__item:hover::after {
