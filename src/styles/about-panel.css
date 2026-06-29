@@ -140,8 +140,8 @@
 
 /* Bio text starts to the right of center — aligned with the name column */
 .about-panel-stack__content-inner {
-  margin-left: clamp(44%, 48vw, 52%);
-  max-width: min(42rem, 52vw);
+  margin-left: clamp(36%, 40vw, 44%);
+  max-width: min(56rem, 68vw);
   padding-right: clamp(1rem, 3vw, 2rem);
 }
 
@@ -175,7 +175,7 @@
   }
 
   .about-panel-stack__content-inner {
-    margin-left: clamp(42%, 46vw, 50%);
+    margin-left: clamp(34%, 38vw, 42%);
     max-width: none;
     padding-right: clamp(0.75rem, 2.5vw, 1.5rem);
   }

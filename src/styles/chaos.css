@@ -696,10 +696,11 @@ html.motion-reduced .press-chaos__poster {
 }
 
 .about-chaos__intro {
-  max-width: 62ch;
+  max-width: none;
 }
 
 .about-chaos__intro .content-prose {
+  max-width: 62ch;
   text-align: justify;
   text-align-last: left;
   hyphens: auto;
@@ -709,6 +710,7 @@ html.motion-reduced .press-chaos__poster {
   font-family: var(--font-subheading);
   letter-spacing: normal;
   line-height: 1.15;
+  max-width: min(52rem, 100%);
 }
 
 .about-chaos__name {
