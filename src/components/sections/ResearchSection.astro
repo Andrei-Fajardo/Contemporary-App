@@ -1,6 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import { researchLinks } from '../../data/content';
+import { researchLinks, igamingLinks, uplatformLinks } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
 interface Props {
@@ -9,6 +9,12 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+
+const tabs = [
+  { id: 'academic', label: 'Academic' },
+  { id: 'igaming',  label: 'iGaming Portfolio' },
+  { id: 'uplatform', label: 'Uplatform' },
+] as const;
 ---
 
 <section id="research" class="scroll-section section-gap research-section">
@@ -18,6 +24,98 @@ const l = t[locale];
       {l.academicHeading}
     </h2>
 
-    <EditorialLinkList items={researchLinks} />
+    <!-- Tab filters — same pattern as exhibition filters -->
+    <div class="exhibition-filters research-filters scroll-reveal" role="tablist" aria-label="Research categories">
+      {tabs.map((tab, i) => (
+        <button
+          type="button"
+          class:list={["exhibition-filter research-tab-btn", i === 0 && "is-active"]}
+          data-research-tab={tab.id}
+          role="tab"
+          aria-selected={i === 0 ? "true" : "false"}
+          aria-controls={`research-panel-${tab.id}`}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Tab panels -->
+    <div
+      id="research-panel-academic"
+      class="research-tab-panel"
+      data-research-panel="academic"
+      role="tabpanel"
+    >
+      <EditorialLinkList items={researchLinks} />
+    </div>
+
+    <div
+      id="research-panel-igaming"
+      class="research-tab-panel"
+      data-research-panel="igaming"
+      role="tabpanel"
+      hidden
+      aria-hidden="true"
+    >
+      <EditorialLinkList items={igamingLinks} />
+    </div>
+
+    <div
+      id="research-panel-uplatform"
+      class="research-tab-panel"
+      data-research-panel="uplatform"
+      role="tabpanel"
+      hidden
+      aria-hidden="true"
+    >
+      <EditorialLinkList items={uplatformLinks} />
+    </div>
   </div>
 </section>
+
+<script>
+  function initResearchTabs() {
+    const btns = document.querySelectorAll<HTMLButtonElement>('[data-research-tab]');
+    const panels = document.querySelectorAll<HTMLElement>('[data-research-panel]');
+    if (!btns.length) return;
+
+    btns.forEach((btn) => {
+      if (btn.dataset.researchBound === 'true') return;
+      btn.dataset.researchBound = 'true';
+
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.researchTab;
+
+        btns.forEach((b) => {
+          const on = b.dataset.researchTab === target;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+
+        panels.forEach((panel) => {
+          const on = panel.dataset.researchPanel === target;
+          panel.hidden = !on;
+          panel.setAttribute('aria-hidden', on ? 'false' : 'true');
+
+          if (on) {
+            panel.style.opacity = '0';
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                panel.style.transition = 'opacity 80ms ease';
+                panel.style.opacity = '1';
+                setTimeout(() => {
+                  panel.style.transition = '';
+                  panel.style.opacity = '';
+                }, 100);
+              });
+            });
+          }
+        });
+      });
+    });
+  }
+
+  initResearchTabs();
+  document.addEventListener('astro:page-load', initResearchTabs);
+</script>
