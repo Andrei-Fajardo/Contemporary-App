@@ -657,21 +657,26 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   display: none;
 }
 
+.sidebar-nav-link {
+  will-change: color, background-color;
+}
+
 .sidebar-nav-link.nav-link--active {
   color: var(--ink) !important;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .sidebar-nav-link.nav-link--active::before {
   content: "";
   position: absolute;
-  left: -1.25rem;
+  left: -0.75rem;
   top: 50%;
   transform: translateY(-50%);
   width: 2px;
-  height: 1.25rem;
-  background: var(--ink);
-  border-radius: 1px;
+  height: 1rem;
+  background: var(--ink-75);
+  border-radius: 2px;
+  transition: height 0.25s var(--ease-editorial), opacity 0.25s ease;
 }
 
 .sidebar-scroll-track,

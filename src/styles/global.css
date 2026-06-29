@@ -484,6 +484,39 @@ html::-webkit-scrollbar-thumb { background: #111111; }
   text-align: left;
 }
 
+/* ── Global smoothness layer ─────────────────────────────────────────── */
+
+/* Tab panels — GPU-composited fade handled by JS, but set will-change here */
+[data-tab-panel] {
+  will-change: opacity, transform;
+}
+
+/* All anchor and button hover transitions — consistent easing */
+a, button {
+  transition-timing-function: var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+/* Focus rings — clean, non-jarring */
+:focus-visible {
+  outline: 1.5px solid var(--ink-50);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Images — always smooth rendering */
+img {
+  image-rendering: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Scrollbar — dark themed, minimal */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ink-25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-45); }
+
+/* ── end smoothness layer ────────────────────────────────────────────── */
+
 /* Keep interactive UI readable — body text stays justified */
 button,
 input,
@@ -522,9 +555,11 @@ select,
   margin-inline: -0.75rem;
   border-bottom: 1px solid var(--border-subtle);
   box-shadow: inset 0 0 0 transparent;
+  cursor: pointer;
   transition:
-    box-shadow 0.35s var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1)),
-    background-color 0.25s ease;
+    box-shadow 0.3s var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1)),
+    background-color 0.2s var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1)),
+    transform 0.2s var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1));
   border-radius: 0.5rem;
 }
 
