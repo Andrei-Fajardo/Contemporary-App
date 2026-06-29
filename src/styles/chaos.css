@@ -713,6 +713,72 @@ html.motion-reduced .press-chaos__poster {
   max-width: min(52rem, 100%);
 }
 
+.about-chaos__city {
+  display: inline-block;
+  position: relative;
+  color: inherit;
+  cursor: default;
+  letter-spacing: 0.02em;
+  transition:
+    color 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    letter-spacing 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-chaos__city::after {
+  content: "";
+  position: absolute;
+  left: -0.06em;
+  right: -0.06em;
+  bottom: 0.08em;
+  height: 1.5px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--ink-70) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-chaos__city:hover,
+  .about-chaos__city:focus-visible {
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    transform: translateY(-1px);
+    text-shadow: 0 0 28px rgba(240, 238, 233, 0.2);
+    outline: none;
+  }
+
+  .about-chaos__city:hover::after,
+  .about-chaos__city:focus-visible::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-chaos__city,
+  .about-chaos__city::after {
+    transition: none;
+  }
+
+  .about-chaos__city:hover,
+  .about-chaos__city:focus-visible {
+    transform: none;
+    text-shadow: none;
+    letter-spacing: 0.02em;
+  }
+}
+
 .about-chaos__name {
   position: relative;
   display: inline-block;
