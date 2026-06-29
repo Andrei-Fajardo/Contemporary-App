@@ -54,7 +54,7 @@ const novels = siteCopy.publications.novels;
         <ul class="pubs-novel-list">
           {novels.map((novel) => (
             <li class="pubs-novel-list__item">
-              <span class="pubs-novel-list__title">{novel.title}</span>
+              <span class="editorial-row-list__title">{novel.title}</span>
               {novel.status === 'coming-soon' && (
                 <span class="pubs-novel-list__status">{l.comingSoon}</span>
               )}

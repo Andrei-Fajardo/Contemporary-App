@@ -118,19 +118,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem 0.75rem;
+  padding: 1.25rem 0.75rem;
   margin-inline: -0.75rem;
   border-bottom: 1px solid var(--border-subtle);
   border-radius: var(--radius-default);
-}
-
-.pubs-novel-list__title {
-  font-family: var(--font-heading);
-  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1.35;
-  text-align: left;
 }
 
 .pubs-novel-list__status {
@@ -395,6 +386,11 @@
     white-space: normal !important;
     font-size: 1rem !important;
     line-height: 1.4 !important;
+  }
+
+  .pubs-overlap .pubs-novel-list__item {
+    padding: 0.875rem 0 !important;
+    margin: 0 !important;
   }
 
   /* ── PRESS: same full-width stacked approach ── */
