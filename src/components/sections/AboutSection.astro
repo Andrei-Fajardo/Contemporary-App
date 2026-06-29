@@ -27,10 +27,28 @@ const l = t[locale];
       </div>
 
       <div class="scroll-reveal about-chaos__meta">
-        <div>
+        <div class="about-chaos__meta-block">
           <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
           <ul class="about-chaos__list">
             {siteCopy.about.interests.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="about-chaos__meta-block">
+          <p class="section-eyebrow mb-3">{l.influencesLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.literaryGhosts.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="about-chaos__meta-block">
+          <p class="section-eyebrow mb-3">{l.mentalCatharsisLabel}</p>
+          <ul class="about-chaos__list">
+            {siteCopy.about.mentalCatharsis.map((item) => (
               <li>{item}</li>
             ))}
           </ul>

@@ -736,6 +736,12 @@ html.motion-reduced .press-chaos__poster {
   border-top: 1px solid var(--border-subtle);
 }
 
+.about-chaos__meta-block + .about-chaos__meta-block {
+  margin-top: 0.25rem;
+  padding-top: clamp(1.25rem, 3vh, 2rem);
+  border-top: 1px solid var(--border-subtle);
+}
+
 @media (min-width: 640px) {
   .about-chaos__meta {
     grid-template-columns: 1fr;
