@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Forum&family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
 @import "./chaos.css";
@@ -7,19 +7,19 @@
 @import "./about-panel.css";
 @import "./utero-layers.css";
 
-/* Editorial typography — Forum (heads) + Inter (body) */
+/* Editorial typography — DM Serif Display (heads) + DM Sans (body) + Cormorant Garamond (hero name) */
 :root {
   color-scheme: light only;
-  --font-heading: "Forum", Georgia, "Times New Roman", serif;
-  --font-subheading: "Forum", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-subheading: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-body: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
   --font-name-cursive: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --heading-track: 0.1em;
+  --heading-track: 0.02em;
 
   /* Legacy aliases */
   --font-forum: var(--font-heading);
-  --font-serif: var(--font-body);
+  --font-serif: var(--font-heading);
   --font-sans: var(--font-body);
 
   /* color.canvas / color.ink — ux-guidelines.md */
@@ -319,16 +319,15 @@ html {
   letter-spacing: 0.03em;
 }
 
-/* Forum heading — ALL CAPS + tracked */
+/* DM Serif Display heading — Title Case, minimal tracking */
 .type-heading {
   font-family: var(--font-heading);
   font-weight: 400;
-  text-transform: uppercase;
   letter-spacing: var(--heading-track);
   line-height: 1.05;
 }
 
-/* Forum sub-heading — Title Case, no extra tracking */
+/* DM Serif Display sub-heading — same family, tighter line-height */
 .type-subheading {
   font-family: var(--font-subheading);
   font-weight: 400;
@@ -336,14 +335,14 @@ html {
   line-height: 1.15;
 }
 
-/* Inter body — regular weight */
+/* DM Sans body — light weight for editorial warmth */
 .type-body {
   font-family: var(--font-body);
   font-weight: 400;
-  line-height: 1.62;
+  line-height: 1.65;
 }
 
-/* Exhibition wall label — Forum heads + Inter prose */
+/* Exhibition wall label — DM Serif Display heads + DM Sans prose */
 .art-wall-label h1,
 .art-wall-label h3 {
   font-family: var(--font-subheading);

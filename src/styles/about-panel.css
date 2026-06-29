@@ -109,7 +109,7 @@
 
 /* Roles: small italic below the name */
 .hero-about-layer__roles {
-  font-family: var(--font-body, "Inter", sans-serif);
+  font-family: var(--font-body, "DM Sans", sans-serif);
   font-size: clamp(0.8125rem, 0.9vw, 0.9375rem);
   font-style: italic;
   font-weight: 400;
