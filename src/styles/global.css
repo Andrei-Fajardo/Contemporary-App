@@ -869,7 +869,7 @@ select,
   /* Hide every artwork wrapper — cleaner mobile layout without the images */
   .research-panel__art,
   .contacts-panel__art,
-  .hero-about-layer__art,
+  .hero-about-layer__art:not([data-headshot]),
   [data-artwork-parallax] {
     display: none !important;
   }
