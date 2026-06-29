@@ -1,6 +1,7 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
 import { publicationLinks } from '../../data/content';
+import { siteCopy } from '../../data/site-copy';
 import { t, type LocaleKey } from '../../data/translations';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const novels = siteCopy.publications.novels;
 ---
 
 <section id="publications" class="scroll-section section-gap pubs-overlap">
@@ -39,7 +41,28 @@ const l = t[locale];
     <h2 class="scroll-reveal type-heading pubs-overlap__heading">
       {l.publicationsHeading}
     </h2>
+
+    <p class="scroll-reveal content-prose text-ink-60 pubs-section__intro">
+      {l.publicationsIntro}
+    </p>
+
     <EditorialLinkList items={publicationLinks} showYear={false} />
+
+    {novels.length > 0 && (
+      <div class="pubs-section__novels scroll-reveal">
+        <p class="section-eyebrow pubs-section__novels-label">{l.novelsLabel}</p>
+        <ul class="pubs-novel-list">
+          {novels.map((novel) => (
+            <li class="pubs-novel-list__item">
+              <span class="pubs-novel-list__title">{novel.title}</span>
+              {novel.status === 'coming-soon' && (
+                <span class="pubs-novel-list__status">{l.comingSoon}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
   </div>
 
 </section>

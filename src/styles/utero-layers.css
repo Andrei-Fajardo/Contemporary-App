@@ -89,6 +89,65 @@
   text-transform: uppercase;
 }
 
+.pubs-section__intro {
+  max-width: min(88ch, 100%);
+  margin-bottom: clamp(1rem, 2.5vh, 1.5rem);
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
+}
+
+.pubs-section__novels {
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+  padding-top: clamp(1rem, 2.5vh, 1.5rem);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.pubs-section__novels-label {
+  margin-bottom: 0.75rem;
+}
+
+.pubs-novel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pubs-novel-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0.75rem;
+  margin-inline: -0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: var(--radius-default);
+}
+
+.pubs-novel-list__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.35;
+  text-align: left;
+}
+
+.pubs-novel-list__status {
+  font-family: var(--font-heading);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.75rem);
+  font-weight: 400;
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  color: var(--ink-55);
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-lang-btn);
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
 
 /* ── 1. EDITORIAL OVERLAP — PRESS ────────────────────────────
    Same structural pattern as Publications.
