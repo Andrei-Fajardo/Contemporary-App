@@ -8,33 +8,15 @@
   --utero-womb-glow: rgba(196, 30, 58, 0.04);
 }
 
-/* Grain always visible — warm paper texture */
+/* Grain — on dark canvas use screen/overlay to add light texture, not multiply */
 .grain-overlay::before {
-  opacity: 0.04;
-  mix-blend-mode: multiply;
+  opacity: 0.06;
+  mix-blend-mode: screen;
 }
 
 .grain-overlay::after {
-  opacity: 0.025;
+  opacity: 0.04;
   mix-blend-mode: overlay;
-}
-
-/* Dark-mode OS preference: switch grain blend to normal so it never
-   darkens the forced-light #f0eee9 canvas on iOS Safari / Android */
-@media (prefers-color-scheme: dark) {
-  .grain-overlay::before {
-    mix-blend-mode: normal;
-    opacity: 0.03;
-  }
-  .grain-overlay::after {
-    mix-blend-mode: normal;
-    opacity: 0.02;
-  }
-  /* All scroll-section depth layers — also use multiply on light canvas */
-  .scroll-section::before {
-    mix-blend-mode: normal;
-    opacity: 0.02;
-  }
 }
 
 /* Subtle ink depth on sections — static, not animated */

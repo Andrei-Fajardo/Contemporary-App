@@ -23,28 +23,28 @@
   --font-serif: var(--font-heading);
   --font-sans: var(--font-body);
 
-  /* color.canvas / color.ink — ux-guidelines.md */
-  --canvas: #F0EEE9;
-  --ink: #111111;
-  --ink-muted: #555555;
-  --ink-tertiary: #888888;
-  --ink-inverse: #ffffff;
-  --ink-90: rgba(17, 17, 17, 0.9);
-  --ink-75: rgba(17, 17, 17, 0.75);
-  --ink-70: rgba(17, 17, 17, 0.7);
-  --ink-60: rgba(17, 17, 17, 0.6);
-  --ink-55: rgba(17, 17, 17, 0.55);
-  --ink-65: rgba(17, 17, 17, 0.65);
-  --ink-50: rgba(17, 17, 17, 0.5);
-  --ink-45: rgba(17, 17, 17, 0.45);
-  --ink-35: rgba(17, 17, 17, 0.35);
-  --ink-25: rgba(17, 17, 17, 0.25);
+  /* color.canvas / color.ink — dark editorial inversion */
+  --canvas: #141414;
+  --ink: #F0EEE9;
+  --ink-muted: #AAAAAA;
+  --ink-tertiary: #777777;
+  --ink-inverse: #141414;
+  --ink-90: rgba(240, 238, 233, 0.9);
+  --ink-75: rgba(240, 238, 233, 0.75);
+  --ink-70: rgba(240, 238, 233, 0.7);
+  --ink-60: rgba(240, 238, 233, 0.6);
+  --ink-55: rgba(240, 238, 233, 0.55);
+  --ink-65: rgba(240, 238, 233, 0.65);
+  --ink-50: rgba(240, 238, 233, 0.5);
+  --ink-45: rgba(240, 238, 233, 0.45);
+  --ink-35: rgba(240, 238, 233, 0.35);
+  --ink-25: rgba(240, 238, 233, 0.25);
 
-  --border-subtle: rgba(17, 17, 17, 0.1);
-  --border-section: rgba(17, 17, 17, 0.2);
-  --border-sidebar: rgba(0, 0, 0, 0.06);
-  --surface-placeholder: rgba(0, 0, 0, 0.04);
-  --surface-hero-frame: rgba(0, 0, 0, 0.03);
+  --border-subtle: rgba(240, 238, 233, 0.12);
+  --border-section: rgba(240, 238, 233, 0.22);
+  --border-sidebar: rgba(240, 238, 233, 0.08);
+  --surface-placeholder: rgba(240, 238, 233, 0.05);
+  --surface-hero-frame: rgba(240, 238, 233, 0.04);
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   --radius-default: 0.25rem;
@@ -55,13 +55,12 @@
   --type-scale: 1;
 }
 
-/* Warm editorial canvas background — force light mode even on dark-mode devices */
+/* Dark editorial canvas */
 body {
   background-color: var(--canvas) !important;
   background: var(--canvas) !important;
   color: var(--ink) !important;
-  color-scheme: light only;
-  -webkit-color-scheme: light;
+  color-scheme: dark;
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
@@ -76,24 +75,8 @@ html {
   padding: 0;
   background-color: var(--canvas) !important;
   background: var(--canvas) !important;
-  color-scheme: light only;
-  -webkit-color-scheme: light;
+  color-scheme: dark;
   font-size: calc(16px * var(--type-scale));
-}
-
-/* Hard override for dark-mode OS preference — always render as light */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --canvas: #F0EEE9;
-    --ink: #111111;
-    --ink-muted: #555555;
-    color-scheme: light only;
-  }
-  html, body {
-    background-color: #F0EEE9 !important;
-    color: #111111 !important;
-    color-scheme: light only;
-  }
 }
 
 /* Global Premium Grain Overlay Blanket — Dual-Layer Contrast Blending */
@@ -1090,7 +1073,7 @@ select,
   
   /* Improve tap highlight */
   * {
-    -webkit-tap-highlight-color: rgba(17, 17, 17, 0.1);
+    -webkit-tap-highlight-color: rgba(240, 238, 233, 0.1);
   }
 }
 
@@ -1106,37 +1089,4 @@ select,
   }
 }
 
-/* iOS Safari / system dark appearance — force editorial light palette */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: light only;
-    --canvas: #f0eee9;
-    --ink: #111111;
-    --ink-muted: #555555;
-    --ink-tertiary: #888888;
-    --ink-inverse: #ffffff;
-    --border-subtle: rgba(17, 17, 17, 0.1);
-    --border-section: rgba(17, 17, 17, 0.2);
-    --surface-placeholder: rgba(0, 0, 0, 0.04);
-    --surface-hero-frame: rgba(0, 0, 0, 0.03);
-  }
-
-  html {
-    color-scheme: light only;
-    background-color: var(--canvas) !important;
-  }
-
-  body,
-  .site-shell,
-  #mobile-drawer,
-  .mobile-drawer__footer,
-  header.lg\:hidden,
-  .desktop-sidebar,
-  .desktop-sidebar__inner,
-  .site-topbar,
-  .site-footer {
-    background-color: var(--canvas) !important;
-    color: var(--ink) !important;
-    color-scheme: light only;
-  }
-}
+/* Dark editorial — canvas is already dark, no OS override needed */

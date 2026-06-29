@@ -18,22 +18,22 @@ const currentLang = Astro.url.pathname.split('/')[1] || 'en';
 ---
 
 <!doctype html>
-<html lang="en" style="color-scheme: light only; background-color: #F0EEE9;">
+<html lang="en" style="color-scheme: light only; background-color: #141414;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="color-scheme" content="light only" />
     <meta name="supported-color-schemes" content="light" />
-    <meta name="theme-color" content="#F0EEE9" />
+    <meta name="theme-color" content="#141414" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <style is:inline>
-      html, body { background-color: #f0eee9 !important; color: #111 !important; color-scheme: light only; }
+      html, body { background-color: #141414 !important; color: #F0EEE9 !important; color-scheme: dark; }
     </style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} — Anna Dauyl Rockswell</title>
     <ClientRouter />
   </head>
-  <body class="font-body text-neutral-800 antialiased bg-[#F0EEE9]">
+  <body class="font-body text-neutral-800 antialiased bg-[#141414]">
     <!-- Film Grain Overlay -->
     <div class="grain-overlay" />
 
@@ -43,7 +43,7 @@ const currentLang = Astro.url.pathname.split('/')[1] || 'en';
         <a
           href={href}
           class={`lang-btn px-2.5 py-1.5 block transition-colors duration-150 ${
-            currentLang === code ? 'bg-[#111111] text-white' : 'text-[#555] hover:bg-[#111111] hover:text-white'
+            currentLang === code ? 'bg-[#F0EEE9] text-white' : 'text-[#555] hover:bg-[#F0EEE9] hover:text-white'
           }`}
           data-lang={code}
         >
@@ -66,10 +66,10 @@ const currentLang = Astro.url.pathname.split('/')[1] || 'en';
     document.querySelectorAll("#lang-toggle .lang-btn").forEach((btn) => {
       const lang = btn.getAttribute("data-lang");
       const isMatch = lang === active;
-      btn.classList.toggle("bg-[#111111]", isMatch);
+      btn.classList.toggle("bg-[#F0EEE9]", isMatch);
       btn.classList.toggle("text-white", isMatch);
       if (!isMatch) {
-        btn.classList.remove("bg-[#111111]", "bg-[#111]", "text-white");
+        btn.classList.remove("bg-[#F0EEE9]", "bg-[#111]", "text-white");
       }
     });
   }

@@ -655,7 +655,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 .sidebar-nav-link.nav-link--active {
-  color: #111 !important;
+  color: var(--ink) !important;
   font-weight: 600;
 }
 
@@ -667,7 +667,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   transform: translateY(-50%);
   width: 2px;
   height: 1.25rem;
-  background: #111;
+  background: var(--ink);
   border-radius: 1px;
 }
 
@@ -800,7 +800,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 .sidebar-nav-link:hover,
 .sidebar-nav-link:focus-visible {
-  color: #111 !important;
+  color: var(--ink) !important;
 }
 
 .sidebar-nav-label {
@@ -1161,7 +1161,7 @@ html {
   display: block;
   width: 0;
   height: 100%;
-  background: #111;
+  background: var(--ink);
   transition: none;
 }
 
@@ -1283,11 +1283,11 @@ html {
 
 .lang-btn:hover:not(.lang-btn--active) {
   background: rgba(17, 17, 17, 0.07);
-  color: #111;
+  color: var(--ink);
 }
 
 .lang-btn--active {
-  background: #111;
+  background: var(--ink);
   color: var(--canvas);
   box-shadow:
     inset 0 0 0 1px rgba(240, 238, 233, 0.12),
@@ -1295,7 +1295,7 @@ html {
 }
 
 .lang-btn--active:hover {
-  background: #111;
+  background: var(--ink);
   color: var(--canvas);
 }
 
