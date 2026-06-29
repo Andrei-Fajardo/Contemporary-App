@@ -33,7 +33,7 @@
 
 .hero-about-layer__art {
   flex: 0 0 auto;
-  width: clamp(16rem, 36vw, 38rem);
+  width: clamp(13rem, 26vw, 22rem);
   z-index: 2;
   pointer-events: none;
   user-select: none;
@@ -42,16 +42,16 @@
 .hero-about-layer__art-img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: clamp(26rem, 48vh, 38rem);
-  object-fit: contain;
-  object-position: left center;
-  filter: grayscale(1) contrast(1.05);
-  opacity: 0.88;
-  mix-blend-mode: multiply;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 2px;
+  /* Subtle inner shadow to give the headshot depth against the canvas */
+  box-shadow: 0 4px 24px rgba(17, 17, 17, 0.14), 0 1px 4px rgba(17, 17, 17, 0.08);
+  filter: contrast(1.04) brightness(0.97);
+  opacity: 1;
   cursor: default;
   pointer-events: none;
-  margin-bottom: clamp(-4rem, -10vh, -2rem);
   animation: hero-portrait-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
   will-change: transform;
   transition: transform 0.1s linear;
@@ -59,7 +59,7 @@
 
 @keyframes hero-portrait-in {
   from { opacity: 0; transform: translateY(1.5rem); }
-  to   { opacity: 0.88; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ?? Hero section ????????????????????????????????????????????? */
@@ -158,7 +158,7 @@
 /* ?? Tablet (768?1023px) ?????????????????????????????????????? */
 @media (max-width: 1023px) {
   .hero-about-layer__art {
-    width: clamp(16rem, 46vw, 24rem);
+    width: clamp(11rem, 32vw, 18rem);
   }
 
   .hero-about-layer__cluster {
@@ -167,8 +167,9 @@
   }
 
   .hero-about-layer__art-img {
-    max-height: clamp(20rem, 42vh, 28rem);
-    margin-bottom: clamp(-2.5rem, -6vh, -1rem);
+    aspect-ratio: 1 / 1;
+    max-height: none;
+    margin-bottom: 0;
   }
 
   .hero-about-layer {
@@ -195,7 +196,7 @@
 /* ?? Mobile (<640px) ??????????????????????????????????????????? */
 @media (max-width: 639px) {
   .hero-about-layer__art {
-    width: clamp(11rem, 40vw, 15rem);
+    width: clamp(8rem, 32vw, 11rem);
   }
 
   .hero-about-layer__cluster {
@@ -204,9 +205,10 @@
   }
 
   .hero-about-layer__art-img {
-    max-height: clamp(16rem, 38vh, 22rem);
-    margin-bottom: clamp(-1.5rem, -4vh, -0.5rem);
-    opacity: 0.4;
+    aspect-ratio: 1 / 1;
+    max-height: none;
+    margin-bottom: 0;
+    opacity: 1;
   }
 
   .hero-about-layer {
@@ -245,6 +247,6 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-about-layer__art-img {
     animation: none;
-    opacity: 0.88;
+    opacity: 1;
   }
 }
