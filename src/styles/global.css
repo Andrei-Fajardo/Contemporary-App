@@ -486,10 +486,9 @@ html::-webkit-scrollbar-thumb { background: #111111; }
 
 /* ── Global smoothness layer ─────────────────────────────────────────── */
 
-/* Tab panels — GPU-composited fade handled by JS, but set will-change here */
-[data-tab-panel] {
-  will-change: opacity, transform;
-}
+/* Tab panels — opacity/transform set directly by JS during transitions;
+   do NOT set will-change here as it creates a stacking context that traps
+   position:fixed children (gallery overlay, lightbox, lang toggle). */
 
 /* All anchor and button hover transitions — consistent easing */
 a, button {

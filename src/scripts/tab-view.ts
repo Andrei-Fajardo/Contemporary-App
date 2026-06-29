@@ -65,6 +65,11 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
       panel.classList.toggle("is-active", on);
       panel.hidden = !on;
       panel.setAttribute("aria-hidden", on ? "false" : "true");
+      // Clear any inline transition styles left from fade-out so
+      // position:fixed children (gallery overlay) aren't trapped
+      panel.style.transition = "";
+      panel.style.opacity = "";
+      panel.style.transform = "";
     });
 
     const main = document.querySelector<HTMLElement>(".tabular-main");
@@ -72,15 +77,20 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
     window.scrollTo({ top: 0, behavior: "instant" });
 
     if (incoming) {
+      // Fade-in: use opacity only — avoid transform which creates stacking context
       incoming.style.opacity = "0";
-      incoming.style.transform = "translateY(10px)";
       loadLazyMediaIn(incoming);
-      // Force reflow then animate in
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          incoming.style.transition = `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease`;
+          incoming.style.transition = `opacity ${FADE_MS}ms ease`;
           incoming.style.opacity = "1";
-          incoming.style.transform = "translateY(0)";
+          // Clean up after animation so no stacking context lingers
+          setTimeout(() => {
+            if (incoming) {
+              incoming.style.transition = "";
+              incoming.style.opacity = "";
+            }
+          }, FADE_MS + 20);
         });
       });
     }
