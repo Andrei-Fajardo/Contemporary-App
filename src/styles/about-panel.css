@@ -8,7 +8,7 @@
   position: relative;
   isolation: isolate;
   background: var(--canvas, #141414);
-  flex: 1;
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
 }
