@@ -65,7 +65,7 @@
 /* ?? Hero section ????????????????????????????????????????????? */
 .hero-about-layer {
   position: relative;
-  min-height: clamp(16rem, 42vh, 30rem);
+  /* No fixed min-height — let the image dictate the section height */
 }
 
 /* Inner shell: centers portrait + name as one unit */
@@ -75,9 +75,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: clamp(16rem, 42vh, 30rem);
-  padding-top: clamp(2.25rem, 5.5vh, 3.75rem);
-  padding-bottom: clamp(1rem, 2.5vh, 1.75rem);
+  padding-top: clamp(2.5rem, 5vh, 4rem);
+  padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
   max-width: 100%;
 }
 
@@ -98,8 +97,8 @@
   font-family: var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(3.25rem, 9vw, 7rem);
-  line-height: 0.9;
+  font-size: clamp(3.75rem, 8vw, 8rem);
+  line-height: 0.92;
   letter-spacing: -0.01em;
   color: var(--ink, #111);
   margin: 0;
@@ -130,16 +129,15 @@
 }
 
 /* ?? Bio section ?????????????????????????????????????????????? */
-/* Bio overlaps the lower half of the portrait vertically */
 .about-panel-stack__content {
   position: relative;
   z-index: 4;
   flex: 1 1 auto;
-  padding-top: clamp(2rem, 5vh, 3.5rem);
-  margin-top: clamp(-3rem, -8vh, -1.5rem);
+  padding-top: clamp(1.5rem, 3vh, 2.5rem);
+  margin-top: 0;
 }
 
-/* Bio text starts to the right of the centered portrait */
+/* Bio text starts to the right of center — aligned with the name column */
 .about-panel-stack__content-inner {
   margin-left: clamp(44%, 48vw, 52%);
   max-width: min(42rem, 52vw);
@@ -166,24 +164,13 @@
     transform: translateX(clamp(-2rem, -4vw, -1rem));
   }
 
-  .hero-about-layer__art-img {
-    aspect-ratio: 1 / 1;
-    max-height: none;
-    margin-bottom: 0;
-  }
-
-  .hero-about-layer {
-    min-height: clamp(14rem, 36vh, 24rem);
-  }
-
   .hero-about-layer__inner {
-    min-height: clamp(14rem, 34vh, 22rem);
-    padding-top: clamp(1.75rem, 4.5vh, 3rem);
-    padding-bottom: clamp(0.875rem, 2vh, 1.25rem);
+    padding-top: clamp(2rem, 4.5vh, 3rem);
+    padding-bottom: clamp(1rem, 2vh, 1.5rem);
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(2.75rem, 9vw, 4.5rem);
+    font-size: clamp(3rem, 9vw, 5.5rem);
   }
 
   .about-panel-stack__content-inner {
@@ -211,12 +198,7 @@
     opacity: 1;
   }
 
-  .hero-about-layer {
-    min-height: clamp(12rem, 32vh, 18rem);
-  }
-
   .hero-about-layer__inner {
-    min-height: clamp(12rem, 30vh, 16rem);
     padding-top: clamp(1.5rem, 4vh, 2.5rem);
     padding-bottom: clamp(0.75rem, 1.5vh, 1.25rem);
   }
