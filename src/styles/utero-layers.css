@@ -75,6 +75,7 @@
   z-index: 2;
   /* Dark translucent bg — text stays legible over image zone */
   background: rgba(20, 20, 20, 0.88);
+  border-radius: 0.75rem 0 0 0.75rem;
   /* Generous left padding pushes text past the image overlap zone */
   padding-left: clamp(1.5rem, 3vw, 2.5rem);
   padding-right: clamp(1rem, 2vw, 1.5rem);
@@ -136,6 +137,7 @@
   right: 0;
   z-index: 2;
   background: rgba(20, 20, 20, 0.88);
+  border-radius: 0.75rem 0 0 0.75rem;
   padding-left: clamp(1.5rem, 3vw, 2.5rem);
   padding-right: clamp(1rem, 2vw, 1.5rem);
   padding-block: clamp(1.25rem, 3vh, 2rem);
