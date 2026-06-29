@@ -649,14 +649,25 @@ select,
 
 @media (max-width: 1023px) {
   .editorial-row-list .editorial-row-list__item {
-    grid-template-columns: 2.75rem 1fr;
+    grid-template-columns: max-content 1fr;
     gap: 0.15rem 0.75rem;
     padding: 0.875rem 0.25rem;
     margin-inline: 0;
   }
 
+  .editorial-row-list__year {
+    max-width: 5.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .editorial-row-list__title {
     font-size: 1.125rem;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
   }
 
   /* No hover arrow on touch devices */
