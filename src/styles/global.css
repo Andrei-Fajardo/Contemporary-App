@@ -655,6 +655,10 @@ select,
     margin-inline: 0;
   }
 
+  .editorial-row-list--no-year .editorial-row-list__item {
+    grid-template-columns: 1fr;
+  }
+
   .editorial-row-list__year {
     white-space: nowrap;
     overflow: hidden;
@@ -669,6 +673,10 @@ select,
     overflow-wrap: anywhere;
     hyphens: none;
     -webkit-hyphens: none;
+  }
+
+  .editorial-row-list--no-year .editorial-row-list__title {
+    grid-column: 1;
   }
 
   /* No hover arrow on touch devices */
