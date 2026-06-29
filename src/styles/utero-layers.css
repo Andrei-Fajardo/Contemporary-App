@@ -73,8 +73,8 @@
   /* Width extends to full right edge */
   right: 0;
   z-index: 2;
-  /* Warm translucent bg — text stays legible over image zone */
-  background: rgba(240, 238, 233, 0.88);
+  /* Dark translucent bg — text stays legible over image zone */
+  background: rgba(20, 20, 20, 0.88);
   /* Generous left padding pushes text past the image overlap zone */
   padding-left: clamp(1.5rem, 3vw, 2.5rem);
   padding-right: clamp(1rem, 2vw, 1.5rem);
@@ -135,7 +135,7 @@
   top: clamp(2rem, 5vh, 3.5rem);
   right: 0;
   z-index: 2;
-  background: rgba(240, 238, 233, 0.88);
+  background: rgba(20, 20, 20, 0.88);
   padding-left: clamp(1.5rem, 3vw, 2.5rem);
   padding-right: clamp(1rem, 2vw, 1.5rem);
   padding-block: clamp(1.25rem, 3vh, 2rem);
