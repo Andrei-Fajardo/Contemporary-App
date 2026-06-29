@@ -525,11 +525,12 @@ select,
   transition:
     box-shadow 0.35s var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1)),
     background-color 0.25s ease;
-  border-radius: var(--radius-default, 0.25rem);
+  border-radius: 0.5rem;
 }
 
 .editorial-row-list .editorial-row-list__item:hover {
   box-shadow: inset 3px 0 0 var(--ink-35);
+  background-color: var(--surface-placeholder);
 }
 
 .editorial-row-list--no-year .editorial-row-list__item {
