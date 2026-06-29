@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 @import "tailwindcss";
 @import "./motion.css";
 @import "./chaos.css";
@@ -7,15 +7,15 @@
 @import "./about-panel.css";
 @import "./utero-layers.css";
 
-/* Editorial typography — DM Serif Display (heads) + DM Sans (body) + Cormorant Garamond (hero name) */
+/* Editorial typography — Cormorant Garamond (heads) + Raleway 300 (body) */
 :root {
   color-scheme: light only;
-  --font-heading: "DM Serif Display", Georgia, "Times New Roman", serif;
-  --font-subheading: "DM Serif Display", Georgia, "Times New Roman", serif;
-  --font-body: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
+  --font-subheading: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
+  --font-body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
   --font-name-cursive: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --heading-track: 0.02em;
+  --heading-track: 0.04em;
 
   /* Legacy aliases */
   --font-forum: var(--font-heading);
@@ -64,6 +64,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
+  font-weight: 300;
+  letter-spacing: 0.01em;
   text-align: justify;
   hyphens: auto;
   -webkit-hyphens: auto;
@@ -319,49 +321,48 @@ html {
   letter-spacing: 0.03em;
 }
 
-/* DM Serif Display heading — Title Case, minimal tracking */
+/* Cormorant Garamond heading — light weight, elegant thin editorial */
 .type-heading {
   font-family: var(--font-heading);
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: var(--heading-track);
   line-height: 1.05;
 }
 
-/* DM Serif Display sub-heading — same family, tighter line-height */
+/* Cormorant Garamond sub-heading — same family, slightly looser */
 .type-subheading {
   font-family: var(--font-subheading);
-  font-weight: 400;
-  letter-spacing: normal;
+  font-weight: 300;
+  letter-spacing: 0.02em;
   line-height: 1.15;
 }
 
-/* DM Sans body — light weight for editorial warmth */
+/* Raleway body — weight 300 for thin, airy editorial feel */
 .type-body {
   font-family: var(--font-body);
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.65;
 }
 
-/* Exhibition wall label — DM Serif Display heads + DM Sans prose */
+/* Exhibition wall label — Cormorant Garamond heads + Raleway prose */
 .art-wall-label h1,
 .art-wall-label h3 {
   font-family: var(--font-subheading);
-  font-weight: 400;
-  letter-spacing: normal;
+  font-weight: 300;
+  letter-spacing: 0.02em;
   line-height: 1.05;
 }
 
 .art-wall-label .type-heading {
   font-family: var(--font-heading);
-  font-weight: 400;
-  text-transform: uppercase;
+  font-weight: 300;
   letter-spacing: var(--heading-track);
 }
 
 .art-wall-label .content-prose,
 .art-wall-label .type-body {
   font-family: var(--font-body);
-  font-weight: 400;
+  font-weight: 300;
   text-align: justify;
   text-align-last: left;
   hyphens: auto;

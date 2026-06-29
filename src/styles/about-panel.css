@@ -33,7 +33,7 @@
 
 .hero-about-layer__art {
   flex: 0 0 auto;
-  width: clamp(13rem, 26vw, 22rem);
+  width: clamp(22rem, 42vw, 38rem);
   z-index: 2;
   pointer-events: none;
   user-select: none;
@@ -109,7 +109,7 @@
 
 /* Roles: small italic below the name */
 .hero-about-layer__roles {
-  font-family: var(--font-body, "DM Sans", sans-serif);
+  font-family: var(--font-body, "Raleway", sans-serif);
   font-size: clamp(0.8125rem, 0.9vw, 0.9375rem);
   font-style: italic;
   font-weight: 400;
@@ -158,7 +158,7 @@
 /* ?? Tablet (768?1023px) ?????????????????????????????????????? */
 @media (max-width: 1023px) {
   .hero-about-layer__art {
-    width: clamp(11rem, 32vw, 18rem);
+    width: clamp(18rem, 46vw, 28rem);
   }
 
   .hero-about-layer__cluster {
@@ -196,7 +196,7 @@
 /* ?? Mobile (<640px) ??????????????????????????????????????????? */
 @media (max-width: 639px) {
   .hero-about-layer__art {
-    width: clamp(8rem, 32vw, 11rem);
+    width: clamp(10rem, 38vw, 14rem);
   }
 
   .hero-about-layer__cluster {
