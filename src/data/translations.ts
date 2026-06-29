@@ -24,7 +24,7 @@ export const t = {
     bio: "Heavily influenced by background in writing, dark expressionism, transgressive literature, counterculture movements, and Jungian psychoanalysis, her themes often circle the edges of contrarian art, visceral imagery, feminine experience, mental health interiority, and raw political & social commentary.",
     interestsLabel: "Interests",
     inspirationsLabel: "Inspirations",
-    mentalCatharsisLabel: "Mental Catharsis",
+    mentalCatharsisLabel: "Inspirations",
     viewPaintings: "View Available Paintings",
     viewExhibitions: "View All Exhibitions",
     exhibitionsTag: "EXHIBITIONS", exhibitionHistory: "Exhibition History",

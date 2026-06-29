@@ -772,16 +772,12 @@ html.motion-reduced .press-chaos__poster {
 }
 
 .about-chaos__list li:hover {
-  border-color: var(--accent-red);
-  color: var(--accent-red);
+  border-color: var(--ink-50);
+  color: var(--ink);
 }
 
 .about-chaos__list li:nth-child(2n) {
   transform: rotate(-0.5deg);
-}
-
-.about-chaos__list li:nth-child(3n + 1) {
-  border-left: 2px solid var(--accent-red);
 }
 
 .about-chaos__statement {
