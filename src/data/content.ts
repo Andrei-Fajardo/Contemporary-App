@@ -320,16 +320,6 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     ],
   },
   {
-    id: 'virtual-intl-fine-arts-fair-2026',
-    year: '2026',
-    title: 'Virtual International Fine Arts Fair',
-    gallery: 'Virtual International Fine Arts Fair',
-    place: 'Virtual Exhibition',
-    kind: 'group',
-    category: 'digital',
-    images: ['/media/virtual/the-atrium.jpg'],
-  },
-  {
     id: 'soul-gift',
     year: '2026',
     title: 'Soul Gift',
