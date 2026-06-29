@@ -1,6 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import { researchLinks, igamingLinks, uplatformLinks } from '../../data/content';
+import { researchLinks, igamingLinks, uplatformBlogLinks, uplatformPressLinks } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
 interface Props {
@@ -69,7 +69,14 @@ const tabs = [
       hidden
       aria-hidden="true"
     >
-      <EditorialLinkList items={uplatformLinks} />
+      <div class="research-uplatform-group scroll-reveal">
+        <p class="section-eyebrow research-uplatform-group__label">Blog</p>
+        <EditorialLinkList items={uplatformBlogLinks} showYear={false} />
+      </div>
+      <div class="research-uplatform-group scroll-reveal">
+        <p class="section-eyebrow research-uplatform-group__label">Press Releases & Website Text</p>
+        <EditorialLinkList items={uplatformPressLinks} showYear={false} />
+      </div>
     </div>
   </div>
 </section>

@@ -401,6 +401,16 @@ html.motion-reduced .press-chaos__poster {
   flex: 1;
 }
 
+.research-uplatform-group + .research-uplatform-group {
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+  padding-top: clamp(1rem, 2.5vh, 1.5rem);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.research-uplatform-group__label {
+  margin-bottom: 0.75rem;
+}
+
 @media (max-width: 1023px) {
   .research-panel__art {
     width: clamp(18rem, 44vw, 31rem);
