@@ -86,7 +86,7 @@
 }
 
 .contacts-chaos__input:focus {
-  border-bottom-color: var(--ink-45);
+  border-color: var(--ink-55);
 }
 
 .contacts-chaos__submit {

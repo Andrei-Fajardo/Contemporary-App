@@ -439,29 +439,41 @@ html.motion-reduced .press-chaos__poster {
 
 .contacts-chaos__input {
   width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.15);
+  display: block;
+  background: rgba(240, 238, 233, 0.06);
+  border: 1px solid var(--border-section);
+  border-radius: 0.5rem;
   font-family: var(--font-body);
   font-size: clamp(0.9375rem, 1vw, 1.0625rem);
-  font-style: italic;
+  font-style: normal;
   line-height: 1.55;
-  color: var(--ink-75);
-  padding: 0.5rem 0;
-  transition: border-color 0.25s ease;
+  color: var(--ink);
+  padding: 0.75rem 1rem;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .contacts-chaos__input::placeholder {
   color: var(--ink-45);
+  font-style: italic;
+}
+
+.contacts-chaos__input:hover {
+  background: rgba(240, 238, 233, 0.09);
+  border-color: var(--ink-35);
 }
 
 .contacts-chaos__input:focus {
   outline: none;
-  border-bottom-color: var(--accent-red);
+  background: rgba(240, 238, 233, 0.1);
+  border-color: var(--ink-55);
+  box-shadow: 0 0 0 3px rgba(240, 238, 233, 0.08);
 }
 
 .contacts-chaos__input--area {
-  min-height: 6rem;
+  min-height: 8rem;
 }
 
 .contacts-chaos__submit {
@@ -473,6 +485,7 @@ html.motion-reduced .press-chaos__poster {
   color: var(--ink);
   background: transparent;
   border: 1px solid var(--ink-35);
+  border-radius: 0.5rem;
   padding: 0.875rem 2rem;
   cursor: pointer;
   transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
