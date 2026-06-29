@@ -232,12 +232,13 @@
     grid-column: 1 / -1;
     grid-row: 2;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(2.5rem, 11vw, 3.75rem);
+    font-size: clamp(4.25rem, 18vw, 6.25rem);
     line-height: 0.92;
     color: var(--ink, #F0EEE9);
     hyphens: none;
     -webkit-hyphens: none;
     word-break: keep-all;
+    width: 100%;
     padding-inline: clamp(0.75rem, 3vw, 1.25rem);
   }
 
