@@ -27,25 +27,11 @@
 }
 
 .chaos-splashes {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-  pointer-events: none;
-  z-index: 0;
+  display: none !important;
 }
 
 .chaos-splash {
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 50% 40% 60% 30%;
-  filter: blur(0.5px);
-  opacity: 0.72;
-  mix-blend-mode: multiply;
-  will-change: transform;
-  transform-origin: center center;
-  /* Position + drift driven by inline rAF script in Hero.astro */
-  animation: none !important;
+  display: none !important;
 }
 
 .chaos-splash--1 {
