@@ -120,7 +120,10 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     place: 'Seoul, South Korea',
     kind: 'solo',
     category: 'physical',
-    images: ['/media/exhibitions/im-insa/im-insa.jpg'],
+    images: [
+      exhibitionPoster('im insa.jpg'),
+      '/media/exhibitions/im-insa/im-insa.jpg',
+    ],
   },
   {
     id: 'kinship',
@@ -420,7 +423,7 @@ export const exhibitions = [
   { image: "/media/exhibitions/holy-london/holy-london-1.jpg", title: "The Holy Art – London", year: "2026", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
   { image: holyParisJournal(1), title: "The Holy Art – Paris", year: "2026", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
   { image: exhibitionPoster('Istanbul Art Show.jpg'), title: "Luna Grande Art", year: "2025", location: "ISTANBUL, TURKEY", subtitle: "FEATURED ARTIST SHOWCASE" },
-  { image: "/media/exhibitions/im-insa/im-insa.jpg", title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
+  { image: exhibitionPoster('im insa.jpg'), title: "IM INSA", year: "2025", location: "INSADONG, SEOUL", subtitle: "SOLO EXHIBITION" },
 ];
 
 export interface ExhibitionItem {
