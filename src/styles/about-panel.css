@@ -90,16 +90,16 @@
 }
 
 /*
-  The headline: large Cormorant Garamond italic.
+  The headline: Relationship of Melodrame display serif.
   Each word wraps naturally (Anna Dauyl / Rockswell) matching reference.
 */
 .hero-about-layer__heading {
-  font-family: var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(3.75rem, 8vw, 8rem);
-  line-height: 0.92;
-  letter-spacing: -0.01em;
+  font-family: "Relationship of Melodrame", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(4.75rem, 11vw, 10.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.015em;
   color: var(--ink, #111);
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -151,7 +151,7 @@
 
 /* ?? editorial-dense overrides ???????????????????????????????? */
 .editorial-dense .hero-about-layer__heading {
-  font-size: clamp(3rem, 8vw, 6.25rem);
+  font-size: clamp(4.25rem, 10vw, 9.25rem);
 }
 
 /* ?? Tablet (768?1023px) ?????????????????????????????????????? */
@@ -171,7 +171,7 @@
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(3rem, 9vw, 5.5rem);
+    font-size: clamp(3.5rem, 10vw, 6.75rem);
   }
 
   .about-panel-stack__content-inner {
@@ -205,8 +205,8 @@
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(2.25rem, 9vw, 3.25rem);
-    line-height: 0.92;
+    font-size: clamp(2.85rem, 11vw, 4.25rem);
+    line-height: 0.9;
   }
 
   .hero-about-layer__roles {

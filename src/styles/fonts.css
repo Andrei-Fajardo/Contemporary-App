@@ -1,0 +1,10 @@
+/* Relationship of Melodrame — display name on About hero (Sizimon.id, personal use) */
+@font-face {
+  font-family: "Relationship of Melodrame";
+  src:
+    url("https://db.onlinewebfonts.com/t/728e099f1d8e61db7905baf2cbc6d76e.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/728e099f1d8e61db7905baf2cbc6d76e.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

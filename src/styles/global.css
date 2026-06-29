@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import "./fonts.css";
 @import "tailwindcss";
 @import "./motion.css";
 @import "./chaos.css";
@@ -14,7 +15,7 @@
   --font-subheading: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
   --font-body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --font-name-cursive: "Cormorant Garamond", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-name-cursive: "Relationship of Melodrame", "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
   --heading-track: 0.04em;
 
   /* Legacy aliases */
