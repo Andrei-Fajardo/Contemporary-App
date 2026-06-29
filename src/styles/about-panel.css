@@ -183,47 +183,94 @@
 
 /* ?? Mobile (<640px) ??????????????????????????????????????????? */
 @media (max-width: 639px) {
-  .hero-about-layer__art {
-    width: clamp(10rem, 38vw, 14rem);
+  /* Switch to a 2-col grid: image left, name right; name overflows below */
+  .hero-about-layer__cluster {
+    display: grid;
+    grid-template-columns: clamp(8rem, 38vw, 13rem) 1fr;
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 0.5rem 0.75rem;
+    transform: none;
+    padding-inline: clamp(0.75rem, 3vw, 1.25rem);
   }
 
-  .hero-about-layer__cluster {
-    gap: clamp(0.5rem, 1.5vw, 1rem);
-    transform: translateX(clamp(-1rem, -3vw, -0.5rem));
+  /* Image: top-left cell, row 1 */
+  .hero-about-layer__art {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
   }
 
   .hero-about-layer__art-img {
+    width: 100%;
     aspect-ratio: 1 / 1;
     max-height: none;
     margin-bottom: 0;
     opacity: 1;
   }
 
+  /* Name block: top-right, row 1 — only shows "Anna Dauyl" */
+  .hero-about-layer__name {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  /* Hide "Rockswell" inside the h1 on mobile — shown via hero-name__last-mobile */
+  .hero-name__last {
+    display: none;
+  }
+
+  /* "Rockswell" spans full width below image+name row */
+  .hero-name__last-mobile {
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
+    font-size: clamp(2.5rem, 11vw, 3.75rem);
+    line-height: 0.92;
+    color: var(--ink, #F0EEE9);
+    hyphens: none;
+    -webkit-hyphens: none;
+    word-break: keep-all;
+    padding-inline: clamp(0.75rem, 3vw, 1.25rem);
+  }
+
   .hero-about-layer__inner {
     padding-top: clamp(1.5rem, 4vh, 2.5rem);
     padding-bottom: clamp(0.75rem, 1.5vh, 1.25rem);
+    padding-inline: 0;
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(2.85rem, 11vw, 4.25rem);
-    line-height: 0.9;
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+    line-height: 0.95;
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: normal;
+    word-break: keep-all;
   }
 
   .hero-about-layer__roles {
-    font-size: 0.8125rem;
-    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
   }
 
   .about-panel-stack__content {
     padding-top: clamp(1.5rem, 4vh, 2.5rem);
-    margin-top: clamp(-1.5rem, -4vh, -0.75rem);
+    margin-top: 0;
   }
 
   .about-panel-stack__content-inner {
-    margin-left: clamp(44%, 48vw, 52%);
+    margin-left: 0;
     max-width: none;
-    padding-right: clamp(0.5rem, 2vw, 1rem);
+    padding-right: 0;
   }
+}
+
+/* Mobile last-name full-width row — hidden on desktop */
+.hero-name__last-mobile {
+  display: none;
 }
 
 /* ?? Reduced motion ???????????????????????????????????????????? */

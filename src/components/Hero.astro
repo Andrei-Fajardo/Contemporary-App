@@ -26,11 +26,15 @@ const l = t[locale];
 
       <div class="hero-editorial__copy hero-about-layer__name">
         <h1 class="hero-about-layer__heading scroll-reveal">
-          {l.heroFirstName}<br />{l.heroLastName}
+          <span class="hero-name__first">{l.heroFirstName}</span>
+          <span class="hero-name__last">{l.heroLastName}</span>
         </h1>
 
         <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
       </div>
+
+      <!-- Mobile only: last name spans full width below the image+name row -->
+      <div class="hero-name__last-mobile" aria-hidden="true">{l.heroLastName}</div>
     </div>
   </div>
   <hr class="hero-about-layer__rule scroll-reveal" />

@@ -648,22 +648,11 @@ select,
 }
 
 @media (max-width: 1023px) {
-  .editorial-link-list {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
   .editorial-row-list .editorial-row-list__item {
-    display: grid;
     grid-template-columns: 2.75rem 1fr;
     gap: 0.15rem 0.75rem;
     padding: 0.875rem 0.25rem;
     margin-inline: 0;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
   }
 
   .editorial-row-list__year {
@@ -674,11 +663,12 @@ select,
 
   .editorial-row-list__title {
     font-size: 1.125rem;
-    white-space: normal;
-    word-break: break-word;
-    overflow-wrap: break-word;
     min-width: 0;
-    max-width: 100%;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    hyphens: none;
+    -webkit-hyphens: none;
   }
 
   /* No hover arrow on touch devices */
