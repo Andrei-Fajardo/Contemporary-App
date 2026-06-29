@@ -1,11 +1,11 @@
 /* Chaotic-beauty / brutal-feminine layer — Swiss print + hazard red */
 
 :root {
-  --accent-red: #C41E3A;
-  --accent-red-bright: #E61919;
-  --accent-red-ghost: rgba(196, 30, 58, 0.08);
-  --accent-red-ink: rgba(196, 30, 58, 0.55);
-  --accent-red-label: #8F2231;
+  --accent-red: rgba(240, 238, 233, 0.55);
+  --accent-red-bright: rgba(240, 238, 233, 0.75);
+  --accent-red-ghost: rgba(240, 238, 233, 0.05);
+  --accent-red-ink: rgba(240, 238, 233, 0.25);
+  --accent-red-label: rgba(240, 238, 233, 0.45);
   --chaos-radius: 0.375rem;
 }
 

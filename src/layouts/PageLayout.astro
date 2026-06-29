@@ -185,7 +185,7 @@ const menuItems: { key: string; href: string }[] = [
                   data-nav-key={item.key}
                   id={`nav-${item.key}-mobile`}
                   aria-current={item.key === "about" ? "true" : "false"}
-                  class="sidebar-nav-link block py-3.5 px-3 type-subheading text-base rounded-md transition-all duration-300 text-[var(--ink-muted)] hover:bg-white/[0.06] hover:text-[var(--ink)]"
+                  class="sidebar-nav-link block py-3.5 px-3 type-subheading text-base rounded-md transition-all duration-300 text-[var(--ink-muted)] hover:bg-white/[0.06] hover:text-[var(--ink)] whitespace-nowrap overflow-hidden text-ellipsis"
                 >
                   <span class="sidebar-nav-label">{l.nav[navKey]}</span>
                 </a>
@@ -235,7 +235,7 @@ const menuItems: { key: string; href: string }[] = [
                   data-nav-key={item.key}
                   id={`nav-${item.key}`}
                   aria-current={item.key === "about" ? "true" : "false"}
-                  class="sidebar-nav-link group relative type-subheading text-[22px] py-2.5 px-2 block rounded-lg transition-all duration-300 text-[var(--ink-muted)]/80 hover:text-[var(--ink)] hover:bg-white/[0.05]"
+                  class="sidebar-nav-link group relative type-subheading text-[22px] py-2.5 px-2 block rounded-lg transition-all duration-300 text-[var(--ink-muted)]/80 hover:text-[var(--ink)] hover:bg-white/[0.05] whitespace-nowrap overflow-hidden text-ellipsis"
                 >
                   <span class="sidebar-nav-label">{l.nav[navKey]}</span>
                 </a>

@@ -315,8 +315,8 @@ html.motion-live .lazy-media.is-loaded.is-focused img {
   left: 0;
   right: 0;
   bottom: 0.06em;
-  height: 2px;
-  background: var(--accent-red);
+  height: 1px;
+  background: var(--ink-35);
   transform: skewX(-8deg);
 }
 
