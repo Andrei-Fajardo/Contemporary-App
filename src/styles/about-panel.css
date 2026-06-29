@@ -258,8 +258,7 @@
   }
 
   .hero-about-layer__roles {
-    font-size: 0.75rem;
-    margin-top: 0.4rem;
+    display: none;
   }
 
   .about-panel-stack__content {
