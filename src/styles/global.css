@@ -15,7 +15,7 @@
   --font-subheading: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
   --font-body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --font-name-cursive: "Relationship of Melodrame", "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
+  --font-name-cursive: "Jellyka Saint Andrew's Queen", "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
   --heading-track: 0.04em;
 
   /* Legacy aliases */
@@ -317,9 +317,9 @@ html {
 
 .font-name-cursive {
   font-family: var(--font-name-cursive);
-  font-style: italic;
-  font-weight: 300;
-  letter-spacing: 0.03em;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 /* Cormorant Garamond heading — light weight, elegant thin editorial */

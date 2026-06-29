@@ -125,7 +125,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
   {
     id: 'kinship',
     year: '2025',
-    title: 'KINSHIP × Hechyeomoyeo',
+    title: 'KINSHIP × HCMY',
     gallery: 'Collaborative Exhibition',
     place: 'Seoul, South Korea',
     kind: 'group',
@@ -270,8 +270,8 @@ export const exhibitionEntries: ExhibitionEntry[] = [
   {
     id: 'hechyeomoyeo-13',
     year: '2025',
-    title: 'Hechyeomoyeo 13',
-    gallery: 'Hechyeomoyeo',
+    title: 'HCMY 13',
+    gallery: 'HCMY',
     place: 'New York, USA',
     kind: 'group',
     category: 'physical',
@@ -292,7 +292,7 @@ export const exhibitionEntries: ExhibitionEntry[] = [
   {
     id: 'hechyeomoyeo-12',
     year: '2025',
-    title: 'Hechyeomoyeo 12',
+    title: 'HCMY 12',
     gallery: 'Living Gallery',
     place: 'Brooklyn, New York, USA',
     kind: 'group',
@@ -422,10 +422,10 @@ export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843
 export const exhibitions = [
   { image: "/media/exhibitions/senses/senses-main.jpg", title: "Senses International Art Fair", year: "2025", location: "MUST MUSEUM, LECCE, ITALY", subtitle: "3RD EDITION – INTERNATIONAL ART FAIR" },
   { image: "/media/exhibitions/venice/venice-1.jpg", title: "Contemporary Venice", year: "2026", location: "VENICE, ITALY", subtitle: "CONTEMPORARY VENICE 2026" },
-  { image: exhibitionPoster('HCMY 12.jpg'), title: "Hechyeomoyeo 12", year: "2025", location: "LIVING GALLERY, BROOKLYN, NEW YORK", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/hechyeomoyeo-13/hech-3.jpg", title: "Hechyeomoyeo 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
+  { image: exhibitionPoster('HCMY 12.jpg'), title: "HCMY 12", year: "2025", location: "LIVING GALLERY, BROOKLYN, NEW YORK", subtitle: "GROUP EXHIBITION" },
+  { image: "/media/exhibitions/hechyeomoyeo-13/hech-3.jpg", title: "HCMY 13", year: "2025", location: "NEW YORK, USA", subtitle: "GROUP EXHIBITION" },
   { image: exhibitionPoster('Ahmad Shariff.jpg'), title: "Ahmad Shariff Gallery", year: "2025", location: "CLAREMONT, CALIFORNIA", subtitle: "GROUP EXHIBITION" },
-  { image: "/media/exhibitions/kinship/kinship-main.png", title: "KINSHIP × Hechyeomoyeo", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
+  { image: "/media/exhibitions/kinship/kinship-main.png", title: "KINSHIP × HCMY", year: "2025", location: "SEOUL, SOUTH KOREA", subtitle: "COLLABORATIVE EXHIBITION" },
   { image: exhibitionPoster('Vergr Gallery.jpg'), title: "DIMO × Verger Gallery", year: "2025", location: "5TH EXHIBITION", subtitle: "VERGER GALLERY COLLABORATION" },
   { image: "/media/exhibitions/holy-london/holy-london-1.jpg", title: "The Holy Art – London", year: "2026", location: "LONDON, UK", subtitle: "INTERNATIONAL GROUP SHOW" },
   { image: holyParisJournal(1), title: "The Holy Art – Paris", year: "2026", location: "PARIS, FRANCE", subtitle: "INTERNATIONAL GROUP SHOW" },
@@ -448,10 +448,10 @@ export const soloExhibitions: ExhibitionItem[] = [
 export const groupExhibitions: ExhibitionItem[] = [
   { year: "2026", title: "Contemporary Venice", venue: "Venice", city: "Venice", country: "Italy" },
   { year: "2025", title: "Senses International Art Fair", venue: "Must Museum", city: "Lecce", country: "Italy" },
-  { year: "2025", title: "Hechyeomoyeo 13", venue: "New York", city: "New York", country: "USA" },
-  { year: "2025", title: "Hechyeomoyeo 12", venue: "Living Gallery", city: "Brooklyn", country: "USA" },
+  { year: "2025", title: "HCMY 13", venue: "New York", city: "New York", country: "USA" },
+  { year: "2025", title: "HCMY 12", venue: "Living Gallery", city: "Brooklyn", country: "USA" },
   { year: "2025", title: "Ahmad Shariff Gallery", venue: "Ahmad Shariff Gallery", city: "Claremont", country: "USA" },
-  { year: "2025", title: "KINSHIP × Hechyeomoyeo", venue: "Seoul", city: "Seoul", country: "South Korea" },
+  { year: "2025", title: "KINSHIP × HCMY", venue: "Seoul", city: "Seoul", country: "South Korea" },
   { year: "2026", title: "The Holy Art — Paris", venue: "Paris", city: "Paris", country: "France" },
   { year: "2026", title: "The Holy Art — London", venue: "London", city: "London", country: "UK" },
   { year: "2025", title: "DIMO × Verger Gallery", venue: "Verger Gallery", city: "Seoul", country: "South Korea" },
@@ -489,7 +489,7 @@ export const publicationLinks: LinkItem[] = [
 /** External press coverage and exhibition listings. */
 export const pressLinks: LinkItem[] = [
   {
-    title: 'Hechyeomoyeo — In the Press',
+    title: 'HCMY — In the Press',
     href: 'https://www.hcmy.org/press',
     year: '2025',
   },

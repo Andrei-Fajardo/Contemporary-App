@@ -90,16 +90,16 @@
 }
 
 /*
-  The headline: Relationship of Melodrame display serif.
+  The headline: Jellyka Saint Andrew's Queen script display.
   Each word wraps naturally (Anna Dauyl / Rockswell) matching reference.
 */
 .hero-about-layer__heading {
-  font-family: "Relationship of Melodrame", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
+  font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
   font-style: normal;
   font-weight: 400;
   font-size: clamp(4.75rem, 11vw, 10.5rem);
-  line-height: 0.9;
-  letter-spacing: -0.015em;
+  line-height: 0.88;
+  letter-spacing: 0.01em;
   color: var(--ink, #111);
   margin: 0;
   -webkit-font-smoothing: antialiased;
