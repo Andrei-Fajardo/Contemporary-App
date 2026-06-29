@@ -114,6 +114,14 @@
   color: var(--ink);
 }
 
+/* Exhibition intro — full section width, no awkward hyphenation */
+.exhibitions-section__intro {
+  max-width: min(88ch, 100%);
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
+}
+
 /* Exhibition category filters */
 .exhibition-filters {
   display: flex;
