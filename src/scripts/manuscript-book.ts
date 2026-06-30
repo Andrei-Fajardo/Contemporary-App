@@ -19,6 +19,9 @@ const VENDOR = {
   turn: '/vendor/turn.js',
 } as const;
 
+/** Width ÷ height for pre-rendered double-page spread JPGs */
+const SPREAD_ASPECT = 1.45;
+
 let vendorPromise: Promise<void> | null = null;
 
 function loadScript(src: string): Promise<void> {
@@ -60,22 +63,17 @@ type BookState = {
 
 const books = new WeakMap<HTMLElement, BookState>();
 
-function isDoubleSpread(): boolean {
-  return window.innerWidth >= 1024;
-}
-
 function measureBook(root: HTMLElement): { width: number; height: number } {
   const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
   const maxW = Math.max(280, (stage?.clientWidth ?? window.innerWidth) - 24);
-  const maxH = Math.max(360, (stage?.clientHeight ?? window.innerHeight) - 120);
-  const ratio = isDoubleSpread() ? 0.68 : 1.32;
+  const maxH = Math.max(200, (stage?.clientHeight ?? window.innerHeight) - 120);
 
-  let width = Math.min(maxW, isDoubleSpread() ? 960 : 520);
-  let height = Math.round(width * ratio);
+  let width = Math.min(maxW, 1100);
+  let height = Math.round(width / SPREAD_ASPECT);
 
   if (height > maxH) {
     height = maxH;
-    width = Math.round(height / ratio);
+    width = Math.round(height * SPREAD_ASPECT);
   }
 
   return { width, height };
@@ -99,7 +97,7 @@ export function resizeManuscriptBook(root: HTMLElement): void {
   const { width, height } = measureBook(root);
   syncShell(root, viewport, width, height);
   state.flipbook.turn('size', width, height);
-  state.flipbook.turn('display', isDoubleSpread() ? 'double' : 'single');
+  state.flipbook.turn('display', 'single');
 }
 
 export function initManuscriptBook(root: HTMLElement): void {
@@ -156,10 +154,10 @@ export function initManuscriptBook(root: HTMLElement): void {
         height,
         page: 1,
         autoCenter: true,
-        display: isDoubleSpread() ? 'double' : 'single',
+        display: 'single',
         acceleration: true,
         elevation: 50,
-        gradients: !reducedMotion,
+        gradients: true,
         duration: reducedMotion ? 0 : 600,
         when: {
           turned(_event: unknown, page: number) {
