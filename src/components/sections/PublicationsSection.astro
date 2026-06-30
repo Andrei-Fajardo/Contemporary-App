@@ -1,5 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
+import ManuscriptBook from '../ManuscriptBook.astro';
 import { publicationLinks } from '../../data/content';
 import { siteCopy } from '../../data/site-copy';
 import { t, type LocaleKey } from '../../data/translations';
@@ -65,6 +66,10 @@ const novels = siteCopy.publications.novels;
         </ul>
       </div>
     )}
+
+    <div class="pubs-section__manuscript scroll-reveal">
+      <ManuscriptBook locale={locale} />
+    </div>
   </div>
 
 </section>

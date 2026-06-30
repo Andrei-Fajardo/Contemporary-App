@@ -90,6 +90,9 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
               incoming.style.transition = "";
               incoming.style.opacity = "";
             }
+            if (tab === "publications") {
+              window.dispatchEvent(new CustomEvent("manuscript-book:visible"));
+            }
           }, FADE_MS + 20);
         });
       });

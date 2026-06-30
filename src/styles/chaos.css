@@ -388,17 +388,7 @@ html.motion-reduced .press-chaos__poster {
   transition: transform 0.1s linear;
 }
 
-/* Manuscript reader — keep decor art fully behind the opaque reading surface */
-.research-panel:has(.manuscript-book) .research-panel__art {
-  z-index: 0;
-}
-
-.research-panel:has(.manuscript-book) .research-panel__art-img {
-  opacity: 0.22;
-  mix-blend-mode: normal;
-}
-
-/* Content sits above the art layer */
+/* Manuscript reader — keep decor art behind section content */
 .research-panel .research-section {
   position: relative;
   z-index: 2;

@@ -1,6 +1,5 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import ManuscriptBook from '../ManuscriptBook.astro';
 import { researchLinks, igamingLinks, uplatformBlogLinks, uplatformPressLinks } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
@@ -51,7 +50,6 @@ const tabs = [
       data-research-panel="academic"
       role="tabpanel"
     >
-      <ManuscriptBook locale={locale} />
       <EditorialLinkList items={researchLinks} />
     </div>
 
@@ -119,9 +117,6 @@ const tabs = [
                 setTimeout(() => {
                   panel.style.transition = '';
                   panel.style.opacity = '';
-                  if (panel.dataset.researchPanel === 'academic') {
-                    window.dispatchEvent(new CustomEvent('manuscript-book:visible'));
-                  }
                 }, 100);
               });
             });

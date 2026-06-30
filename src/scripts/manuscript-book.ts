@@ -86,6 +86,25 @@ export function initManuscriptBook(root: HTMLElement): void {
   let flipbook: JQueryInstance | null = null;
   let currentPage = 1;
   let rafId = 0;
+  let mounted = false;
+  let onResize: (() => void) | null = null;
+
+  const isRenderable = () => {
+    if (root.closest('[hidden]')) return false;
+    const rect = root.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+  };
+
+  const tryMount = () => {
+    if (mounted) {
+      onResize?.();
+      return;
+    }
+    if (!isRenderable()) return;
+    mounted = true;
+    observer.disconnect();
+    void mount();
+  };
 
   const flipbookWidth = () => {
     const fromViewport = viewport?.clientWidth ?? 0;
@@ -159,7 +178,7 @@ export function initManuscriptBook(root: HTMLElement): void {
       prevBtn?.addEventListener('click', () => goToPage(currentPage - 1));
       nextBtn?.addEventListener('click', () => goToPage(currentPage + 1));
 
-      const onResize = () => {
+      onResize = () => {
         if (!flipbook) return;
         const w = flipbookWidth();
         const h = flipbookHeight(w);
@@ -168,8 +187,8 @@ export function initManuscriptBook(root: HTMLElement): void {
         if (useScrollDrive) onScroll();
       };
 
-      window.addEventListener('resize', onResize);
-      window.addEventListener('manuscript-book:visible', onResize);
+      window.addEventListener('resize', () => onResize?.());
+      window.addEventListener('manuscript-book:visible', tryMount);
     } catch {
       flipbookEl.classList.add('manuscript-flipbook--fallback');
       flipbookEl.classList.add('manuscript-flipbook--ready');
@@ -178,13 +197,14 @@ export function initManuscriptBook(root: HTMLElement): void {
 
   const observer = new IntersectionObserver(
     (entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) {
-        observer.disconnect();
-        void mount();
-      }
+      if (entries.some((entry) => entry.isIntersecting)) tryMount();
     },
     { rootMargin: '200px' },
   );
 
   observer.observe(root);
+  document.addEventListener('tabular:change', (event) => {
+    const tab = (event as CustomEvent<{ tab: string }>).detail?.tab;
+    if (tab === 'publications') setTimeout(tryMount, 120);
+  });
 }

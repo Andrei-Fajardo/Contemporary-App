@@ -5,9 +5,9 @@
   z-index: 5;
   isolation: isolate;
   margin-top: clamp(2rem, 5vh, 3rem);
-  margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
-  padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
-  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .manuscript-book__header {
