@@ -191,10 +191,10 @@
   /* Switch to a 2-col grid: image left, name right; name overflows below */
   .hero-about-layer__cluster {
     display: grid;
-    grid-template-columns: clamp(8rem, 38vw, 13rem) 1fr;
+    grid-template-columns: clamp(7rem, 31vw, 10.5rem) 1fr;
     grid-template-rows: auto auto;
     align-items: start;
-    gap: 0.5rem 0.75rem;
+    gap: 0.35rem 0.65rem;
     transform: none;
     padding-inline: clamp(0.75rem, 3vw, 1.25rem);
   }
@@ -232,14 +232,15 @@
     grid-column: 1 / -1;
     grid-row: 2;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(4.25rem, 18vw, 6.25rem);
-    line-height: 0.92;
+    font-size: clamp(5.25rem, 24vw, 8.5rem);
+    line-height: 0.88;
     color: var(--ink, #F0EEE9);
     hyphens: none;
     -webkit-hyphens: none;
     word-break: keep-all;
     width: 100%;
     padding-inline: clamp(0.75rem, 3vw, 1.25rem);
+    margin-top: 0.15rem;
   }
 
   .hero-about-layer__inner {
@@ -249,12 +250,22 @@
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(1.75rem, 8vw, 2.75rem);
-    line-height: 0.95;
+    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
+    font-weight: 400;
+    font-size: clamp(2.85rem, 14vw, 5rem);
+    line-height: 0.86;
     hyphens: none;
     -webkit-hyphens: none;
     overflow-wrap: normal;
     word-break: keep-all;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .magazine-cover .hero-about-layer__heading {
+    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 
   .hero-about-layer__roles {
