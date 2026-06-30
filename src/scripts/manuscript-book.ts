@@ -22,8 +22,17 @@ const VENDOR = {
 /** Width ÷ height for pre-rendered double-page spread JPGs */
 const SPREAD_ASPECT = 1.45;
 
-/** Safety inset so the double spread never clips against the stage edges */
-const STAGE_SAFETY_MARGIN = 40;
+/** Target fraction of the stage used for the flipbook spread */
+const VIEWPORT_FILL = 0.88;
+
+/** Bottom chrome (page indicator) reserved inside the stage */
+const CHROME_RESERVE = 36;
+
+/** Minimum inset from the stage edge for nav controls */
+const STAGE_EDGE_INSET = 12;
+
+/** Gap between the book edge and the nav button */
+const NAV_BOOK_GAP = 14;
 
 /** Turn.js page index (1-based) where spread 0001.jpg first appears as a full spread */
 const FIRST_CONTENT_PAGE = 2;
@@ -67,23 +76,17 @@ const books = new WeakMap<HTMLElement, BookState>();
 
 function measureBook(root: HTMLElement): { width: number; height: number } {
   const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
-  const stageBody = root.querySelector<HTMLElement>('.manuscript-book__stage-body');
-  const bodyPad =
-    stageBody
-      ? parseFloat(getComputedStyle(stageBody).paddingLeft) +
-        parseFloat(getComputedStyle(stageBody).paddingRight)
-      : 0;
+  const stageW = stage?.clientWidth ?? window.innerWidth;
+  const stageH = stage?.clientHeight ?? window.innerHeight;
 
-  const maxW = Math.max(
-    280,
-    (stage?.clientWidth ?? window.innerWidth) - STAGE_SAFETY_MARGIN - bodyPad - 24,
-  );
-  const maxH = Math.max(
-    200,
-    (stage?.clientHeight ?? window.innerHeight) - STAGE_SAFETY_MARGIN - 120,
-  );
+  const navBtn = root.querySelector<HTMLElement>('.manuscript-book__nav--side');
+  const navSize = navBtn ? Math.ceil(navBtn.getBoundingClientRect().width) : 56;
+  const navGutter = navSize + NAV_BOOK_GAP + STAGE_EDGE_INSET;
 
-  let width = Math.min(maxW, 1100);
+  const maxW = Math.max(280, stageW * VIEWPORT_FILL - navGutter * 2);
+  const maxH = Math.max(200, (stageH - CHROME_RESERVE) * VIEWPORT_FILL);
+
+  let width = maxW;
   let height = Math.round(width / SPREAD_ASPECT);
 
   if (height > maxH) {
@@ -95,8 +98,13 @@ function measureBook(root: HTMLElement): { width: number; height: number } {
 }
 
 function syncShell(root: HTMLElement, viewport: HTMLElement | null, width: number, height: number) {
+  const navBtn = root.querySelector<HTMLElement>('.manuscript-book__nav--side');
+  const navSize = navBtn ? Math.ceil(navBtn.getBoundingClientRect().width) : 56;
+  const navOffset = navSize + NAV_BOOK_GAP;
+
   root.style.setProperty('--manuscript-w', `${width}px`);
   root.style.setProperty('--manuscript-h', `${height}px`);
+  root.style.setProperty('--manuscript-nav-offset', `${navOffset}px`);
   if (viewport) {
     viewport.style.width = `${width}px`;
     viewport.style.height = `${height}px`;
