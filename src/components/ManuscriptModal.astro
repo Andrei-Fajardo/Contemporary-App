@@ -39,16 +39,18 @@ const pageCount = manuscriptPages.length;
       data-page-count={pageCount}
     >
       <div class="manuscript-modal__stage" data-manuscript-stage>
-        <div class="manuscript-book__stage-body">
-          <button
-            type="button"
-            class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev"
-            data-manuscript-prev
-            aria-label={l.manuscriptPrev}
-          >
-            ←
-          </button>
+        <button
+          type="button"
+          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev"
+          data-manuscript-prev
+          aria-label={l.manuscriptPrev}
+        >
+          <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
 
+        <div class="manuscript-book__stage-body">
           <div class="manuscript-book__viewport" data-manuscript-viewport>
             <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
               {manuscriptPages.map((src, index) => (
@@ -66,16 +68,18 @@ const pageCount = manuscriptPages.length;
               ))}
             </div>
           </div>
-
-          <button
-            type="button"
-            class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next"
-            data-manuscript-next
-            aria-label={l.manuscriptNext}
-          >
-            →
-          </button>
         </div>
+
+        <button
+          type="button"
+          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next"
+          data-manuscript-next
+          aria-label={l.manuscriptNext}
+        >
+          <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
 
         <div class="manuscript-book__chrome" aria-live="polite">
           <span class="manuscript-book__indicator" data-manuscript-indicator>
