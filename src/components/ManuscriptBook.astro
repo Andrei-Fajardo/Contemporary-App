@@ -11,88 +11,62 @@ const l = t[locale];
 const pageCount = manuscriptPages.length;
 ---
 
-<article
+<div
   class="manuscript-book scroll-reveal"
   data-manuscript-book
   data-page-count={pageCount}
   style={`--manuscript-pages: ${pageCount}`}
-  aria-label={l.manuscriptHeading}
 >
-  <div class="manuscript-book__spread">
-    <header class="manuscript-book__meta">
-      <p class="section-eyebrow">{l.manuscriptTag}</p>
-      <h3 class="manuscript-book__title type-magazine-display">{l.manuscriptHeading}</h3>
-      <hr class="magazine-rule-crimson magazine-rule-crimson--short manuscript-book__rule" />
-      <p class="content-prose text-ink-60 manuscript-book__intro">{l.manuscriptIntro}</p>
-      <div class="manuscript-book__scroll-rail" aria-hidden="true">
-        <span class="manuscript-book__scroll-rail-track">
-          <span class="manuscript-book__scroll-rail-fill" data-manuscript-scroll-fill></span>
-        </span>
-        <span class="manuscript-book__scroll-rail-label">{l.manuscriptScrollHint}</span>
-      </div>
-    </header>
+  <div class="manuscript-book__header">
+    <p class="section-eyebrow">{l.manuscriptTag}</p>
+    <h3 class="manuscript-book__title type-subheading">{l.manuscriptHeading}</h3>
+    <p class="content-prose text-ink-60 manuscript-book__intro">{l.manuscriptIntro}</p>
+  </div>
 
-    <div class="manuscript-book__folio" data-manuscript-stage>
-      <div class="manuscript-book__desk">
-        <div class="manuscript-book__sticky" data-manuscript-sticky>
-          <div class="manuscript-book__binder" data-manuscript-binder>
-            <div class="manuscript-book__spine" aria-hidden="true"></div>
-            <div class="manuscript-book__fore-edge" aria-hidden="true"></div>
-            <div class="manuscript-book__viewport" data-manuscript-viewport>
-              <div class="manuscript-flipbook flipbook manuscript-flipbook--loading" data-manuscript-flipbook>
-                <div class="hard manuscript-book__cover manuscript-book__cover--front">
-                  <span class="manuscript-book__cover-eyebrow">{l.manuscriptTag}</span>
-                  <span class="manuscript-book__cover-title">{manuscriptMeta.title}</span>
-                  <span class="manuscript-book__cover-rule" aria-hidden="true"></span>
-                  <small class="manuscript-book__cover-sub">{manuscriptMeta.subtitle}</small>
-                </div>
-                <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
-                {manuscriptPages.map((src, index) => (
-                  <div class="manuscript-book__page">
-                    <img
-                      src={src}
-                      alt={`${manuscriptMeta.title} — page ${index + 1}`}
-                      loading={index < 4 ? "eager" : "lazy"}
-                      decoding="async"
-                      draggable="false"
-                      data-lightbox-ignore
-                    />
-                  </div>
-                ))}
-                <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
-                <div class="hard manuscript-book__cover manuscript-book__cover--end">
-                  <span class="manuscript-book__cover-title">{l.manuscriptEnd}</span>
-                </div>
-              </div>
-            </div>
+  <div class="manuscript-book__stage" data-manuscript-stage>
+    <div class="manuscript-book__sticky" data-manuscript-sticky>
+      <div class="manuscript-book__viewport" data-manuscript-viewport>
+        <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
+          <div class="hard manuscript-book__cover">
+            <span class="manuscript-book__cover-title">{manuscriptMeta.title}</span>
+            <small class="manuscript-book__cover-sub">{manuscriptMeta.subtitle}</small>
           </div>
-
-          <footer class="manuscript-book__toolbar" aria-live="polite">
-            <div class="manuscript-book__progress">
-              <span class="manuscript-book__progress-track">
-                <span class="manuscript-book__progress-fill" data-manuscript-progress></span>
-              </span>
+          <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
+          {manuscriptPages.map((src, index) => (
+            <div class="manuscript-book__page">
+              <img
+                src={src}
+                alt={`${manuscriptMeta.title} — page ${index + 1}`}
+                loading={index < 4 ? "eager" : "lazy"}
+                decoding="async"
+                draggable="false"
+                data-lightbox-ignore
+              />
             </div>
-            <div class="manuscript-book__chrome">
-              <button type="button" class="manuscript-book__nav" data-manuscript-prev aria-label={l.manuscriptPrev}>
-                <span class="manuscript-book__nav-glyph" aria-hidden="true">←</span>
-                <span class="manuscript-book__nav-label">{l.manuscriptPrev}</span>
-              </button>
-              <span class="manuscript-book__indicator" data-manuscript-indicator>
-                01 <span class="manuscript-book__indicator-sep">/</span> {String(pageCount).padStart(2, '0')}
-              </span>
-              <button type="button" class="manuscript-book__nav" data-manuscript-next aria-label={l.manuscriptNext}>
-                <span class="manuscript-book__nav-label">{l.manuscriptNext}</span>
-                <span class="manuscript-book__nav-glyph" aria-hidden="true">→</span>
-              </button>
-            </div>
-          </footer>
+          ))}
+          <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
+          <div class="hard manuscript-book__cover manuscript-book__cover--end">
+            <span class="manuscript-book__cover-title">{l.manuscriptEnd}</span>
+          </div>
         </div>
       </div>
-      <div class="manuscript-book__scroll-spacer" data-manuscript-spacer aria-hidden="true"></div>
+
+      <div class="manuscript-book__chrome" aria-live="polite">
+        <button type="button" class="manuscript-book__nav" data-manuscript-prev aria-label={l.manuscriptPrev}>
+          ‹
+        </button>
+        <span class="manuscript-book__indicator" data-manuscript-indicator>
+          1 / {pageCount}
+        </span>
+        <button type="button" class="manuscript-book__nav" data-manuscript-next aria-label={l.manuscriptNext}>
+          ›
+        </button>
+      </div>
+      <p class="manuscript-book__hint">{l.manuscriptScrollHint}</p>
     </div>
+    <div class="manuscript-book__scroll-spacer" data-manuscript-spacer aria-hidden="true"></div>
   </div>
-</article>
+</div>
 
 <script>
   import { initManuscriptBook } from '../scripts/manuscript-book';
