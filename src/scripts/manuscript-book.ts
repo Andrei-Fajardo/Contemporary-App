@@ -171,7 +171,12 @@ export function initManuscriptBook(root: HTMLElement): void {
       updateIndicator(1);
 
       if (useScrollDrive) {
-        window.addEventListener('scroll', onScroll, { passive: true });
+        const scrollTargets: Array<HTMLElement | Window> = [window];
+        const mainColumn = document.querySelector<HTMLElement>('.site-main-column');
+        if (mainColumn) scrollTargets.push(mainColumn);
+        scrollTargets.forEach((target) => {
+          target.addEventListener('scroll', onScroll, { passive: true });
+        });
         onScroll();
       }
 

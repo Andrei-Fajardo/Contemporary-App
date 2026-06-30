@@ -829,7 +829,6 @@ select,
    On mobile we allow normal scrolling so content is not cut off by the
    fixed header/footer. */
 @media (min-width: 1024px) {
-  body[data-layout="tabular"]:has(.publications-panel.is-active),
   body[data-layout="tabular"]:has(.press-panel.is-active),
   body[data-layout="tabular"]:has(.contacts-panel.is-active) {
     overflow: hidden;
@@ -837,23 +836,19 @@ select,
     max-height: 100dvh;
   }
 
-  .site-main-column:has(.publications-panel.is-active),
   .site-main-column:has(.press-panel.is-active),
   .site-main-column:has(.contacts-panel.is-active) {
     overflow: hidden;
     max-height: 100dvh;
   }
 
-  .tabular-main:has(.publications-panel.is-active),
   .tabular-main:has(.press-panel.is-active),
   .tabular-main:has(.contacts-panel.is-active) {
     overflow: hidden;
   }
 
-  .tabular-view:has(.publications-panel.is-active),
   .tabular-view:has(.press-panel.is-active),
   .tabular-view:has(.contacts-panel.is-active),
-  .tabular-panels:has(.publications-panel.is-active),
   .tabular-panels:has(.press-panel.is-active),
   .tabular-panels:has(.contacts-panel.is-active) {
     overflow: hidden;
@@ -861,23 +856,24 @@ select,
     flex: 1;
   }
 
-  .tabular-panel.publications-panel.is-active,
   .tabular-panel.press-panel.is-active,
   .tabular-panel.contacts-panel.is-active {
     overflow: hidden;
     min-height: 0;
   }
 
-  /* About + Research tabs — scroll within main column so long content is never clipped */
+  /* About, Research, Publications — scroll within main column (long content + manuscript) */
   body[data-layout="tabular"]:has(.about-panel.is-active),
-  body[data-layout="tabular"]:has(.research-panel.is-active) {
+  body[data-layout="tabular"]:has(.research-panel.is-active),
+  body[data-layout="tabular"]:has(.publications-panel.is-active) {
     overflow: hidden;
     height: 100dvh;
     max-height: 100dvh;
   }
 
   .site-main-column:has(.about-panel.is-active),
-  .site-main-column:has(.research-panel.is-active) {
+  .site-main-column:has(.research-panel.is-active),
+  .site-main-column:has(.publications-panel.is-active) {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 100dvh;
@@ -885,12 +881,14 @@ select,
   }
 
   .site-main-column:has(.about-panel.is-active) > .tabular-main,
-  .site-main-column:has(.research-panel.is-active) > .tabular-main {
+  .site-main-column:has(.research-panel.is-active) > .tabular-main,
+  .site-main-column:has(.publications-panel.is-active) > .tabular-main {
     flex: 0 0 auto;
   }
 
   .site-main-column:has(.about-panel.is-active) > .site-footer,
-  .site-main-column:has(.research-panel.is-active) > .site-footer {
+  .site-main-column:has(.research-panel.is-active) > .site-footer,
+  .site-main-column:has(.publications-panel.is-active) > .site-footer {
     position: relative;
     z-index: 2;
     flex-shrink: 0;
@@ -903,33 +901,33 @@ select,
   .tabular-main:has(.research-panel.is-active),
   .tabular-view:has(.research-panel.is-active),
   .tabular-panels:has(.research-panel.is-active),
-  .tabular-panel.research-panel.is-active {
+  .tabular-panel.research-panel.is-active,
+  .tabular-main:has(.publications-panel.is-active),
+  .tabular-view:has(.publications-panel.is-active),
+  .tabular-panels:has(.publications-panel.is-active),
+  .tabular-panel.publications-panel.is-active {
     overflow: visible;
     min-height: 0;
     height: auto;
   }
 
   .tabular-panel.about-panel.is-active > .about-panel-stack,
-  .tabular-panel.research-panel.is-active > .research-section {
+  .tabular-panel.research-panel.is-active > .research-section,
+  .tabular-panel.publications-panel.is-active > .scroll-section,
+  .tabular-panel.publications-panel.is-active .pubs-overlap {
     overflow: visible;
     min-height: auto;
+    height: auto;
     padding-bottom: clamp(2.5rem, 6vh, 5rem);
   }
 
-  .tabular-panel.publications-panel.is-active > .scroll-section,
   .tabular-panel.press-panel.is-active > .scroll-section,
   .tabular-panel.contacts-panel.is-active > .scroll-section {
     overflow: hidden;
   }
 
-  .tabular-panel.publications-panel.is-active .pubs-overlap,
   .tabular-panel.press-panel.is-active .press-overlap {
     overflow: hidden;
-    min-height: 0;
-  }
-
-  .tabular-panel.publications-panel.is-active .pubs-overlap {
-    height: 100%;
     min-height: 0;
   }
 }

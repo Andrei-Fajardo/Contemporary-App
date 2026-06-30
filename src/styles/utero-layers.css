@@ -32,9 +32,13 @@
 .pubs-overlap {
   position: relative;
   isolation: isolate;
-  /* Needs explicit height room so the absolutely-positioned
-     content box doesn't collapse the parent to 0 */
+  overflow: visible;
+  /* Base room for overlap layout; grows with manuscript scroll section */
   min-height: clamp(28rem, 58vh, 48rem);
+}
+
+.pubs-overlap:has(.pubs-section__manuscript) {
+  min-height: auto;
 }
 
 /* Image frame: nudged toward center, wide enough to show full artwork */
