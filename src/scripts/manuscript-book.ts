@@ -48,7 +48,6 @@ function contentPageCount(root: HTMLElement): number {
 }
 
 function flipbookPageCount(contentPages: number): number {
-  // hard + blank + content + blank + hard
   return contentPages + 4;
 }
 
@@ -67,10 +66,17 @@ function scrollProgress(stage: HTMLElement): number {
   return traveled / scrollable;
 }
 
+function padPage(n: number): string {
+  return String(n).padStart(2, '0');
+}
+
 export function initManuscriptBook(root: HTMLElement): void {
   const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
+  const binder = root.querySelector<HTMLElement>('[data-manuscript-binder]');
   const flipbookEl = root.querySelector<HTMLElement>('[data-manuscript-flipbook]');
   const indicator = root.querySelector<HTMLElement>('[data-manuscript-indicator]');
+  const progressFill = root.querySelector<HTMLElement>('[data-manuscript-progress]');
+  const scrollFill = root.querySelector<HTMLElement>('[data-manuscript-scroll-fill]');
   const prevBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-prev]');
   const nextBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-next]');
 
@@ -87,10 +93,28 @@ export function initManuscriptBook(root: HTMLElement): void {
   let currentPage = 1;
   let rafId = 0;
 
+  const updateProgress = (displayPage: number, scrollRatio?: number) => {
+    const ratio = scrollRatio ?? displayPage / contentPages;
+    const pct = `${Math.min(100, Math.max(0, ratio * 100))}%`;
+
+    if (progressFill) progressFill.style.width = pct;
+    if (scrollFill) {
+      if (window.innerWidth <= 1023) {
+        scrollFill.style.width = pct;
+        scrollFill.style.height = '100%';
+      } else {
+        scrollFill.style.height = pct;
+        scrollFill.style.width = '100%';
+      }
+    }
+  };
+
   const updateIndicator = (page: number) => {
-    if (!indicator) return;
     const display = Math.min(contentPages, Math.max(1, page - 2));
-    indicator.textContent = `${display} / ${contentPages}`;
+    if (indicator) {
+      indicator.innerHTML = `${padPage(display)} <span class="manuscript-book__indicator-sep">/</span> ${padPage(contentPages)}`;
+    }
+    updateProgress(display);
   };
 
   const goToPage = (page: number, animate = true) => {
@@ -104,12 +128,23 @@ export function initManuscriptBook(root: HTMLElement): void {
     updateIndicator(next);
   };
 
+  const flipbookWidth = () => {
+    const binderWidth = binder?.clientWidth ?? flipbookEl.clientWidth;
+    if (binderWidth > 0) return Math.round(binderWidth * 0.92);
+    return Math.min(340, window.innerWidth - 64);
+  };
+
+  const flipbookHeight = (width: number) => Math.round(width * 1.32);
+
   const onScroll = () => {
     if (!useScrollDrive || !flipbook) return;
     cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
-      const page = pageFromScroll(scrollProgress(stage), contentPages);
+      const progress = scrollProgress(stage);
+      const page = pageFromScroll(progress, contentPages);
       goToPage(page);
+      const display = Math.min(contentPages, Math.max(1, page - 2));
+      updateProgress(display, progress);
     });
   };
 
@@ -119,19 +154,21 @@ export function initManuscriptBook(root: HTMLElement): void {
       const $ = window.jQuery ?? window.$;
       if (!$) return;
 
-      const width = flipbookEl.clientWidth || Math.min(920, window.innerWidth - 32);
-      const height = Math.round(width * 0.62);
+      const width = flipbookWidth();
+      const height = flipbookHeight(width);
+      const useDouble = window.innerWidth >= 1024;
 
       flipbook = $(flipbookEl);
       flipbook.turn({
         width,
         height,
+        page: 1,
         autoCenter: true,
-        display: window.innerWidth >= 1024 ? 'double' : 'single',
+        display: useDouble ? 'double' : 'single',
         acceleration: true,
-        elevation: 50,
+        elevation: 64,
         gradients: !reducedMotion,
-        duration: reducedMotion ? 0 : 600,
+        duration: reducedMotion ? 0 : 720,
         when: {
           turned(_event: unknown, page: number) {
             currentPage = page;
@@ -139,6 +176,10 @@ export function initManuscriptBook(root: HTMLElement): void {
           },
         },
       });
+
+      flipbookEl.classList.remove('manuscript-flipbook--loading');
+      flipbookEl.classList.add('manuscript-flipbook--ready');
+      root.classList.add('manuscript-book--ready');
 
       updateIndicator(1);
 
@@ -152,8 +193,8 @@ export function initManuscriptBook(root: HTMLElement): void {
 
       const onResize = () => {
         if (!flipbook) return;
-        const w = flipbookEl.clientWidth || Math.min(920, window.innerWidth - 32);
-        const h = Math.round(w * 0.62);
+        const w = flipbookWidth();
+        const h = flipbookHeight(w);
         flipbook.turn('size', w, h);
         flipbook.turn('display', window.innerWidth >= 1024 ? 'double' : 'single');
         if (useScrollDrive) onScroll();

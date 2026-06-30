@@ -357,19 +357,18 @@ html.motion-reduced .press-chaos__poster {
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* overflow: visible lets the image bleed off the right and bottom edges */
+  min-height: 100%;
   overflow: visible;
 }
 
 .research-panel__art {
-  position: fixed;
-  /* Inward from right edge, raised above footer */
-  right: clamp(3rem, 8vw, 8rem);
-  bottom: clamp(6rem, 14vh, 12rem);
+  position: absolute;
+  right: clamp(-2rem, -4vw, -0.5rem);
+  bottom: clamp(2rem, 8vh, 5rem);
   left: auto;
-  width: clamp(25rem, 36vw, 42rem);
-  /* Above footer and sidebar stacking contexts */
-  z-index: 50;
+  width: clamp(22rem, 34vw, 38rem);
+  /* Must stay behind section content — never fixed (escapes panel stacking) */
+  z-index: 0;
   pointer-events: none;
   user-select: none;
 }
@@ -381,19 +380,30 @@ html.motion-reduced .press-chaos__poster {
   object-fit: contain;
   object-position: right bottom;
   filter: grayscale(1) contrast(1.05) brightness(0.97);
-  opacity: 0.5;
-  mix-blend-mode: multiply;
+  opacity: 0.34;
+  mix-blend-mode: normal;
   cursor: default;
   pointer-events: none;
   will-change: transform;
   transition: transform 0.1s linear;
 }
 
+/* Manuscript reader — keep decor art fully behind the opaque reading surface */
+.research-panel:has(.manuscript-book) .research-panel__art {
+  z-index: 0;
+}
+
+.research-panel:has(.manuscript-book) .research-panel__art-img {
+  opacity: 0.22;
+  mix-blend-mode: normal;
+}
+
 /* Content sits above the art layer */
 .research-panel .research-section {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   flex: 1;
+  isolation: isolate;
 }
 
 .research-uplatform-group + .research-uplatform-group {
@@ -408,20 +418,22 @@ html.motion-reduced .press-chaos__poster {
 
 @media (max-width: 1023px) {
   .research-panel__art {
-    width: clamp(18rem, 44vw, 31rem);
+    width: clamp(16rem, 40vw, 28rem);
+    right: -1rem;
+    bottom: 1rem;
   }
 }
 
 @media (max-width: 639px) {
   .research-panel__art {
-    right: clamp(0.5rem, 3vw, 2rem);
-    bottom: clamp(4rem, 10vh, 7rem);
+    right: -0.5rem;
+    bottom: 0.5rem;
     width: clamp(10rem, 42vw, 16rem);
     transform: none !important;
   }
 
   .research-panel__art-img {
-    opacity: 0.5;
+    opacity: 0.2;
     will-change: auto;
     transform: none !important;
   }
