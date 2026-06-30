@@ -13,7 +13,6 @@ const l = t[locale];
 <section id="about" class="scroll-section about-chaos about-panel-stack__content magazine-torn">
   <div class="section-shell section-shell--wide about-panel-stack__content-inner">
     <div class="magazine-chapter scroll-reveal">
-      <span class="magazine-giant-type magazine-chapter__giant" aria-hidden="true">A</span>
       <p class="section-eyebrow">{l.aboutTag}</p>
     </div>
 
@@ -29,7 +28,7 @@ const l = t[locale];
       <div class="magazine-spread__page scroll-reveal about-chaos__meta magazine-meta-grid">
         <div class="about-chaos__meta-block">
           <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
-          <ul class="about-chaos__list magazine-columns">
+          <ul class="about-chaos__list">
             {siteCopy.about.interests.map((item) => (
               <li>{item}</li>
             ))}

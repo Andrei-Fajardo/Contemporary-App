@@ -7,12 +7,9 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-const coverInitial = l.heroLastName.charAt(0).toUpperCase();
 ---
 
 <section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
-  <span class="magazine-giant-type magazine-cover__giant" aria-hidden="true">{coverInitial}</span>
-
   <div class="hero-about-layer__inner section-shell section-shell--wide">
     <div class="magazine-masthead scroll-reveal">
       <span class="magazine-masthead__issue">Portfolio · 2026</span>

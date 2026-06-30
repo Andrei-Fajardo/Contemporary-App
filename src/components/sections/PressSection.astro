@@ -11,7 +11,7 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="press" class="scroll-section section-gap press-overlap magazine-torn">
+<section id="press" class="scroll-section section-gap press-overlap">
 
   <!-- ── Image layer — anna sample 6, decorative ───────────── -->
   <div class="press-overlap__frame" aria-hidden="true">
@@ -32,7 +32,6 @@ const l = t[locale];
   <!-- ── Text content box — overlaps the image's right edge ── -->
   <div class="press-overlap__content section-shell section-shell--wide">
     <div class="magazine-chapter">
-      <span class="magazine-giant-type magazine-chapter__giant" aria-hidden="true">P</span>
       <p class="scroll-reveal section-eyebrow">{l.pressTag}</p>
       <h2 class="scroll-reveal magazine-chapter__title press-overlap__heading">
         {l.nav.press}

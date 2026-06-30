@@ -1,16 +1,23 @@
 /* ── Magazine editorial layer — Men's Folio / Vogue spread mechanics ── */
 
 :root,
-[data-theme="dark"],
-[data-theme="light"] {
-  /* Theme-aware accents: --ink is light in dark mode, dark in light mode */
-  --magazine-accent: var(--ink);
-  --magazine-accent-deep: var(--ink-75);
-  --magazine-accent-muted: var(--ink-55);
-  --magazine-accent-ghost: var(--ink-25);
+[data-theme="dark"] {
+  /* Accent equals the light-mode canvas when the site is dark. */
+  --magazine-accent: #F0EEE9;
+  --magazine-accent-deep: rgba(240, 238, 233, 0.75);
+  --magazine-accent-muted: rgba(240, 238, 233, 0.55);
+  --magazine-accent-ghost: rgba(240, 238, 233, 0.12);
   --font-magazine-display: "Playfair Display", "Cormorant Garamond", "Didot", "Bodoni MT", Georgia, serif;
   --magazine-col-gap: clamp(0.75rem, 2vw, 1.5rem);
   --magazine-row-gap: clamp(1rem, 2.5vh, 2rem);
+}
+
+[data-theme="light"] {
+  /* Accent equals the dark-mode canvas when the site is light. */
+  --magazine-accent: #141414;
+  --magazine-accent-deep: rgba(20, 20, 20, 0.75);
+  --magazine-accent-muted: rgba(20, 20, 20, 0.55);
+  --magazine-accent-ghost: rgba(20, 20, 20, 0.12);
 }
 
 /* Master canvas */
@@ -103,26 +110,6 @@
   color: var(--canvas);
 }
 
-/* Giant background letter */
-.magazine-giant-type {
-  position: absolute;
-  font-family: var(--font-magazine-display);
-  font-weight: 900;
-  font-size: clamp(7rem, 24vw, 20rem);
-  line-height: 0.82;
-  letter-spacing: -0.04em;
-  color: var(--magazine-accent);
-  opacity: 0.1;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  white-space: nowrap;
-}
-
-[data-theme="light"] .magazine-giant-type {
-  opacity: 0.08;
-}
-
 /* Drop cap */
 .magazine-dropcap {
   position: relative;
@@ -181,6 +168,7 @@
   padding: 0.55rem 1rem;
   background: var(--magazine-accent);
   color: var(--canvas);
+  border-radius: 0.75rem 0 0 0.75rem;
   margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
 }
 
@@ -196,16 +184,6 @@
   position: relative;
   overflow: visible;
   padding-top: clamp(0.5rem, 2vh, 1.25rem);
-}
-
-.magazine-cover__giant {
-  top: clamp(-1rem, 2vh, 1rem);
-  right: clamp(-0.5rem, 4vw, 3rem);
-}
-
-.magazine-cover__giant--left {
-  left: clamp(-1rem, 2vw, 1rem);
-  right: auto;
 }
 
 .magazine-cover__motto {
@@ -277,29 +255,6 @@
   position: relative;
 }
 
-.magazine-lookbook .art-piece:nth-child(odd) .magazine-piece-index {
-  right: clamp(0.5rem, 3vw, 2rem);
-  left: auto;
-}
-
-.magazine-lookbook .art-piece:nth-child(even) .magazine-piece-index {
-  left: clamp(0.5rem, 3vw, 2rem);
-  right: auto;
-}
-
-.magazine-piece-index {
-  position: absolute;
-  top: clamp(0.5rem, 2vh, 1.5rem);
-  font-family: var(--font-magazine-display);
-  font-size: clamp(4rem, 12vw, 8rem);
-  font-weight: 900;
-  line-height: 1;
-  color: var(--magazine-accent);
-  opacity: 0.14;
-  pointer-events: none;
-  z-index: 0;
-}
-
 .magazine-lookbook .art-piece .section-shell {
   position: relative;
   z-index: 1;
@@ -330,13 +285,6 @@
   position: relative;
   padding-bottom: clamp(0.75rem, 2vh, 1.25rem);
   margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
-}
-
-.magazine-chapter__giant {
-  top: -0.35em;
-  left: -0.05em;
-  font-size: clamp(5rem, 16vw, 11rem);
-  opacity: 0.09;
 }
 
 .magazine-chapter__title {
@@ -406,11 +354,6 @@
 }
 
 /* Hover — premium lift */
-.magazine-lookbook .art-piece:hover .magazine-piece-index {
-  opacity: 0.22;
-  transition: opacity 0.45s var(--ease-editorial);
-}
-
 .magazine-cover .hero-about-layer__art-img {
   transition: transform 0.6s var(--ease-editorial);
 }
