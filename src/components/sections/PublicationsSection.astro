@@ -32,40 +32,50 @@ const novels = siteCopy.publications.novels;
   </div>
 
   <div class="pubs-overlap__content section-shell section-shell--wide">
-    <div class="magazine-chapter">
-      <p class="scroll-reveal section-eyebrow">{l.publicationsTag}</p>
-      <h2 class="scroll-reveal magazine-chapter__title pubs-overlap__heading">
-        {l.publicationsHeading}
-      </h2>
-    </div>
+    <header class="pubs-editorial__masthead scroll-reveal">
+      <div class="magazine-chapter">
+        <p class="section-eyebrow">{l.publicationsTag}</p>
+        <h2 class="magazine-chapter__title pubs-overlap__heading">
+          {l.publicationsHeading}
+        </h2>
+      </div>
+      <p class="content-prose text-ink-60 pubs-section__intro">
+        {l.publicationsIntro}
+      </p>
+    </header>
 
-    <p class="scroll-reveal content-prose text-ink-60 pubs-section__intro">
-      {l.publicationsIntro}
-    </p>
-
-    <EditorialLinkList items={publicationLinks} showYear={false} />
-
-    {novels.length > 0 && (
-      <div class="pubs-section__novels scroll-reveal">
-        <p class="section-eyebrow pubs-section__novels-label">{l.novelsLabel}</p>
-        <ul class="pubs-novel-list">
-          {novels.map((novel) => (
-            <li class="pubs-novel-list__item">
-              <span class="editorial-row-list__title">{novel.title}</span>
-              {novel.status === 'coming-soon' && (
-                <span class="pubs-novel-list__status">{l.comingSoon}</span>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <div class="pubs-section__manuscript-actions scroll-reveal" role="group" aria-label={l.manuscriptHeading}>
-          <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
-            {l.manuscriptReadBtn}
-          </button>
+    <div class="pubs-editorial__grid scroll-reveal">
+      <div class="pubs-editorial__col pubs-editorial__col--links">
+        <div class="pubs-editorial__panel">
+          <p class="pubs-editorial__label">{l.publicationsFeaturedLabel}</p>
+          <EditorialLinkList items={publicationLinks} showYear={false} />
         </div>
       </div>
-    )}
+
+      {novels.length > 0 && (
+        <div class="pubs-editorial__col pubs-editorial__col--novels">
+          <div class="pubs-editorial__panel pubs-editorial__panel--accent">
+            <p class="pubs-editorial__label">{l.novelsLabel}</p>
+            <ul class="pubs-novel-list">
+              {novels.map((novel) => (
+                <li class="pubs-novel-list__item">
+                  <span class="editorial-row-list__title">{novel.title}</span>
+                  {novel.status === 'coming-soon' && (
+                    <span class="pubs-novel-list__status">{l.comingSoon}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+              <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
+                {l.manuscriptReadBtn}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   </div>
 
 </section>

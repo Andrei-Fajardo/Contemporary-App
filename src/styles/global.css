@@ -1521,12 +1521,11 @@ select,
   }
 
   .pubs-section__intro {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
 
-  .pubs-section__novels {
-    margin-top: 1rem;
-    padding-top: 1rem;
+  .pubs-editorial__grid {
+    margin-top: 0.85rem;
   }
 
   .pubs-novel-list__item {
