@@ -1,0 +1,210 @@
+/* From Utero — scroll-driven manuscript flipbook (turn.js) */
+
+.manuscript-book {
+  position: relative;
+  margin-top: clamp(2rem, 5vh, 3rem);
+  margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.manuscript-book__header {
+  margin-bottom: clamp(1.25rem, 3vh, 2rem);
+  max-width: 62ch;
+}
+
+.manuscript-book__title {
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  line-height: 1.08;
+  margin-bottom: 0.65rem;
+  color: var(--ink);
+}
+
+.manuscript-book__intro {
+  max-width: 58ch;
+}
+
+.manuscript-book__stage {
+  position: relative;
+}
+
+.manuscript-book__sticky {
+  position: sticky;
+  top: clamp(3.75rem, 12vh, 5rem);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+}
+
+.manuscript-book__scroll-spacer {
+  height: calc(var(--manuscript-pages, 20) * 55vh);
+  pointer-events: none;
+}
+
+.manuscript-book__viewport {
+  width: min(100%, 56rem);
+  margin-inline: auto;
+  border-radius: 0.35rem;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.28),
+    0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.manuscript-flipbook {
+  width: 100%;
+  margin-inline: auto;
+  background: var(--canvas);
+}
+
+.manuscript-flipbook .hard {
+  background: color-mix(in srgb, var(--accent-canvas) 88%, var(--canvas)) !important;
+  color: var(--canvas);
+  font-family: var(--font-heading);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.manuscript-book__cover--blank {
+  background: color-mix(in srgb, var(--canvas) 92%, var(--ink)) !important;
+}
+
+.manuscript-book__cover-title {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.05;
+}
+
+.manuscript-book__cover-sub {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  font-style: normal;
+}
+
+.manuscript-book__page {
+  background: #f4f0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.manuscript-book__page img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #f4f0e8;
+}
+
+.manuscript-book__chrome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.manuscript-book__nav {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--canvas) 88%, transparent);
+  color: var(--ink);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.manuscript-book__nav:hover {
+  border-color: var(--ink-45);
+  background: var(--surface-hover);
+}
+
+.manuscript-book__nav:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.manuscript-book__indicator {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+  min-width: 5.5rem;
+  text-align: center;
+}
+
+.manuscript-book__hint {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  text-align: center;
+}
+
+/* Fallback if turn.js fails — vertical page stack */
+.manuscript-flipbook--fallback {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.manuscript-flipbook--fallback .hard {
+  display: none;
+}
+
+.manuscript-flipbook--fallback .manuscript-book__page {
+  border-radius: 0.35rem;
+  min-height: 12rem;
+}
+
+@media (max-width: 767px) {
+  .manuscript-book__sticky {
+    position: relative;
+    top: auto;
+  }
+
+  .manuscript-book__scroll-spacer {
+    display: none;
+  }
+
+  .manuscript-book__viewport {
+    width: 100%;
+  }
+
+  .manuscript-book__hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manuscript-book__scroll-spacer {
+    display: none;
+  }
+
+  .manuscript-book__sticky {
+    position: relative;
+    top: auto;
+  }
+}

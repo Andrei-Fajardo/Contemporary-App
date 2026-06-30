@@ -8,6 +8,7 @@
 @import "./about-panel.css";
 @import "./utero-layers.css";
 @import "./magazine.css";
+@import "./manuscript-book.css";
 
 /* Editorial typography — Cormorant Garamond (heads) + Raleway 300 (body) */
 :root {
