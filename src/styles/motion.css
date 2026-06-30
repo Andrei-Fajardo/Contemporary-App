@@ -636,7 +636,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   z-index: 45;
   width: 15rem;
   height: 100vh;
-  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  border-right: 1px solid var(--border-sidebar);
   background-color: var(--canvas);
   overflow-y: auto;
 }
@@ -1212,9 +1212,9 @@ html {
   align-items: stretch;
   gap: 0.2rem;
   padding: 0.3rem;
-  border: 1.5px solid rgba(240, 238, 233, 0.18);
+  border: 1.5px solid var(--lang-toggle-border);
   border-radius: 0.35rem;
-  background: rgba(20, 20, 20, 0.88);
+  background: var(--surface-lang-toggle);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
@@ -1244,8 +1244,8 @@ html {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0.25rem;
   padding: 0.35rem;
-  background: rgba(20, 20, 20, 0.92);
-  border: 1px solid rgba(240, 238, 233, 0.15);
+  background: var(--surface-lang-toggle-drawer);
+  border: 1px solid var(--lang-toggle-border);
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -1290,7 +1290,7 @@ html {
 }
 
 .lang-btn:hover:not(.lang-btn--active) {
-  background: rgba(240, 238, 233, 0.08);
+  background: var(--surface-hover);
   color: var(--ink);
 }
 
