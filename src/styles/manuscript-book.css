@@ -81,6 +81,8 @@
 }
 
 .manuscript-modal__stage {
+  position: relative;
+  isolation: isolate;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -90,6 +92,19 @@
   gap: clamp(0.75rem, 2vh, 1rem);
   background: #121212;
   border-radius: 0.35rem;
+  overflow: visible;
+}
+
+.manuscript-book__stage-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: clamp(2.75rem, 6vw, 3.5rem);
+  box-sizing: border-box;
 }
 
 /* ── Flipbook reader ─────────────────────────────────────── */
@@ -102,6 +117,8 @@
 }
 
 .manuscript-book__viewport {
+  position: relative;
+  z-index: 1;
   width: min(100%, var(--manuscript-w, 56rem));
   height: var(--manuscript-h, auto);
   margin-inline: auto;
@@ -175,40 +192,62 @@
 }
 
 .manuscript-book__chrome {
+  position: relative;
+  z-index: 60;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
   width: min(100%, var(--manuscript-w, 56rem));
   flex-shrink: 0;
+  pointer-events: none;
 }
 
 .manuscript-book__nav {
   display: grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
-  border: 1px solid color-mix(in srgb, var(--canvas) 28%, transparent);
+  border: 1px solid rgba(240, 238, 233, 0.34);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--canvas) 10%, transparent);
-  color: var(--canvas);
+  background: rgba(240, 238, 233, 0.12);
+  color: #f0eee9;
   font-size: 1.125rem;
   line-height: 1;
   cursor: pointer;
   flex-shrink: 0;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   transition:
     border-color 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.manuscript-book__nav--side {
+  position: absolute;
+  top: 50%;
+  z-index: 60;
+  transform: translateY(-50%);
+}
+
+.manuscript-book__nav--prev {
+  left: clamp(0.35rem, 1.5vw, 0.85rem);
+}
+
+.manuscript-book__nav--next {
+  right: clamp(0.35rem, 1.5vw, 0.85rem);
 }
 
 .manuscript-book__nav:hover {
-  border-color: color-mix(in srgb, var(--canvas) 50%, transparent);
-  background: color-mix(in srgb, var(--canvas) 18%, transparent);
+  border-color: rgba(240, 238, 233, 0.58);
+  background: rgba(240, 238, 233, 0.22);
+  transform: translateY(-50%) scale(1.04);
 }
 
 .manuscript-book__nav:focus-visible {
-  outline: 2px solid var(--canvas);
+  outline: 2px solid #f0eee9;
   outline-offset: 2px;
 }
 
@@ -217,10 +256,11 @@
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--canvas) 78%, white);
+  color: rgba(240, 238, 233, 0.78);
   min-width: 5.5rem;
   text-align: center;
   flex-shrink: 0;
+  pointer-events: none;
 }
 
 .manuscript-flipbook--fallback {

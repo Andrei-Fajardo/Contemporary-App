@@ -39,34 +39,48 @@ const pageCount = manuscriptPages.length;
       data-page-count={pageCount}
     >
       <div class="manuscript-modal__stage" data-manuscript-stage>
-        <div class="manuscript-book__viewport" data-manuscript-viewport>
-          <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
-            {manuscriptPages.map((src, index) => (
-              <div class="manuscript-book__page">
-                <img
-                  src={src}
-                  alt={`${manuscriptMeta.title} — spread ${index + 1}`}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchpriority={index === 0 ? 'high' : 'auto'}
-                  decoding="async"
-                  draggable="false"
-                  data-lightbox-ignore
-                />
-              </div>
-            ))}
+        <div class="manuscript-book__stage-body">
+          <button
+            type="button"
+            class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev"
+            data-manuscript-prev
+            aria-label={l.manuscriptPrev}
+          >
+            ←
+          </button>
+
+          <div class="manuscript-book__viewport" data-manuscript-viewport>
+            <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
+              {manuscriptPages.map((src, index) => (
+                <div class="manuscript-book__page">
+                  <img
+                    src={src}
+                    alt={`${manuscriptMeta.title} — spread ${index + 1}`}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={index === 0 ? 'high' : 'auto'}
+                    decoding="async"
+                    draggable="false"
+                    data-lightbox-ignore
+                  />
+                </div>
+              ))}
+            </div>
           </div>
+
+          <button
+            type="button"
+            class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next"
+            data-manuscript-next
+            aria-label={l.manuscriptNext}
+          >
+            →
+          </button>
         </div>
 
         <div class="manuscript-book__chrome" aria-live="polite">
-          <button type="button" class="manuscript-book__nav" data-manuscript-prev aria-label={l.manuscriptPrev}>
-            ←
-          </button>
           <span class="manuscript-book__indicator" data-manuscript-indicator>
             1 / {pageCount}
           </span>
-          <button type="button" class="manuscript-book__nav" data-manuscript-next aria-label={l.manuscriptNext}>
-            →
-          </button>
         </div>
       </div>
     </div>
