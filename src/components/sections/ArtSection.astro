@@ -11,13 +11,14 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="art" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide mb-6 md:mb-8">
+<section id="art" class="scroll-section section-gap magazine-lookbook">
+  <div class="section-shell section-shell--wide mb-6 md:mb-8 magazine-chapter">
+    <span class="magazine-giant-type magazine-chapter__giant" aria-hidden="true">A</span>
     <p class="scroll-reveal section-eyebrow">{l.artTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-2">
+    <h2 class="scroll-reveal magazine-chapter__title text-3xl md:text-5xl lg:text-6xl text-ink mb-2">
       {l.nav.art}
     </h2>
-    <hr class="brutal-rule brutal-rule--short scroll-reveal" />
+    <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal" />
   </div>
 
   {artworks.map((p, i) => (
@@ -28,6 +29,7 @@ const l = t[locale];
         </div>
       )}
       <article class="art-piece" data-popup-title={p.title}>
+      <span class="magazine-piece-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
       <div class="section-shell section-shell--wide py-6 md:py-8">
         <div class={`grid md:grid-cols-2 gap-8 lg:gap-12 items-start`}>
           <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>

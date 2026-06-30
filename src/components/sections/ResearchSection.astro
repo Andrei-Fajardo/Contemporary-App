@@ -17,12 +17,16 @@ const tabs = [
 ] as const;
 ---
 
-<section id="research" class="scroll-section section-gap research-section">
+<section id="research" class="scroll-section section-gap research-section magazine-torn">
   <div class="section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow">{l.academicTag}</p>
-    <h2 class="scroll-reveal type-heading text-3xl md:text-5xl lg:text-6xl text-ink mb-3">
-      {l.academicHeading}
-    </h2>
+    <div class="magazine-chapter scroll-reveal">
+      <span class="magazine-giant-type magazine-chapter__giant" aria-hidden="true">R</span>
+      <p class="section-eyebrow">{l.academicTag}</p>
+      <h2 class="magazine-chapter__title text-3xl md:text-5xl lg:text-6xl text-ink mb-3">
+        {l.academicHeading}
+      </h2>
+      <hr class="magazine-rule-crimson magazine-rule-crimson--short" />
+    </div>
 
     <!-- Tab filters — same pattern as exhibition filters -->
     <div class="exhibition-filters research-filters scroll-reveal" role="tablist" aria-label="Research categories">

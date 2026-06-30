@@ -10,25 +10,26 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="about" class="scroll-section about-chaos about-panel-stack__content">
+<section id="about" class="scroll-section about-chaos about-panel-stack__content magazine-torn">
   <div class="section-shell section-shell--wide about-panel-stack__content-inner">
-    <p class="scroll-reveal section-eyebrow">{l.aboutTag}</p>
+    <div class="magazine-chapter scroll-reveal">
+      <span class="magazine-giant-type magazine-chapter__giant" aria-hidden="true">A</span>
+      <p class="section-eyebrow">{l.aboutTag}</p>
+    </div>
 
-    <div class="about-chaos__body">
-      <div class="scroll-reveal about-chaos__intro">
+    <div class="magazine-spread about-chaos__body">
+      <div class="magazine-spread__page scroll-reveal about-chaos__intro">
         <p class="content-prose text-ink-60 mb-2">{l.heroBasedIn}</p>
-        <h2 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-3">
+        <h2 class="type-magazine-display text-2xl md:text-4xl lg:text-[2.75rem] text-ink mb-4 leading-[1.05]">
           {l.heroIntroBefore}<span class="about-chaos__city" tabindex="0">{l.heroIntroCity}</span>{l.heroIntroAfter}
         </h2>
-        <div class="space-y-4">
-          <p class="content-prose text-ink-75">{l.bio}</p>
-        </div>
+        <p class="content-prose text-ink-75 magazine-dropcap max-w-[62ch]">{l.bio}</p>
       </div>
 
-      <div class="scroll-reveal about-chaos__meta">
+      <div class="magazine-spread__page scroll-reveal about-chaos__meta magazine-meta-grid">
         <div class="about-chaos__meta-block">
           <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
-          <ul class="about-chaos__list">
+          <ul class="about-chaos__list magazine-columns">
             {siteCopy.about.interests.map((item) => (
               <li>{item}</li>
             ))}

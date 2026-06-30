@@ -13,7 +13,7 @@ const l = t[locale];
 const novels = siteCopy.publications.novels;
 ---
 
-<section id="publications" class="scroll-section section-gap pubs-overlap">
+<section id="publications" class="scroll-section section-gap pubs-overlap magazine-torn">
 
   <!-- ── Image layer — decorative, non-interactive ─────────────
        The marble figure occupies the left ~40% of the section.
@@ -37,10 +37,13 @@ const novels = siteCopy.publications.novels;
 
   <!-- ── Text content box — overlaps the image's right edge ── -->
   <div class="pubs-overlap__content section-shell section-shell--wide">
-    <p class="scroll-reveal section-eyebrow">{l.publicationsTag}</p>
-    <h2 class="scroll-reveal type-heading pubs-overlap__heading">
-      {l.publicationsHeading}
-    </h2>
+    <div class="magazine-chapter">
+      <span class="magazine-giant-type magazine-chapter__giant" aria-hidden="true">P</span>
+      <p class="scroll-reveal section-eyebrow">{l.publicationsTag}</p>
+      <h2 class="scroll-reveal magazine-chapter__title pubs-overlap__heading">
+        {l.publicationsHeading}
+      </h2>
+    </div>
 
     <p class="scroll-reveal content-prose text-ink-60 pubs-section__intro">
       {l.publicationsIntro}

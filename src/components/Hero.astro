@@ -7,10 +7,19 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const coverInitial = l.heroLastName.charAt(0).toUpperCase();
 ---
 
-<section id="home" class="hero-section hero-about-layer scroll-section">
+<section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
+  <span class="magazine-giant-type magazine-cover__giant" aria-hidden="true">{coverInitial}</span>
+
   <div class="hero-about-layer__inner section-shell section-shell--wide">
+    <div class="magazine-masthead scroll-reveal">
+      <span class="magazine-masthead__issue">Portfolio · 2026</span>
+      <span class="type-magazine-masthead">{l.heroTagline}</span>
+      <span class="magazine-star" aria-hidden="true"></span>
+    </div>
+
     <div class="hero-about-layer__cluster">
       <div class="hero-about-layer__art" data-headshot aria-hidden="true">
         <img
@@ -25,17 +34,19 @@ const l = t[locale];
       </div>
 
       <div class="hero-editorial__copy hero-about-layer__name">
-        <h1 class="hero-about-layer__heading scroll-reveal">
+        <h1 class="hero-about-layer__heading scroll-reveal type-magazine-display">
           <span class="hero-name__first">{l.heroFirstName}</span>
           <span class="hero-name__last">{l.heroLastName}</span>
         </h1>
 
         <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
+        <p class="magazine-cover__motto scroll-reveal">{l.heroMotto}</p>
       </div>
 
-      <!-- Mobile only: last name spans full width below the image+name row -->
       <div class="hero-name__last-mobile" aria-hidden="true">{l.heroLastName}</div>
     </div>
   </div>
+
+  <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal" />
   <hr class="hero-about-layer__rule scroll-reveal" />
 </section>
