@@ -705,7 +705,7 @@ html.motion-reduced .press-chaos__poster {
 }
 
 .about-chaos__intro .content-prose {
-  max-width: 62ch;
+  max-width: min(72ch, 100%);
   text-align: justify;
   text-align-last: left;
   hyphens: auto;

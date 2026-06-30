@@ -164,6 +164,19 @@
   margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
 }
 
+@media (min-width: 640px) {
+  .magazine-cover .magazine-masthead {
+    position: relative;
+    z-index: 6;
+    align-self: flex-start;
+    width: auto;
+    max-width: min(28rem, 44%);
+    margin-left: clamp(-1.25rem, -3.5vw, -0.35rem);
+    margin-right: auto;
+    flex-shrink: 0;
+  }
+}
+
 .magazine-masthead__issue {
   font-family: var(--font-mono);
   font-size: 0.625rem;
