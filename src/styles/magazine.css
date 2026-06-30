@@ -326,7 +326,6 @@
   margin-top: clamp(-2rem, -4vh, -0.5rem);
   padding: clamp(1rem, 2.5vw, 1.75rem);
   background: var(--surface-panel);
-  border-left: 3px solid var(--magazine-accent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -338,15 +337,9 @@
   }
 }
 
-/* Sidebar magazine accent */
+/* Sidebar — standard border only */
 .desktop-sidebar.magazine-sidebar {
   border-right: 1px solid var(--border-sidebar);
-  box-shadow: inset -3px 0 0 var(--magazine-accent);
-}
-
-.desktop-sidebar.magazine-sidebar .sidebar-nav-link.nav-link--active::before {
-  background: var(--magazine-accent);
-  width: 3px;
 }
 
 /* About spread meta lists */
