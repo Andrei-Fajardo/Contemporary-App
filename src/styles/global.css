@@ -1313,6 +1313,7 @@ select,
   :root {
     --mobile-page-pad: clamp(1rem, 4.5vw, 1.35rem);
     --mobile-card-pad: clamp(1rem, 4.25vw, 1.35rem);
+    --mobile-card-pad-inline: clamp(1.1rem, 5vw, 1.5rem);
     --mobile-card-radius: 1rem;
     --mobile-accent-soft: color-mix(in srgb, var(--magazine-accent) 3.5%, transparent);
     --mobile-accent-softer: color-mix(in srgb, var(--magazine-accent) 3%, transparent);
@@ -1431,11 +1432,12 @@ select,
     align-items: start;
     width: 100%;
     margin: 0 0 0.7rem;
-    padding: 0.9rem 0.95rem;
+    padding: 0.9rem var(--mobile-card-pad-inline);
     border: 1px solid var(--border-subtle);
     border-radius: var(--mobile-card-radius);
     background: var(--mobile-accent-soft);
     box-shadow: inset 0 1px 0 var(--mobile-accent-line);
+    box-sizing: border-box;
   }
 
   .editorial-row-list--no-year .editorial-row-list__item {
@@ -1487,15 +1489,16 @@ select,
     width: 100% !important;
     max-width: none !important;
     margin: 0 !important;
-    padding: var(--mobile-card-pad) !important;
+    padding-block: var(--mobile-card-pad) !important;
+    padding-inline: var(--mobile-card-pad-inline) !important;
     border: 1px solid var(--border-subtle);
     border-radius: var(--mobile-card-radius) !important;
     background: var(--mobile-accent-soft) !important;
     box-sizing: border-box;
   }
 
-  .pubs-overlap .section-shell,
-  .press-overlap .section-shell {
+  .pubs-overlap .section-shell:not(.pubs-overlap__content),
+  .press-overlap .section-shell:not(.press-overlap__content) {
     padding-inline: 0 !important;
   }
 
@@ -1525,10 +1528,11 @@ select,
     flex-direction: column;
     gap: 0.55rem;
     margin: 0 0 0.7rem;
-    padding: 0.9rem 0.95rem;
+    padding: 0.9rem var(--mobile-card-pad-inline);
     border: 1px solid var(--border-subtle);
     border-radius: var(--mobile-card-radius);
     background: var(--mobile-accent-soft);
+    box-sizing: border-box;
   }
 
   .pubs-novel-list__status {
@@ -1671,26 +1675,29 @@ select,
     padding-bottom: 0.35rem;
   }
 
-  /* Publications & Press rows — restore horizontal inset (utero strips it). */
+  /* Publications & Press rows — inset inside the content card */
   .pubs-overlap .editorial-row-list__item,
   .press-overlap .editorial-row-list__item {
-    padding: 0.9rem 0.95rem !important;
+    padding: 0.9rem var(--mobile-card-pad-inline) !important;
     border: 1px solid var(--border-subtle) !important;
     border-radius: var(--mobile-card-radius) !important;
     margin-bottom: 0.7rem !important;
     border-bottom: 1px solid var(--border-subtle) !important;
+    box-sizing: border-box !important;
   }
 
   .pubs-overlap .pubs-novel-list__item {
-    padding: 0.9rem 0.95rem !important;
+    padding: 0.9rem var(--mobile-card-pad-inline) !important;
     border: 1px solid var(--border-subtle) !important;
     border-radius: var(--mobile-card-radius) !important;
     margin-bottom: 0.7rem !important;
+    box-sizing: border-box !important;
   }
 
   .pubs-overlap__content,
   .press-overlap__content {
-    padding: var(--mobile-card-pad) !important;
+    padding-block: var(--mobile-card-pad) !important;
+    padding-inline: var(--mobile-card-pad-inline) !important;
   }
 }
 

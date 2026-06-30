@@ -359,7 +359,8 @@
     right: auto !important;
     width: 100% !important;
     max-width: none !important;
-    padding: var(--mobile-card-pad, 1.25rem 1rem) !important;
+    padding-block: var(--mobile-card-pad, 1.25rem) !important;
+    padding-inline: var(--mobile-card-pad-inline, 1.15rem) !important;
     margin: 0 !important;
     background: var(--mobile-accent-soft, transparent) !important;
     border: 1px solid var(--border-subtle) !important;
@@ -381,7 +382,7 @@
   .pubs-overlap .editorial-row-list__item {
     display: block !important;
     width: 100% !important;
-    padding: 0.9rem 0.95rem !important;
+    padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
     margin: 0 0 0.7rem !important;
     border: 1px solid var(--border-subtle) !important;
     border-radius: var(--mobile-card-radius, 1rem) !important;
@@ -402,7 +403,7 @@
   }
 
   .pubs-overlap .pubs-novel-list__item {
-    padding: 0.9rem 0.95rem !important;
+    padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
     margin: 0 0 0.7rem !important;
     border: 1px solid var(--border-subtle) !important;
     border-radius: var(--mobile-card-radius, 1rem) !important;
@@ -443,7 +444,8 @@
     right: auto !important;
     width: 100% !important;
     max-width: none !important;
-    padding: var(--mobile-card-pad, 1.25rem 1rem) !important;
+    padding-block: var(--mobile-card-pad, 1.25rem) !important;
+    padding-inline: var(--mobile-card-pad-inline, 1.15rem) !important;
     margin: 0 !important;
     background: var(--mobile-accent-soft, transparent) !important;
     border: 1px solid var(--border-subtle) !important;
@@ -466,7 +468,7 @@
     grid-template-columns: 2.75rem 1fr !important;
     width: 100% !important;
     gap: 0.15rem 0.75rem !important;
-    padding: 0.9rem 0.95rem !important;
+    padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
     margin: 0 0 0.7rem !important;
     box-sizing: border-box !important;
     border: 1px solid var(--border-subtle) !important;
