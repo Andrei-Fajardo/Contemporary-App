@@ -1,4 +1,4 @@
-/* From Utero — fullscreen manuscript reader (turn.js) */
+/* From Utero — fullscreen manuscript reader (CSS 3D carousel) */
 
 /* ── Fullscreen modal ─────────────────────────────────────── */
 .manuscript-modal {
@@ -92,7 +92,7 @@
   border-radius: 0.35rem;
 }
 
-/* ── Flipbook reader ─────────────────────────────────────── */
+/* ── Spread carousel ─────────────────────────────────────── */
 .manuscript-book--modal {
   display: flex;
   flex-direction: column;
@@ -111,77 +111,76 @@
   background: #121212;
 }
 
-.manuscript-flipbook:not(.manuscript-flipbook--ready) {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.manuscript-flipbook--ready {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.25s ease;
-}
-
-.manuscript-flipbook {
+.manuscript-carousel {
+  position: relative;
   width: 100%;
   height: 100%;
-  margin-inline: auto;
+  perspective: 1400px;
+  transform-style: preserve-3d;
   background: #121212;
 }
 
-.manuscript-flipbook .hard {
-  background: color-mix(in srgb, var(--accent-canvas) 88%, var(--canvas)) !important;
-  color: var(--canvas);
-  font-family: var(--font-heading);
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  text-align: center;
-  padding: 1.5rem;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+.manuscript-carousel:not(.manuscript-carousel--ready) .manuscript-carousel__spread.is-active {
+  opacity: 1;
+  visibility: visible;
 }
 
-.manuscript-book__cover--blank {
-  background: #2a2a2a !important;
+.manuscript-carousel--ready {
+  opacity: 1;
+  visibility: visible;
 }
 
-.manuscript-book__cover-title {
-  font-size: clamp(1.35rem, 3vw, 2rem);
-  line-height: 1.05;
-}
-
-.manuscript-book__cover-sub {
-  font-family: var(--font-body);
-  font-size: 0.6875rem;
-  font-weight: 400;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  opacity: 0.72;
-  font-style: normal;
-}
-
-.manuscript-book__page {
-  position: relative;
-  background: #f7f7f7;
+.manuscript-carousel__spread {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
+  background: #f7f7f7;
   box-sizing: border-box;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+  transform: rotateY(0deg);
+  transition: transform var(--manuscript-flip-ms, 600ms) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.manuscript-carousel__spread.is-active {
+  opacity: 1;
+  z-index: 2;
+  pointer-events: auto;
+  transform: rotateY(0deg);
+}
+
+.manuscript-carousel__spread.is-behind {
+  opacity: 1;
+  z-index: 1;
+  transform: rotateY(0deg);
+}
+
+.manuscript-carousel__spread.is-flip-out {
+  z-index: 3;
+  opacity: 1;
+  transform: rotateY(-180deg);
+}
+
+.manuscript-carousel__spread.is-flip-in {
+  z-index: 3;
+  opacity: 1;
+  transform: rotateY(-180deg);
+}
+
+.manuscript-carousel__spread.is-flip-in.is-active {
+  transform: rotateY(0deg);
 }
 
 /* Center spine crease over pre-rendered double-page spreads */
-.manuscript-book__page::after {
+.manuscript-carousel__spread::after {
   content: "";
   position: absolute;
   top: 0;
@@ -199,12 +198,20 @@
   z-index: 2;
 }
 
-.manuscript-book__page img {
+.manuscript-carousel__spread img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   background: transparent;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manuscript-carousel__spread {
+    transition: none;
+  }
 }
 
 .manuscript-book__chrome {
@@ -254,26 +261,6 @@
   min-width: 5.5rem;
   text-align: center;
   flex-shrink: 0;
-}
-
-.manuscript-flipbook--fallback {
-  display: grid;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  opacity: 1;
-  visibility: visible;
-  height: auto;
-  overflow-y: auto;
-  max-height: 70dvh;
-}
-
-.manuscript-flipbook--fallback .hard {
-  display: none;
-}
-
-.manuscript-flipbook--fallback .manuscript-book__page {
-  border-radius: 0.25rem;
-  min-height: 14rem;
 }
 
 /* Publications — trigger button (exhibition filter style) */

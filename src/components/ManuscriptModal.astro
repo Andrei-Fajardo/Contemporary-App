@@ -40,28 +40,25 @@ const pageCount = manuscriptPages.length;
     >
       <div class="manuscript-modal__stage" data-manuscript-stage>
         <div class="manuscript-book__viewport" data-manuscript-viewport>
-          <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
-            <div class="hard manuscript-book__cover">
-              <span class="manuscript-book__cover-title">{manuscriptMeta.title}</span>
-              <small class="manuscript-book__cover-sub">{manuscriptMeta.subtitle}</small>
-            </div>
-            <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
+          <div class="manuscript-carousel" data-manuscript-carousel>
             {manuscriptPages.map((src, index) => (
-              <div class="manuscript-book__page">
+              <div
+                class="manuscript-carousel__spread"
+                data-manuscript-spread
+                data-spread-index={index}
+                aria-hidden={index === 0 ? 'false' : 'true'}
+              >
                 <img
                   src={src}
-                  alt={`${manuscriptMeta.title} — page ${index + 1}`}
-                  loading={index < 4 ? "eager" : "lazy"}
+                  alt={`${manuscriptMeta.title} — spread ${index + 1}`}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={index === 0 ? 'high' : 'auto'}
                   decoding="async"
                   draggable="false"
                   data-lightbox-ignore
                 />
               </div>
             ))}
-            <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
-            <div class="hard manuscript-book__cover manuscript-book__cover--end">
-              <span class="manuscript-book__cover-title">{l.manuscriptEnd}</span>
-            </div>
           </div>
         </div>
 

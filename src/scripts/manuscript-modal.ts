@@ -1,4 +1,10 @@
-import { initManuscriptBook, resizeManuscriptBook } from './manuscript-book';
+import {
+  goManuscriptNext,
+  goManuscriptPrev,
+  initManuscriptBook,
+  resetManuscriptBook,
+  resizeManuscriptBook,
+} from './manuscript-book';
 
 let listenersBound = false;
 
@@ -23,6 +29,7 @@ function openModal(): void {
     book.dataset.manuscriptBound = 'true';
     initManuscriptBook(book);
   } else {
+    resetManuscriptBook(book);
     resizeManuscriptBook(book);
   }
 
@@ -62,6 +69,21 @@ export function initManuscriptModal(): void {
     if (event.key === 'Escape') {
       event.preventDefault();
       closeModal();
+      return;
+    }
+
+    const book = getBook();
+    if (!book) return;
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      goManuscriptPrev(book);
+      return;
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      goManuscriptNext(book);
     }
   });
 }
