@@ -40,14 +40,9 @@ const pageCount = manuscriptPages.length;
     >
       <div class="manuscript-modal__stage" data-manuscript-stage>
         <div class="manuscript-book__viewport" data-manuscript-viewport>
-          <div class="manuscript-carousel" data-manuscript-carousel>
+          <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
             {manuscriptPages.map((src, index) => (
-              <div
-                class="manuscript-carousel__spread"
-                data-manuscript-spread
-                data-spread-index={index}
-                aria-hidden={index === 0 ? 'false' : 'true'}
-              >
+              <div class="manuscript-book__page">
                 <img
                   src={src}
                   alt={`${manuscriptMeta.title} — spread ${index + 1}`}

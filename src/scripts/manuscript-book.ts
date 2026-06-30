@@ -1,22 +1,66 @@
+declare global {
+  interface Window {
+    jQuery?: JQueryStatic;
+    $?: JQueryStatic;
+  }
+}
+
+type JQueryStatic = {
+  (selector: string | HTMLElement): JQueryInstance;
+};
+
+type JQueryInstance = {
+  turn(options?: Record<string, unknown>): JQueryInstance;
+  turn(method: string, ...args: unknown[]): unknown;
+};
+
+const VENDOR = {
+  jquery: '/vendor/jquery.js',
+  turn: '/vendor/turn.js',
+} as const;
+
 /** Width ÷ height for pre-rendered double-page spread JPGs */
 const SPREAD_ASPECT = 1.45;
 
-const FLIP_DURATION_MS = 600;
+/** Turn.js page index (1-based) where spread 0001.jpg is shown */
+const FIRST_CONTENT_PAGE = 1;
 
-type BookState = {
-  currentIndex: number;
-  total: number;
-  animating: boolean;
-  spreads: HTMLElement[];
-  reducedMotion: boolean;
-  onResize: (() => void) | null;
-};
+let vendorPromise: Promise<void> | null = null;
 
-const books = new WeakMap<HTMLElement, BookState>();
+function loadScript(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.head.appendChild(script);
+  });
+}
+
+function loadVendors(): Promise<void> {
+  if (!vendorPromise) {
+    vendorPromise = loadScript(VENDOR.jquery).then(() => loadScript(VENDOR.turn));
+  }
+  return vendorPromise;
+}
 
 function contentPageCount(root: HTMLElement): number {
   return Number(root.dataset.pageCount ?? '0');
 }
+
+type BookState = {
+  flipbook: JQueryInstance | null;
+  currentPage: number;
+  contentPages: number;
+  onResize: (() => void) | null;
+};
+
+const books = new WeakMap<HTMLElement, BookState>();
 
 function measureBook(root: HTMLElement): { width: number; height: number } {
   const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
@@ -37,7 +81,6 @@ function measureBook(root: HTMLElement): { width: number; height: number } {
 function syncShell(root: HTMLElement, viewport: HTMLElement | null, width: number, height: number) {
   root.style.setProperty('--manuscript-w', `${width}px`);
   root.style.setProperty('--manuscript-h', `${height}px`);
-  root.style.setProperty('--manuscript-flip-ms', `${FLIP_DURATION_MS}ms`);
   if (viewport) {
     viewport.style.width = `${width}px`;
     viewport.style.height = `${height}px`;
@@ -45,156 +88,120 @@ function syncShell(root: HTMLElement, viewport: HTMLElement | null, width: numbe
   }
 }
 
-function updateIndicator(root: HTMLElement, index: number, total: number) {
+function turnPageToContentIndex(turnPage: number): number {
+  return turnPage - FIRST_CONTENT_PAGE + 1;
+}
+
+function contentIndexToTurnPage(contentIndex: number): number {
+  return contentIndex + FIRST_CONTENT_PAGE - 1;
+}
+
+function updateIndicator(root: HTMLElement, turnPage: number, contentPages: number) {
   const indicator = root.querySelector<HTMLElement>('[data-manuscript-indicator]');
   if (!indicator) return;
-  indicator.textContent = `${index + 1} / ${total}`;
-}
-
-function waitTransition(el: HTMLElement, reducedMotion: boolean): Promise<void> {
-  if (reducedMotion) return Promise.resolve();
-  return new Promise((resolve) => {
-    const done = () => {
-      el.removeEventListener('transitionend', onEnd);
-      clearTimeout(fallback);
-      resolve();
-    };
-    const onEnd = (event: TransitionEvent) => {
-      if (event.target === el && event.propertyName === 'transform') done();
-    };
-    el.addEventListener('transitionend', onEnd);
-    const fallback = window.setTimeout(done, FLIP_DURATION_MS + 80);
-  });
-}
-
-function clearSpreadClasses(spread: HTMLElement) {
-  spread.classList.remove('is-active', 'is-behind', 'is-flip-out', 'is-flip-in');
-  spread.removeAttribute('style');
-}
-
-function applyIdleState(state: BookState) {
-  state.spreads.forEach((spread, index) => {
-    clearSpreadClasses(spread);
-    const isActive = index === state.currentIndex;
-    spread.classList.toggle('is-active', isActive);
-    spread.setAttribute('aria-hidden', isActive ? 'false' : 'true');
-  });
+  const display = Math.min(contentPages, Math.max(1, turnPageToContentIndex(turnPage)));
+  indicator.textContent = `${display} / ${contentPages}`;
 }
 
 export function resizeManuscriptBook(root: HTMLElement): void {
+  const state = books.get(root);
   const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
   const { width, height } = measureBook(root);
   syncShell(root, viewport, width, height);
+
+  if (!state?.flipbook) return;
+  state.flipbook.turn('size', width, height);
+  state.flipbook.turn('display', 'single');
 }
 
 export function resetManuscriptBook(root: HTMLElement): void {
   const state = books.get(root);
-  if (!state) return;
+  if (!state?.flipbook) return;
 
-  state.animating = false;
-  state.currentIndex = 0;
-  applyIdleState(state);
-  updateIndicator(root, 0, state.total);
+  state.currentPage = FIRST_CONTENT_PAGE;
+  state.flipbook.turn('page', FIRST_CONTENT_PAGE);
+  updateIndicator(root, FIRST_CONTENT_PAGE, state.contentPages);
   resizeManuscriptBook(root);
 }
 
 export function goManuscriptPrev(root: HTMLElement): void {
   const state = books.get(root);
-  if (!state || state.animating || state.currentIndex <= 0) return;
-
-  const { spreads, reducedMotion } = state;
-  const current = spreads[state.currentIndex];
-  const previous = spreads[state.currentIndex - 1];
-  const nextIndex = state.currentIndex - 1;
-
-  if (reducedMotion) {
-    state.currentIndex = nextIndex;
-    applyIdleState(state);
-    updateIndicator(root, nextIndex, state.total);
-    return;
-  }
-
-  state.animating = true;
-  current.classList.remove('is-active');
-  previous.classList.add('is-flip-in');
-  void previous.offsetWidth;
-  previous.classList.add('is-active');
-
-  void waitTransition(previous, reducedMotion).then(() => {
-    state.currentIndex = nextIndex;
-    applyIdleState(state);
-    updateIndicator(root, nextIndex, state.total);
-    state.animating = false;
-  });
+  if (!state?.flipbook || state.currentPage <= FIRST_CONTENT_PAGE) return;
+  state.flipbook.turn('previous');
 }
 
 export function goManuscriptNext(root: HTMLElement): void {
   const state = books.get(root);
-  if (!state || state.animating || state.currentIndex >= state.total - 1) return;
-
-  const { spreads, reducedMotion } = state;
-  const current = spreads[state.currentIndex];
-  const next = spreads[state.currentIndex + 1];
-  const nextIndex = state.currentIndex + 1;
-
-  if (reducedMotion) {
-    state.currentIndex = nextIndex;
-    applyIdleState(state);
-    updateIndicator(root, nextIndex, state.total);
-    return;
-  }
-
-  state.animating = true;
-  next.classList.add('is-behind');
-  void next.offsetWidth;
-  current.classList.add('is-flip-out');
-
-  void waitTransition(current, reducedMotion).then(() => {
-    state.currentIndex = nextIndex;
-    applyIdleState(state);
-    updateIndicator(root, nextIndex, state.total);
-    state.animating = false;
-  });
+  if (!state?.flipbook) return;
+  const lastPage = contentIndexToTurnPage(state.contentPages);
+  if (state.currentPage >= lastPage) return;
+  state.flipbook.turn('next');
 }
 
 export function initManuscriptBook(root: HTMLElement): void {
-  const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
   const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
-  const carousel = root.querySelector<HTMLElement>('[data-manuscript-carousel]');
+  const flipbookEl = root.querySelector<HTMLElement>('[data-manuscript-flipbook]');
+  const indicator = root.querySelector<HTMLElement>('[data-manuscript-indicator]');
   const prevBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-prev]');
   const nextBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-next]');
 
-  if (!stage || !carousel) return;
+  if (!flipbookEl) return;
 
-  const total = contentPageCount(root);
-  if (!total) return;
-
-  const spreads = Array.from(
-    carousel.querySelectorAll<HTMLElement>('[data-manuscript-spread]'),
-  );
-  if (spreads.length !== total) return;
+  const contentPages = contentPageCount(root);
+  if (!contentPages) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const state: BookState = {
-    currentIndex: 0,
-    total,
-    animating: false,
-    spreads,
-    reducedMotion,
+    flipbook: null,
+    currentPage: FIRST_CONTENT_PAGE,
+    contentPages,
     onResize: null,
   };
   books.set(root, state);
 
-  const { width, height } = measureBook(root);
-  syncShell(root, viewport, width, height);
-  applyIdleState(state);
-  updateIndicator(root, 0, total);
-  carousel.classList.add('manuscript-carousel--ready');
+  const mount = async () => {
+    try {
+      await loadVendors();
+      const $ = window.jQuery ?? window.$;
+      if (!$) return;
 
-  prevBtn?.addEventListener('click', () => goManuscriptPrev(root));
-  nextBtn?.addEventListener('click', () => goManuscriptNext(root));
+      const { width, height } = measureBook(root);
+      syncShell(root, viewport, width, height);
 
-  state.onResize = () => resizeManuscriptBook(root);
-  window.addEventListener('resize', state.onResize);
+      state.flipbook = $(flipbookEl);
+      state.flipbook.turn({
+        width,
+        height,
+        page: FIRST_CONTENT_PAGE,
+        autoCenter: true,
+        display: 'single',
+        acceleration: true,
+        elevation: 50,
+        gradients: true,
+        duration: reducedMotion ? 0 : 600,
+        when: {
+          turned(_event: unknown, page: number) {
+            state.currentPage = page;
+            updateIndicator(root, page, contentPages);
+          },
+        },
+      });
+
+      state.flipbook.turn('page', FIRST_CONTENT_PAGE);
+      flipbookEl.classList.add('manuscript-flipbook--ready');
+      updateIndicator(root, FIRST_CONTENT_PAGE, contentPages);
+
+      prevBtn?.addEventListener('click', () => goManuscriptPrev(root));
+      nextBtn?.addEventListener('click', () => goManuscriptNext(root));
+
+      state.onResize = () => resizeManuscriptBook(root);
+      window.addEventListener('resize', state.onResize);
+    } catch {
+      flipbookEl.classList.add('manuscript-flipbook--fallback');
+      flipbookEl.classList.add('manuscript-flipbook--ready');
+    }
+  };
+
+  void mount();
 }

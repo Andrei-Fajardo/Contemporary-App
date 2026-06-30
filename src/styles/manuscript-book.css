@@ -1,4 +1,4 @@
-/* From Utero — fullscreen manuscript reader (CSS 3D carousel) */
+/* From Utero — fullscreen manuscript reader (turn.js) */
 
 /* ── Fullscreen modal ─────────────────────────────────────── */
 .manuscript-modal {
@@ -92,7 +92,7 @@
   border-radius: 0.35rem;
 }
 
-/* ── Spread carousel ─────────────────────────────────────── */
+/* ── Flipbook reader ─────────────────────────────────────── */
 .manuscript-book--modal {
   display: flex;
   flex-direction: column;
@@ -111,76 +111,41 @@
   background: #121212;
 }
 
-.manuscript-carousel {
-  position: relative;
+.manuscript-flipbook:not(.manuscript-flipbook--ready) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.manuscript-flipbook--ready {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
+}
+
+.manuscript-flipbook {
   width: 100%;
   height: 100%;
-  perspective: 1400px;
-  transform-style: preserve-3d;
+  margin-inline: auto;
   background: #121212;
 }
 
-.manuscript-carousel:not(.manuscript-carousel--ready) .manuscript-carousel__spread.is-active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.manuscript-carousel--ready {
-  opacity: 1;
-  visibility: visible;
-}
-
-.manuscript-carousel__spread {
-  position: absolute;
-  inset: 0;
+/* Single-display spreads: each page fills the full measured width */
+.manuscript-flipbook .page,
+.manuscript-flipbook .manuscript-book__page {
+  position: relative;
+  background: #f7f7f7;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #f7f7f7;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
-  transform-style: preserve-3d;
-  transform-origin: left center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-  transform: rotateY(0deg);
-  transition: transform var(--manuscript-flip-ms, 600ms) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.manuscript-carousel__spread.is-active {
-  opacity: 1;
-  z-index: 2;
-  pointer-events: auto;
-  transform: rotateY(0deg);
-}
-
-.manuscript-carousel__spread.is-behind {
-  opacity: 1;
-  z-index: 1;
-  transform: rotateY(0deg);
-}
-
-.manuscript-carousel__spread.is-flip-out {
-  z-index: 3;
-  opacity: 1;
-  transform: rotateY(-180deg);
-}
-
-.manuscript-carousel__spread.is-flip-in {
-  z-index: 3;
-  opacity: 1;
-  transform: rotateY(-180deg);
-}
-
-.manuscript-carousel__spread.is-flip-in.is-active {
-  transform: rotateY(0deg);
 }
 
 /* Center spine crease over pre-rendered double-page spreads */
-.manuscript-carousel__spread::after {
+.manuscript-flipbook .page::after,
+.manuscript-flipbook .manuscript-book__page::after {
   content: "";
   position: absolute;
   top: 0;
@@ -198,7 +163,8 @@
   z-index: 2;
 }
 
-.manuscript-carousel__spread img {
+.manuscript-flipbook .page img,
+.manuscript-book__page img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -206,12 +172,6 @@
   background: transparent;
   user-select: none;
   -webkit-user-drag: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .manuscript-carousel__spread {
-    transition: none;
-  }
 }
 
 .manuscript-book__chrome {
@@ -263,20 +223,69 @@
   flex-shrink: 0;
 }
 
-/* Publications — trigger button (exhibition filter style) */
+.manuscript-flipbook--fallback {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  opacity: 1;
+  visibility: visible;
+  height: auto;
+  overflow-y: auto;
+  max-height: 70dvh;
+}
+
+.manuscript-flipbook--fallback .manuscript-book__page {
+  border-radius: 0.25rem;
+  min-height: 14rem;
+}
+
+/* Publications — luxury manuscript trigger */
 .pubs-section__manuscript-actions {
-  margin-top: clamp(1rem, 2.5vh, 1.5rem);
+  margin-top: clamp(1.25rem, 3vh, 1.75rem);
   margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
 }
 
 .pubs-manuscript-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.75rem);
+  font-weight: 400;
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  line-height: 1.2;
   color: var(--ink);
-  border-bottom-color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border: 1px solid var(--border-section);
+  border-radius: 0.2rem;
+  padding: 0.7rem 1.35rem;
+  cursor: pointer;
+  transition:
+    color 0.35s var(--ease-editorial),
+    background 0.35s var(--ease-editorial),
+    border-color 0.35s var(--ease-editorial),
+    box-shadow 0.35s var(--ease-editorial),
+    transform 0.35s var(--ease-editorial);
 }
 
 .pubs-manuscript-btn:hover {
   color: var(--ink);
-  border-bottom-color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 10%, transparent);
+  border-color: color-mix(in srgb, var(--ink) 38%, transparent);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--ink) 8%, transparent);
+  transform: translateY(-1px);
+}
+
+.pubs-manuscript-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.pubs-manuscript-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
