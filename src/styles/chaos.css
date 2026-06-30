@@ -759,7 +759,7 @@ html.motion-reduced .press-chaos__poster {
     color: var(--ink);
     letter-spacing: 0.08em;
     transform: translateY(-1px);
-    text-shadow: 0 0 28px rgba(240, 238, 233, 0.2);
+    text-shadow: 0 0 28px color-mix(in srgb, var(--accent-canvas) 20%, transparent);
     outline: none;
   }
 

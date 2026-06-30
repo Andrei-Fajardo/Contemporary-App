@@ -65,11 +65,18 @@
   --lang-toggle-border: rgba(240, 238, 233, 0.18);
   --scrollbar-thumb: rgba(240, 238, 233, 0.25);
 
-  --accent-red: rgba(240, 238, 233, 0.55);
-  --accent-red-bright: rgba(240, 238, 233, 0.75);
-  --accent-red-ghost: rgba(240, 238, 233, 0.05);
-  --accent-red-ink: rgba(240, 238, 233, 0.25);
-  --accent-red-label: rgba(240, 238, 233, 0.45);
+  /* Editorial accent — opposite theme canvas (light bg on dark site, etc.) */
+  --accent-canvas: #F0EEE9;
+  --accent-canvas-deep: color-mix(in srgb, var(--accent-canvas) 75%, transparent);
+  --accent-canvas-muted: color-mix(in srgb, var(--accent-canvas) 55%, transparent);
+  --accent-canvas-ghost: color-mix(in srgb, var(--accent-canvas) 12%, transparent);
+  --accent-canvas-ink: color-mix(in srgb, var(--accent-canvas) 25%, transparent);
+
+  --accent-red: var(--accent-canvas-muted);
+  --accent-red-bright: var(--accent-canvas-deep);
+  --accent-red-ghost: color-mix(in srgb, var(--accent-canvas) 5%, transparent);
+  --accent-red-ink: var(--accent-canvas-ink);
+  --accent-red-label: color-mix(in srgb, var(--accent-canvas) 45%, transparent);
 }
 
 /* Light mode — light canvas, dark ink */
@@ -104,11 +111,17 @@
   --lang-toggle-border: rgba(20, 20, 20, 0.15);
   --scrollbar-thumb: rgba(20, 20, 20, 0.25);
 
-  --accent-red: rgba(20, 20, 20, 0.55);
-  --accent-red-bright: rgba(20, 20, 20, 0.75);
-  --accent-red-ghost: rgba(20, 20, 20, 0.05);
-  --accent-red-ink: rgba(20, 20, 20, 0.25);
-  --accent-red-label: rgba(20, 20, 20, 0.45);
+  --accent-canvas: #141414;
+  --accent-canvas-deep: color-mix(in srgb, var(--accent-canvas) 75%, transparent);
+  --accent-canvas-muted: color-mix(in srgb, var(--accent-canvas) 55%, transparent);
+  --accent-canvas-ghost: color-mix(in srgb, var(--accent-canvas) 12%, transparent);
+  --accent-canvas-ink: color-mix(in srgb, var(--accent-canvas) 25%, transparent);
+
+  --accent-red: var(--accent-canvas-muted);
+  --accent-red-bright: var(--accent-canvas-deep);
+  --accent-red-ghost: color-mix(in srgb, var(--accent-canvas) 5%, transparent);
+  --accent-red-ink: var(--accent-canvas-ink);
+  --accent-red-label: color-mix(in srgb, var(--accent-canvas) 45%, transparent);
 }
 
 /* Dark editorial canvas */
@@ -1169,7 +1182,6 @@ select,
   body {
     background-color: var(--canvas) !important;
     color: var(--ink) !important;
-    color-scheme: light only;
   }
 
   /* Ensure touch targets are at least 44x44px — only on interactive controls, not all anchors */

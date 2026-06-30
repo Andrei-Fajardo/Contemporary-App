@@ -1,23 +1,15 @@
 /* ── Magazine editorial layer — Men's Folio / Vogue spread mechanics ── */
 
 :root,
-[data-theme="dark"] {
-  /* Accent equals the light-mode canvas when the site is dark. */
-  --magazine-accent: #F0EEE9;
-  --magazine-accent-deep: rgba(240, 238, 233, 0.75);
-  --magazine-accent-muted: rgba(240, 238, 233, 0.55);
-  --magazine-accent-ghost: rgba(240, 238, 233, 0.12);
+[data-theme="dark"],
+[data-theme="light"] {
+  --magazine-accent: var(--accent-canvas);
+  --magazine-accent-deep: var(--accent-canvas-deep);
+  --magazine-accent-muted: var(--accent-canvas-muted);
+  --magazine-accent-ghost: var(--accent-canvas-ghost);
   --font-magazine-display: "Playfair Display", "Cormorant Garamond", "Didot", "Bodoni MT", Georgia, serif;
   --magazine-col-gap: clamp(0.75rem, 2vw, 1.5rem);
   --magazine-row-gap: clamp(1rem, 2.5vh, 2rem);
-}
-
-[data-theme="light"] {
-  /* Accent equals the dark-mode canvas when the site is light. */
-  --magazine-accent: #141414;
-  --magazine-accent-deep: rgba(20, 20, 20, 0.75);
-  --magazine-accent-muted: rgba(20, 20, 20, 0.55);
-  --magazine-accent-ghost: rgba(20, 20, 20, 0.12);
 }
 
 /* Master canvas */

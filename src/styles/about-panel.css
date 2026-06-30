@@ -119,13 +119,30 @@
   margin-left: 0.1em;
 }
 
-/* Divider rule ? sits BELOW portrait z-index */
+/* Divider rule — theme-accent corner mark + fading horizontal bar */
 .hero-about-layer__rule {
   position: relative;
   z-index: 1;
   border: 0;
-  border-top: 1px solid var(--border-subtle, rgba(17,17,17,0.1));
+  height: 2px;
   margin: 0 var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
+  background: linear-gradient(
+    90deg,
+    var(--magazine-accent) 0%,
+    var(--magazine-accent-deep) 55%,
+    transparent 100%
+  );
+}
+
+.hero-about-layer__rule::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1.35rem;
+  background: var(--magazine-accent);
+  pointer-events: none;
 }
 
 /* ?? Bio section ?????????????????????????????????????????????? */
