@@ -1,0 +1,89 @@
+---
+import { manuscriptPages, manuscriptMeta } from '../data/manuscript';
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+const pageCount = manuscriptPages.length;
+---
+
+<div
+  class="manuscript-modal"
+  id="manuscript-modal"
+  role="presentation"
+  hidden
+  aria-hidden="true"
+>
+  <div class="manuscript-modal__backdrop" data-manuscript-close tabindex="-1"></div>
+
+  <div
+    class="manuscript-modal__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="manuscript-modal-title"
+  >
+    <header class="manuscript-modal__header">
+      <p class="manuscript-modal__eyebrow" id="manuscript-modal-title">{l.manuscriptHeading}</p>
+      <button type="button" class="manuscript-modal__close" data-manuscript-close aria-label="Close">
+        ×
+      </button>
+    </header>
+
+    <div
+      class="manuscript-book manuscript-book--modal"
+      data-manuscript-book
+      data-page-count={pageCount}
+    >
+      <div class="manuscript-modal__stage" data-manuscript-stage>
+        <div class="manuscript-book__viewport" data-manuscript-viewport>
+          <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
+            <div class="hard manuscript-book__cover">
+              <span class="manuscript-book__cover-title">{manuscriptMeta.title}</span>
+              <small class="manuscript-book__cover-sub">{manuscriptMeta.subtitle}</small>
+            </div>
+            <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
+            {manuscriptPages.map((src, index) => (
+              <div class="manuscript-book__page">
+                <img
+                  src={src}
+                  alt={`${manuscriptMeta.title} — page ${index + 1}`}
+                  loading={index < 4 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable="false"
+                  data-lightbox-ignore
+                />
+              </div>
+            ))}
+            <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
+            <div class="hard manuscript-book__cover manuscript-book__cover--end">
+              <span class="manuscript-book__cover-title">{l.manuscriptEnd}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="manuscript-book__chrome" aria-live="polite">
+          <button type="button" class="manuscript-book__nav" data-manuscript-prev aria-label={l.manuscriptPrev}>
+            ←
+          </button>
+          <span class="manuscript-book__indicator" data-manuscript-indicator>
+            1 / {pageCount}
+          </span>
+          <button type="button" class="manuscript-book__nav" data-manuscript-next aria-label={l.manuscriptNext}>
+            →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initManuscriptModal } from '../scripts/manuscript-modal';
+
+  initManuscriptModal();
+  document.addEventListener('astro:page-load', initManuscriptModal);
+</script>

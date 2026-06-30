@@ -32,13 +32,7 @@
 .pubs-overlap {
   position: relative;
   isolation: isolate;
-  overflow: visible;
-  /* Base room for overlap layout; grows with manuscript scroll section */
   min-height: clamp(28rem, 58vh, 48rem);
-}
-
-.pubs-overlap:has(.pubs-section__manuscript) {
-  min-height: auto;
 }
 
 /* Image frame: nudged toward center, wide enough to show full artwork */
@@ -117,38 +111,6 @@
 
 .pubs-section__novels-label {
   margin-bottom: 0.75rem;
-}
-
-.pubs-section__manuscript {
-  position: relative;
-  z-index: 3;
-  margin-top: clamp(2rem, 5vh, 3rem);
-  padding-top: clamp(1.5rem, 4vh, 2.5rem);
-  border-top: 1px solid var(--border-subtle);
-}
-
-.pubs-section__manuscript .manuscript-book {
-  margin-top: clamp(1rem, 2.5vh, 1.5rem);
-}
-
-/* Manuscript booklet — switch overlap content to document flow so footer
-   sits after the full scroll height, not mid-viewport */
-@media (min-width: 1024px) {
-  .pubs-overlap:has(.pubs-section__manuscript) {
-    min-height: auto;
-    overflow: visible;
-    padding-bottom: clamp(3rem, 8vh, 5rem);
-  }
-
-  .pubs-overlap:has(.pubs-section__manuscript) .pubs-overlap__content {
-    position: relative;
-    left: auto;
-    top: auto;
-    right: auto;
-    margin-left: clamp(18rem, 40vw, 34rem);
-    width: auto;
-    max-width: none;
-  }
 }
 
 .pubs-novel-list {

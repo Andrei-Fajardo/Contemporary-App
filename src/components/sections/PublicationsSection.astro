@@ -1,6 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import ManuscriptBook from '../ManuscriptBook.astro';
+import ManuscriptModal from '../ManuscriptModal.astro';
 import { publicationLinks } from '../../data/content';
 import { siteCopy } from '../../data/site-copy';
 import { t, type LocaleKey } from '../../data/translations';
@@ -16,11 +16,6 @@ const novels = siteCopy.publications.novels;
 
 <section id="publications" class="scroll-section section-gap pubs-overlap magazine-torn">
 
-  <!-- ── Image layer — decorative, non-interactive ─────────────
-       The marble figure occupies the left ~40% of the section.
-       The text box is absolutely positioned to overlap its right edge,
-       creating the editorial bleed seen in the manuscript layout.
-  ──────────────────────────────────────────────────────────── -->
   <div class="pubs-overlap__frame" aria-hidden="true">
     <img
       src="/media/anan sample 2.png"
@@ -36,7 +31,6 @@ const novels = siteCopy.publications.novels;
     />
   </div>
 
-  <!-- ── Text content box — overlaps the image's right edge ── -->
   <div class="pubs-overlap__content section-shell section-shell--wide">
     <div class="magazine-chapter">
       <p class="scroll-reveal section-eyebrow">{l.publicationsTag}</p>
@@ -64,12 +58,16 @@ const novels = siteCopy.publications.novels;
             </li>
           ))}
         </ul>
+
+        <div class="exhibition-filters pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+          <button type="button" class="exhibition-filter pubs-manuscript-btn" data-manuscript-open>
+            {l.manuscriptReadBtn}
+          </button>
+        </div>
       </div>
     )}
-
-    <div class="pubs-section__manuscript scroll-reveal">
-      <ManuscriptBook locale={locale} />
-    </div>
   </div>
 
 </section>
+
+<ManuscriptModal locale={locale} />

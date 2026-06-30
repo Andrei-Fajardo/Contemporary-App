@@ -1,68 +1,114 @@
-/* From Utero — scroll-driven manuscript flipbook (turn.js) */
+/* From Utero — fullscreen manuscript reader (turn.js) */
 
-.manuscript-book {
+/* ── Fullscreen modal ─────────────────────────────────────── */
+.manuscript-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(3.5rem, 10vh, 4.5rem) clamp(1rem, 3vw, 2rem) clamp(1.25rem, 3vh, 2rem);
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.manuscript-modal[hidden] {
+  display: none;
+}
+
+.manuscript-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 10, 9, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: zoom-out;
+}
+
+.manuscript-modal__panel {
   position: relative;
-  z-index: 5;
-  isolation: isolate;
-  margin-top: clamp(2rem, 5vh, 3rem);
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-  --manuscript-w: 100%;
-  --manuscript-h: auto;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 72rem);
+  height: 100%;
+  max-height: min(92dvh, 920px);
+  gap: clamp(0.75rem, 2vh, 1.25rem);
 }
 
-.manuscript-book__header {
-  margin-bottom: clamp(1.25rem, 3vh, 2rem);
-  max-width: 62ch;
+.manuscript-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
-.manuscript-book__title {
-  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-  line-height: 1.08;
-  margin-bottom: 0.65rem;
-  color: var(--ink);
+.manuscript-modal__eyebrow {
+  font-family: var(--font-heading);
+  font-size: clamp(0.6875rem, 0.6vw + 0.5rem, 0.8125rem);
+  font-weight: 400;
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--canvas) 72%, white);
+  margin: 0;
 }
 
-.manuscript-book__intro {
-  max-width: 58ch;
+.manuscript-modal__close {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid color-mix(in srgb, var(--canvas) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--canvas) 8%, transparent);
+  color: var(--canvas);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.manuscript-book__stage {
-  position: relative;
+.manuscript-modal__close:hover {
+  background: color-mix(in srgb, var(--canvas) 16%, transparent);
+  border-color: color-mix(in srgb, var(--canvas) 40%, transparent);
 }
 
-.manuscript-book__sticky {
-  position: sticky;
-  top: clamp(3.75rem, 12vh, 5rem);
-  z-index: 10;
+.manuscript-modal__close:focus-visible {
+  outline: 2px solid var(--canvas);
+  outline-offset: 2px;
+}
+
+.manuscript-modal__stage {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding-bottom: 1rem;
-  width: 100%;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vh, 1rem);
 }
 
-.manuscript-book__scroll-spacer {
-  height: calc(var(--manuscript-pages, 20) * 48vh);
-  pointer-events: none;
+/* ── Flipbook reader ─────────────────────────────────────── */
+.manuscript-book--modal {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
 }
 
 .manuscript-book__viewport {
   width: min(100%, var(--manuscript-w, 56rem));
   height: var(--manuscript-h, auto);
-  min-height: 0;
   margin-inline: auto;
-  border-radius: 0.35rem;
-  box-shadow:
-    0 24px 48px rgba(0, 0, 0, 0.28),
-    0 2px 8px rgba(0, 0, 0, 0.12);
+  border-radius: 0.25rem;
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.45);
   overflow: hidden;
   background: #f4f0e8;
 }
 
-/* Hide raw page stack until turn.js lays out the book */
 .manuscript-flipbook:not(.manuscript-flipbook--ready) {
   opacity: 0;
   visibility: hidden;
@@ -126,7 +172,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.08);
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -146,6 +191,7 @@
   justify-content: center;
   gap: 1rem;
   width: min(100%, var(--manuscript-w, 56rem));
+  flex-shrink: 0;
 }
 
 .manuscript-book__nav {
@@ -154,27 +200,26 @@
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid color-mix(in srgb, var(--canvas) 28%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--canvas) 88%, transparent);
-  color: var(--ink);
+  background: color-mix(in srgb, var(--canvas) 10%, transparent);
+  color: var(--canvas);
   font-size: 1.125rem;
   line-height: 1;
   cursor: pointer;
   flex-shrink: 0;
   transition:
     border-color 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease;
+    background 0.2s ease;
 }
 
 .manuscript-book__nav:hover {
-  border-color: var(--ink-45);
-  background: var(--surface-hover);
+  border-color: color-mix(in srgb, var(--canvas) 50%, transparent);
+  background: color-mix(in srgb, var(--canvas) 18%, transparent);
 }
 
 .manuscript-book__nav:focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--canvas);
   outline-offset: 2px;
 }
 
@@ -183,38 +228,12 @@
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-55);
+  color: color-mix(in srgb, var(--canvas) 78%, white);
   min-width: 5.5rem;
   text-align: center;
   flex-shrink: 0;
 }
 
-.manuscript-book__hint {
-  font-family: var(--font-body);
-  font-size: 0.625rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-45);
-  text-align: center;
-  width: min(100%, var(--manuscript-w, 56rem));
-}
-
-/* Publications — use full content column width */
-.pubs-section__manuscript .manuscript-book__viewport {
-  max-width: 100%;
-}
-
-.pubs-section__manuscript .manuscript-book__sticky {
-  align-items: stretch;
-}
-
-.pubs-section__manuscript .manuscript-book__chrome,
-.pubs-section__manuscript .manuscript-book__hint {
-  align-self: center;
-}
-
-/* Fallback if turn.js fails — vertical page stack */
 .manuscript-flipbook--fallback {
   display: grid;
   gap: 0.75rem;
@@ -222,6 +241,8 @@
   opacity: 1;
   visibility: visible;
   height: auto;
+  overflow-y: auto;
+  max-height: 70dvh;
 }
 
 .manuscript-flipbook--fallback .hard {
@@ -229,32 +250,24 @@
 }
 
 .manuscript-flipbook--fallback .manuscript-book__page {
-  border-radius: 0.35rem;
-  min-height: 12rem;
+  border-radius: 0.25rem;
+  min-height: 14rem;
 }
 
-@media (max-width: 767px) {
-  .manuscript-book__sticky {
-    position: relative;
-    top: auto;
-  }
-
-  .manuscript-book__scroll-spacer {
-    display: none;
-  }
-
-  .manuscript-book__hint {
-    display: none;
-  }
+/* Publications — trigger button (exhibition filter style) */
+.pubs-section__manuscript-actions {
+  margin-top: clamp(1rem, 2.5vh, 1.5rem);
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .manuscript-book__scroll-spacer {
-    display: none;
-  }
+.pubs-manuscript-btn {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
 
-  .manuscript-book__sticky {
-    position: relative;
-    top: auto;
-  }
+.pubs-manuscript-btn:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
 }

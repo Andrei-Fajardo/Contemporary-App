@@ -51,19 +51,55 @@ function flipbookPageCount(contentPages: number): number {
   return contentPages + 4;
 }
 
-function pageFromScroll(progress: number, contentPages: number): number {
-  const total = flipbookPageCount(contentPages);
-  const clamped = Math.min(1, Math.max(0, progress));
-  const index = Math.min(total - 1, Math.max(1, Math.round(clamped * (total - 1)) + 1));
-  return index;
+type BookState = {
+  flipbook: JQueryInstance | null;
+  currentPage: number;
+  contentPages: number;
+  onResize: (() => void) | null;
+};
+
+const books = new WeakMap<HTMLElement, BookState>();
+
+function isDoubleSpread(): boolean {
+  return window.innerWidth >= 1024;
 }
 
-function scrollProgress(stage: HTMLElement): number {
-  const rect = stage.getBoundingClientRect();
-  const scrollable = stage.offsetHeight - window.innerHeight;
-  if (scrollable <= 0) return 0;
-  const traveled = Math.min(scrollable, Math.max(0, -rect.top));
-  return traveled / scrollable;
+function measureBook(root: HTMLElement): { width: number; height: number } {
+  const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
+  const maxW = Math.max(280, (stage?.clientWidth ?? window.innerWidth) - 24);
+  const maxH = Math.max(360, (stage?.clientHeight ?? window.innerHeight) - 120);
+  const ratio = isDoubleSpread() ? 0.68 : 1.32;
+
+  let width = Math.min(maxW, isDoubleSpread() ? 960 : 520);
+  let height = Math.round(width * ratio);
+
+  if (height > maxH) {
+    height = maxH;
+    width = Math.round(height / ratio);
+  }
+
+  return { width, height };
+}
+
+function syncShell(root: HTMLElement, viewport: HTMLElement | null, width: number, height: number) {
+  root.style.setProperty('--manuscript-w', `${width}px`);
+  root.style.setProperty('--manuscript-h', `${height}px`);
+  if (viewport) {
+    viewport.style.width = `${width}px`;
+    viewport.style.height = `${height}px`;
+    viewport.style.maxWidth = '100%';
+  }
+}
+
+export function resizeManuscriptBook(root: HTMLElement): void {
+  const state = books.get(root);
+  if (!state?.flipbook) return;
+
+  const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
+  const { width, height } = measureBook(root);
+  syncShell(root, viewport, width, height);
+  state.flipbook.turn('size', width, height);
+  state.flipbook.turn('display', isDoubleSpread() ? 'double' : 'single');
 }
 
 export function initManuscriptBook(root: HTMLElement): void {
@@ -80,55 +116,14 @@ export function initManuscriptBook(root: HTMLElement): void {
   if (!contentPages) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-  const useScrollDrive = !reducedMotion && !isCoarse && window.innerWidth >= 768;
 
-  let flipbook: JQueryInstance | null = null;
-  let currentPage = 1;
-  let rafId = 0;
-  let mounted = false;
-  let onResize: (() => void) | null = null;
-
-  const isRenderable = () => {
-    if (root.closest('[hidden]')) return false;
-    const rect = root.getBoundingClientRect();
-    return rect.width > 0 && rect.height > 0;
+  const state: BookState = {
+    flipbook: null,
+    currentPage: 1,
+    contentPages,
+    onResize: null,
   };
-
-  const tryMount = () => {
-    if (mounted) {
-      onResize?.();
-      return;
-    }
-    if (!isRenderable()) return;
-    mounted = true;
-    observer.disconnect();
-    void mount();
-  };
-
-  const isDoubleSpread = () => window.innerWidth >= 1024;
-
-  const flipbookWidth = () => {
-    const sticky = root.querySelector<HTMLElement>('[data-manuscript-sticky]');
-    const w = sticky?.clientWidth ?? viewport?.clientWidth ?? 0;
-    if (w > 120) return w;
-    return Math.min(920, window.innerWidth - 48);
-  };
-
-  const flipbookHeight = (width: number) => {
-    if (isDoubleSpread()) return Math.round(width * 0.68);
-    return Math.round(width * 1.32);
-  };
-
-  const syncShell = (width: number, height: number) => {
-    root.style.setProperty('--manuscript-w', `${width}px`);
-    root.style.setProperty('--manuscript-h', `${height}px`);
-    if (viewport) {
-      viewport.style.width = `${width}px`;
-      viewport.style.maxWidth = '100%';
-      viewport.style.height = `${height}px`;
-    }
-  };
+  books.set(root, state);
 
   const updateIndicator = (page: number) => {
     if (!indicator) return;
@@ -136,24 +131,14 @@ export function initManuscriptBook(root: HTMLElement): void {
     indicator.textContent = `${display} / ${contentPages}`;
   };
 
-  const goToPage = (page: number, animate = true) => {
-    if (!flipbook) return;
+  const goToPage = (page: number) => {
+    if (!state.flipbook) return;
     const total = flipbookPageCount(contentPages);
     const next = Math.min(total, Math.max(1, page));
-    if (next === currentPage) return;
-    currentPage = next;
-    flipbook.turn('page', next);
-    if (!animate) flipbook.turn('stop');
+    if (next === state.currentPage) return;
+    state.currentPage = next;
+    state.flipbook.turn('page', next);
     updateIndicator(next);
-  };
-
-  const onScroll = () => {
-    if (!useScrollDrive || !flipbook) return;
-    cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-      const page = pageFromScroll(scrollProgress(stage), contentPages);
-      goToPage(page);
-    });
   };
 
   const mount = async () => {
@@ -162,14 +147,14 @@ export function initManuscriptBook(root: HTMLElement): void {
       const $ = window.jQuery ?? window.$;
       if (!$) return;
 
-      const width = flipbookWidth();
-      const height = flipbookHeight(width);
-      syncShell(width, height);
+      const { width, height } = measureBook(root);
+      syncShell(root, viewport, width, height);
 
-      flipbook = $(flipbookEl);
-      flipbook.turn({
+      state.flipbook = $(flipbookEl);
+      state.flipbook.turn({
         width,
         height,
+        page: 1,
         autoCenter: true,
         display: isDoubleSpread() ? 'double' : 'single',
         acceleration: true,
@@ -178,7 +163,7 @@ export function initManuscriptBook(root: HTMLElement): void {
         duration: reducedMotion ? 0 : 600,
         when: {
           turned(_event: unknown, page: number) {
-            currentPage = page;
+            state.currentPage = page;
             updateIndicator(page);
           },
         },
@@ -187,47 +172,16 @@ export function initManuscriptBook(root: HTMLElement): void {
       flipbookEl.classList.add('manuscript-flipbook--ready');
       updateIndicator(1);
 
-      if (useScrollDrive) {
-        const scrollTargets: Array<HTMLElement | Window> = [window];
-        const mainColumn = document.querySelector<HTMLElement>('.site-main-column');
-        if (mainColumn) scrollTargets.push(mainColumn);
-        scrollTargets.forEach((target) => {
-          target.addEventListener('scroll', onScroll, { passive: true });
-        });
-        onScroll();
-      }
+      prevBtn?.addEventListener('click', () => goToPage(state.currentPage - 1));
+      nextBtn?.addEventListener('click', () => goToPage(state.currentPage + 1));
 
-      prevBtn?.addEventListener('click', () => goToPage(currentPage - 1));
-      nextBtn?.addEventListener('click', () => goToPage(currentPage + 1));
-
-      onResize = () => {
-        if (!flipbook) return;
-        const w = flipbookWidth();
-        const h = flipbookHeight(w);
-        syncShell(w, h);
-        flipbook.turn('size', w, h);
-        flipbook.turn('display', isDoubleSpread() ? 'double' : 'single');
-        if (useScrollDrive) onScroll();
-      };
-
-      window.addEventListener('resize', () => onResize?.());
-      window.addEventListener('manuscript-book:visible', tryMount);
+      state.onResize = () => resizeManuscriptBook(root);
+      window.addEventListener('resize', state.onResize);
     } catch {
       flipbookEl.classList.add('manuscript-flipbook--fallback');
       flipbookEl.classList.add('manuscript-flipbook--ready');
     }
   };
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (entries.some((entry) => entry.isIntersecting)) tryMount();
-    },
-    { rootMargin: '200px' },
-  );
-
-  observer.observe(root);
-  document.addEventListener('tabular:change', (event) => {
-    const tab = (event as CustomEvent<{ tab: string }>).detail?.tab;
-    if (tab === 'publications') setTimeout(tryMount, 120);
-  });
+  void mount();
 }
