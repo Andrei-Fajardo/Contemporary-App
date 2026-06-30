@@ -242,7 +242,7 @@
     grid-column: 1 / -1;
     grid-row: 2;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(5.5rem, 26vw, 9rem);
+    font-size: clamp(3.25rem, 17vw, 4.75rem);
     line-height: 0.86;
     color: var(--ink);
     hyphens: none;
