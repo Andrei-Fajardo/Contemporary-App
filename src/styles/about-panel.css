@@ -190,10 +190,10 @@
 @media (max-width: 639px) {
   .hero-about-layer__cluster {
     display: grid;
-    grid-template-columns: clamp(7.25rem, 34vw, 11rem) minmax(0, 1fr);
+    grid-template-columns: clamp(6.75rem, 31vw, 10.25rem) minmax(0, 1fr);
     grid-template-rows: auto auto;
     align-items: start;
-    gap: 0.25rem 0.75rem;
+    gap: 0.35rem 1.15rem;
     transform: none;
     padding-inline: clamp(0.875rem, 4vw, 1.35rem);
   }
@@ -220,6 +220,7 @@
     align-self: center;
     min-width: 0;
     padding-top: 0.15rem;
+    padding-left: 0.65rem;
   }
 
   .hero-name__last {
@@ -242,7 +243,7 @@
     grid-column: 1 / -1;
     grid-row: 2;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(3.25rem, 17vw, 4.75rem);
+    font-size: clamp(4.5rem, 21.5vw, 6.875rem);
     line-height: 0.86;
     color: var(--ink);
     hyphens: none;
