@@ -53,19 +53,38 @@ const pageCount = manuscriptPages.length;
         <div class="manuscript-book__stage-body">
           <div class="manuscript-book__viewport" data-manuscript-viewport>
             <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
-              {manuscriptPages.map((src, index) => (
-                <div class="manuscript-book__page">
+              <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
+              {manuscriptPages.flatMap((src, index) => [
+                <div
+                  class="manuscript-book__page manuscript-book__page--half manuscript-book__page--left"
+                  data-spread-index={index}
+                >
                   <img
                     src={src}
                     alt={`${manuscriptMeta.title} — spread ${index + 1}`}
+                    class="manuscript-book__spread-img manuscript-book__spread-img--left"
                     loading={index === 0 ? 'eager' : 'lazy'}
                     fetchpriority={index === 0 ? 'high' : 'auto'}
                     decoding="async"
                     draggable="false"
                     data-lightbox-ignore
                   />
-                </div>
-              ))}
+                </div>,
+                <div
+                  class="manuscript-book__page manuscript-book__page--half manuscript-book__page--right"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    class="manuscript-book__spread-img manuscript-book__spread-img--right"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    draggable="false"
+                    data-lightbox-ignore
+                  />
+                </div>,
+              ])}
             </div>
           </div>
         </div>

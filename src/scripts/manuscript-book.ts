@@ -22,8 +22,11 @@ const VENDOR = {
 /** Width ÷ height for pre-rendered double-page spread JPGs */
 const SPREAD_ASPECT = 1.45;
 
-/** Turn.js page index (1-based) where spread 0001.jpg is shown */
-const FIRST_CONTENT_PAGE = 1;
+/** Safety inset so the double spread never clips against the stage edges */
+const STAGE_SAFETY_MARGIN = 40;
+
+/** Turn.js page index (1-based) where spread 0001.jpg first appears as a full spread */
+const FIRST_CONTENT_PAGE = 2;
 
 let vendorPromise: Promise<void> | null = null;
 
@@ -64,8 +67,21 @@ const books = new WeakMap<HTMLElement, BookState>();
 
 function measureBook(root: HTMLElement): { width: number; height: number } {
   const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
-  const maxW = Math.max(280, (stage?.clientWidth ?? window.innerWidth) - 24);
-  const maxH = Math.max(200, (stage?.clientHeight ?? window.innerHeight) - 120);
+  const stageBody = root.querySelector<HTMLElement>('.manuscript-book__stage-body');
+  const bodyPad =
+    stageBody
+      ? parseFloat(getComputedStyle(stageBody).paddingLeft) +
+        parseFloat(getComputedStyle(stageBody).paddingRight)
+      : 0;
+
+  const maxW = Math.max(
+    280,
+    (stage?.clientWidth ?? window.innerWidth) - STAGE_SAFETY_MARGIN - bodyPad - 24,
+  );
+  const maxH = Math.max(
+    200,
+    (stage?.clientHeight ?? window.innerHeight) - STAGE_SAFETY_MARGIN - 120,
+  );
 
   let width = Math.min(maxW, 1100);
   let height = Math.round(width / SPREAD_ASPECT);
@@ -88,19 +104,19 @@ function syncShell(root: HTMLElement, viewport: HTMLElement | null, width: numbe
   }
 }
 
-function turnPageToContentIndex(turnPage: number): number {
-  return turnPage - FIRST_CONTENT_PAGE + 1;
+function lastContentTurnPage(contentPages: number): number {
+  return contentPages * 2;
 }
 
-function contentIndexToTurnPage(contentIndex: number): number {
-  return contentIndex + FIRST_CONTENT_PAGE - 1;
+function turnPageToSpreadIndex(turnPage: number, contentPages: number): number {
+  if (turnPage <= 1) return 1;
+  return Math.min(contentPages, Math.floor((turnPage + 1) / 2));
 }
 
 function updateIndicator(root: HTMLElement, turnPage: number, contentPages: number) {
   const indicator = root.querySelector<HTMLElement>('[data-manuscript-indicator]');
   if (!indicator) return;
-  const display = Math.min(contentPages, Math.max(1, turnPageToContentIndex(turnPage)));
-  indicator.textContent = `${display} / ${contentPages}`;
+  indicator.textContent = `${turnPageToSpreadIndex(turnPage, contentPages)} / ${contentPages}`;
 }
 
 export function resizeManuscriptBook(root: HTMLElement): void {
@@ -111,7 +127,7 @@ export function resizeManuscriptBook(root: HTMLElement): void {
 
   if (!state?.flipbook) return;
   state.flipbook.turn('size', width, height);
-  state.flipbook.turn('display', 'single');
+  state.flipbook.turn('display', 'double');
 }
 
 export function resetManuscriptBook(root: HTMLElement): void {
@@ -126,22 +142,20 @@ export function resetManuscriptBook(root: HTMLElement): void {
 
 export function goManuscriptPrev(root: HTMLElement): void {
   const state = books.get(root);
-  if (!state?.flipbook || state.currentPage <= FIRST_CONTENT_PAGE) return;
+  if (!state?.flipbook || state.currentPage <= 1) return;
   state.flipbook.turn('previous');
 }
 
 export function goManuscriptNext(root: HTMLElement): void {
   const state = books.get(root);
   if (!state?.flipbook) return;
-  const lastPage = contentIndexToTurnPage(state.contentPages);
-  if (state.currentPage >= lastPage) return;
+  if (state.currentPage >= lastContentTurnPage(state.contentPages)) return;
   state.flipbook.turn('next');
 }
 
 export function initManuscriptBook(root: HTMLElement): void {
   const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
   const flipbookEl = root.querySelector<HTMLElement>('[data-manuscript-flipbook]');
-  const indicator = root.querySelector<HTMLElement>('[data-manuscript-indicator]');
   const prevBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-prev]');
   const nextBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-next]');
 
@@ -175,7 +189,7 @@ export function initManuscriptBook(root: HTMLElement): void {
         height,
         page: FIRST_CONTENT_PAGE,
         autoCenter: true,
-        display: 'single',
+        display: 'double',
         acceleration: true,
         elevation: 50,
         gradients: true,
