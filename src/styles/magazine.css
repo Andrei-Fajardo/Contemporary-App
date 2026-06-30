@@ -179,6 +179,30 @@
   opacity: 0.85;
 }
 
+@media (max-width: 639px) {
+  /* Mobile hero: name-first layout — hide editorial chrome until integrated later */
+  .hero-editorial-only {
+    display: none !important;
+  }
+
+  .magazine-cover {
+    padding-top: 0;
+    overflow: visible;
+  }
+
+  .magazine-masthead {
+    display: none !important;
+  }
+
+  .magazine-cover__motto {
+    display: none !important;
+  }
+
+  .magazine-rule-crimson {
+    display: none !important;
+  }
+}
+
 /* Magazine cover (hero) */
 .magazine-cover {
   position: relative;
