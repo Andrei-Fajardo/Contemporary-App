@@ -106,13 +106,29 @@ export function initManuscriptBook(root: HTMLElement): void {
     void mount();
   };
 
+  const isDoubleSpread = () => window.innerWidth >= 1024;
+
   const flipbookWidth = () => {
-    const fromViewport = viewport?.clientWidth ?? 0;
-    if (fromViewport > 120) return fromViewport;
+    const sticky = root.querySelector<HTMLElement>('[data-manuscript-sticky]');
+    const w = sticky?.clientWidth ?? viewport?.clientWidth ?? 0;
+    if (w > 120) return w;
     return Math.min(920, window.innerWidth - 48);
   };
 
-  const flipbookHeight = (width: number) => Math.round(width * 0.62);
+  const flipbookHeight = (width: number) => {
+    if (isDoubleSpread()) return Math.round(width * 0.68);
+    return Math.round(width * 1.32);
+  };
+
+  const syncShell = (width: number, height: number) => {
+    root.style.setProperty('--manuscript-w', `${width}px`);
+    root.style.setProperty('--manuscript-h', `${height}px`);
+    if (viewport) {
+      viewport.style.width = `${width}px`;
+      viewport.style.maxWidth = '100%';
+      viewport.style.height = `${height}px`;
+    }
+  };
 
   const updateIndicator = (page: number) => {
     if (!indicator) return;
@@ -148,13 +164,14 @@ export function initManuscriptBook(root: HTMLElement): void {
 
       const width = flipbookWidth();
       const height = flipbookHeight(width);
+      syncShell(width, height);
 
       flipbook = $(flipbookEl);
       flipbook.turn({
         width,
         height,
         autoCenter: true,
-        display: window.innerWidth >= 1024 ? 'double' : 'single',
+        display: isDoubleSpread() ? 'double' : 'single',
         acceleration: true,
         elevation: 50,
         gradients: !reducedMotion,
@@ -187,8 +204,9 @@ export function initManuscriptBook(root: HTMLElement): void {
         if (!flipbook) return;
         const w = flipbookWidth();
         const h = flipbookHeight(w);
+        syncShell(w, h);
         flipbook.turn('size', w, h);
-        flipbook.turn('display', window.innerWidth >= 1024 ? 'double' : 'single');
+        flipbook.turn('display', isDoubleSpread() ? 'double' : 'single');
         if (useScrollDrive) onScroll();
       };
 

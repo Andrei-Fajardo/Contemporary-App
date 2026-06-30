@@ -807,6 +807,11 @@ select,
   background-color: var(--canvas);
 }
 
+.tabular-panel.publications-panel.is-active:has(.pubs-section__manuscript) > .scroll-section {
+  min-height: auto;
+  flex: 0 0 auto;
+}
+
 .tabular-panel.contacts-panel.is-active > .scroll-section {
   flex: 1 1 auto;
   display: flex;

@@ -131,6 +131,26 @@
   margin-top: clamp(1rem, 2.5vh, 1.5rem);
 }
 
+/* Manuscript booklet — switch overlap content to document flow so footer
+   sits after the full scroll height, not mid-viewport */
+@media (min-width: 1024px) {
+  .pubs-overlap:has(.pubs-section__manuscript) {
+    min-height: auto;
+    overflow: visible;
+    padding-bottom: clamp(3rem, 8vh, 5rem);
+  }
+
+  .pubs-overlap:has(.pubs-section__manuscript) .pubs-overlap__content {
+    position: relative;
+    left: auto;
+    top: auto;
+    right: auto;
+    margin-left: clamp(18rem, 40vw, 34rem);
+    width: auto;
+    max-width: none;
+  }
+}
+
 .pubs-novel-list {
   list-style: none;
   padding: 0;

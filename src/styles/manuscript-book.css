@@ -8,6 +8,8 @@
   margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
+  --manuscript-w: 100%;
+  --manuscript-h: auto;
 }
 
 .manuscript-book__header {
@@ -28,7 +30,6 @@
 
 .manuscript-book__stage {
   position: relative;
-  background: var(--canvas);
 }
 
 .manuscript-book__sticky {
@@ -40,6 +41,7 @@
   align-items: center;
   gap: 0.75rem;
   padding-bottom: 1rem;
+  width: 100%;
 }
 
 .manuscript-book__scroll-spacer {
@@ -48,21 +50,22 @@
 }
 
 .manuscript-book__viewport {
-  width: min(100%, 56rem);
-  min-height: clamp(18rem, 42vw, 28rem);
+  width: min(100%, var(--manuscript-w, 56rem));
+  height: var(--manuscript-h, auto);
+  min-height: 0;
   margin-inline: auto;
   border-radius: 0.35rem;
   box-shadow:
     0 24px 48px rgba(0, 0, 0, 0.28),
     0 2px 8px rgba(0, 0, 0, 0.12);
   overflow: hidden;
+  background: #f4f0e8;
 }
 
 /* Hide raw page stack until turn.js lays out the book */
 .manuscript-flipbook:not(.manuscript-flipbook--ready) {
   opacity: 0;
   visibility: hidden;
-  min-height: clamp(18rem, 42vw, 28rem);
 }
 
 .manuscript-flipbook--ready {
@@ -73,8 +76,9 @@
 
 .manuscript-flipbook {
   width: 100%;
+  height: 100%;
   margin-inline: auto;
-  background: var(--canvas);
+  background: #f4f0e8;
 }
 
 .manuscript-flipbook .hard {
@@ -92,10 +96,13 @@
   gap: 0.35rem;
   text-align: center;
   padding: 1.5rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .manuscript-book__cover--blank {
-  background: color-mix(in srgb, var(--canvas) 92%, var(--ink)) !important;
+  background: #ebe5da !important;
 }
 
 .manuscript-book__cover-title {
@@ -120,6 +127,9 @@
   justify-content: center;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .manuscript-book__page img {
@@ -135,18 +145,23 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  width: min(100%, var(--manuscript-w, 56rem));
 }
 
 .manuscript-book__nav {
-  width: 2.25rem;
-  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
   border: 1px solid var(--border-subtle);
   border-radius: 999px;
   background: color-mix(in srgb, var(--canvas) 88%, transparent);
   color: var(--ink);
-  font-size: 1.35rem;
+  font-size: 1.125rem;
   line-height: 1;
   cursor: pointer;
+  flex-shrink: 0;
   transition:
     border-color 0.2s ease,
     background 0.2s ease,
@@ -171,6 +186,7 @@
   color: var(--ink-55);
   min-width: 5.5rem;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .manuscript-book__hint {
@@ -181,6 +197,21 @@
   text-transform: uppercase;
   color: var(--ink-45);
   text-align: center;
+  width: min(100%, var(--manuscript-w, 56rem));
+}
+
+/* Publications — use full content column width */
+.pubs-section__manuscript .manuscript-book__viewport {
+  max-width: 100%;
+}
+
+.pubs-section__manuscript .manuscript-book__sticky {
+  align-items: stretch;
+}
+
+.pubs-section__manuscript .manuscript-book__chrome,
+.pubs-section__manuscript .manuscript-book__hint {
+  align-self: center;
 }
 
 /* Fallback if turn.js fails — vertical page stack */
@@ -190,6 +221,7 @@
   padding: 0.75rem;
   opacity: 1;
   visibility: visible;
+  height: auto;
 }
 
 .manuscript-flipbook--fallback .hard {
@@ -209,11 +241,6 @@
 
   .manuscript-book__scroll-spacer {
     display: none;
-  }
-
-  .manuscript-book__viewport {
-    width: 100%;
-    min-height: clamp(14rem, 55vw, 22rem);
   }
 
   .manuscript-book__hint {
