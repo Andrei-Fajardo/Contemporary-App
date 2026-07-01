@@ -20,17 +20,6 @@ const pageCount = manuscriptPages.length;
 >
   <div class="manuscript-modal__backdrop" data-manuscript-close tabindex="-1"></div>
 
-  <button
-    type="button"
-    class="manuscript-modal__close-viewport"
-    data-manuscript-close
-    aria-label="Close"
-  >
-    <svg class="manuscript-modal__close-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
-    </svg>
-  </button>
-
   <div
     class="manuscript-modal__panel"
     role="dialog"
@@ -45,6 +34,7 @@ const pageCount = manuscriptPages.length;
       class="manuscript-book manuscript-book--modal"
       data-manuscript-book
       data-page-count={pageCount}
+      data-manuscript-layout="double"
     >
       <div class="manuscript-modal__stage" data-manuscript-stage>
         <button
@@ -119,6 +109,19 @@ const pageCount = manuscriptPages.length;
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="manuscript-modal__chrome" aria-hidden="false">
+    <button
+      type="button"
+      class="manuscript-modal__close-viewport"
+      data-manuscript-close
+      aria-label="Close"
+    >
+      <svg class="manuscript-modal__close-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    </button>
   </div>
 </div>
 

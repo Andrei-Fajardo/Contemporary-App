@@ -12,6 +12,12 @@ function getModal(): HTMLElement | null {
   return document.getElementById('manuscript-modal');
 }
 
+function ensureModalOnBody(): void {
+  const modal = getModal();
+  if (!modal || modal.parentElement === document.body) return;
+  document.body.appendChild(modal);
+}
+
 function getBook(): HTMLElement | null {
   return document.querySelector<HTMLElement>('[data-manuscript-book]');
 }
@@ -20,6 +26,8 @@ function openModal(): void {
   const modal = getModal();
   const book = getBook();
   if (!modal || !book) return;
+
+  ensureModalOnBody();
 
   modal.removeAttribute('hidden');
   modal.setAttribute('aria-hidden', 'false');
@@ -46,6 +54,8 @@ function closeModal(): void {
 }
 
 export function initManuscriptModal(): void {
+  ensureModalOnBody();
+
   if (listenersBound) return;
   listenersBound = true;
 
