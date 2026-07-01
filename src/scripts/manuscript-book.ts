@@ -37,6 +37,12 @@ const NAV_BOOK_GAP = 14;
 /** Turn.js page index (1-based) where spread 0001.jpg first appears as a full spread */
 const FIRST_CONTENT_PAGE = 2;
 
+/** Corner peel demo duration (ms) */
+const PEEL_HINT_MS = 1500;
+
+/** Delay before peel hint runs after open/reset (ms) */
+const PEEL_HINT_DELAY_MS = 420;
+
 let vendorPromise: Promise<void> | null = null;
 
 function loadScript(src: string): Promise<void> {
@@ -70,9 +76,15 @@ type BookState = {
   currentPage: number;
   contentPages: number;
   onResize: (() => void) | null;
+  peelTimeout: number | null;
+  hintDismissed: boolean;
 };
 
 const books = new WeakMap<HTMLElement, BookState>();
+
+function getViewport(root: HTMLElement): HTMLElement | null {
+  return root.querySelector<HTMLElement>('[data-manuscript-viewport]');
+}
 
 function measureBook(root: HTMLElement): { width: number; height: number } {
   const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
@@ -127,6 +139,79 @@ function updateIndicator(root: HTMLElement, turnPage: number, contentPages: numb
   indicator.textContent = `${turnPageToSpreadIndex(turnPage, contentPages)} / ${contentPages}`;
 }
 
+function clearPeelTimeout(state: BookState) {
+  if (state.peelTimeout !== null) {
+    window.clearTimeout(state.peelTimeout);
+    state.peelTimeout = null;
+  }
+}
+
+function dismissDragHint(root: HTMLElement, state: BookState) {
+  if (state.hintDismissed) return;
+
+  state.hintDismissed = true;
+  clearPeelTimeout(state);
+
+  const viewport = getViewport(root);
+  viewport?.classList.add('has-interacted');
+  viewport?.classList.remove('is-drag-hint-active');
+
+  try {
+    state.flipbook?.turn('peel', false);
+  } catch {
+    /* Turn.js may reject peel reset mid-animation */
+  }
+}
+
+function playDragHint(root: HTMLElement, state: BookState, reducedMotion: boolean) {
+  const viewport = getViewport(root);
+  if (!viewport || !state.flipbook) return;
+
+  state.hintDismissed = false;
+  viewport.classList.remove('has-interacted');
+  viewport.classList.remove('is-drag-hint-active');
+  clearPeelTimeout(state);
+
+  if (reducedMotion) return;
+
+  state.peelTimeout = window.setTimeout(() => {
+    state.peelTimeout = null;
+    if (state.hintDismissed) return;
+
+    viewport.classList.add('is-drag-hint-active');
+
+    try {
+      state.flipbook?.turn('peel', 'br');
+    } catch {
+      /* peel unsupported or blocked */
+    }
+
+    state.peelTimeout = window.setTimeout(() => {
+      state.peelTimeout = null;
+      if (state.hintDismissed) return;
+
+      try {
+        state.flipbook?.turn('peel', false);
+      } catch {
+        /* ignore */
+      }
+    }, PEEL_HINT_MS);
+  }, PEEL_HINT_DELAY_MS);
+}
+
+function bindDragHintDismiss(root: HTMLElement, flipbookEl: HTMLElement, state: BookState) {
+  if (flipbookEl.dataset.dragHintBound === 'true') return;
+  flipbookEl.dataset.dragHintBound = 'true';
+
+  const dismiss = () => dismissDragHint(root, state);
+
+  flipbookEl.addEventListener('mousedown', dismiss);
+  flipbookEl.addEventListener('touchstart', dismiss, { passive: true });
+
+  root.querySelector('[data-manuscript-prev]')?.addEventListener('click', dismiss);
+  root.querySelector('[data-manuscript-next]')?.addEventListener('click', dismiss);
+}
+
 export function resizeManuscriptBook(root: HTMLElement): void {
   const state = books.get(root);
   const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
@@ -142,15 +227,19 @@ export function resetManuscriptBook(root: HTMLElement): void {
   const state = books.get(root);
   if (!state?.flipbook) return;
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   state.currentPage = FIRST_CONTENT_PAGE;
   state.flipbook.turn('page', FIRST_CONTENT_PAGE);
   updateIndicator(root, FIRST_CONTENT_PAGE, state.contentPages);
   resizeManuscriptBook(root);
+  playDragHint(root, state, reducedMotion);
 }
 
 export function goManuscriptPrev(root: HTMLElement): void {
   const state = books.get(root);
   if (!state?.flipbook || state.currentPage <= 1) return;
+  dismissDragHint(root, state);
   state.flipbook.turn('previous');
 }
 
@@ -158,6 +247,7 @@ export function goManuscriptNext(root: HTMLElement): void {
   const state = books.get(root);
   if (!state?.flipbook) return;
   if (state.currentPage >= lastContentTurnPage(state.contentPages)) return;
+  dismissDragHint(root, state);
   state.flipbook.turn('next');
 }
 
@@ -179,6 +269,8 @@ export function initManuscriptBook(root: HTMLElement): void {
     currentPage: FIRST_CONTENT_PAGE,
     contentPages,
     onResize: null,
+    peelTimeout: null,
+    hintDismissed: false,
   };
   books.set(root, state);
 
@@ -213,6 +305,9 @@ export function initManuscriptBook(root: HTMLElement): void {
       state.flipbook.turn('page', FIRST_CONTENT_PAGE);
       flipbookEl.classList.add('manuscript-flipbook--ready');
       updateIndicator(root, FIRST_CONTENT_PAGE, contentPages);
+
+      bindDragHintDismiss(root, flipbookEl, state);
+      playDragHint(root, state, reducedMotion);
 
       prevBtn?.addEventListener('click', () => goManuscriptPrev(root));
       nextBtn?.addEventListener('click', () => goManuscriptNext(root));

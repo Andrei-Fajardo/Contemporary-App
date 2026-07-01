@@ -33,7 +33,7 @@ function openModal(): void {
     resizeManuscriptBook(book);
   }
 
-  modal.querySelector<HTMLButtonElement>('.manuscript-modal__close')?.focus();
+  modal.querySelector<HTMLButtonElement>('.manuscript-modal__close-viewport')?.focus();
 }
 
 function closeModal(): void {

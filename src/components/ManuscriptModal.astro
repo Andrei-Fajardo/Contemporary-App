@@ -20,6 +20,17 @@ const pageCount = manuscriptPages.length;
 >
   <div class="manuscript-modal__backdrop" data-manuscript-close tabindex="-1"></div>
 
+  <button
+    type="button"
+    class="manuscript-modal__close-viewport"
+    data-manuscript-close
+    aria-label="Close"
+  >
+    <svg class="manuscript-modal__close-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+    </svg>
+  </button>
+
   <div
     class="manuscript-modal__panel"
     role="dialog"
@@ -28,9 +39,6 @@ const pageCount = manuscriptPages.length;
   >
     <header class="manuscript-modal__header">
       <p class="manuscript-modal__eyebrow" id="manuscript-modal-title">{l.manuscriptHeading}</p>
-      <button type="button" class="manuscript-modal__close" data-manuscript-close aria-label="Close">
-        ×
-      </button>
     </header>
 
     <div
@@ -52,6 +60,10 @@ const pageCount = manuscriptPages.length;
 
         <div class="manuscript-book__stage-body">
           <div class="manuscript-book__viewport" data-manuscript-viewport>
+            <div class="manuscript-book__drag-hints" aria-hidden="true">
+              <span class="manuscript-book__drag-hint manuscript-book__drag-hint--tr"></span>
+              <span class="manuscript-book__drag-hint manuscript-book__drag-hint--br"></span>
+            </div>
             <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
               <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
               {manuscriptPages.flatMap((src, index) => [

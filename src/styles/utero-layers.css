@@ -129,6 +129,11 @@
   padding-left: clamp(1rem, 2.5vw, 1.65rem);
 }
 
+.pubs-editorial__panel--novels {
+  flex: 1;
+  min-height: clamp(5.5rem, 12vh, 8rem);
+}
+
 .pubs-editorial__panel--chapbook {
   margin-top: 0;
 }
