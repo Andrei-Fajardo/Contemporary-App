@@ -664,12 +664,13 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 .sidebar-nav-link.nav-link--active {
   color: var(--ink) !important;
   font-weight: 500;
+  background: var(--surface-hover);
 }
 
 .sidebar-nav-link.nav-link--active::before {
   content: "";
   position: absolute;
-  left: -0.75rem;
+  left: 0.625rem;
   top: 50%;
   transform: translateY(-50%);
   width: 2px;
@@ -720,6 +721,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 #mobile-drawer .sidebar-nav-link {
   text-align: left;
   position: relative;
+  padding: 0.875rem 1rem 0.875rem 1.5rem;
 }
 
 #mobile-drawer .sidebar-nav-link::after {
@@ -770,7 +772,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 .sidebar-nav-link {
   position: relative;
   display: block;
-  padding-left: 0.25rem;
+  padding: 0.625rem 0.875rem 0.625rem 1.5rem;
   /* Explicitly left — never justified, even for long labels like "Publications & Writing" */
   text-align: left !important;
   text-align-last: left;
@@ -784,7 +786,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 .sidebar-nav-link::after {
   content: "";
   position: absolute;
-  left: 0;
+  left: 1.5rem;
   bottom: 0.35rem;
   width: 0;
   height: 1px;
