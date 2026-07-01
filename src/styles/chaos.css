@@ -706,6 +706,10 @@ html.motion-reduced .press-chaos__poster {
   max-width: none;
 }
 
+.about-chaos__label {
+  margin-top: 0;
+}
+
 .about-chaos__intro .content-prose {
   max-width: min(72ch, 100%);
   text-align: justify;

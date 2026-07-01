@@ -146,6 +146,10 @@
   padding-right: clamp(1rem, 3vw, 2rem);
 }
 
+.about-panel-stack__content .about-chaos__label {
+  margin-bottom: clamp(0.85rem, 2vh, 1rem);
+}
+
 .about-panel-stack__content .section-eyebrow {
   margin-bottom: 0.5rem;
 }
