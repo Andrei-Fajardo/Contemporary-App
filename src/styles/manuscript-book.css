@@ -252,6 +252,20 @@
   height: 100%;
   margin-inline: auto;
   background: #121212;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Lock chrome/nav input while Turn.js is mid-flip */
+[data-manuscript-book].is-turning .manuscript-book__nav,
+[data-manuscript-book].is-turning .manuscript-book__chrome {
+  pointer-events: none;
+}
+
+[data-manuscript-book].is-turning .manuscript-book__drag-hints {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* Double-display spreads: each wide JPG is split across two Turn.js pages */

@@ -43,6 +43,9 @@ const PEEL_HINT_MS = 1500;
 /** Delay before peel hint runs after open/reset (ms) */
 const PEEL_HINT_DELAY_MS = 420;
 
+/** Debounce window resize recalculation (ms) */
+const RESIZE_DEBOUNCE_MS = 175;
+
 let vendorPromise: Promise<void> | null = null;
 
 function loadScript(src: string): Promise<void> {
@@ -78,6 +81,11 @@ type BookState = {
   onResize: (() => void) | null;
   peelTimeout: number | null;
   hintDismissed: boolean;
+  isTurning: boolean;
+  resizeDebounceId: number | null;
+  resizePending: boolean;
+  lastWidth: number;
+  lastHeight: number;
 };
 
 const books = new WeakMap<HTMLElement, BookState>();
@@ -106,22 +114,54 @@ function measureBook(root: HTMLElement): { width: number; height: number } {
     width = Math.round(height * SPREAD_ASPECT);
   }
 
-  return { width, height };
+  return { width: Math.round(width), height: Math.round(height) };
 }
 
 function syncShell(root: HTMLElement, viewport: HTMLElement | null, width: number, height: number) {
+  const safeW = Math.round(width);
+  const safeH = Math.round(height);
   const navBtn = root.querySelector<HTMLElement>('.manuscript-book__nav--side');
   const navSize = navBtn ? Math.ceil(navBtn.getBoundingClientRect().width) : 56;
-  const navOffset = navSize + NAV_BOOK_GAP;
+  const navOffset = Math.round(navSize + NAV_BOOK_GAP);
 
-  root.style.setProperty('--manuscript-w', `${width}px`);
-  root.style.setProperty('--manuscript-h', `${height}px`);
+  root.style.setProperty('--manuscript-w', `${safeW}px`);
+  root.style.setProperty('--manuscript-h', `${safeH}px`);
   root.style.setProperty('--manuscript-nav-offset', `${navOffset}px`);
   if (viewport) {
-    viewport.style.width = `${width}px`;
-    viewport.style.height = `${height}px`;
+    viewport.style.width = `${safeW}px`;
+    viewport.style.height = `${safeH}px`;
     viewport.style.maxWidth = '100%';
   }
+}
+
+function setTurning(root: HTMLElement, state: BookState, turning: boolean) {
+  state.isTurning = turning;
+  root.classList.toggle('is-turning', turning);
+
+  if (!turning && state.resizePending) {
+    state.resizePending = false;
+    resizeManuscriptBook(root, { immediate: true });
+  }
+}
+
+function scheduleResize(root: HTMLElement) {
+  const state = books.get(root);
+  if (!state) return;
+
+  if (state.resizeDebounceId !== null) {
+    window.clearTimeout(state.resizeDebounceId);
+  }
+
+  state.resizeDebounceId = window.setTimeout(() => {
+    state.resizeDebounceId = null;
+
+    if (state.isTurning) {
+      state.resizePending = true;
+      return;
+    }
+
+    resizeManuscriptBook(root, { immediate: true });
+  }, RESIZE_DEBOUNCE_MS);
 }
 
 function lastContentTurnPage(contentPages: number): number {
@@ -212,13 +252,35 @@ function bindDragHintDismiss(root: HTMLElement, flipbookEl: HTMLElement, state: 
   root.querySelector('[data-manuscript-next]')?.addEventListener('click', dismiss);
 }
 
-export function resizeManuscriptBook(root: HTMLElement): void {
+export function resizeManuscriptBook(
+  root: HTMLElement,
+  options: { immediate?: boolean } = {},
+): void {
   const state = books.get(root);
   const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
   const { width, height } = measureBook(root);
+
+  if (state?.isTurning && !options.immediate) {
+    state.resizePending = true;
+    return;
+  }
+
+  if (!options.immediate) {
+    scheduleResize(root);
+    return;
+  }
+
+  if (state && state.lastWidth === width && state.lastHeight === height) {
+    syncShell(root, viewport, width, height);
+    return;
+  }
+
   syncShell(root, viewport, width, height);
 
   if (!state?.flipbook) return;
+
+  state.lastWidth = width;
+  state.lastHeight = height;
   state.flipbook.turn('size', width, height);
   state.flipbook.turn('display', 'double');
 }
@@ -232,7 +294,7 @@ export function resetManuscriptBook(root: HTMLElement): void {
   state.currentPage = FIRST_CONTENT_PAGE;
   state.flipbook.turn('page', FIRST_CONTENT_PAGE);
   updateIndicator(root, FIRST_CONTENT_PAGE, state.contentPages);
-  resizeManuscriptBook(root);
+  resizeManuscriptBook(root, { immediate: true });
   playDragHint(root, state, reducedMotion);
 }
 
@@ -271,6 +333,11 @@ export function initManuscriptBook(root: HTMLElement): void {
     onResize: null,
     peelTimeout: null,
     hintDismissed: false,
+    isTurning: false,
+    resizeDebounceId: null,
+    resizePending: false,
+    lastWidth: 0,
+    lastHeight: 0,
   };
   books.set(root, state);
 
@@ -295,13 +362,19 @@ export function initManuscriptBook(root: HTMLElement): void {
         gradients: true,
         duration: reducedMotion ? 0 : 600,
         when: {
+          turning() {
+            setTurning(root, state, true);
+          },
           turned(_event: unknown, page: number) {
             state.currentPage = page;
             updateIndicator(root, page, contentPages);
+            setTurning(root, state, false);
           },
         },
       });
 
+      state.lastWidth = width;
+      state.lastHeight = height;
       state.flipbook.turn('page', FIRST_CONTENT_PAGE);
       flipbookEl.classList.add('manuscript-flipbook--ready');
       updateIndicator(root, FIRST_CONTENT_PAGE, contentPages);
@@ -312,7 +385,7 @@ export function initManuscriptBook(root: HTMLElement): void {
       prevBtn?.addEventListener('click', () => goManuscriptPrev(root));
       nextBtn?.addEventListener('click', () => goManuscriptNext(root));
 
-      state.onResize = () => resizeManuscriptBook(root);
+      state.onResize = () => scheduleResize(root);
       window.addEventListener('resize', state.onResize);
     } catch {
       flipbookEl.classList.add('manuscript-flipbook--fallback');
