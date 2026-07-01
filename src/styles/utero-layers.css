@@ -146,6 +146,24 @@
     flex: none;
     min-height: 0;
   }
+
+  /* Flatten columns so card order utilities control mobile stack sequence */
+  .pubs-editorial__col--links,
+  .pubs-editorial__col--stack {
+    display: contents;
+  }
+
+  .pubs-editorial__panel--chapbook {
+    order: -1;
+  }
+
+  .pubs-editorial__col--links > .pubs-editorial__panel {
+    order: 0;
+  }
+
+  .pubs-editorial__panel--novels {
+    order: 1;
+  }
 }
 
 .pubs-editorial__panel--chapbook {
@@ -422,6 +440,18 @@
     padding-left: 0;
     padding-top: 0.15rem;
     gap: 1.5rem;
+  }
+
+  .pubs-editorial__panel--chapbook {
+    border-color: var(--border-section);
+    box-shadow:
+      0 10px 28px color-mix(in srgb, var(--ink) 8%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+
+  .pubs-editorial__panel--chapbook .pubs-manuscript-btn {
+    font-size: clamp(0.875rem, 3.6vw, 0.9375rem);
+    padding-block: clamp(1.05rem, 3vh, 1.25rem);
   }
 }
 

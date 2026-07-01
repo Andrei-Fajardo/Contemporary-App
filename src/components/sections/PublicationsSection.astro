@@ -47,16 +47,16 @@ const novels = siteCopy.publications.novels;
     <div
       class="pubs-editorial__grid scroll-reveal flex min-w-0 flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:items-stretch lg:gap-[clamp(1rem,2.5vw,1.75rem)]"
     >
-      <div class="pubs-editorial__col pubs-editorial__col--links min-w-0">
-        <div class="pubs-editorial__panel h-auto min-h-0">
+      <div class="pubs-editorial__col pubs-editorial__col--links min-w-0 max-lg:contents">
+        <div class="pubs-editorial__panel h-auto min-h-0 order-2 lg:order-none">
           <p class="pubs-editorial__label">{l.publicationsFeaturedLabel}</p>
           <EditorialLinkList items={publicationLinks} showYear={false} />
         </div>
       </div>
 
-      <div class="pubs-editorial__col pubs-editorial__col--stack flex min-w-0 flex-col gap-6">
+      <div class="pubs-editorial__col pubs-editorial__col--stack flex min-w-0 flex-col gap-6 max-lg:contents lg:flex">
         {novels.length > 0 && (
-          <div class="pubs-editorial__panel pubs-editorial__panel--accent pubs-editorial__panel--novels h-auto min-h-0">
+          <div class="pubs-editorial__panel pubs-editorial__panel--accent pubs-editorial__panel--novels h-auto min-h-0 order-3 lg:order-none">
             <p class="pubs-editorial__label">{l.novelsLabel}</p>
             <ul class="pubs-novel-list">
               {novels.map((novel) => (
@@ -71,7 +71,7 @@ const novels = siteCopy.publications.novels;
           </div>
         )}
 
-        <div class="pubs-editorial__panel pubs-editorial__panel--accent pubs-editorial__panel--chapbook h-auto min-h-0">
+        <div class="pubs-editorial__panel pubs-editorial__panel--accent pubs-editorial__panel--chapbook h-auto min-h-0 order-first lg:order-none">
           <p class="pubs-editorial__label">{l.chapbookLabel}</p>
           <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
             <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
