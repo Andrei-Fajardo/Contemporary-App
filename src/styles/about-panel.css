@@ -39,6 +39,7 @@
   cursor: pointer;
   border-radius: 0.5rem;
   user-select: none;
+  outline: none;
 }
 
 .hero-about-layer__art-img {
@@ -90,33 +91,35 @@
   text-align: left;
   position: relative;
   z-index: 4;
-  cursor: pointer;
 }
 
-/* Profile image overlay card — advocate tagline on cluster hover */
-.hero-profile-group {
-  outline: none;
-}
-
+/* Profile image overlay card — desktop hover only; hidden on mobile */
 .hero-profile-overlay {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  z-index: 10;
-  max-width: calc(100% - 2rem);
-  padding: 0.65rem 0.85rem 0.7rem;
-  background: color-mix(in srgb, var(--magazine-accent) 94%, transparent);
-  color: var(--canvas);
-  border-radius: 0.2rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(0.5rem);
-  transition:
-    opacity 0.3s ease-out,
-    transform 0.3s ease-out,
-    visibility 0.3s ease-out;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .hero-profile-overlay {
+    display: block;
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 10;
+    max-width: calc(100% - 2rem);
+    padding: 0.65rem 0.85rem 0.7rem;
+    background: color-mix(in srgb, var(--magazine-accent) 94%, transparent);
+    color: var(--canvas);
+    border-radius: 0.2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out,
+      visibility 0.3s ease-out;
+  }
 }
 
 .hero-profile-overlay__meta {
@@ -139,26 +142,25 @@
   line-height: 1.35;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .hero-profile-group:hover .hero-profile-overlay {
+@media (min-width: 640px) and (hover: hover) and (pointer: fine) {
+  .hero-about-layer__art:hover .hero-profile-overlay {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
 }
 
-.hero-profile-group:focus-within .hero-profile-overlay {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+@media (min-width: 640px) {
+  .hero-about-layer__art:focus-within .hero-profile-overlay {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 639px) {
-  .hero-profile-overlay {
-    bottom: 0.65rem;
-    left: 0.65rem;
-    max-width: calc(100% - 1.3rem);
-    padding: 0.5rem 0.7rem 0.55rem;
+  .hero-about-layer__art {
+    cursor: default;
   }
 }
 
