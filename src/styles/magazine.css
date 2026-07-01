@@ -165,7 +165,7 @@
 }
 
 @media (min-width: 640px) {
-  .magazine-cover .magazine-masthead {
+  .magazine-cover .magazine-masthead:not(.hero-name-hover-pill) {
     position: relative;
     z-index: 6;
     align-self: flex-start;
@@ -184,6 +184,72 @@
   opacity: 0.85;
 }
 
+/* Signature hover pill — masthead badge revealed on name hover (Art card pattern) */
+.hero-name-group {
+  position: relative;
+  z-index: 5;
+  outline: none;
+}
+
+.hero-name-hover-pill.magazine-masthead {
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  z-index: 8;
+  width: auto;
+  max-width: min(28rem, calc(100vw - 2.5rem));
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-100%) translateY(0.5rem) scale(0.95);
+  transform-origin: left bottom;
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  .hero-name-hover-pill.magazine-masthead {
+    left: auto;
+    right: 0;
+    transform-origin: right bottom;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-name-group:hover .hero-name-hover-pill.magazine-masthead,
+  .hero-name-group:focus-within .hero-name-hover-pill.magazine-masthead {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-100%) translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 639px) {
+  .hero-name-hover-pill.magazine-masthead {
+    top: -0.35rem;
+    left: 0;
+    right: auto;
+    max-width: min(22rem, calc(100vw - 2rem));
+    transform-origin: left bottom;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .hero-name-group:focus-within .hero-name-hover-pill.magazine-masthead {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-100%) translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-name-hover-pill.magazine-masthead {
+    transition: none;
+  }
+}
+
 @media (max-width: 639px) {
   /* Mobile hero: name-first layout — hide editorial chrome until integrated later */
   .hero-editorial-only {
@@ -193,10 +259,6 @@
   .magazine-cover {
     padding-top: 0;
     overflow: visible;
-  }
-
-  .magazine-masthead {
-    display: none !important;
   }
 
   .magazine-cover__motto {
