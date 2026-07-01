@@ -14,8 +14,8 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
 
 <section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
   <div class="hero-about-layer__inner section-shell section-shell--wide">
-    <div class="hero-about-layer__cluster">
-      <div class="hero-about-layer__art" data-headshot aria-hidden="true">
+    <div class="hero-about-layer__cluster hero-profile-group group" tabindex="0">
+      <div class="hero-about-layer__art relative overflow-hidden" data-headshot>
         <img
           src="/media/anna header 2.png"
           alt="Anna Dauyl Rockswell"
@@ -25,18 +25,13 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
           draggable="false"
           data-lightbox-ignore
         />
+        <div class="hero-profile-overlay grain-noise" aria-hidden="true">
+          <p class="hero-profile-overlay__meta">Portfolio · 2026</p>
+          <p class="hero-profile-overlay__tagline">{l.heroTagline}</p>
+        </div>
       </div>
 
-      <div
-        class="hero-editorial__copy hero-about-layer__name hero-name-group group relative cursor-pointer"
-        tabindex="0"
-      >
-        <div class="magazine-masthead hero-name-hover-pill" aria-hidden="true">
-          <span class="magazine-masthead__issue">Portfolio · 2026</span>
-          <span class="type-magazine-masthead">{l.heroTagline}</span>
-          <span class="magazine-star" aria-hidden="true"></span>
-        </div>
-
+      <div class="hero-editorial__copy hero-about-layer__name">
         <h1 class="hero-about-layer__heading scroll-reveal">
           <span class="hero-name__first">
             <span class="hero-name__line">{heroGivenName}</span>

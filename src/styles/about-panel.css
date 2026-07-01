@@ -35,7 +35,9 @@
   flex: 0 0 auto;
   width: clamp(28rem, 52vw, 46rem);
   z-index: 2;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
+  border-radius: 0.5rem;
   user-select: none;
 }
 
@@ -45,7 +47,7 @@
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center top;
-  border-radius: 0.5rem;
+  border-radius: 0;
   /* Subtle inner shadow to give the headshot depth against the canvas */
   box-shadow: 0 4px 24px rgba(17, 17, 17, 0.14), 0 1px 4px rgba(17, 17, 17, 0.08);
   filter: contrast(1.04) brightness(0.97);
@@ -88,6 +90,82 @@
   text-align: left;
   position: relative;
   z-index: 4;
+  cursor: pointer;
+}
+
+/* Profile image overlay card — advocate tagline on cluster hover */
+.hero-profile-group {
+  outline: none;
+}
+
+.hero-profile-overlay {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 10;
+  max-width: calc(100% - 2rem);
+  padding: 0.65rem 0.85rem 0.7rem;
+  background: color-mix(in srgb, var(--magazine-accent) 94%, transparent);
+  color: var(--canvas);
+  border-radius: 0.2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out,
+    visibility 0.3s ease-out;
+}
+
+.hero-profile-overlay__meta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+.hero-profile-overlay__tagline {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.5625rem, 0.5vw + 0.45rem, 0.6875rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-profile-group:hover .hero-profile-overlay {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+.hero-profile-group:focus-within .hero-profile-overlay {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 639px) {
+  .hero-profile-overlay {
+    bottom: 0.65rem;
+    left: 0.65rem;
+    max-width: calc(100% - 1.3rem);
+    padding: 0.5rem 0.7rem 0.55rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-profile-overlay {
+    transition: none;
+  }
 }
 
 /*
@@ -216,7 +294,7 @@
     max-height: none;
     margin-bottom: 0;
     opacity: 1;
-    border-radius: 0.5rem;
+    border-radius: 0;
   }
 
   .hero-about-layer__name {
