@@ -627,6 +627,12 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 #mobile-drawer nav {
   text-align: left;
   hyphens: none;
+  width: 100%;
+  min-width: 0;
+}
+
+.desktop-sidebar__nav {
+  min-width: 0;
 }
 
 .desktop-sidebar {
@@ -670,7 +676,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 .sidebar-nav-link.nav-link--active::before {
   content: "";
   position: absolute;
-  left: 0.625rem;
+  left: 1rem;
   top: 50%;
   transform: translateY(-50%);
   width: 2px;
@@ -721,7 +727,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 #mobile-drawer .sidebar-nav-link {
   text-align: left;
   position: relative;
-  padding: 0.875rem 1rem 0.875rem 1.5rem;
+  padding: 0.75rem 1rem;
 }
 
 #mobile-drawer .sidebar-nav-link::after {
@@ -772,13 +778,19 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 .sidebar-nav-link {
   position: relative;
   display: block;
-  padding: 0.625rem 0.875rem 0.625rem 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.35;
   /* Explicitly left — never justified, even for long labels like "Publications & Writing" */
   text-align: left !important;
   text-align-last: left;
   hyphens: none;
   white-space: normal;
   word-break: normal;
+  overflow-wrap: break-word;
   transition: color 0.4s var(--ease-editorial);
   will-change: transform;
 }
@@ -786,7 +798,8 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 .sidebar-nav-link::after {
   content: "";
   position: absolute;
-  left: 1.5rem;
+  left: 2.125rem;
+  right: 1rem;
   bottom: 0.35rem;
   width: 0;
   height: 1px;
@@ -804,7 +817,9 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 .sidebar-nav-link.nav-link--active::after {
-  width: 2rem;
+  left: 2.125rem;
+  right: 1rem;
+  width: auto;
   opacity: 1;
 }
 
@@ -815,12 +830,17 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 .sidebar-nav-label {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  padding-left: 1.125rem;
+  padding-right: 0.125rem;
   opacity: 0.72;
   letter-spacing: 0.01em;
   text-align: left !important;
   text-align-last: left;
   hyphens: none;
+  white-space: normal;
+  overflow-wrap: break-word;
   transition: opacity 0.35s var(--ease-editorial);
 }
 
