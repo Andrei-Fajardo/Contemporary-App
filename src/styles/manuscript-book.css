@@ -269,7 +269,8 @@
 
 /* Lock chrome/nav input while Turn.js is mid-flip */
 [data-manuscript-book].is-turning .manuscript-book__nav,
-[data-manuscript-book].is-turning .manuscript-book__chrome {
+[data-manuscript-book].is-turning .manuscript-book__chrome,
+[data-manuscript-book].is-turning .manuscript-book__mobile-nav {
   pointer-events: none;
 }
 
@@ -344,7 +345,7 @@
   display: none;
 }
 
-.manuscript-book__chrome {
+.manuscript-book__chrome--desktop {
   position: relative;
   z-index: 60;
   display: flex;
@@ -353,6 +354,48 @@
   width: min(100%, var(--manuscript-w, 56rem));
   flex-shrink: 0;
   pointer-events: none;
+}
+
+.manuscript-book__mobile-nav {
+  position: relative;
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-inline: clamp(0.75rem, 4vw, 1.25rem);
+  padding-bottom: max(0.35rem, env(safe-area-inset-bottom, 0px));
+}
+
+.manuscript-book__nav--mobile {
+  position: static;
+  top: auto;
+  transform: none;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 0.35rem;
+}
+
+.manuscript-book__nav--mobile:hover {
+  transform: none;
+}
+
+.manuscript-book__nav--mobile:active {
+  transform: scale(0.97);
+}
+
+.manuscript-book__nav--mobile.manuscript-book__nav--prev:hover .manuscript-book__nav-icon {
+  transform: translateX(-2px);
+}
+
+.manuscript-book__nav--mobile.manuscript-book__nav--next:hover .manuscript-book__nav-icon {
+  transform: translateX(2px);
+}
+
+.manuscript-book__indicator--mobile {
+  min-width: 5.75rem;
+  text-align: center;
+  flex-shrink: 0;
+  color: rgba(240, 238, 233, 0.88);
 }
 
 .manuscript-book__nav {
@@ -481,7 +524,7 @@
   max-width: 95vw;
 }
 
-.manuscript-book--layout-single .manuscript-book__chrome {
+.manuscript-book--layout-single .manuscript-book__chrome--desktop {
   width: min(100%, var(--manuscript-w, 93vw));
   max-width: 95vw;
 }
@@ -515,19 +558,25 @@
     height: 1rem;
   }
 
-  .manuscript-book__nav--side {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+  .manuscript-modal__stage {
+    justify-content: flex-start;
+    gap: 0;
   }
 
   .manuscript-book__stage-body {
     padding-inline: 0;
+    flex: 1;
+    min-height: 0;
   }
 
   .manuscript-book__viewport {
     border-radius: 0.15rem;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .manuscript-book__mobile-nav {
+    margin-top: 1.25rem;
+    gap: clamp(1.75rem, 8vw, 2.25rem);
   }
 }
 

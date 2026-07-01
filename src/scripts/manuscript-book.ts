@@ -229,9 +229,10 @@ function turnPageToSpreadIndex(turnPage: number, contentPages: number): number {
 }
 
 function updateIndicator(root: HTMLElement, turnPage: number, contentPages: number) {
-  const indicator = root.querySelector<HTMLElement>('[data-manuscript-indicator]');
-  if (!indicator) return;
-  indicator.textContent = `${turnPageToSpreadIndex(turnPage, contentPages)} / ${contentPages}`;
+  const text = `${turnPageToSpreadIndex(turnPage, contentPages)} / ${contentPages}`;
+  root.querySelectorAll<HTMLElement>('[data-manuscript-indicator]').forEach((indicator) => {
+    indicator.textContent = text;
+  });
 }
 
 function clearPeelTimeout(state: BookState) {
@@ -373,8 +374,12 @@ function bindDragHintDismiss(root: HTMLElement, flipbookEl: HTMLElement, state: 
   flipbookEl.addEventListener('mousedown', dismiss);
   flipbookEl.addEventListener('touchstart', dismiss, { passive: true });
 
-  root.querySelector('[data-manuscript-prev]')?.addEventListener('click', dismiss);
-  root.querySelector('[data-manuscript-next]')?.addEventListener('click', dismiss);
+  root.querySelectorAll('[data-manuscript-prev]').forEach((btn) => {
+    btn.addEventListener('click', dismiss);
+  });
+  root.querySelectorAll('[data-manuscript-next]').forEach((btn) => {
+    btn.addEventListener('click', dismiss);
+  });
 }
 
 export function resizeManuscriptBook(
@@ -454,8 +459,8 @@ export function goManuscriptNext(root: HTMLElement): void {
 export function initManuscriptBook(root: HTMLElement): void {
   const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
   const flipbookEl = root.querySelector<HTMLElement>('[data-manuscript-flipbook]');
-  const prevBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-prev]');
-  const nextBtn = root.querySelector<HTMLButtonElement>('[data-manuscript-next]');
+  const prevBtns = root.querySelectorAll<HTMLButtonElement>('[data-manuscript-prev]');
+  const nextBtns = root.querySelectorAll<HTMLButtonElement>('[data-manuscript-next]');
 
   if (!flipbookEl) return;
 
@@ -524,8 +529,8 @@ export function initManuscriptBook(root: HTMLElement): void {
       bindDragHintDismiss(root, flipbookEl, state);
       scheduleDragHint(root, state, reducedMotion);
 
-      prevBtn?.addEventListener('click', () => goManuscriptPrev(root));
-      nextBtn?.addEventListener('click', () => goManuscriptNext(root));
+      prevBtns.forEach((btn) => btn.addEventListener('click', () => goManuscriptPrev(root)));
+      nextBtns.forEach((btn) => btn.addEventListener('click', () => goManuscriptNext(root)));
 
       state.onResize = () => scheduleResize(root);
       window.addEventListener('resize', state.onResize);

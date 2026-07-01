@@ -39,7 +39,7 @@ const pageCount = manuscriptPages.length;
       <div class="manuscript-modal__stage" data-manuscript-stage>
         <button
           type="button"
-          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev"
+          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev hidden md:grid"
           data-manuscript-prev
           aria-label={l.manuscriptPrev}
         >
@@ -93,7 +93,7 @@ const pageCount = manuscriptPages.length;
 
         <button
           type="button"
-          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next"
+          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next hidden md:grid"
           data-manuscript-next
           aria-label={l.manuscriptNext}
         >
@@ -102,11 +102,42 @@ const pageCount = manuscriptPages.length;
           </svg>
         </button>
 
-        <div class="manuscript-book__chrome" aria-live="polite">
+        <div class="manuscript-book__chrome manuscript-book__chrome--desktop hidden md:flex" aria-live="polite">
           <span class="manuscript-book__indicator" data-manuscript-indicator>
             1 / {pageCount}
           </span>
         </div>
+
+        <nav
+          class="manuscript-book__mobile-nav flex w-full justify-center gap-8 mt-6 md:hidden"
+          aria-label={l.manuscriptHeading}
+        >
+          <button
+            type="button"
+            class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--prev"
+            data-manuscript-prev
+            aria-label={l.manuscriptPrev}
+          >
+            <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <span class="manuscript-book__indicator manuscript-book__indicator--mobile" data-manuscript-indicator aria-live="polite">
+            1 / {pageCount}
+          </span>
+
+          <button
+            type="button"
+            class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--next"
+            data-manuscript-next
+            aria-label={l.manuscriptNext}
+          >
+            <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </nav>
       </div>
     </div>
   </div>

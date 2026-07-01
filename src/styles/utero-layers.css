@@ -110,11 +110,16 @@
 }
 
 .pubs-editorial__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-  gap: clamp(1rem, 2.5vw, 1.75rem);
-  align-items: stretch;
   margin-top: clamp(1.15rem, 2.8vh, 1.65rem);
+}
+
+@media (min-width: 1024px) {
+  .pubs-editorial__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+    align-items: stretch;
+  }
 }
 
 .pubs-editorial__col {
@@ -134,6 +139,15 @@
   min-height: clamp(5.5rem, 12vh, 8rem);
 }
 
+@media (max-width: 1023px) {
+  .pubs-editorial__panel,
+  .pubs-editorial__panel--novels {
+    height: auto;
+    flex: none;
+    min-height: 0;
+  }
+}
+
 .pubs-editorial__panel--chapbook {
   margin-top: 0;
 }
@@ -146,12 +160,17 @@
 .pubs-editorial__panel {
   display: flex;
   flex-direction: column;
-  height: 100%;
   padding: clamp(1rem, 2.2vw, 1.35rem);
   border: 1px solid var(--border-subtle);
   border-radius: 0.35rem;
   background: color-mix(in srgb, var(--ink) 3.5%, transparent);
   box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .pubs-editorial__panel {
+    height: 100%;
+  }
 }
 
 .pubs-editorial__panel--accent {
@@ -355,7 +374,7 @@
 @media (max-width: 1023px) {
   /* Tablet: shrink the overlap frame, keep the editorial offset */
   .pubs-overlap {
-    min-height: clamp(24rem, 52vh, 38rem);
+    min-height: 0;
   }
   .pubs-overlap__frame {
     left: clamp(1rem, 5vw, 3rem);
@@ -395,14 +414,14 @@
   }
 
   .pubs-editorial__grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .pubs-editorial__col--stack {
     border-left: none;
     padding-left: 0;
     padding-top: 0.15rem;
+    gap: 1.5rem;
   }
 }
 
@@ -504,6 +523,7 @@
   .pubs-editorial__col--stack {
     border-top: 1px solid var(--border-subtle);
     padding-top: 0.85rem !important;
+    gap: 1.5rem !important;
   }
 
   /* ── PRESS: same full-width stacked approach ── */
