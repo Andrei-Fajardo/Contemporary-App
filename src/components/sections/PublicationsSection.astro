@@ -52,8 +52,8 @@ const novels = siteCopy.publications.novels;
         </div>
       </div>
 
-      {novels.length > 0 && (
-        <div class="pubs-editorial__col pubs-editorial__col--novels">
+      <div class="pubs-editorial__col pubs-editorial__col--stack">
+        {novels.length > 0 && (
           <div class="pubs-editorial__panel pubs-editorial__panel--accent">
             <p class="pubs-editorial__label">{l.novelsLabel}</p>
             <ul class="pubs-novel-list">
@@ -66,15 +66,18 @@ const novels = siteCopy.publications.novels;
                 </li>
               ))}
             </ul>
+          </div>
+        )}
 
-            <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
-              <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
-                {l.manuscriptReadBtn}
-              </button>
-            </div>
+        <div class="pubs-editorial__panel pubs-editorial__panel--accent pubs-editorial__panel--chapbook">
+          <p class="pubs-editorial__label">{l.chapbookLabel}</p>
+          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+            <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
+              {l.manuscriptReadBtn}
+            </button>
           </div>
         </div>
-      )}
+      </div>
     </div>
   </div>
 

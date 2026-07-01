@@ -121,9 +121,21 @@
   min-width: 0;
 }
 
-.pubs-editorial__col--novels {
+.pubs-editorial__col--stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vw, 1.25rem);
   border-left: 1px solid var(--border-subtle);
   padding-left: clamp(1rem, 2.5vw, 1.65rem);
+}
+
+.pubs-editorial__panel--chapbook {
+  margin-top: 0;
+}
+
+.pubs-editorial__panel--chapbook .pubs-section__manuscript-actions {
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .pubs-editorial__panel {
@@ -382,7 +394,7 @@
     gap: 1rem;
   }
 
-  .pubs-editorial__col--novels {
+  .pubs-editorial__col--stack {
     border-left: none;
     padding-left: 0;
     padding-top: 0.15rem;
@@ -484,7 +496,7 @@
     padding: var(--mobile-card-pad-inline, 1.15rem) !important;
   }
 
-  .pubs-editorial__col--novels {
+  .pubs-editorial__col--stack {
     border-top: 1px solid var(--border-subtle);
     padding-top: 0.85rem !important;
   }
