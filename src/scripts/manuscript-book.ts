@@ -459,8 +459,12 @@ export function goManuscriptNext(root: HTMLElement): void {
 export function initManuscriptBook(root: HTMLElement): void {
   const viewport = root.querySelector<HTMLElement>('[data-manuscript-viewport]');
   const flipbookEl = root.querySelector<HTMLElement>('[data-manuscript-flipbook]');
-  const prevBtns = root.querySelectorAll<HTMLButtonElement>('[data-manuscript-prev]');
-  const nextBtns = root.querySelectorAll<HTMLButtonElement>('[data-manuscript-next]');
+  const prevBtns = root.querySelectorAll<HTMLButtonElement>(
+    '[data-manuscript-prev][data-manuscript-nav="mobile"], [data-manuscript-prev][data-manuscript-nav="side"]',
+  );
+  const nextBtns = root.querySelectorAll<HTMLButtonElement>(
+    '[data-manuscript-next][data-manuscript-nav="mobile"], [data-manuscript-next][data-manuscript-nav="side"]',
+  );
 
   if (!flipbookEl) return;
 

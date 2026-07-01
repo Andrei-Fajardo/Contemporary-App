@@ -39,8 +39,9 @@ const pageCount = manuscriptPages.length;
       <div class="manuscript-modal__stage" data-manuscript-stage>
         <button
           type="button"
-          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev hidden md:grid"
+          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev"
           data-manuscript-prev
+          data-manuscript-nav="side"
           aria-label={l.manuscriptPrev}
         >
           <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -93,8 +94,9 @@ const pageCount = manuscriptPages.length;
 
         <button
           type="button"
-          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next hidden md:grid"
+          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next"
           data-manuscript-next
+          data-manuscript-nav="side"
           aria-label={l.manuscriptNext}
         >
           <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -102,20 +104,21 @@ const pageCount = manuscriptPages.length;
           </svg>
         </button>
 
-        <div class="manuscript-book__chrome manuscript-book__chrome--desktop hidden md:flex" aria-live="polite">
-          <span class="manuscript-book__indicator" data-manuscript-indicator>
+        <div class="manuscript-book__chrome manuscript-book__chrome--desktop" aria-live="polite">
+          <span class="manuscript-book__indicator manuscript-book__indicator--desktop" data-manuscript-indicator>
             1 / {pageCount}
           </span>
         </div>
 
         <nav
-          class="manuscript-book__mobile-nav flex w-full justify-center gap-8 mt-6 md:hidden"
+          class="manuscript-book__mobile-nav"
           aria-label={l.manuscriptHeading}
         >
           <button
             type="button"
             class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--prev"
             data-manuscript-prev
+            data-manuscript-nav="mobile"
             aria-label={l.manuscriptPrev}
           >
             <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -131,6 +134,7 @@ const pageCount = manuscriptPages.length;
             type="button"
             class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--next"
             data-manuscript-next
+            data-manuscript-nav="mobile"
             aria-label={l.manuscriptNext}
           >
             <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
