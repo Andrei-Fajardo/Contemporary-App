@@ -31,6 +31,9 @@
 
   /* Global type scale — 1 = 16px root; was 1.4 (too large at 100% zoom) */
   --type-scale: 1;
+
+  /* Desktop persistent sidebar — shared width for layout offsets */
+  --desktop-sidebar-width: 18.75rem;
 }
 
 /* Dark mode — dark canvas, light ink */

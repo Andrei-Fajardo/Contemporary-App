@@ -98,7 +98,7 @@
 @media (min-width: 1024px) {
   .floating-petals {
     top: 0;
-    left: 15rem;
+    left: var(--desktop-sidebar-width);
   }
 }
 

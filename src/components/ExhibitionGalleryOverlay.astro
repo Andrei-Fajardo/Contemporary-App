@@ -119,7 +119,7 @@
 }
 
 /* ===== Panel =====
-   On desktop (≥1024px) the sidebar is 15rem wide on the left.
+   On desktop (≥1024px) the sidebar width is defined by --desktop-sidebar-width.
    The panel must never overlap it — start from the sidebar's right edge.
    On mobile the panel is full-width (sidebar is hidden).
 */
@@ -143,7 +143,7 @@
 /* Desktop: panel occupies only the main content column */
 @media (min-width: 1024px) {
   .exg-overlay__panel {
-    width: calc(100vw - 15rem);
+    width: calc(100vw - var(--desktop-sidebar-width));
   }
 
   .exg-overlay__header {
