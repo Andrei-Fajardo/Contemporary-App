@@ -64,6 +64,11 @@
   --surface-hero-frame: rgba(240, 238, 233, 0.04);
   --surface-hover: rgba(240, 238, 233, 0.06);
   --surface-panel: rgba(20, 20, 20, 0.88);
+  --sidebar-nav-ink: #fafafa;
+  --sidebar-nav-ink-muted: #d4d4d4;
+  --sidebar-nav-surface-active: rgba(255, 255, 255, 0.1);
+  --sidebar-nav-surface-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-nav-indicator: #f0eee9;
   --surface-lang-toggle: rgba(20, 20, 20, 0.88);
   --surface-lang-toggle-drawer: rgba(20, 20, 20, 0.92);
   --lang-toggle-border: rgba(240, 238, 233, 0.18);
@@ -110,6 +115,11 @@
   --surface-hero-frame: rgba(20, 20, 20, 0.04);
   --surface-hover: rgba(20, 20, 20, 0.05);
   --surface-panel: rgba(240, 238, 233, 0.92);
+  --sidebar-nav-ink: #0a0a0a;
+  --sidebar-nav-ink-muted: #525252;
+  --sidebar-nav-surface-active: rgba(20, 20, 20, 0.09);
+  --sidebar-nav-surface-hover: rgba(20, 20, 20, 0.05);
+  --sidebar-nav-indicator: #141414;
   --surface-lang-toggle: rgba(240, 238, 233, 0.92);
   --surface-lang-toggle-drawer: rgba(240, 238, 233, 0.96);
   --lang-toggle-border: rgba(20, 20, 20, 0.15);
@@ -1294,7 +1304,7 @@ select,
 }
 
 .sidebar-nav-link:hover {
-  background: var(--surface-hover);
+  background: var(--sidebar-nav-surface-hover);
 }
 
 /* Disable hover effects on touch devices */

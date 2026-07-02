@@ -78,11 +78,11 @@
 }
 
 .sidebar-nav-link.nav-link--active::before {
-  background: var(--ink) !important;
+  background: var(--sidebar-nav-indicator) !important;
 }
 
 .sidebar-nav-link.nav-link--active {
-  color: var(--ink) !important;
+  color: var(--sidebar-nav-ink) !important;
 }
 
 .contacts-chaos__input:focus {

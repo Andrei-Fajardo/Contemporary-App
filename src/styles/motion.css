@@ -671,12 +671,14 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 .sidebar-nav-link {
   will-change: color, background-color;
+  color: var(--sidebar-nav-ink-muted);
+  font-weight: 400;
 }
 
 .sidebar-nav-link.nav-link--active {
-  color: var(--ink) !important;
-  font-weight: 500;
-  background: var(--surface-hover);
+  color: var(--sidebar-nav-ink) !important;
+  font-weight: 600;
+  background: var(--sidebar-nav-surface-active);
 }
 
 .sidebar-nav-link.nav-link--active::before {
@@ -687,7 +689,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   transform: translateY(-50%);
   width: 2px;
   height: 1rem;
-  background: var(--ink-75);
+  background: var(--sidebar-nav-indicator);
   border-radius: 2px;
   transition: height 0.25s var(--ease-editorial), opacity 0.25s ease;
 }
@@ -748,7 +750,7 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 #mobile-drawer .sidebar-nav-link .sidebar-nav-label {
-  opacity: 0.72;
+  opacity: 1;
 }
 
 #mobile-drawer .sidebar-nav-link:hover .sidebar-nav-label,
@@ -758,8 +760,8 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 }
 
 #mobile-drawer .sidebar-nav-link.nav-link--active {
-  background: rgba(17, 17, 17, 0.06);
-  color: var(--ink);
+  background: var(--sidebar-nav-surface-active);
+  color: var(--sidebar-nav-ink);
 }
 
 .scroll-page {
@@ -830,7 +832,8 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
 
 .sidebar-nav-link:hover,
 .sidebar-nav-link:focus-visible {
-  color: var(--ink) !important;
+  color: var(--sidebar-nav-ink) !important;
+  background: var(--sidebar-nav-surface-hover);
 }
 
 .sidebar-nav-label {
@@ -839,20 +842,22 @@ html.motion-live .hero-section .scroll-reveal.is-visible {
   max-width: 100%;
   padding-left: 1.125rem;
   padding-right: 0.125rem;
-  opacity: 0.72;
+  opacity: 1;
+  color: inherit;
   letter-spacing: 0.01em;
   text-align: left !important;
   text-align-last: left;
   hyphens: none;
   white-space: normal;
   overflow-wrap: break-word;
-  transition: opacity 0.35s var(--ease-editorial);
+  transition: color 0.35s var(--ease-editorial);
 }
 
 .sidebar-nav-link:hover .sidebar-nav-label,
 .sidebar-nav-link:focus-visible .sidebar-nav-label,
 .sidebar-nav-link.nav-link--active .sidebar-nav-label {
   opacity: 1;
+  color: inherit;
 }
 
 .exhibitions-explore-link {

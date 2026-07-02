@@ -1010,13 +1010,13 @@ html.motion-reduced .press-chaos__poster {
   color: var(--accent-red-label);
 }
 
-/* Nav active indicator bleeds red */
+/* Nav active indicator — high-contrast sidebar tokens */
 .sidebar-nav-link.nav-link--active::before {
-  background: var(--accent-red) !important;
+  background: var(--sidebar-nav-indicator) !important;
 }
 
 .sidebar-nav-link.nav-link--active {
-  color: var(--accent-red) !important;
+  color: var(--sidebar-nav-ink) !important;
 }
 
 /* Chaotic section title underline */
