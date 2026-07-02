@@ -4,7 +4,7 @@ const STORAGE_KEY = 'site-theme';
 
 export function getTheme(): SiteTheme {
   const theme = document.documentElement.getAttribute('data-theme');
-  return theme === 'light' ? 'light' : 'dark';
+  return theme === 'dark' ? 'dark' : 'light';
 }
 
 export function applyTheme(theme: SiteTheme) {

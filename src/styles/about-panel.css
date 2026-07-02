@@ -274,24 +274,31 @@
 /* ?? Mobile (<640px) — name-first sketch layout ????????????????????? */
 @media (max-width: 639px) {
   .hero-about-layer__cluster {
+    position: relative;
     display: grid;
-    grid-template-columns: clamp(6.75rem, 31vw, 10.25rem) minmax(0, 1fr);
+    grid-template-columns: clamp(11rem, 40vw, 12rem) minmax(0, 1fr);
     grid-template-rows: auto auto;
-    align-items: start;
-    gap: 0.35rem 1.15rem;
+    align-items: end;
+    gap: 0.25rem 0.65rem;
     transform: none;
     padding-inline: clamp(0.875rem, 4vw, 1.35rem);
   }
 
   .hero-about-layer__art {
     grid-column: 1;
-    grid-row: 1;
-    width: 100%;
+    grid-row: 1 / span 2;
+    width: clamp(11rem, 40vw, 12rem);
+    height: clamp(11rem, 40vw, 12rem);
+    max-width: 12rem;
+    max-height: 12rem;
     align-self: start;
+    z-index: 1;
+    margin-bottom: -1.5rem;
   }
 
   .hero-about-layer__art-img {
     width: 100%;
+    height: 100%;
     aspect-ratio: 1 / 1;
     max-height: none;
     margin-bottom: 0;
@@ -302,10 +309,12 @@
   .hero-about-layer__name {
     grid-column: 2;
     grid-row: 1;
-    align-self: center;
+    align-self: end;
     min-width: 0;
-    padding-top: 0.15rem;
-    padding-left: 0.65rem;
+    padding-top: 0;
+    padding-left: 0.35rem;
+    padding-bottom: 0.35rem;
+    z-index: 2;
   }
 
   .hero-name__last {
@@ -327,6 +336,8 @@
     display: block;
     grid-column: 1 / -1;
     grid-row: 2;
+    position: relative;
+    z-index: 2;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     font-size: clamp(4.5rem, 21.5vw, 6.875rem);
     line-height: 0.86;
@@ -336,7 +347,7 @@
     word-break: keep-all;
     width: 100%;
     padding-inline: 0;
-    margin-top: 0.35rem;
+    margin-top: 0.15rem;
     text-align: left;
   }
 
