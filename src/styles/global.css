@@ -1723,12 +1723,17 @@ select,
   .editorial-index .editorial-row-list .editorial-row-list__item,
   .editorial-index .editorial-row-list--no-year .editorial-row-list__item {
     margin: 0;
-    padding: 1.25rem 0;
+    padding: 1rem 0;
     border: none;
     border-bottom: 1px solid var(--border-subtle);
     border-radius: 0;
     background: transparent;
     box-shadow: none;
+  }
+
+  .editorial-index.exhibition-accordion {
+    display: block;
+    gap: 0;
   }
 
   .editorial-index.exhibition-accordion .exhibition-accordion__item {
@@ -1740,8 +1745,13 @@ select,
   }
 
   .editorial-index.exhibition-accordion .exhibition-accordion__summary {
-    padding: 1.25rem 0;
+    padding: 1rem 0;
+    border: none;
     border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .editorial-index.exhibition-accordion > .exhibition-accordion__item + .exhibition-accordion__item {
+    border-top: none;
   }
 
   .pubs-overlap__content:has(.editorial-index) {
@@ -1754,7 +1764,7 @@ select,
 
   .pubs-overlap .editorial-index .editorial-row-list__item,
   .pubs-overlap .editorial-index .pubs-novel-list__item {
-    padding: 1.25rem 0 !important;
+    padding: 1rem 0 !important;
     border: none !important;
     border-bottom: 1px solid var(--border-subtle) !important;
     border-radius: 0 !important;
