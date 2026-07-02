@@ -23,6 +23,9 @@ if (!painting) {
   return Astro.redirect("/404");
 }
 
+const [leadParagraph, ...moreParagraphs] = painting.aboutParagraphs;
+const hasMoreCopy = moreParagraphs.length > 0;
+
 const additionalMedia: Record<string, string[]> = {
   "the-fish": ["/media/exhibitions/senses/senses-1.jpg", "/media/feature/itaewon-1.jpg"],
   "the-souls-of-leavings": ["/media/exhibitions/kinship/kinship-1.jpg", holyParisJournal(3)],
@@ -30,61 +33,65 @@ const additionalMedia: Record<string, string[]> = {
 ---
 
 <PageLayout title={`${painting.title} — ${l.siteTitle}`} activeSection="art" locale={locale}>
-  <div slot="content">
-    <div class="max-w-7xl mx-auto px-6 sm:px-12 pt-16 md:pt-24 pb-2">
-      <a
-        href={locale === "en" ? "/" : `/${locale}`}
-        class="inline-block font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-400 hover:text-neutral-900 transition-all duration-300 ease-out transform hover:-translate-x-1"
-      >
+  <div slot="content" class="art-detail-bleed">
+    <div class="pt-12 md:pt-16 pb-2">
+      <a href={locale === "en" ? "/" : `/${locale}`} class="art-detail-bleed__back">
         &larr; {l.artTag}
       </a>
     </div>
 
-    <div class="w-full grid grid-cols-1 md:grid-cols-[45%_1fr] gap-8 md:gap-12 items-start py-12 max-w-7xl mx-auto px-6 sm:px-12">
-      <div class="interactive-image-container aspect-[4/5] md:aspect-square">
-        <img src={painting.image} alt={painting.title} loading="lazy" />
+    <div class="art-detail-bleed__grid">
+      <div class="art-detail-bleed__image-wrap interactive-image-container">
+        <img src={painting.image} alt={painting.title} loading="eager" />
       </div>
 
-      <div class="w-full flex flex-col justify-between h-full min-w-0 art-wall-label">
-        <div class="w-full flex flex-col space-y-6">
-          <h1 class="type-subheading text-3xl md:text-4xl text-neutral-900 leading-none">
-            {painting.title}
-          </h1>
+      <div class="art-detail-bleed__caption art-wall-label">
+        <h1 class="art-detail-bleed__title">{painting.title}</h1>
+        <p class="art-detail-bleed__meta">{painting.dimensions}</p>
+        <p class="art-detail-bleed__artist">By Artist NANA (Anna Dauyl Rockswell)</p>
 
-          <p class="type-subheading text-lg text-neutral-600">{painting.dimensions}</p>
-          <p class="type-body text-neutral-600 text-sm">By Artist NANA (Anna Dauyl Rockswell)</p>
-
-          <div class="pt-2">
-            <p class="type-heading text-[0.6875rem] text-neutral-400 mb-4">About</p>
-            <div class="space-y-4 max-w-[55ch]">
-              {painting.aboutParagraphs.map((para) => (
-                <p class="content-prose text-neutral-600 text-justify">{para}</p>
-              ))}
-            </div>
+        <div>
+          <p class="art-detail-bleed__about-label">About</p>
+          <div class="art-detail-bleed__prose content-prose text-ink-65">
+            <p>{leadParagraph}</p>
+            {hasMoreCopy && (
+              <div id="art-read-more" class="art-detail-bleed__more" hidden>
+                {moreParagraphs.map((para) => (
+                  <p>{para}</p>
+                ))}
+              </div>
+            )}
           </div>
-
+          {hasMoreCopy && (
+            <button
+              type="button"
+              id="art-read-more-btn"
+              class="art-detail-bleed__read-more"
+              aria-expanded="false"
+              aria-controls="art-read-more"
+            >
+              {l.viewMore}
+            </button>
+          )}
         </div>
 
-        <div class="pt-8">
+        <div class="pt-10">
           <button
             id="view-details-btn"
-            class="inline-block font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-900 border-b border-neutral-900 pb-1 hover:text-neutral-500 hover:border-neutral-300 transition-all duration-300 ease-out transform hover:translate-x-1 cursor-pointer"
+            class="art-detail-bleed__read-more"
             aria-expanded="false"
             aria-controls="detail-grid"
           >
-            View More &rarr;
+            {l.viewMore} &rarr;
           </button>
         </div>
       </div>
     </div>
 
-    <section
-      id="detail-grid"
-      class="hidden max-w-7xl mx-auto px-6 sm:px-12 pb-16 md:pb-24"
-    >
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-900/10 border border-neutral-900/10">
+    <section id="detail-grid" class="pb-16 md:pb-24" hidden>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)]">
         {(additionalMedia[painting.slug] ?? []).map((media) => (
-          <div class="interactive-image-container aspect-video">
+          <div class="interactive-image-container aspect-video bg-[var(--canvas)]">
             <img
               src={media}
               alt={`${painting.title} — detail`}
@@ -100,6 +107,16 @@ const additionalMedia: Record<string, string[]> = {
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const readBtn = document.getElementById("art-read-more-btn");
+    const readMore = document.getElementById("art-read-more");
+    if (readBtn && readMore) {
+      readBtn.addEventListener("click", () => {
+        const expanded = readBtn.getAttribute("aria-expanded") === "true";
+        readBtn.setAttribute("aria-expanded", String(!expanded));
+        readMore.hidden = expanded;
+      });
+    }
+
     const btn = document.getElementById("view-details-btn");
     const grid = document.getElementById("detail-grid");
     if (!btn || !grid) return;
@@ -107,7 +124,7 @@ const additionalMedia: Record<string, string[]> = {
     btn.addEventListener("click", () => {
       const expanded = btn.getAttribute("aria-expanded") === "true";
       btn.setAttribute("aria-expanded", String(!expanded));
-      grid.classList.toggle("hidden");
+      grid.hidden = expanded;
 
       if (!expanded) {
         grid.querySelectorAll("img").forEach((img, i) => {

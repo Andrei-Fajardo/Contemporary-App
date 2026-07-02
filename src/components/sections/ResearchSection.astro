@@ -46,7 +46,7 @@ const tabs = [
     <!-- Tab panels -->
     <div
       id="research-panel-academic"
-      class="research-tab-panel"
+      class="research-tab-panel editorial-index"
       data-research-panel="academic"
       role="tabpanel"
     >
@@ -55,7 +55,7 @@ const tabs = [
 
     <div
       id="research-panel-igaming"
-      class="research-tab-panel"
+      class="research-tab-panel editorial-index"
       data-research-panel="igaming"
       role="tabpanel"
       hidden
@@ -66,18 +66,18 @@ const tabs = [
 
     <div
       id="research-panel-uplatform"
-      class="research-tab-panel"
+      class="research-tab-panel editorial-index"
       data-research-panel="uplatform"
       role="tabpanel"
       hidden
       aria-hidden="true"
     >
-      <div class="research-uplatform-group scroll-reveal">
-        <p class="section-eyebrow research-uplatform-group__label">Blog</p>
+      <div class="editorial-index__group">
+        <h3 class="editorial-index__label">Blog</h3>
         <EditorialLinkList items={uplatformBlogLinks} showYear={false} />
       </div>
-      <div class="research-uplatform-group scroll-reveal">
-        <p class="section-eyebrow research-uplatform-group__label">Press Releases & Website Text</p>
+      <div class="editorial-index__group">
+        <h3 class="editorial-index__label">Press Releases & Website Text</h3>
         <EditorialLinkList items={uplatformPressLinks} showYear={false} />
       </div>
     </div>

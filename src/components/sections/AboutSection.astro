@@ -25,20 +25,20 @@ const l = t[locale];
       <div class="magazine-spread__page scroll-reveal about-chaos__meta magazine-meta-grid">
         <div class="about-chaos__meta-block">
           <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
-          <ul class="about-chaos__list">
-            {siteCopy.about.interests.map((item) => (
-              <li>{item}</li>
+          <p class="about-chaos__inline-meta">
+            {siteCopy.about.interests.map((item, i) => (
+              <span>{item}</span>
             ))}
-          </ul>
+          </p>
         </div>
 
         <div class="about-chaos__meta-block">
           <p class="section-eyebrow mb-3">{l.influencesLabel}</p>
-          <ul class="about-chaos__list">
+          <p class="about-chaos__inline-meta">
             {siteCopy.about.mentalCatharsis.map((item) => (
-              <li>{item}</li>
+              <span>{item}</span>
             ))}
-          </ul>
+          </p>
         </div>
       </div>
     </div>

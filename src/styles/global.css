@@ -8,6 +8,7 @@
 @import "./about-panel.css";
 @import "./utero-layers.css";
 @import "./magazine.css";
+@import "./editorial-downsize.css";
 @import "./manuscript-book.css";
 
 /* Editorial typography — Cormorant Garamond (heads) + Raleway 300 (body) */
@@ -1716,6 +1717,50 @@ select,
   .press-overlap__content {
     padding-block: var(--mobile-card-pad) !important;
     padding-inline: var(--mobile-card-pad-inline) !important;
+  }
+
+  /* Editorial downsize — open index on mobile (undo card chrome) */
+  .editorial-index .editorial-row-list .editorial-row-list__item,
+  .editorial-index .editorial-row-list--no-year .editorial-row-list__item {
+    margin: 0;
+    padding: 1.25rem 0;
+    border: none;
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .editorial-index.exhibition-accordion .exhibition-accordion__item {
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .editorial-index.exhibition-accordion .exhibition-accordion__summary {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .pubs-overlap__content:has(.editorial-index) {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-inline: var(--mobile-page-pad) !important;
+  }
+
+  .pubs-overlap .editorial-index .editorial-row-list__item,
+  .pubs-overlap .editorial-index .pubs-novel-list__item {
+    padding: 1.25rem 0 !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 }
 
