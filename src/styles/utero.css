@@ -72,9 +72,18 @@
   display: none !important;
 }
 
-.section-eyebrow--blood,
-.about-chaos .section-eyebrow {
+.section-eyebrow--blood {
   color: var(--ink-45) !important;
+}
+
+/* About supporting labels — secondary, but legible (~65–70% ink) */
+.about-chaos .section-eyebrow {
+  color: var(--ink-65) !important;
+}
+
+.about-chaos .pubs-editorial__label,
+.about-chaos .about-chaos__label {
+  color: var(--ink-70);
 }
 
 .sidebar-nav-link.nav-link--active::before {
