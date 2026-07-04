@@ -144,26 +144,69 @@
   max-width: 42ch;
 }
 
-/* — About: inline meta instead of pills — */
-.about-chaos__inline-meta {
-  font-family: var(--font-body);
-  font-size: clamp(1rem, 1.1vw + 0.5rem, 1.125rem);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.65;
-  color: var(--ink-60);
+/* — About: Interests / Influences as discrete pills — */
+.about-chaos__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.55rem;
+  list-style: none;
+  padding: 0;
   margin: 0;
-  max-width: 38ch;
+  max-width: none;
 }
 
-.about-chaos__inline-meta span + span::before {
-  content: " · ";
+.about-chaos__list li {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: clamp(0.8125rem, 0.7vw + 0.55rem, 0.9375rem);
+  font-weight: 400;
   font-style: normal;
-  color: var(--ink-35);
+  line-height: 1.25;
+  color: var(--ink-60);
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  transform: none;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.about-chaos__list li:hover {
+  border-color: var(--ink-45);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+}
+
+.about-chaos__list li:nth-child(2n) {
+  transform: none;
 }
 
 .about-chaos__meta-block {
   padding-top: clamp(0.5rem, 2vh, 1.5rem);
+  min-width: 0;
+}
+
+.magazine-meta-grid {
+  gap: clamp(1.75rem, 4vw, 3.25rem);
+}
+
+@media (min-width: 640px) {
+  .magazine-meta-grid .about-chaos__meta-block + .about-chaos__meta-block {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-chaos__body.magazine-spread,
+  .about-chaos .magazine-spread {
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
 }
 
 /* — Hero portrait: larger, less padding (md+ only; mobile stacks in about-panel) — */
