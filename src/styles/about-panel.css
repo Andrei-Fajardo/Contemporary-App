@@ -395,21 +395,21 @@
     border: 0;
   }
 
-  /* Rockswell — near full content-width scale below portrait (no blend) */
+  /* Rockswell — spans near-full viewport width below portrait (no blend) */
   .hero-name__last-mobile {
     display: block;
     position: static;
     z-index: auto;
-    width: auto;
+    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    margin: clamp(1.25rem, 4vw, 1.65rem) clamp(0.875rem, 4vw, 1.35rem) clamp(0.35rem, 1.25vw, 0.55rem);
-    padding: 0;
+    margin: clamp(1.35rem, 4.5vw, 1.75rem) 0 clamp(0.4rem, 1.5vw, 0.65rem);
+    padding-inline: clamp(0.5rem, 3vw, 0.875rem);
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(3.35rem, 19.5vw, 5.65rem);
+    font-size: clamp(4.5rem, 28vw, 7.75rem);
     font-weight: 400;
-    line-height: 0.86;
-    letter-spacing: -0.03em;
+    line-height: 0.84;
+    letter-spacing: -0.04em;
     color: var(--ink);
     text-align: left;
     hyphens: none;
@@ -425,7 +425,7 @@
   .hero-about-layer__inner.section-shell,
   .hero-about-layer__inner.section-shell--wide {
     padding-top: clamp(0.75rem, 2.5vh, 1.25rem);
-    padding-bottom: clamp(0.75rem, 2vh, 1.15rem);
+    padding-bottom: clamp(0.85rem, 2.25vh, 1.25rem);
     padding-inline: 0 !important;
     max-width: none;
     width: 100%;
@@ -443,7 +443,7 @@
   }
 
   .about-panel-stack__content {
-    padding-top: clamp(1.65rem, 4.5vh, 2.35rem);
+    padding-top: clamp(1.75rem, 5vh, 2.5rem);
     margin-top: 0;
   }
 
