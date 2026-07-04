@@ -57,6 +57,17 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
 
     <div class="editorial-list-blocks scroll-reveal">
       <div class="editorial-list-block">
+        <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
+        <EditorialListContainer>
+          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+            <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
+              {l.manuscriptReadBtn}
+            </button>
+          </div>
+        </EditorialListContainer>
+      </div>
+
+      <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
         {/* Publication titles are proper nouns / published names — kept as authored English */}
         <EditorialListContainer>
@@ -81,17 +92,6 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
           </EditorialListContainer>
         </div>
       )}
-
-      <div class="editorial-list-block">
-        <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
-        <EditorialListContainer>
-          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
-            <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
-              {l.manuscriptReadBtn}
-            </button>
-          </div>
-        </EditorialListContainer>
-      </div>
     </div>
   </div>
 
