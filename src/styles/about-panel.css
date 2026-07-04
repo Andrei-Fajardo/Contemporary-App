@@ -42,6 +42,11 @@
   outline: none;
 }
 
+.hero-about-layer__art picture {
+  display: block;
+  width: 100%;
+}
+
 .hero-about-layer__art-img {
   display: block;
   width: 100%;
