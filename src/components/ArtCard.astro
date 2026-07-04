@@ -1,0 +1,63 @@
+---
+import MediaPopup from "./MediaPopup.astro";
+
+interface Props {
+  title: string;
+  year: string;
+  medium: string;
+  dimensions: string;
+  slug: string;
+  imageUrl: string;
+}
+
+const { title, year, medium, dimensions, slug, imageUrl } = Astro.props;
+const subtitle = `${dimensions} | ${medium}`;
+---
+
+<div class="w-full grid grid-cols-1 md:grid-cols-[45%_1fr] gap-8 md:gap-12 items-start py-12 border-b border-neutral-900/10 scroll-reveal">
+
+  <MediaPopup
+    imageSrc={imageUrl}
+    imageAlt={title}
+    title={title}
+    subtitle={subtitle}
+    aspectRatio="4 / 5"
+    parallaxSpeed={0.45}
+    contain={true}
+    imageClass="w-full h-full object-contain"
+  />
+
+  <div class="w-full flex flex-col justify-between h-full min-w-0">
+    <div class="w-full flex flex-col space-y-6">
+
+      <div class="w-full flex justify-between items-baseline border-b border-neutral-900/10 pb-3 min-w-0">
+        <h3 class="type-subheading text-3xl md:text-4xl text-neutral-900 leading-none truncate pr-4">
+          {title}
+        </h3>
+        <span class="font-mono text-xs text-neutral-400 shrink-0 select-none">
+          // {year}
+        </span>
+      </div>
+
+      <div class="w-full block overflow-x-auto scrollbar-none pb-1">
+        <p class="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-neutral-500 uppercase whitespace-nowrap">
+          {dimensions} <span class="text-neutral-300 mx-2">|</span> {medium}
+        </p>
+      </div>
+
+      <div class="type-body text-sm text-neutral-600 leading-relaxed max-w-[60ch] pt-2">
+        <slot />
+      </div>
+    </div>
+
+    <div class="pt-8">
+      <a
+        href={`/art/${slug}`}
+        class="inline-block font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-900 border-b border-neutral-900 pb-1 hover:text-neutral-500 hover:border-neutral-300 transition-all duration-300 ease-out transform hover:translate-x-1"
+      >
+        View Project Specs &rarr;
+      </a>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,11 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import HomePageContent from '../../components/HomePageContent.astro';
+import { t } from '../../data/translations';
+
+const l = t.ru;
+---
+
+<PageLayout title={l.siteTitle} locale="ru">
+  <HomePageContent slot="content" locale="ru" />
+</PageLayout>

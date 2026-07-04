@@ -1,0 +1,16 @@
+---
+import Hero from './Hero.astro';
+import AboutSection from './sections/AboutSection.astro';
+import { type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale: LocaleKey;
+}
+
+const { locale } = Astro.props;
+---
+
+<div class="about-panel-stack">
+  <Hero locale={locale} />
+  <AboutSection locale={locale} />
+</div>

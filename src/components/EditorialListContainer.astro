@@ -1,0 +1,15 @@
+---
+/**
+ * Shared rounded list container used by Press and Publications.
+ * Header/eyebrow labels stay outside — only entry content goes in the slot.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['editorial-list-container', className]}>
+  <slot />
+</div>

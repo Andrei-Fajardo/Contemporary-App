@@ -1,0 +1,147 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { artworks } from '../../data/artworks';
+import { holyParisJournal } from '../../data/content';
+
+export interface Props {
+  locale?: LocaleKey;
+}
+
+export async function getStaticPaths() {
+  return artworks.map((art) => ({
+    params: { slug: art.slug },
+  }));
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+
+const painting = artworks.find((a) => a.slug === Astro.params.slug);
+
+if (!painting) {
+  return Astro.redirect("/404");
+}
+
+const [leadParagraph, ...moreParagraphs] = painting.aboutParagraphs;
+const hasMoreCopy = moreParagraphs.length > 0;
+
+const additionalMedia: Record<string, string[]> = {
+  "the-fish": ["/media/exhibitions/senses/senses-1.jpg", "/media/feature/itaewon-1.jpg"],
+  "the-souls-of-leavings": ["/media/exhibitions/kinship/kinship-1.jpg", holyParisJournal(3)],
+};
+---
+
+<PageLayout title={`${painting.title} — ${l.siteTitle}`} activeSection="art" locale={locale}>
+  <div slot="content" class="art-detail-bleed">
+    <div class="pt-12 md:pt-16 pb-2">
+      <a href={locale === "en" ? "/" : `/${locale}`} class="art-detail-bleed__back">
+        &larr; {l.artTag}
+      </a>
+    </div>
+
+    <div class="art-detail-bleed__grid">
+      <div class="art-detail-bleed__image-wrap interactive-image-container">
+        <img src={painting.image} alt={painting.title} loading="eager" />
+      </div>
+
+      <div class="art-detail-bleed__caption art-wall-label">
+        <h1 class="art-detail-bleed__title">{painting.title}</h1>
+        <p class="art-detail-bleed__meta">{painting.dimensions}</p>
+        <p class="art-detail-bleed__artist">{l.artistCredit}</p>
+
+        <div>
+          {/* Artwork title + wall-label body copy: authored English (proper nouns / source text) */}
+          <p class="art-detail-bleed__about-label">{l.wallAboutLabel}</p>
+          <div class="hidden md:block">
+            <div class="art-detail-bleed__prose content-prose text-ink-65">
+              <p>{leadParagraph}</p>
+              {hasMoreCopy && (
+                <div id="art-read-more" class="art-detail-bleed__more" hidden>
+                  {moreParagraphs.map((para) => (
+                    <p>{para}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+            {hasMoreCopy && (
+              <button
+                type="button"
+                id="art-read-more-btn"
+                class="art-detail-bleed__read-more"
+                aria-expanded="false"
+                aria-controls="art-read-more"
+              >
+                {l.viewMore}
+              </button>
+            )}
+          </div>
+          <div class="block md:hidden">
+            <div class="art-detail-bleed__prose content-prose text-ink-65">
+              <p>{painting.aboutMobile}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-10">
+          <button
+            id="view-details-btn"
+            class="art-detail-bleed__read-more"
+            aria-expanded="false"
+            aria-controls="detail-grid"
+          >
+            {l.viewMore} &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section id="detail-grid" class="pb-16 md:pb-24" hidden>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)]">
+        {(additionalMedia[painting.slug] ?? []).map((media) => (
+          <div class="interactive-image-container aspect-video bg-[var(--canvas)]">
+            <img
+              src={media}
+              alt={`${painting.title} — detail`}
+              loading="lazy"
+              class="opacity-0 translate-y-4 animate-fade-up"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</PageLayout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const readBtn = document.getElementById("art-read-more-btn");
+    const readMore = document.getElementById("art-read-more");
+    if (readBtn && readMore) {
+      readBtn.addEventListener("click", () => {
+        const expanded = readBtn.getAttribute("aria-expanded") === "true";
+        readBtn.setAttribute("aria-expanded", String(!expanded));
+        readMore.hidden = expanded;
+      });
+    }
+
+    const btn = document.getElementById("view-details-btn");
+    const grid = document.getElementById("detail-grid");
+    if (!btn || !grid) return;
+
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      grid.hidden = expanded;
+
+      if (!expanded) {
+        grid.querySelectorAll("img").forEach((img, i) => {
+          setTimeout(() => {
+            img.classList.remove("opacity-0", "translate-y-4");
+            img.classList.add("opacity-100", "translate-y-0");
+          }, i * 150);
+        });
+      }
+    });
+  });
+</script>

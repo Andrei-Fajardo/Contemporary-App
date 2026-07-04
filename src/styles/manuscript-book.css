@@ -1,0 +1,714 @@
+/* From Utero — fullscreen manuscript reader (turn.js) */
+
+/* ── Fullscreen modal ─────────────────────────────────────── */
+.manuscript-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50000;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: clamp(2.25rem, 4.5vh, 2.75rem) clamp(0.5rem, 1vw, 0.75rem) clamp(0.5rem, 1.5vh, 0.75rem);
+  overflow: visible;
+  overscroll-behavior: none;
+  isolation: isolate;
+}
+
+.manuscript-modal[hidden] {
+  display: none;
+}
+
+.manuscript-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(12, 10, 9, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: zoom-out;
+}
+
+.manuscript-modal__chrome {
+  position: fixed;
+  inset: 0;
+  z-index: 50001;
+  pointer-events: none;
+}
+
+.manuscript-modal__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  gap: 0.4rem;
+  overflow: hidden;
+}
+
+.manuscript-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.manuscript-modal__close-viewport {
+  position: fixed;
+  top: max(1.1rem, env(safe-area-inset-top, 0px));
+  right: max(1.1rem, env(safe-area-inset-right, 0px));
+  z-index: 50002;
+  display: grid;
+  place-items: center;
+  width: clamp(3rem, 4.5vw, 3.5rem);
+  height: clamp(3rem, 4.5vw, 3.5rem);
+  padding: 0;
+  border: 1px solid rgba(240, 238, 233, 0.24);
+  border-radius: 0.4rem;
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #f0eee9;
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(240, 238, 233, 0.08);
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    color 0.3s var(--ease-editorial),
+    border-color 0.3s var(--ease-editorial),
+    background 0.3s var(--ease-editorial),
+    box-shadow 0.3s var(--ease-editorial),
+    transform 0.3s var(--ease-editorial);
+}
+
+.manuscript-modal__close-icon {
+  display: block;
+  width: 1.15rem;
+  height: 1.15rem;
+  opacity: 0.92;
+  transition: opacity 0.3s var(--ease-editorial);
+}
+
+.manuscript-modal__close-viewport:hover {
+  border-color: rgba(240, 238, 233, 0.62);
+  background: rgba(240, 238, 233, 0.14);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(240, 238, 233, 0.18);
+  transform: scale(1.04);
+}
+
+.manuscript-modal__close-viewport:hover .manuscript-modal__close-icon {
+  opacity: 1;
+}
+
+.manuscript-modal__close-viewport:active {
+  transform: scale(0.97);
+  background: rgba(240, 238, 233, 0.1);
+}
+
+.manuscript-modal__close-viewport:focus-visible {
+  outline: 2px solid #f0eee9;
+  outline-offset: 3px;
+}
+
+.manuscript-modal__eyebrow {
+  font-family: var(--font-heading);
+  font-size: clamp(0.6875rem, 0.6vw + 0.5rem, 0.8125rem);
+  font-weight: 400;
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--canvas) 72%, white);
+  margin: 0;
+}
+
+.manuscript-modal__stage {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: #121212;
+  border-radius: 0.25rem;
+  overflow: visible;
+}
+
+.manuscript-book__stage-body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0;
+  box-sizing: border-box;
+}
+
+/* ── Flipbook reader ─────────────────────────────────────── */
+.manuscript-book--modal {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.manuscript-book__viewport {
+  position: relative;
+  z-index: 1;
+  width: min(100%, var(--manuscript-w, 56rem));
+  height: var(--manuscript-h, auto);
+  margin-inline: auto;
+  border-radius: 0.25rem;
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  background: #121212;
+}
+
+/* Drag-to-flip corner hints — dark moody pulse until first interaction */
+.manuscript-book__drag-hints {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.manuscript-book__drag-hint {
+  position: absolute;
+  right: 0;
+  width: clamp(3.25rem, 11%, 5rem);
+  height: clamp(3.25rem, 16%, 4.75rem);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.manuscript-book__drag-hint--tr {
+  top: 0;
+  background: linear-gradient(
+    225deg,
+    rgba(0, 0, 0, 0.42) 0%,
+    rgba(0, 0, 0, 0.18) 38%,
+    transparent 72%
+  );
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.manuscript-book__drag-hint--br {
+  bottom: 0;
+  background: linear-gradient(
+    315deg,
+    rgba(0, 0, 0, 0.48) 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    transparent 74%
+  );
+  clip-path: polygon(100% 100%, 100% 0, 0 100%);
+}
+
+.manuscript-book__viewport.is-drag-hint-active .manuscript-book__drag-hint {
+  animation: manuscript-drag-hint-pulse 2.6s ease-in-out infinite;
+}
+
+.manuscript-book__viewport.is-drag-hint-active .manuscript-book__drag-hint--br {
+  animation-delay: 0.35s;
+}
+
+.manuscript-book__viewport.has-interacted .manuscript-book__drag-hints {
+  display: none;
+}
+
+@keyframes manuscript-drag-hint-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.58;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manuscript-book__viewport.is-drag-hint-active .manuscript-book__drag-hint {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.manuscript-flipbook:not(.manuscript-flipbook--ready) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.manuscript-flipbook--ready {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
+}
+
+.manuscript-flipbook {
+  width: 100%;
+  height: 100%;
+  margin-inline: auto;
+  background: #121212;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Lock chrome/nav input while Turn.js is mid-flip */
+[data-manuscript-book].is-turning .manuscript-book__nav,
+[data-manuscript-book].is-turning .manuscript-book__chrome,
+[data-manuscript-book].is-turning .manuscript-book__mobile-nav {
+  pointer-events: none;
+}
+
+[data-manuscript-book].is-turning .manuscript-book__drag-hints {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Double-display spreads: each wide JPG is split across two Turn.js pages */
+.manuscript-flipbook .page,
+.manuscript-flipbook .manuscript-book__page {
+  position: relative;
+  background: #f7f7f7;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.manuscript-flipbook .hard,
+.manuscript-book__cover {
+  background: #2a2a2a !important;
+  border: none;
+}
+
+.manuscript-book__cover--blank {
+  background: #2a2a2a !important;
+}
+
+.manuscript-book__page--half {
+  padding: 0;
+}
+
+.manuscript-book__spread-img {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 200%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  background: transparent;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.manuscript-book__spread-img--left {
+  left: 0;
+  object-position: left center;
+}
+
+.manuscript-book__spread-img--right {
+  left: -100%;
+  object-position: right center;
+}
+
+/* Fallback: show full spreads when Turn.js is unavailable */
+.manuscript-flipbook--fallback .manuscript-book__page--right {
+  display: none;
+}
+
+.manuscript-flipbook--fallback .manuscript-book__spread-img {
+  position: static;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.manuscript-flipbook--fallback .manuscript-book__cover {
+  display: none;
+}
+
+.manuscript-book__chrome--desktop {
+  position: relative;
+  z-index: 60;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, var(--manuscript-w, 56rem));
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.manuscript-book__mobile-nav {
+  position: relative;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.75rem, 8vw, 2rem);
+  width: 100%;
+  margin-top: 1.5rem;
+  flex-shrink: 0;
+  padding-inline: clamp(0.75rem, 4vw, 1.25rem);
+  padding-bottom: max(0.35rem, env(safe-area-inset-bottom, 0px));
+}
+
+.manuscript-book__nav--mobile {
+  position: static;
+  top: auto;
+  transform: none;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 0.35rem;
+}
+
+@media (min-width: 768px) {
+  .manuscript-book__chrome--desktop {
+    display: flex;
+  }
+
+  .manuscript-book__mobile-nav {
+    display: none;
+  }
+}
+
+.manuscript-book__nav--mobile:hover {
+  transform: none;
+}
+
+.manuscript-book__nav--mobile:active {
+  transform: scale(0.97);
+}
+
+.manuscript-book__nav--mobile.manuscript-book__nav--prev:hover .manuscript-book__nav-icon {
+  transform: translateX(-2px);
+}
+
+.manuscript-book__nav--mobile.manuscript-book__nav--next:hover .manuscript-book__nav-icon {
+  transform: translateX(2px);
+}
+
+.manuscript-book__indicator--mobile {
+  min-width: 5.75rem;
+  text-align: center;
+  flex-shrink: 0;
+  color: rgba(240, 238, 233, 0.88);
+}
+
+.manuscript-book__nav {
+  display: grid;
+  place-items: center;
+  width: clamp(3rem, 4.5vw, 3.5rem);
+  height: clamp(3rem, 4.5vw, 3.5rem);
+  padding: 0;
+  border: 1px solid rgba(240, 238, 233, 0.24);
+  border-radius: 0.4rem;
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #f0eee9;
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(240, 238, 233, 0.08);
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    color 0.3s var(--ease-editorial),
+    border-color 0.3s var(--ease-editorial),
+    background 0.3s var(--ease-editorial),
+    box-shadow 0.3s var(--ease-editorial),
+    transform 0.3s var(--ease-editorial);
+}
+
+.manuscript-book__nav.manuscript-book__nav--side {
+  display: none;
+  position: absolute;
+  top: 50%;
+  z-index: 70;
+  transform: translateY(-50%);
+}
+
+.manuscript-book__nav-icon {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  opacity: 0.9;
+  transition:
+    opacity 0.3s var(--ease-editorial),
+    transform 0.3s var(--ease-editorial);
+}
+
+.manuscript-book__nav--prev {
+  left: max(
+    0.5rem,
+    calc(50% - var(--manuscript-w, 90vw) / 2 - var(--manuscript-nav-offset, 3.5rem))
+  );
+}
+
+.manuscript-book__nav--next {
+  right: max(
+    0.5rem,
+    calc(50% - var(--manuscript-w, 90vw) / 2 - var(--manuscript-nav-offset, 3.5rem))
+  );
+}
+
+.manuscript-book__nav:hover {
+  border-color: rgba(240, 238, 233, 0.62);
+  background: rgba(240, 238, 233, 0.14);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(240, 238, 233, 0.18);
+}
+
+.manuscript-book__nav--prev:hover .manuscript-book__nav-icon {
+  opacity: 1;
+  transform: translateX(-2px);
+}
+
+.manuscript-book__nav--next:hover .manuscript-book__nav-icon {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.manuscript-book__nav:focus-visible {
+  outline: 2px solid #f0eee9;
+  outline-offset: 3px;
+}
+
+.manuscript-book__nav--side.manuscript-book__nav:hover,
+.manuscript-book__nav--side.manuscript-book__nav:active {
+  transform: translateY(-50%);
+}
+
+.manuscript-book__nav--side.manuscript-book__nav:active {
+  transform: translateY(-50%) scale(0.97);
+}
+
+@media (min-width: 768px) {
+  .manuscript-book__nav.manuscript-book__nav--side {
+    display: grid;
+  }
+}
+
+.manuscript-book__indicator {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 238, 233, 0.78);
+  min-width: 5.5rem;
+  text-align: center;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.manuscript-flipbook--fallback {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  opacity: 1;
+  visibility: visible;
+  height: auto;
+  overflow-y: auto;
+  max-height: 70dvh;
+}
+
+.manuscript-flipbook--fallback .manuscript-book__page {
+  border-radius: 0.25rem;
+  min-height: 14rem;
+}
+
+.manuscript-book--layout-single .manuscript-book__stage-body {
+  width: 100%;
+  padding-inline: 0;
+}
+
+.manuscript-book--layout-single .manuscript-book__viewport {
+  width: min(100%, var(--manuscript-w, 93vw));
+  max-width: 95vw;
+}
+
+.manuscript-book--layout-single .manuscript-book__chrome--desktop {
+  width: min(100%, var(--manuscript-w, 93vw));
+  max-width: 95vw;
+}
+
+@media (max-width: 767px) {
+  .manuscript-modal {
+    padding:
+      max(0.35rem, env(safe-area-inset-top, 0px))
+      0
+      max(0.35rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .manuscript-modal__panel {
+    gap: 0.25rem;
+  }
+
+  .manuscript-modal__header {
+    padding-inline: clamp(0.75rem, 3vw, 1rem);
+  }
+
+  .manuscript-modal__close-viewport {
+    top: max(0.75rem, env(safe-area-inset-top, 0px));
+    right: max(0.65rem, env(safe-area-inset-right, 0px));
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.35rem;
+  }
+
+  .manuscript-modal__close-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .manuscript-modal__stage {
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .manuscript-book__stage-body {
+    padding-inline: 0;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .manuscript-book__viewport {
+    border-radius: 0.15rem;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .manuscript-book__mobile-nav {
+    margin-top: 1.25rem;
+    gap: clamp(1.75rem, 8vw, 2.25rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .manuscript-modal {
+    padding:
+      max(0.35rem, env(safe-area-inset-top, 0px))
+      0
+      max(0.35rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .manuscript-modal__close-viewport {
+    top: max(0.75rem, env(safe-area-inset-top, 0px));
+    right: max(0.65rem, env(safe-area-inset-right, 0px));
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.35rem;
+  }
+
+  .manuscript-modal__close-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+/* Publications — primary manuscript CTA */
+.pubs-section__manuscript-actions {
+  margin-top: auto;
+  padding-top: clamp(1.25rem, 3vh, 1.75rem);
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.pubs-manuscript-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: clamp(0.8125rem, 0.7vw + 0.6rem, 0.9375rem);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  color: var(--canvas);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: var(--mobile-card-radius, 1rem);
+  padding: 1rem clamp(1.5rem, 4vw, 2rem);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent),
+    0 8px 24px color-mix(in srgb, var(--ink) 18%, transparent);
+  cursor: pointer;
+  transition:
+    color 0.3s var(--ease-editorial),
+    background 0.3s var(--ease-editorial),
+    border-color 0.3s var(--ease-editorial),
+    box-shadow 0.3s var(--ease-editorial),
+    transform 0.3s var(--ease-editorial);
+}
+
+/* Desktop: calm shadow/opacity breathe only */
+.pubs-manuscript-btn.animate-pulse-cta {
+  animation: pulse-cta 3.8s ease-in-out infinite;
+}
+
+/* Mobile: keep a barely-there scale so the cue stays visible on a smaller button */
+@media (max-width: 767px) {
+  .pubs-manuscript-btn.animate-pulse-cta {
+    animation-name: pulse-cta-mobile;
+  }
+}
+
+/* Pause pulse on interaction so hover transform does not compound */
+.pubs-manuscript-btn.animate-pulse-cta:hover,
+.pubs-manuscript-btn.animate-pulse-cta:focus-visible,
+.pubs-manuscript-btn.animate-pulse-cta:active {
+  animation: none;
+  opacity: 1;
+}
+
+.pubs-manuscript-btn:hover,
+.pubs-manuscript-btn:focus-visible {
+  color: var(--canvas);
+  background: var(--ink);
+  border-color: var(--ink);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--ink) 20%, transparent),
+    0 14px 32px color-mix(in srgb, var(--ink) 28%, transparent);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.pubs-manuscript-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.pubs-manuscript-btn:active {
+  transform: translateY(0) scale(1);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent),
+    0 4px 12px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pubs-manuscript-btn.animate-pulse-cta {
+    animation: none;
+  }
+}

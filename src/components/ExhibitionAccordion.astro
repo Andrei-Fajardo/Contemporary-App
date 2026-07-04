@@ -1,0 +1,615 @@
+---
+import type { ExhibitionEntry } from '../data/content';
+import { formatExhibitionDisplay } from '../data/exhibition-display';
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  entries: ExhibitionEntry[];
+  expandLabel?: string;
+  locale?: LocaleKey;
+}
+
+const { entries, expandLabel, locale = 'en' } = Astro.props;
+const l = t[locale];
+const expand = expandLabel ?? l.viewMore;
+
+const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
+---
+
+<div class="exhibition-accordion editorial-index editorial-divider-list">
+  {entries.map((entry) => {
+    const display  = formatExhibitionDisplay(entry);
+    const thumbs   = entry.images.slice(0, THUMB_COUNT);
+    const carouselImages = thumbs;
+    const carouselEncoded = carouselImages.join('|');
+    // All images passed to "View all": accordion thumbs + any extra gallery images
+    const allGalleryImages = [...entry.images, ...(entry.galleryImages ?? [])];
+    const total    = allGalleryImages.length;
+    const hasMore  = total > THUMB_COUNT;
+    // Encode full gallery set for the overlay
+    const imagesEncoded = allGalleryImages.join('|');
+
+    return (
+    <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
+      <summary class="exhibition-accordion__summary hover-row" aria-label={`${display.heading} — ${display.subheading} — ${expand}`}>
+        <span class="exhibition-accordion__year">{entry.year}</span>
+        <span class="exhibition-accordion__heading">
+          <span class="exhibition-accordion__title">{display.heading}</span>
+          {entry.kind === 'museum' && (
+            <span class="exhibition-accordion__badge">{l.museumBadge}</span>
+          )}
+        </span>
+        <span class="exhibition-accordion__meta">{display.subheading}</span>
+        <span class="exhibition-accordion__action" aria-hidden="true">
+          <span class="exhibition-accordion__action-label">{expand}</span>
+          <span class="exhibition-accordion__action-icon exhibition-accordion__action-icon--arrow">
+            <svg class="exhibition-accordion__icon-svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 6h7.5M6.5 3.5 10 6 6.5 8.5" />
+            </svg>
+          </span>
+          <span class="exhibition-accordion__chevron exhibition-accordion__action-icon">
+            <svg class="exhibition-accordion__icon-svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M6 2.5v7M2.5 6h7" />
+            </svg>
+          </span>
+        </span>
+      </summary>
+
+      <div class="exhibition-accordion__panel">
+        {entry.links && (
+          <dl class="exhibition-accordion__links">
+            {entry.links.website && (
+              <div class="exhibition-accordion__link-row">
+                <dt>{l.linkWebsite}</dt>
+                <dd>
+                  <a href={entry.links.website} target="_blank" rel="noopener noreferrer" class="exhibition-accordion__link">
+                    {entry.links.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                  </a>
+                </dd>
+              </div>
+            )}
+            {(entry.links.magazine || entry.links.magazineLabel) && (
+              <div class="exhibition-accordion__link-row">
+                <dt>{l.linkMagazine}</dt>
+                <dd>
+                  {entry.links.magazine ? (
+                    <a href={entry.links.magazine} target="_blank" rel="noopener noreferrer" class="exhibition-accordion__link">
+                      {entry.links.magazineLabel ?? entry.links.magazine.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                    </a>
+                  ) : (
+                    <span class="content-prose text-ink-75">{entry.links.magazineLabel}</span>
+                  )}
+                </dd>
+              </div>
+            )}
+            {entry.links.issue && entry.category !== 'magazine' && (
+              <div class="exhibition-accordion__link-row">
+                <dt>{l.linkIssue}</dt>
+                <dd><span class="content-prose text-ink-75">{entry.links.issue}</span></dd>
+              </div>
+            )}
+            {entry.links.artwork && (
+              <div class="exhibition-accordion__link-row">
+                <dt>{l.linkArtwork}</dt>
+                <dd><span class="content-prose text-ink-75">{entry.links.artwork}</span></dd>
+              </div>
+            )}
+          </dl>
+        )}
+
+        {/* ── Thumbnail strip + View All ── */}
+        {thumbs.length > 0 && (
+          <div class="exg-thumb-strip">
+            <div class="exg-thumb-strip__grid">
+              {thumbs.map((src, i) => {
+                const isViewAllCell = hasMore && i === THUMB_COUNT - 1;
+                return (
+                <button
+                  type="button"
+                  class="exg-thumb-strip__cell"
+                  data-gallery-title={entry.title}
+                  data-gallery-place={entry.place}
+                  data-gallery-images={isViewAllCell ? imagesEncoded : carouselEncoded}
+                  data-gallery-index={i}
+                  {...(isViewAllCell ? { 'data-gallery-open': true } : { 'data-gallery-preview': true })}
+                  aria-label={isViewAllCell
+                    ? `${l.viewAllPhotosFor} ${entry.title}`
+                    : `${l.viewImageN} ${i + 1}: ${entry.title}`}
+                >
+                  {/* Skeleton shimmer shown while image loads */}
+                  <span class="exg-thumb-strip__skeleton" aria-hidden="true"></span>
+                  <img
+                    src={src}
+                    alt={`${entry.title} — photo ${i + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                    class="exg-thumb-strip__img"
+                    onload="this.previousElementSibling.style.display='none';this.classList.add('is-loaded')"
+                  />
+                  {/* Last thumbnail: overlay showing "+N more" if hasMore */}
+                  {hasMore && i === THUMB_COUNT - 1 && (
+                    <span class="exg-thumb-strip__more" aria-hidden="true">
+                      +{total - THUMB_COUNT}
+                    </span>
+                  )}
+                </button>
+                );
+              })}
+            </div>
+
+        {allGalleryImages.length > 0 && (
+          <div class="exg-thumb-strip__footer">
+            <span class="exg-thumb-strip__total">
+              {allGalleryImages.length} {allGalleryImages.length !== 1 ? l.itemsLabel : l.itemLabel}
+            </span>
+                <button
+                  type="button"
+                  class="exg-thumb-strip__view-all"
+                  data-gallery-open
+                  data-gallery-images={imagesEncoded}
+                  data-gallery-title={entry.title}
+                  data-gallery-place={entry.place}
+                  aria-label={`${l.viewAllPhotosFor} ${entry.title}`}
+                >
+                  {l.viewAll}
+                  <svg class="exg-thumb-strip__view-all-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="4 2 8 6 4 10"/>
+                  </svg>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {entry.kind && entry.category !== 'magazine' && (
+          <span class="exhibition-accordion__kind">
+            {entry.kind === 'museum' ? l.museumBadge : entry.kind === 'solo' ? l.soloExhibitions : l.groupExhibitions}
+          </span>
+        )}
+      </div>
+    </details>
+    );
+  })}
+</div>
+
+<style>
+  .exhibition-accordion__item {
+    background: transparent;
+    overflow: visible;
+    margin: 0;
+  }
+
+  .exhibition-accordion__panel {
+    padding: 0 0 1.5rem 4.5rem;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    will-change: height, opacity;
+  }
+
+  .exhibition-accordion__summary {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.2rem 1.25rem;
+    align-items: center;
+    margin-inline: -0.75rem;
+    padding: 1rem 0.75rem;
+    border: none;
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    list-style: none;
+    background: transparent;
+  }
+
+  .exhibition-accordion__summary:focus-visible {
+    outline: 2px solid var(--ink-55);
+    outline-offset: 2px;
+  }
+
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__summary {
+    border-bottom-color: var(--border-subtle);
+  }
+
+  .exhibition-accordion__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .exhibition-accordion__year {
+    grid-row: 1 / 3;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-45);
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__year,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__year {
+    color: var(--ink-70);
+  }
+
+  .exhibition-accordion__heading {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 0.65rem;
+    min-width: 0;
+  }
+
+  .exhibition-accordion__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.3;
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__title {
+    color: var(--ink);
+  }
+
+  .exhibition-accordion__meta {
+    grid-column: 2;
+    font-family: var(--font-body);
+    font-size: clamp(0.875rem, 0.95vw, 1rem);
+    color: var(--ink-55);
+    font-style: italic;
+    line-height: 1.4;
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__meta {
+    color: var(--ink-65);
+  }
+
+  .exhibition-accordion__action {
+    grid-row: 1 / 3;
+    grid-column: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-self: end;
+    flex-shrink: 0;
+    align-self: center;
+    min-height: 1.25rem;
+  }
+
+  .exhibition-accordion__action-label {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+    white-space: nowrap;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    height: 1.25rem;
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__action-label,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__action-label {
+    color: var(--ink-75);
+  }
+
+  .exhibition-accordion__action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: var(--ink-35);
+    transition: color 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__icon-svg {
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .exhibition-accordion__chevron .exhibition-accordion__icon-svg {
+    width: 0.8125rem;
+    height: 0.8125rem;
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__action-icon,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__action-icon {
+    color: var(--ink);
+  }
+
+  .exhibition-accordion__chevron {
+    transform-origin: center;
+  }
+
+  .exhibition-accordion__kind {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+  }
+
+  .exhibition-accordion__badge {
+    flex-shrink: 0;
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-55);
+    border: 1px solid var(--border-subtle);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-lang-btn);
+    transition:
+      border-color 0.3s var(--ease-editorial),
+      background 0.3s var(--ease-editorial);
+  }
+
+  .exhibition-accordion__summary:hover .exhibition-accordion__badge {
+    border-color: var(--border-section);
+  }
+
+  .exhibition-accordion__item.is-filtered-out {
+    display: none;
+  }
+
+  /* ── Thumbnail strip ─────────────────────────────────────── */
+  .exg-thumb-strip {
+    margin-top: 1rem;
+  }
+
+  .exg-thumb-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.375rem;
+  }
+
+  @media (max-width: 639px) {
+    .exg-thumb-strip__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Each thumbnail is a button for a11y */
+  .exg-thumb-strip__cell {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    cursor: zoom-in;
+    background: rgba(17,17,17,0.05);
+    border: none;
+    padding: 0;
+    display: block;
+    transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .exg-thumb-strip__cell:hover {
+    transform: scale(1.03);
+  }
+
+  .exg-thumb-strip__cell:focus-visible {
+    outline: 2px solid var(--ink, #111);
+    outline-offset: 2px;
+  }
+
+  /* Skeleton shimmer inside each thumbnail cell */
+  .exg-thumb-strip__skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(17,17,17,0.05) 0%,
+      rgba(17,17,17,0.12) 50%,
+      rgba(17,17,17,0.05) 100%
+    );
+    background-size: 200% 100%;
+    animation: exg-thumb-shimmer 1.5s ease-in-out infinite;
+    border-radius: inherit;
+  }
+
+  @keyframes exg-thumb-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .exg-thumb-strip__img {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.15);
+    opacity: 0;
+    transition: opacity 0.35s ease, filter 0.3s ease;
+  }
+
+  .exg-thumb-strip__img.is-loaded {
+    opacity: 1;
+  }
+
+  .exg-thumb-strip__cell:hover .exg-thumb-strip__img {
+    filter: grayscale(0);
+  }
+
+  /* "+N more" overlay on last thumbnail */
+  .exg-thumb-strip__more {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(17,17,17,0.52);
+    color: rgba(240,238,233,0.92);
+    font-family: var(--font-heading, "Cormorant Garamond", serif);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    backdrop-filter: blur(1px);
+  }
+
+  /* Footer: photo count + View All button */
+  .exg-thumb-strip__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.625rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(17,17,17,0.07);
+  }
+
+  .exg-thumb-strip__total {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-45, rgba(17,17,17,0.45));
+  }
+
+  .exg-thumb-strip__view-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    line-height: 1;
+    min-height: 1.75rem;
+    font-family: var(--font-heading, "Cormorant Garamond", serif);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #111);
+    background: transparent;
+    border: 1px solid rgba(17,17,17,0.18);
+    border-radius: 0.2rem;
+    padding: 0.35rem 0.75rem 0.35rem 0.75rem;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .exg-thumb-strip__view-all:hover {
+    background: var(--ink, #111);
+    color: var(--canvas, #141414);
+    border-color: var(--ink, #111);
+  }
+
+  .exg-thumb-strip__view-all:focus-visible {
+    outline: 2px solid var(--ink, #111);
+    outline-offset: 2px;
+  }
+
+  .exg-thumb-strip__view-all-icon {
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .exhibition-accordion__links {
+    display: grid;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .exhibition-accordion__link-row {
+    display: grid;
+    grid-template-columns: minmax(5rem, 7rem) 1fr;
+    gap: 0.75rem 1.25rem;
+    align-items: baseline;
+  }
+
+  .exhibition-accordion__link-row dt {
+    font-family: var(--font-heading);
+    font-size: 0.625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+  }
+
+  .exhibition-accordion__link {
+    font-family: var(--font-body);
+    font-size: clamp(0.9375rem, 1vw, 1.0625rem);
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s ease, color 0.25s ease;
+    word-break: break-word;
+  }
+
+  .exhibition-accordion__link:hover {
+    border-bottom-color: var(--ink-45);
+    color: var(--ink-75);
+  }
+
+  @media (max-width: 1023px) {
+    .exhibition-accordion__panel {
+      padding: 0 0.95rem 1rem;
+    }
+
+    .exhibition-accordion__summary {
+      grid-template-columns: 2.75rem 1fr auto;
+      gap: 0.15rem 0.75rem;
+      margin-inline: 0;
+      padding: 0.875rem 0.25rem;
+    }
+
+    .exhibition-accordion__year {
+      font-size: 0.6875rem;
+    }
+
+    .exhibition-accordion__title {
+      font-size: 1.0625rem;
+    }
+
+    .exhibition-accordion__meta {
+      font-size: 0.875rem;
+    }
+
+    .exhibition-accordion__action-label {
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+    }
+
+    .exhibition-accordion__action-icon {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+
+    .exhibition-accordion__icon-svg {
+      width: 0.6875rem;
+      height: 0.6875rem;
+    }
+
+    .exhibition-accordion__chevron .exhibition-accordion__icon-svg {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  import { initExhibitionAccordion } from "../scripts/motion/exhibition-accordion";
+  import { initExhibitionGallery } from "../scripts/exhibition-gallery";
+
+  function boot() {
+    initExhibitionAccordion();
+    initExhibitionGallery();
+  }
+
+  boot();
+  document.addEventListener("astro:page-load", boot);
+</script>

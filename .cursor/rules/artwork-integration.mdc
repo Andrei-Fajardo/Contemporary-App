@@ -1,0 +1,33 @@
+---
+description: Visceral Gothic aesthetic and artwork integration workflow
+alwaysApply: true
+---
+
+# Role & Aesthetic Directive
+- Aesthetic Style: "Visceral Gothic / Abject Art". All visual content must reflect "Dark Feminine" themes (body horror, anatomical, botanical/decay).
+- Image Source: Always prefer Unsplash API for fair-use compliance.
+- Visual Processing: Apply `filter: grayscale()` or `sepia()` and `opacity-80` via Tailwind.
+- Technical: Use Astro `<Image />` component for all assets.
+
+# Layered Composition Protocol
+- Layout: Use `grid` or `absolute` positioning for all page layouts to allow text to bleed over background imagery.
+- Image Layering:
+    - Background: `absolute inset-0 z-0 opacity-40 mix-blend-multiply` (or `overlay`).
+    - Foreground/Text: `relative z-10`.
+- Responsive Typography: Ensure text uses `mix-blend-difference` or high-contrast white/black to remain legible over complex background imagery.
+- Asset Handling: Every unique route/page must fetch a distinct Unsplash asset. Use dynamic URLs based on page content (e.g., `https://source.unsplash.com/featured/?anatomy` for one page, `/?botany` for another).
+
+# Visual Layers Strategy
+- Text Wrapping: Use `shape-outside` (via Tailwind custom classes) so text flows around body horror / botanical silhouettes.
+- Blending: Use `background-blend-mode: multiply` on the image container so imagery bleeds into the site's white/off-white background.
+- Grain: Add a subtle noise grain overlay (custom Tailwind utility) for an organic, old-chapbook feel.
+
+# PageContainer Pattern
+- Reusable `PageContainer.astro` with `pageTitle` and `bgKeyword` props.
+- Full-screen absolute Unsplash background from `bgKeyword`; apply `mix-blend-multiply` and grayscale filter.
+- Default slot for main content; z-index utilities keep text above the image layer.
+
+# Token Efficiency Protocol (CRITICAL)
+- Branch Management: All work is to be performed in `feature/Artwork-Integration`.
+- Usage: Use "Standard Chat" for all design, logic, and aesthetic brainstorming. Only invoke "Composer" (Agent) when ready to commit code changes.
+- Context: Never use @Codebase. Explicitly tag only relevant files (e.g., @Portfolio.astro).

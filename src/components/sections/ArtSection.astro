@@ -1,0 +1,89 @@
+---
+import MediaPopup from '../MediaPopup.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { artworks } from '../../data/artworks';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+---
+
+<section id="art" class="scroll-section section-gap magazine-lookbook">
+  <div class="section-shell section-shell--wide mb-6 md:mb-8 magazine-chapter">
+    <p class="scroll-reveal section-eyebrow">{l.artTag}</p>
+    <h2 class="scroll-reveal magazine-chapter__title text-3xl md:text-5xl lg:text-6xl text-ink mb-2">
+      {l.nav.art}
+    </h2>
+    <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal" />
+  </div>
+
+  {artworks.map((p, i) => (
+    <>
+      {i > 0 && (
+        <div class="section-shell section-shell--wide art-piece-divider-wrap">
+          <hr class="art-piece-divider scroll-reveal" aria-hidden="true" />
+        </div>
+      )}
+      <article class="art-piece" data-popup-title={p.title}>
+      <div class="section-shell section-shell--wide py-6 md:py-8">
+        <div class={`grid md:grid-cols-2 gap-8 lg:gap-12 items-start`}>
+          <div class={`min-w-0 ${i % 2 === 1 ? 'md:col-start-2' : ''}`}>
+            <MediaPopup
+              imageSrc={p.image}
+              imageAlt={p.title}
+              title={p.title}
+              subtitle={p.dimensions}
+              aspectRatio={p.contain ? "auto" : "3 / 2"}
+              parallaxSpeed={0}
+              contain={p.contain}
+              eager={true}
+              imageClass={p.contain ? "w-full h-auto max-h-[80vh] object-contain mx-auto" : "w-full h-[55vh] md:h-[68vh] object-cover"}
+            />
+          </div>
+
+          <div class={`scroll-reveal min-w-0 art-wall-label ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
+            <h3 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-3">{p.title}</h3>
+            <p class="type-subheading text-lg md:text-xl text-ink-65 mb-2">{p.dimensions}</p>
+            <p class="type-body text-ink-60 text-sm mb-8">{l.artistCredit}</p>
+
+            <div class="art-wall-label__block">
+              {/* Artwork titles + wall-label body copy: authored English (proper nouns / source text) */}
+              <p class="type-heading text-[0.6875rem] text-ink-50 mb-4">{l.wallAboutLabel}</p>
+              <div class="hidden md:block space-y-4">
+                {p.aboutParagraphs.map((para) => (
+                  <p class="content-prose text-ink-75 max-w-[58ch] text-justify">{para}</p>
+                ))}
+              </div>
+              <div class="block md:hidden">
+                <p class="content-prose text-ink-75">{p.aboutMobile}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    </>
+  ))}
+</section>
+
+<style>
+  .art-wall-label__block {
+    margin-top: 0.25rem;
+  }
+
+  .art-piece-divider-wrap {
+    padding-block: 0;
+  }
+
+  .art-piece-divider {
+    display: block;
+    width: 100%;
+    height: 0;
+    border: 0;
+    border-top: 1px solid var(--border-section, rgba(17, 17, 17, 0.2));
+    margin: clamp(1.25rem, 3vh, 2rem) 0;
+  }
+</style>

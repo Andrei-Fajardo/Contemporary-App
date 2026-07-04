@@ -1,0 +1,667 @@
+/* ============================================================
+   From Utero — manuscript-inspired layered image system
+   ============================================================
+
+   Two distinct layering patterns are used:
+
+   1. EDITORIAL OVERLAP (Publications, Press)
+      A fixed-size image frame sits left-anchored at z-index 0.
+      A text content box overlaps the image's right edge via
+      absolute positioning + left offset — the image and text
+      share the same vertical band of space.
+      Text box has a semi-transparent canvas bg so it reads
+      cleanly where it crosses the image boundary.
+
+   2. GHOST WATERMARK (Research, Contacts)
+      Artwork is absolutely positioned, opacity 0.09–0.55,
+      mix-blend-mode multiply — purely textural, never in flow.
+
+   All artwork: pointer-events:none, aria-hidden, z-index 0.
+   All content: position relative, z-index 1+.
+   ============================================================ */
+
+
+/* ── 1. EDITORIAL OVERLAP — PUBLICATIONS ─────────────────────
+   Layout:
+     .pubs-overlap          position:relative, isolation:isolate
+     .pubs-overlap__frame   left-anchored image box, fixed size
+     .pubs-overlap__img     grayscale, mix-blend multiply, cover
+     .pubs-overlap__content absolute, starts at ~35% of width
+                            overlaps the image's right boundary
+   ──────────────────────────────────────────────────────────── */
+.pubs-overlap {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(28rem, 58vh, 48rem);
+}
+
+/* Image frame: nudged toward center, wide enough to show full artwork */
+.pubs-overlap__frame {
+  position: absolute;
+  top: 0;
+  left: clamp(2rem, 9vw, 7rem);
+  width: clamp(26rem, 52vw, 48rem);
+  height: clamp(30rem, 66vh, 54rem);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: visible;
+}
+
+.pubs-overlap__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  filter: grayscale(1) contrast(1.06) brightness(0.97);
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  cursor: default;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Text box: overlaps the image's right edge */
+.pubs-overlap__content {
+  position: absolute;
+  left: clamp(18rem, 40vw, 34rem);
+  top: clamp(2rem, 5vh, 3.5rem);
+  /* Width extends to full right edge */
+  right: 0;
+  z-index: 2;
+  /* Dark translucent bg — text stays legible over image zone */
+  background: var(--surface-panel);
+  border-radius: 0.75rem 0 0 0.75rem;
+  /* Generous left padding pushes text past the image overlap zone */
+  padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 2vw, 1.5rem);
+  padding-block: clamp(1.25rem, 3vh, 2rem);
+}
+
+.magazine-chapter .pubs-overlap__heading,
+.magazine-chapter .press-overlap__heading {
+  font-family: var(--font-magazine-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.pubs-overlap__heading {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Desktop: ampersand stays inline with the headline words */
+.pubs-heading__part,
+.pubs-heading__amp {
+  display: inline;
+}
+
+.pubs-heading__amp {
+  margin-inline: 0.12em;
+}
+
+.pubs-section__intro {
+  max-width: min(72ch, 100%);
+  margin-bottom: 0;
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
+}
+
+/* Editorial masthead + asymmetrical split grid */
+.pubs-editorial__masthead {
+  padding-bottom: clamp(1rem, 2.5vh, 1.35rem);
+  border-bottom: 1px solid var(--border-section);
+}
+
+.pubs-editorial__grid {
+  margin-top: clamp(1.15rem, 2.8vh, 1.65rem);
+}
+
+@media (min-width: 1024px) {
+  .pubs-editorial__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: clamp(1rem, 2.5vw, 1.75rem);
+    align-items: stretch;
+  }
+}
+
+.pubs-editorial__col {
+  min-width: 0;
+}
+
+.pubs-editorial__col--stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vw, 1.25rem);
+  border-left: 1px solid var(--border-subtle);
+  padding-left: clamp(1rem, 2.5vw, 1.65rem);
+}
+
+.pubs-editorial__panel--novels {
+  flex: 1;
+  min-height: clamp(5.5rem, 12vh, 8rem);
+}
+
+@media (max-width: 1023px) {
+  .pubs-editorial__panel,
+  .pubs-editorial__panel--novels {
+    height: auto;
+    flex: none;
+    min-height: 0;
+  }
+
+  /* Flatten columns so card order utilities control mobile stack sequence */
+  .pubs-editorial__col--links,
+  .pubs-editorial__col--stack {
+    display: contents;
+  }
+
+  .pubs-editorial__panel--chapbook {
+    order: -1;
+  }
+
+  .pubs-editorial__col--links > .pubs-editorial__panel {
+    order: 0;
+  }
+
+  .pubs-editorial__panel--novels {
+    order: 1;
+  }
+}
+
+.pubs-editorial__panel--chapbook {
+  margin-top: 0;
+}
+
+.pubs-editorial__panel--chapbook .pubs-section__manuscript-actions {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.pubs-editorial__panel {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1rem, 2.2vw, 1.35rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--ink) 3.5%, transparent);
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .pubs-editorial__panel {
+    height: 100%;
+  }
+}
+
+.pubs-editorial__panel--accent {
+  border-color: var(--border-section);
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.pubs-editorial__label {
+  font-family: var(--font-heading);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.75rem);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+  margin: 0 0 clamp(0.85rem, 2vh, 1rem);
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.pubs-editorial__col--links .editorial-link-list {
+  margin: 0;
+}
+
+.pubs-editorial__col--links .editorial-row-list__item {
+  margin-inline: 0;
+  padding-inline: 0.25rem;
+}
+
+.pubs-section__novels {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.pubs-section__novels-label {
+  margin-bottom: 0.75rem;
+}
+
+.pubs-novel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pubs-novel-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 0.75rem;
+  margin-inline: -0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: var(--radius-default);
+}
+
+.pubs-novel-list__status {
+  font-family: var(--font-heading);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.75rem);
+  font-weight: 400;
+  letter-spacing: var(--heading-track);
+  text-transform: uppercase;
+  color: var(--ink-55);
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-lang-btn);
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+
+/* ── 1. EDITORIAL OVERLAP — PRESS ────────────────────────────
+   Same structural pattern as Publications.
+   Image: anna-sample-6 — left frame.
+   Text box overlaps from the right, starting ~60% across the image.
+   ──────────────────────────────────────────────────────────── */
+.press-overlap {
+  position: relative;
+  isolation: isolate;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.press-overlap__frame {
+  position: absolute;
+  top: clamp(-2rem, 2vh, 2rem);
+  left: clamp(-4rem, -6vw, 0rem);
+  width: clamp(42rem, 88vw, 76rem);
+  height: clamp(52rem, 118vh, 96rem);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.press-overlap__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left 58%;
+  filter: grayscale(1) contrast(1.08) brightness(0.98);
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  cursor: default;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+.press-overlap__content {
+  position: absolute;
+  left: clamp(17rem, 38vw, 32rem);
+  top: clamp(2rem, 5vh, 3.5rem);
+  right: 0;
+  z-index: 2;
+  background: var(--surface-panel);
+  border-radius: 0.75rem 0 0 0.75rem;
+  padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 2vw, 1.5rem);
+  padding-block: clamp(1.25rem, 3vh, 2rem);
+}
+
+.press-overlap__heading {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+
+/* Research panel art positioning is defined in chaos.css */
+
+
+/* ── CONTACTS — anna-sample-7: bottom-left, over footer ──────
+   Large figure anchored bottom-left, bleeding off the left
+   edge and down over the footer. overflow:visible on the panel
+   lets the art cross into the footer zone. z-index 10 places
+   it above the footer's own stacking context.
+   Content (form + contact info) stays at z-index 2, always
+   readable above the art layer.
+   ──────────────────────────────────────────────────────────── */
+.contacts-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contacts-panel__art {
+  position: absolute;
+  left: clamp(2rem, 8vw, 6rem);
+  bottom: clamp(-2rem, 0vh, 2rem);
+  width: clamp(38rem, 64vw, 58rem);
+  max-width: calc(100% - clamp(2rem, 8vw, 6rem));
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.contacts-panel__art-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: left bottom;
+  filter: grayscale(1) contrast(1.08) brightness(0.96);
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  cursor: default;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Content stays above the art */
+.contacts-panel > .contacts-panel__art ~ * {
+  position: relative;
+  z-index: 2;
+}
+
+.contacts-panel > *:not(.contacts-panel__art) {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ── RESPONSIVE ─────────────────────────────────────────────
+   TABLET  (640px – 1023px): tighten the overlap sizes
+   MOBILE  (<640px)        : full stacked layout — image above,
+                             content below, both in normal flow.
+                             artwork images reduced to opacity 0.4
+   ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  /* Tablet: shrink the overlap frame, keep the editorial offset */
+  .pubs-overlap {
+    min-height: 0;
+  }
+  .pubs-overlap__frame {
+    left: clamp(1rem, 5vw, 3rem);
+    width: clamp(18rem, 46vw, 28rem);
+    height: clamp(22rem, 54vh, 38rem);
+  }
+  .pubs-overlap__content {
+    left: clamp(12rem, 30vw, 20rem);
+    top: clamp(1rem, 3vh, 2rem);
+  }
+
+  .press-overlap {
+    min-height: 0;
+  }
+  .press-overlap__frame {
+    top: clamp(-1rem, 3vh, 1.5rem);
+    left: clamp(-2rem, -3vw, 0rem);
+    width: clamp(28rem, 78vw, 44rem);
+    height: clamp(34rem, 90vh, 56rem);
+  }
+  .press-overlap__content {
+    left: clamp(11rem, 26vw, 18rem);
+    top: clamp(1rem, 3vh, 2rem);
+  }
+
+  .contacts-panel__art {
+    width: clamp(24rem, 58vw, 38rem);
+    left: clamp(1rem, 4vw, 3rem);
+    bottom: clamp(-1rem, 1vh, 0.5rem);
+  }
+
+  /* Artwork images: consistent opacity on tablet */
+  .pubs-overlap__img,
+  .press-overlap__img,
+  .contacts-panel__art-img {
+    opacity: 0.5;
+  }
+
+  .pubs-editorial__grid {
+    gap: 1.5rem;
+  }
+
+  .pubs-editorial__col--stack {
+    border-left: none;
+    padding-left: 0;
+    padding-top: 0.15rem;
+    gap: 1.5rem;
+  }
+
+  .pubs-editorial__panel--chapbook {
+    border-color: var(--border-section);
+    box-shadow:
+      0 10px 28px color-mix(in srgb, var(--ink) 8%, transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+
+  .pubs-editorial__panel--chapbook .pubs-manuscript-btn {
+    font-size: clamp(0.875rem, 3.6vw, 0.9375rem);
+    padding-block: clamp(1.05rem, 3vh, 1.25rem);
+  }
+}
+
+@media (max-width: 639px) {
+  /* ── PUBLICATIONS: full-width stacked layout on mobile ───────
+     Image strip at top, then text spanning the full screen width.
+     We override the desktop absolute/overlap positioning entirely.
+  ──────────────────────────────────────────────────────────── */
+  .pubs-overlap {
+    position: static !important;
+    display: block !important;
+    isolation: isolate;
+    min-height: 0;
+    width: 100%;
+    padding-inline: var(--mobile-page-pad, 1rem);
+    box-sizing: border-box;
+  }
+
+  /* Image — in-flow, full-width thumbnail strip */
+  .pubs-overlap__frame {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: clamp(12rem, 50vw, 20rem) !important;
+    overflow: hidden;
+    opacity: 1;
+  }
+
+  .pubs-overlap__img {
+    object-fit: cover;
+    object-position: center 30%;
+    opacity: 0.5;
+  }
+
+  /* Text — full screen width. Strip every section-shell constraint. */
+  .pubs-overlap__content {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding-block: var(--mobile-card-pad, 1.25rem) !important;
+    padding-inline: var(--mobile-card-pad-inline, 1.15rem) !important;
+    margin: 0 !important;
+    background: var(--mobile-accent-soft, transparent) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--mobile-card-radius, 1rem) !important;
+    box-sizing: border-box;
+    display: block !important;
+  }
+
+  /* The ul itself must be full width */
+  .pubs-overlap .editorial-link-list,
+  .pubs-overlap .editorial-row-list {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Each row: no-year variant → just 1fr for title */
+  .pubs-overlap .editorial-row-list__item {
+    display: block !important;
+    width: 100% !important;
+    padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
+    margin: 0 0 0.7rem !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--mobile-card-radius, 1rem) !important;
+    box-sizing: border-box !important;
+  }
+
+  .pubs-overlap .editorial-row-list__title {
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .pubs-overlap .pubs-novel-list__item {
+    padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
+    margin: 0 0 0.7rem !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--mobile-card-radius, 1rem) !important;
+    box-sizing: border-box !important;
+  }
+
+  .pubs-editorial__panel {
+    padding: var(--mobile-card-pad-inline, 1.15rem) !important;
+  }
+
+  .pubs-editorial__col--stack {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.85rem !important;
+    gap: 1.5rem !important;
+  }
+
+  /* ── PRESS: same full-width stacked approach ── */
+  .press-overlap {
+    position: static !important;
+    display: block !important;
+    isolation: isolate;
+    min-height: 0;
+    width: 100%;
+    overflow: visible;
+    padding-inline: var(--mobile-page-pad, 1rem);
+    box-sizing: border-box;
+  }
+
+  .press-overlap__frame {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: clamp(12rem, 50vw, 20rem) !important;
+    overflow: hidden;
+  }
+
+  .press-overlap__img {
+    object-fit: cover;
+    object-position: center 40%;
+    opacity: 0.5;
+  }
+
+  .press-overlap__content {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding-block: var(--mobile-card-pad, 1.25rem) !important;
+    padding-inline: var(--mobile-card-pad-inline, 1.15rem) !important;
+    margin: 0 !important;
+    background: var(--mobile-accent-soft, transparent) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--mobile-card-radius, 1rem) !important;
+    box-sizing: border-box;
+    display: block !important;
+  }
+
+  .press-overlap .editorial-link-list,
+  .press-overlap .editorial-row-list {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Press has showYear=true → keep year column */
+  .press-overlap .editorial-row-list__item {
+    display: grid !important;
+    grid-template-columns: 2.75rem 1fr !important;
+    width: 100% !important;
+    gap: 0.15rem 0.75rem !important;
+    padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
+    margin: 0 0 0.7rem !important;
+    box-sizing: border-box !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--mobile-card-radius, 1rem) !important;
+  }
+
+  .press-overlap .editorial-row-list__title {
+    display: block !important;
+    min-width: 0 !important;
+    text-align: left !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* ── CONTACTS art: smaller on mobile ── */
+  .contacts-panel__art {
+    width: min(72vw, 22rem);
+    left: clamp(-0.5rem, 2vw, 1rem);
+    bottom: clamp(-0.5rem, 1vh, 0.5rem);
+  }
+
+  .contacts-panel__art-img {
+    opacity: 0.5;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .research-panel__art,
+  .research-panel__art-echo,
+  .contacts-panel__art {
+    animation: none !important;
+    transform: none !important;
+  }
+}

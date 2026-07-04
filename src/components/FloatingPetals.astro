@@ -1,0 +1,21 @@
+---
+interface Props {
+  /** Cover full viewport (no sidebar offset) */
+  fullBleed?: boolean;
+}
+
+const { fullBleed = false } = Astro.props;
+---
+
+<div class:list={["floating-petals", fullBleed && "floating-petals--full"]} aria-hidden="true">
+  <span class="floating-petal floating-petal--1"></span>
+  <span class="floating-petal floating-petal--2"></span>
+  <span class="floating-petal floating-petal--3"></span>
+  <span class="floating-petal floating-petal--4"></span>
+  <span class="floating-petal floating-petal--5"></span>
+  <span class="floating-petal floating-petal--6"></span>
+  <span class="floating-petal floating-petal--7"></span>
+  <span class="floating-petal floating-petal--8"></span>
+  <span class="floating-petal floating-petal--9"></span>
+  <span class="floating-petal floating-petal--10"></span>
+</div>
