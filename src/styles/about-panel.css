@@ -280,6 +280,8 @@
    Mobile-only; desktop flex cluster stays at md+. */
 @media (max-width: 767px) {
   .hero-about-layer__cluster {
+    /* Match ABOUT card / section-shell mobile page margin */
+    --mobile-page-pad: clamp(1rem, 4.5vw, 1.35rem);
     --hero-signature-shadow:
       drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18))
       drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
@@ -395,22 +397,29 @@
     border: 0;
   }
 
-  /* Rockswell — left-aligned; extra left pad clears the cursive R flourish */
+  /*
+    Rockswell — natural-width, left-aligned block.
+    Left edge matches page content margin (--mobile-page-pad / ABOUT card).
+    Font clamp sized so rendered width stays inside content area at 375–414px.
+  */
   .hero-name__last-mobile {
     display: block;
     position: static;
     z-index: auto;
-    width: 100%;
-    max-width: 100%;
+    width: fit-content;
+    max-width: calc(100% - (2 * var(--mobile-page-pad, 1rem)));
     box-sizing: border-box;
-    margin: clamp(1.35rem, 4.5vw, 1.75rem) 0 clamp(0.4rem, 1.5vw, 0.65rem);
-    padding-left: clamp(1.5rem, 8vw, 2.25rem);
-    padding-right: clamp(0.75rem, 4vw, 1.25rem);
+    margin-top: clamp(1.35rem, 4.5vw, 1.75rem);
+    margin-bottom: clamp(0.4rem, 1.5vw, 0.65rem);
+    margin-left: var(--mobile-page-pad, 1rem);
+    margin-right: auto;
+    padding: 0;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(3.5rem, 21vw, 6rem);
+    /* 16vw @ 375px ≈ 60px; natural "Rockswell" width stays under ~343px content area */
+    font-size: clamp(3rem, 16vw, 4.5rem);
     font-weight: 400;
     line-height: 0.84;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     color: var(--ink);
     text-align: left;
     hyphens: none;
@@ -418,7 +427,6 @@
     word-break: keep-all;
     overflow-wrap: normal;
     white-space: nowrap;
-    overflow: hidden;
     pointer-events: none;
     filter: var(--hero-signature-shadow);
   }
