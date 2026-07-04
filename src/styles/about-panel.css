@@ -417,8 +417,8 @@
     margin-right: auto;
     padding: 0;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    /* Larger fluid scale; max tuned to fill content width without past ABOUT margins */
-    font-size: clamp(4.5rem, 40vw, 8rem);
+    /* Slightly under full-bleed max so the trailing flourish keeps a safe right margin */
+    font-size: clamp(4rem, 36vw, 7rem);
     font-weight: 400;
     line-height: 0.84;
     letter-spacing: -0.02em;
