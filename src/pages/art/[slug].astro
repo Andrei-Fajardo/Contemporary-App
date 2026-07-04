@@ -52,27 +52,34 @@ const additionalMedia: Record<string, string[]> = {
 
         <div>
           <p class="art-detail-bleed__about-label">About</p>
-          <div class="art-detail-bleed__prose content-prose text-ink-65">
-            <p>{leadParagraph}</p>
+          <div class="hidden md:block">
+            <div class="art-detail-bleed__prose content-prose text-ink-65">
+              <p>{leadParagraph}</p>
+              {hasMoreCopy && (
+                <div id="art-read-more" class="art-detail-bleed__more" hidden>
+                  {moreParagraphs.map((para) => (
+                    <p>{para}</p>
+                  ))}
+                </div>
+              )}
+            </div>
             {hasMoreCopy && (
-              <div id="art-read-more" class="art-detail-bleed__more" hidden>
-                {moreParagraphs.map((para) => (
-                  <p>{para}</p>
-                ))}
-              </div>
+              <button
+                type="button"
+                id="art-read-more-btn"
+                class="art-detail-bleed__read-more"
+                aria-expanded="false"
+                aria-controls="art-read-more"
+              >
+                {l.viewMore}
+              </button>
             )}
           </div>
-          {hasMoreCopy && (
-            <button
-              type="button"
-              id="art-read-more-btn"
-              class="art-detail-bleed__read-more"
-              aria-expanded="false"
-              aria-controls="art-read-more"
-            >
-              {l.viewMore}
-            </button>
-          )}
+          <div class="block md:hidden">
+            <div class="art-detail-bleed__prose content-prose text-ink-65">
+              <p>{painting.aboutMobile}</p>
+            </div>
+          </div>
         </div>
 
         <div class="pt-10">

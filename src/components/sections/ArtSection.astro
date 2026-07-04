@@ -51,10 +51,13 @@ const l = t[locale];
 
             <div class="art-wall-label__block">
               <p class="type-heading text-[0.6875rem] text-ink-50 mb-4">About</p>
-              <div class="space-y-4">
+              <div class="hidden md:block space-y-4">
                 {p.aboutParagraphs.map((para) => (
                   <p class="content-prose text-ink-75 max-w-[58ch] text-justify">{para}</p>
                 ))}
+              </div>
+              <div class="block md:hidden">
+                <p class="content-prose text-ink-75">{p.aboutMobile}</p>
               </div>
             </div>
           </div>

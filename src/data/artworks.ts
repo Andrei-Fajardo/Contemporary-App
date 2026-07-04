@@ -6,8 +6,10 @@ export interface Artwork {
   year: string;
   image: string;
   contain: boolean;
-  /** Wall-label About copy — one or more paragraphs */
+  /** Wall-label About copy — one or more paragraphs (desktop) */
   aboutParagraphs: string[];
+  /** Concise About copy for mobile viewports only */
+  aboutMobile: string;
 }
 
 export const artworks: Artwork[] = [
@@ -23,6 +25,8 @@ export const artworks: Artwork[] = [
       "“The Fish” is a melancholic depiction of a woman suspended between sensuality and symbolism. Elements of Pisces allude to intuition and fluid identity, while the black fur — a symbol of death in Kazakh culture — wraps her in a calm, inevitable stillness. The poppy flower appears as an opiate symbol, suggesting a slow, warm, engulfing death and a deep regression into the womb.",
       "The sensation mirrors sinking into deep water, into sleep — that quiet drowning where warmth, oblivion, and a return to origin converge. The work portrays feminine interpretation held within the quiet inevitability of death, folding regression, return to the womb, and the pull toward a “warm, friendly death” into one unified moment.",
     ],
+    aboutMobile:
+      "A melancholic exploration of intuition and identity. Symbolized by black fur representing death in Kazakh culture and a poppy flower as a slow, warm regression, the work captures a calm, inevitable stillness akin to sinking into deep water.",
   },
   {
     slug: "the-souls-of-leavings",
@@ -38,5 +42,7 @@ export const artworks: Artwork[] = [
       "Its imagery draws from two contrasting internal truths: the feeling of womanhood as never-ending perpetual pregnancy, and the feeling of womanhood as never-ending perpetual miscarriage.",
       "The act of creation became a form of fictional countertransference. By letting the art “suffer” as dark as possible instead of the female body, the work becomes a vessel for shared grief and existential anxiety for both women.",
     ],
+    aboutMobile:
+      "Born from witnessing the grief of abandonment and chronic physical pain, this painting captures the suspended state between hope and departure. It translates deep existential anxiety into a visual vessel for shared healing.",
   },
 ];
