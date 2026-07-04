@@ -271,28 +271,25 @@
   }
 }
 
-/* ?? Mobile (<768px / below md) — stacked portrait + signature in flow ??
-   Signature is NOT overlaid; desktop flex/overlap layout stays at md+. */
+/* ?? Mobile (<768px) — signature overlays portrait (editorial, no clip) ??
+   Mobile-only anchors/scale; desktop flex cluster stays at md+. */
 @media (max-width: 767px) {
   .hero-about-layer__cluster {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: 0;
+    position: relative;
+    display: block;
+    isolation: isolate;
     transform: none;
     padding-inline: 0;
     padding-bottom: 0;
     min-height: 0;
-    overflow: visible;
+    width: 100%;
+    overflow: hidden;
   }
 
   .hero-about-layer__art {
     position: relative;
     z-index: 0;
     display: block;
-    flex: none;
     width: 100%;
     height: auto;
     max-width: none;
@@ -314,41 +311,84 @@
     object-position: center top;
   }
 
-  /* Signature wordmark — normal flow below portrait, no absolute overlay */
+  /*
+    Signature layer fills the portrait frame.
+    Light stone + mix-blend-difference → dark on pink, light on coat.
+  */
   .hero-about-layer__name {
-    position: static;
-    z-index: auto;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
     display: block;
-    flex: none;
-    width: 100%;
-    max-width: 100%;
+    width: auto;
+    max-width: none;
     min-width: 0;
-    margin: clamp(1rem, 3.5vw, 1.35rem) 0 0;
-    padding-inline: clamp(0.875rem, 4vw, 1.35rem);
-    padding-top: 0;
-    padding-bottom: 0;
-    text-align: left;
-    pointer-events: auto;
-    color: var(--ink);
-    mix-blend-mode: normal;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    color: #f5f2eb;
+    mix-blend-mode: difference;
   }
 
+  .hero-about-layer__heading {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
+    font-weight: 400;
+    font-size: clamp(2.15rem, 9.5vw, 3.35rem);
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    color: #f5f2eb;
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    overflow: visible;
+  }
+
+  .magazine-cover .hero-about-layer__heading {
+    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: #f5f2eb;
+  }
+
+  /* Upper-right: Anna / Dauyl over light background */
   .hero-name__first {
+    position: absolute;
+    top: 5%;
+    right: 4%;
+    left: auto;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 0;
+    max-width: 48%;
+    text-align: right;
   }
 
   .hero-name__line {
     display: block;
-    line-height: 0.88;
+    line-height: 0.84;
   }
 
-  /* Full name lives in the real h1 on mobile — no duplicate overlay layer */
+  /* Lower-left: Rockswell over coat — stays inside frame */
   .hero-name__last {
+    position: absolute;
     display: block;
-    line-height: 0.88;
+    left: 3.5%;
+    right: 6%;
+    bottom: 5%;
+    top: auto;
+    max-width: 90%;
+    margin: 0;
+    line-height: 0.84;
+    text-align: left;
+    font-size: clamp(2.35rem, 10.5vw, 3.65rem);
   }
 
   .hero-name__last-mobile {
@@ -359,35 +399,12 @@
   .hero-about-layer__inner.section-shell,
   .hero-about-layer__inner.section-shell--wide {
     padding-top: clamp(0.75rem, 2.5vh, 1.25rem);
-    padding-bottom: clamp(1.25rem, 3.5vh, 2rem);
+    padding-bottom: clamp(1rem, 3vh, 1.5rem);
     padding-inline: 0 !important;
     max-width: none;
     width: 100%;
     justify-content: flex-start;
     align-items: stretch;
-  }
-
-  .hero-about-layer__heading {
-    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-weight: 400;
-    font-size: clamp(2.85rem, 12.5vw, 4.75rem);
-    line-height: 0.9;
-    color: var(--ink);
-    hyphens: none;
-    -webkit-hyphens: none;
-    overflow-wrap: normal;
-    word-break: keep-all;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    overflow: visible;
-  }
-
-  .magazine-cover .hero-about-layer__heading {
-    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-weight: 400;
-    letter-spacing: 0.01em;
-    color: var(--ink);
   }
 
   .hero-about-layer__roles {
@@ -410,7 +427,6 @@
     padding-right: 0;
   }
 
-  /* About: simple stack on mobile — editorial spread comes later */
   .about-panel-stack__content.magazine-torn::after {
     display: none;
   }
