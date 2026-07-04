@@ -650,7 +650,7 @@
   color: var(--canvas);
   background: var(--ink);
   border: 1px solid var(--ink);
-  border-radius: 0.15rem;
+  border-radius: var(--mobile-card-radius, 1rem);
   padding: 1rem clamp(1.5rem, 4vw, 2rem);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent),
@@ -664,14 +664,22 @@
     transform 0.3s var(--ease-editorial);
 }
 
-.pubs-manuscript-btn:hover {
+/* Pause pulse on interaction so hover transform does not compound */
+.pubs-manuscript-btn.animate-pulse-cta:hover,
+.pubs-manuscript-btn.animate-pulse-cta:focus-visible,
+.pubs-manuscript-btn.animate-pulse-cta:active {
+  animation: none;
+}
+
+.pubs-manuscript-btn:hover,
+.pubs-manuscript-btn:focus-visible {
   color: var(--canvas);
   background: var(--ink);
   border-color: var(--ink);
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--ink) 20%, transparent),
     0 14px 32px color-mix(in srgb, var(--ink) 28%, transparent);
-  transform: translateY(-3px) scale(1.015);
+  transform: translateY(-3px) scale(1.02);
 }
 
 .pubs-manuscript-btn:focus-visible {
@@ -684,4 +692,10 @@
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent),
     0 4px 12px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pubs-manuscript-btn.animate-pulse-cta {
+    animation: none;
+  }
 }
