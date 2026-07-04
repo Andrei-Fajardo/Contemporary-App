@@ -416,6 +416,7 @@
     margin-left: var(--mobile-page-pad, 1rem);
     margin-right: auto;
     padding: 0;
+    padding-left: 0.35rem;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     /* Slightly under full-bleed max so the trailing flourish keeps a safe right margin */
     font-size: clamp(4rem, 36vw, 7rem);
