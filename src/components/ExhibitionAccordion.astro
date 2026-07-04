@@ -31,7 +31,7 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
 
     return (
     <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
-      <summary class="exhibition-accordion__summary" aria-label={`${display.heading} — ${display.subheading} — ${expand}`}>
+      <summary class="exhibition-accordion__summary hover-row" aria-label={`${display.heading} — ${display.subheading} — ${expand}`}>
         <span class="exhibition-accordion__year">{entry.year}</span>
         <span class="exhibition-accordion__heading">
           <span class="exhibition-accordion__title">{display.heading}</span>
@@ -194,33 +194,23 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
     grid-template-rows: auto auto;
     gap: 0.2rem 1.25rem;
     align-items: center;
-    margin-inline: 0;
-    padding: 1rem 0;
+    margin-inline: -0.75rem;
+    padding: 1rem 0.75rem;
     border: none;
     border-bottom: 1px solid var(--border-subtle);
-    border-radius: 0;
+    border-radius: 0.5rem;
     cursor: pointer;
     list-style: none;
-    background: transparent;
-    transition: color 0.25s var(--ease-editorial);
-  }
-
-  .exhibition-accordion__summary:hover {
-    box-shadow: none;
     background: transparent;
   }
 
   .exhibition-accordion__summary:focus-visible {
-    outline: 2px solid var(--ink);
+    outline: 2px solid var(--ink-55);
     outline-offset: 2px;
   }
 
   .exhibition-accordion__item.is-expanded .exhibition-accordion__summary {
-    box-shadow: none;
-  }
-
-  .exhibition-accordion__item.is-expanded .exhibition-accordion__summary:hover {
-    box-shadow: none;
+    border-bottom-color: var(--border-subtle);
   }
 
   .exhibition-accordion__summary::-webkit-details-marker {

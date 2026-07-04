@@ -119,11 +119,14 @@
 }
 
 /*
-  Featured Publications only — reuse Academic Research row hover tokens:
-  --surface-placeholder fill + inset 3px accent bar, plus a small slide.
+  Shared list-row hover — Academic Research, Featured Publications, Exhibitions.
+  Soft fill + inset accent bar + slight slide. No hard border box.
 */
-.pubs-overlap .editorial-list-container .editorial-row-list__item {
+.hover-row,
+.editorial-row-list .editorial-row-list__item,
+.exhibition-accordion__summary {
   cursor: pointer;
+  border: none;
   transition:
     background-color 0.18s var(--ease-editorial, ease),
     box-shadow 0.18s var(--ease-editorial, ease),
@@ -131,10 +134,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .pubs-overlap .editorial-list-container .editorial-row-list__item:hover {
+  .hover-row:hover,
+  .editorial-row-list .editorial-row-list__item:hover,
+  .exhibition-accordion__summary:hover,
+  .exhibition-accordion__item.is-expanded .exhibition-accordion__summary:hover {
     background-color: var(--surface-placeholder) !important;
     box-shadow: inset 3px 0 0 var(--ink-35) !important;
     transform: translateX(4px);
+    outline: none;
   }
 }
 

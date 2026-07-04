@@ -15,7 +15,7 @@ const listClass = showYear ? 'editorial-link-list editorial-row-list scroll-reve
 {items.length > 0 ? (
   <ul class={listClass}>
     {items.map((item) => (
-      <li class="editorial-row-list__item">
+      <li class="editorial-row-list__item hover-row">
         {showYear && <span class="editorial-row-list__year">{item.year ?? ''}</span>}
         <a href={item.href} target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
           {item.title}

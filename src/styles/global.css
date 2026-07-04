@@ -649,10 +649,7 @@ select,
   border-radius: 0.5rem;
 }
 
-.editorial-row-list .editorial-row-list__item:hover {
-  box-shadow: inset 3px 0 0 var(--ink-35);
-  background-color: var(--surface-placeholder);
-}
+/* Hover treatment lives on shared `.hover-row` in editorial-list-container.css */
 
 .editorial-row-list--no-year .editorial-row-list__item {
   grid-template-columns: 1fr auto;
@@ -1751,9 +1748,12 @@ select,
   }
 
   .editorial-index.exhibition-accordion .exhibition-accordion__summary {
-    padding: 1rem 0;
+    margin-inline: -0.5rem;
+    padding: 1rem 0.5rem;
     border: none;
     border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0.5rem;
+    background: transparent;
   }
 
   .editorial-index.exhibition-accordion > .exhibition-accordion__item + .exhibition-accordion__item {
