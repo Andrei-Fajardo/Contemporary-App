@@ -95,6 +95,16 @@
   text-transform: uppercase;
 }
 
+/* Desktop: ampersand stays inline with the headline words */
+.pubs-heading__part,
+.pubs-heading__amp {
+  display: inline;
+}
+
+.pubs-heading__amp {
+  margin-inline: 0.12em;
+}
+
 .pubs-section__intro {
   max-width: min(72ch, 100%);
   margin-bottom: 0;

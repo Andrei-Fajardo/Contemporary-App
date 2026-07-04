@@ -449,3 +449,107 @@
     padding-left: 0;
   }
 }
+
+/* — Publications mobile hierarchy (below md only) — */
+@media (max-width: 767px) {
+  /* Headline: keep & with first line, second word on its own line */
+  #publications .pubs-overlap__heading:has(.pubs-heading__amp) {
+    display: block;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  #publications .pubs-heading__part,
+  #publications .pubs-heading__amp {
+    display: inline;
+  }
+
+  #publications .pubs-heading__amp {
+    margin-inline: 0.18em 0;
+    font-weight: inherit;
+  }
+
+  #publications .pubs-heading__part:last-child {
+    display: block;
+  }
+
+  /* Section blocks: more air between groups than within */
+  #publications .editorial-index {
+    gap: clamp(2.25rem, 7vw, 3rem);
+  }
+
+  #publications .editorial-index__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  /* Category labels: stronger headers + short crimson accent rule */
+  #publications .editorial-index__label {
+    font-family: var(--font-mono, var(--font-body));
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--ink-70);
+    margin: 0;
+    padding: 0 0 0.55rem;
+    border-bottom: none;
+    border-top: none;
+    box-shadow: inset 0 2px 0 0 var(--accent-red, #8b1a1a);
+    padding-top: 0.65rem;
+  }
+
+  /* Items: no full-width hairlines — spacing alone groups rows */
+  #publications .editorial-index .editorial-row-list__item,
+  #publications .editorial-index .editorial-row-list--no-year .editorial-row-list__item,
+  #publications .pubs-overlap .editorial-index .editorial-row-list__item {
+    padding: 0.45rem 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #publications .editorial-index .editorial-row-list__item + .editorial-row-list__item {
+    padding-top: 0.55rem !important;
+  }
+
+  /* Novel title + Coming Soon as one tight unit */
+  #publications .pubs-novel-list__item,
+  #publications .pubs-overlap .editorial-index .pubs-novel-list__item {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.35rem 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  #publications .pubs-novel-list__status {
+    align-self: flex-start;
+    display: inline-block;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--border-section);
+    border-radius: 0.1rem;
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-55);
+  }
+
+  /* Chapbook label + CTA as one unit */
+  #publications .pubs-section__manuscript-actions {
+    margin-top: 0.15rem;
+    padding-top: 0;
+  }
+
+  #publications .pubs-editorial__index {
+    margin-top: clamp(1.75rem, 5vh, 2.5rem);
+  }
+}
