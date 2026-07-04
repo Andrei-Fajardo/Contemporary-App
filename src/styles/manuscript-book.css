@@ -664,11 +664,24 @@
     transform 0.3s var(--ease-editorial);
 }
 
+/* Desktop: calm shadow/opacity breathe only */
+.pubs-manuscript-btn.animate-pulse-cta {
+  animation: pulse-cta 3.8s ease-in-out infinite;
+}
+
+/* Mobile: keep a barely-there scale so the cue stays visible on a smaller button */
+@media (max-width: 767px) {
+  .pubs-manuscript-btn.animate-pulse-cta {
+    animation-name: pulse-cta-mobile;
+  }
+}
+
 /* Pause pulse on interaction so hover transform does not compound */
 .pubs-manuscript-btn.animate-pulse-cta:hover,
 .pubs-manuscript-btn.animate-pulse-cta:focus-visible,
 .pubs-manuscript-btn.animate-pulse-cta:active {
   animation: none;
+  opacity: 1;
 }
 
 .pubs-manuscript-btn:hover,

@@ -13,22 +13,42 @@
   --spacing-editorial-block: clamp(1.5rem, 3vh, 2.5rem);
   --width-hero-bleed: min(96vw, 92rem);
   --width-art-bleed: min(98vw, 88rem);
-  --animate-pulse-cta: pulse-cta 2.6s ease-in-out infinite;
+  --animate-pulse-cta: pulse-cta 3.8s ease-in-out infinite;
 }
 
+/* Desktop default: shadow/opacity only — no scale (avoids wide-button exaggeration) */
 @keyframes pulse-cta {
   0%,
   100% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent),
+      0 6px 16px color-mix(in srgb, var(--ink) 10%, transparent);
+  }
+  50% {
+    opacity: 0.94;
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent),
+      0 8px 20px color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+}
+
+/* Mobile: tiny scale is still readable on a smaller control */
+@keyframes pulse-cta-mobile {
+  0%,
+  100% {
+    opacity: 1;
     transform: scale(1);
     box-shadow:
       0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent),
-      0 8px 24px color-mix(in srgb, var(--ink) 18%, transparent);
+      0 6px 16px color-mix(in srgb, var(--ink) 10%, transparent);
   }
   50% {
-    transform: scale(1.02);
+    opacity: 0.94;
+    transform: scale(1.008);
     box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--ink) 16%, transparent),
-      0 12px 28px color-mix(in srgb, var(--ink) 24%, transparent);
+      0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent),
+      0 8px 20px color-mix(in srgb, var(--ink) 14%, transparent);
   }
 }
 
