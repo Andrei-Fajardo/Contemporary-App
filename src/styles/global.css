@@ -9,6 +9,7 @@
 @import "./utero-layers.css";
 @import "./magazine.css";
 @import "./editorial-downsize.css";
+@import "./editorial-list-container.css";
 @import "./manuscript-book.css";
 
 /* Editorial typography — Cormorant Garamond (heads) + Raleway 300 (body) */
@@ -1754,7 +1755,8 @@ select,
     border-top: none;
   }
 
-  .pubs-overlap__content:has(.editorial-index) {
+  /* Publications: page shell is open; each section owns its Press-style card */
+  .pubs-overlap__content:has(.editorial-list-blocks) {
     border: none !important;
     border-radius: 0 !important;
     background: transparent !important;
@@ -1762,15 +1764,8 @@ select,
     padding-inline: var(--mobile-page-pad) !important;
   }
 
-  .pubs-overlap .editorial-index .editorial-row-list__item,
-  .pubs-overlap .editorial-index .pubs-novel-list__item {
-    padding: 1rem 0 !important;
-    border: none !important;
-    border-bottom: 1px solid var(--border-subtle) !important;
-    border-radius: 0 !important;
-    margin-bottom: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
+  .pubs-overlap__content:has(.editorial-list-blocks) .editorial-list-container {
+    margin-inline: 0;
   }
 }
 

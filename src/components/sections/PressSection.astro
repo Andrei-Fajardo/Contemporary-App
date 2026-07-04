@@ -1,5 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
+import EditorialListContainer from '../EditorialListContainer.astro';
 import { pressLinks } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
@@ -29,7 +30,7 @@ const l = t[locale];
     />
   </div>
 
-  <!-- ── Text content box — overlaps the image's right edge ── -->
+  <!-- ── Text content — header above list container ─────────── -->
   <div class="press-overlap__content section-shell section-shell--wide">
     <div class="magazine-chapter">
       <p class="scroll-reveal section-eyebrow">{l.pressTag}</p>
@@ -37,7 +38,9 @@ const l = t[locale];
         {l.nav.press}
       </h2>
     </div>
-    <EditorialLinkList items={pressLinks} />
+    <EditorialListContainer class="scroll-reveal">
+      <EditorialLinkList items={pressLinks} />
+    </EditorialListContainer>
   </div>
 
 </section>

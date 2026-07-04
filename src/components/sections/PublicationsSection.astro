@@ -1,5 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
+import EditorialListContainer from '../EditorialListContainer.astro';
 import ManuscriptModal from '../ManuscriptModal.astro';
 import { publicationLinks } from '../../data/content';
 import { siteCopy } from '../../data/site-copy';
@@ -54,35 +55,41 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
       </p>
     </header>
 
-    <div class="pubs-editorial__index editorial-index scroll-reveal">
-      <div class="editorial-index__group">
-        <h3 class="editorial-index__label">{l.publicationsFeaturedLabel}</h3>
-        <EditorialLinkList items={publicationLinks} showYear={false} />
+    <div class="editorial-list-blocks scroll-reveal">
+      <div class="editorial-list-block">
+        <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
+        <EditorialListContainer>
+          <EditorialLinkList items={publicationLinks} showYear={false} />
+        </EditorialListContainer>
       </div>
 
       {novels.length > 0 && (
-        <div class="editorial-index__group">
-          <h3 class="editorial-index__label">{l.novelsLabel}</h3>
-          <ul class="pubs-novel-list">
-            {novels.map((novel) => (
-              <li class="pubs-novel-list__item">
-                <span class="editorial-row-list__title">{novel.title}</span>
-                {novel.status === 'coming-soon' && (
-                  <span class="pubs-novel-list__status">{l.comingSoon}</span>
-                )}
-              </li>
-            ))}
-          </ul>
+        <div class="editorial-list-block">
+          <h3 class="editorial-list-block__label">{l.novelsLabel}</h3>
+          <EditorialListContainer>
+            <ul class="pubs-novel-list">
+              {novels.map((novel) => (
+                <li class="pubs-novel-list__item">
+                  <span class="editorial-row-list__title">{novel.title}</span>
+                  {novel.status === 'coming-soon' && (
+                    <span class="pubs-novel-list__status">{l.comingSoon}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </EditorialListContainer>
         </div>
       )}
 
-      <div class="editorial-index__group">
-        <h3 class="editorial-index__label">{l.chapbookLabel}</h3>
-        <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
-          <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
-            {l.manuscriptReadBtn}
-          </button>
-        </div>
+      <div class="editorial-list-block">
+        <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
+        <EditorialListContainer>
+          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+            <button type="button" class="pubs-manuscript-btn" data-manuscript-open>
+              {l.manuscriptReadBtn}
+            </button>
+          </div>
+        </EditorialListContainer>
       </div>
     </div>
   </div>

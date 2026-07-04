@@ -1,0 +1,308 @@
+/* ============================================================
+   Editorial list container — Press source-of-truth pattern
+   Outer rounded panel + inner entry pills (year badge + title)
+   ============================================================ */
+
+.editorial-list-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: var(--mobile-card-pad, clamp(1rem, 4.25vw, 1.35rem))
+    var(--mobile-card-pad-inline, clamp(1.1rem, 5vw, 1.5rem));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--mobile-card-radius, 1rem);
+  background: var(
+    --mobile-accent-soft,
+    color-mix(in srgb, var(--magazine-accent, var(--ink)) 3.5%, transparent)
+  );
+  box-shadow: inset 0 1px 0
+    var(--mobile-accent-line, color-mix(in srgb, var(--magazine-accent, var(--ink)) 3.5%, transparent));
+}
+
+.editorial-list-container .editorial-link-list,
+.editorial-list-container .editorial-row-list,
+.editorial-list-container .pubs-novel-list {
+  list-style: none;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Entry sub-blocks — faint pills inside the outer container */
+.editorial-list-container .editorial-row-list__item,
+.editorial-list-container .pubs-novel-list__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.85rem;
+  align-items: start;
+  width: 100%;
+  margin: 0 0 0.7rem;
+  padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--mobile-card-radius, 1rem);
+  background: color-mix(in srgb, var(--canvas) 72%, transparent);
+  box-shadow: inset 0 1px 0 var(--mobile-accent-line, transparent);
+  box-sizing: border-box;
+  cursor: default;
+}
+
+.editorial-list-container .editorial-row-list__item:last-child,
+.editorial-list-container .pubs-novel-list__item:last-child {
+  margin-bottom: 0;
+}
+
+.editorial-list-container .editorial-row-list--no-year .editorial-row-list__item {
+  grid-template-columns: 1fr;
+}
+
+.editorial-list-container .editorial-row-list__item:hover {
+  background: color-mix(in srgb, var(--canvas) 88%, transparent);
+  box-shadow: inset 0 1px 0 var(--mobile-accent-line, transparent);
+}
+
+.editorial-list-container .editorial-row-list__item::after {
+  display: none !important;
+}
+
+/* Year / status metadata pill */
+.editorial-list-container .editorial-row-list__year,
+.editorial-list-container .pubs-novel-list__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  margin: 0;
+  padding: 0.28rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink-55);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.editorial-list-container .editorial-row-list__title,
+.editorial-list-container .pubs-novel-list__item .editorial-row-list__title {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.3;
+  font-weight: 400;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+/* Novel: title + status pill as a contained unit */
+.editorial-list-container .pubs-novel-list__item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+}
+
+.editorial-list-container .pubs-novel-list__item .editorial-row-list__title {
+  flex: 1 1 auto;
+  min-width: min(100%, 12rem);
+}
+
+.editorial-list-container .pubs-novel-list__status {
+  flex: 0 0 auto;
+  order: -1;
+}
+
+/* Chapbook CTA sits inside the container without fighting the panel */
+.editorial-list-container .pubs-section__manuscript-actions {
+  margin: 0;
+  padding: 0;
+}
+
+.editorial-list-container .pubs-manuscript-btn {
+  width: 100%;
+}
+
+/* Section label above each container (Press-style eyebrow) */
+.editorial-list-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.editorial-list-block__label {
+  margin: 0;
+  font-family: var(--font-mono, var(--font-body));
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+}
+
+.editorial-list-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 4vh, 2.5rem);
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+/*
+  Press keeps its existing panel chrome on `.press-overlap__content`.
+  The shared container is a transparent passthrough there so Press
+  visuals stay identical while Publications owns the card treatment.
+*/
+.press-overlap__content > .editorial-list-container {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.press-overlap__content > .editorial-list-container .editorial-row-list__item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  gap: 0.2rem 1.25rem;
+  align-items: center;
+  margin: 0;
+  margin-inline: -0.75rem;
+  padding: 1.25rem 0.75rem;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
+  background: transparent;
+  box-shadow: inset 0 0 0 transparent;
+  cursor: pointer;
+}
+
+.press-overlap__content > .editorial-list-container .editorial-row-list__item:hover {
+  box-shadow: inset 3px 0 0 var(--ink-35);
+  background-color: var(--surface-placeholder);
+}
+
+.press-overlap__content > .editorial-list-container .editorial-row-list__item::after {
+  display: inline-flex !important;
+}
+
+.press-overlap__content > .editorial-list-container .editorial-row-list__year {
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-45);
+}
+
+.press-overlap__content > .editorial-list-container .editorial-row-list__title {
+  font-size: clamp(1.25rem, 1.75vw, 1.5625rem);
+  line-height: 1.35;
+}
+
+/* Publications page shell: header/intro stay outside the section cards */
+.pubs-overlap__content:has(.editorial-list-blocks) .pubs-editorial__masthead {
+  border-bottom: none;
+  padding-bottom: clamp(0.5rem, 1.5vh, 0.85rem);
+}
+
+/* Beat legacy pubs mobile card overrides so shared container wins */
+.pubs-overlap .editorial-list-container .editorial-row-list__item,
+.pubs-overlap .editorial-list-container .editorial-row-list--no-year .editorial-row-list__item,
+.pubs-overlap .editorial-list-container .pubs-novel-list__item {
+  display: grid !important;
+  grid-template-columns: auto 1fr !important;
+  gap: 0.35rem 0.85rem !important;
+  align-items: start !important;
+  width: 100% !important;
+  margin: 0 0 0.7rem !important;
+  padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--mobile-card-radius, 1rem) !important;
+  background: color-mix(in srgb, var(--canvas) 72%, transparent) !important;
+  box-shadow: inset 0 1px 0 var(--mobile-accent-line, transparent) !important;
+  box-sizing: border-box !important;
+}
+
+.pubs-overlap .editorial-list-container .editorial-row-list--no-year .editorial-row-list__item {
+  grid-template-columns: 1fr !important;
+}
+
+.pubs-overlap .editorial-list-container .editorial-row-list__item:last-child,
+.pubs-overlap .editorial-list-container .pubs-novel-list__item:last-child {
+  margin-bottom: 0 !important;
+}
+
+.pubs-overlap .editorial-list-container .pubs-novel-list__item {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.55rem 0.75rem !important;
+}
+
+.pubs-overlap .editorial-list-container .pubs-novel-list__status {
+  order: -1;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0.28rem 0.5rem !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 999px !important;
+  background: color-mix(in srgb, var(--ink) 4%, transparent) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.64rem !important;
+  letter-spacing: 0.1em !important;
+  color: var(--ink-55) !important;
+}
+
+/* Mobile Press: keep existing entry-card treatment on items */
+@media (max-width: 639px) {
+  .press-overlap__content > .editorial-list-container .editorial-row-list__item {
+    display: grid !important;
+    grid-template-columns: 2.75rem 1fr !important;
+    gap: 0.15rem 0.75rem !important;
+    width: 100% !important;
+    margin: 0 0 0.7rem !important;
+    padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--mobile-card-radius, 1rem) !important;
+    background: color-mix(in srgb, var(--canvas) 72%, transparent) !important;
+    box-shadow: inset 0 1px 0 var(--mobile-accent-line, transparent) !important;
+  }
+
+  .press-overlap__content > .editorial-list-container .editorial-row-list__item:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .press-overlap__content > .editorial-list-container .editorial-row-list__item::after {
+    display: none !important;
+  }
+
+  .press-overlap__content > .editorial-list-container .editorial-row-list__year {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.28rem 0.5rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ink) 4%, transparent);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-55);
+  }
+
+  .press-overlap__content > .editorial-list-container .editorial-row-list__title {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+}
