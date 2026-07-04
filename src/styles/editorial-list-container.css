@@ -7,8 +7,8 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: var(--mobile-card-pad, clamp(1rem, 4.25vw, 1.35rem))
-    var(--mobile-card-pad-inline, clamp(1.1rem, 5vw, 1.5rem));
+  /* Match Press `.press-overlap__content` mobile padding scale */
+  padding: 0.65rem 0.7rem;
   border: 1px solid var(--border-subtle);
   border-radius: var(--mobile-card-radius, 1rem);
   background: var(
@@ -34,11 +34,11 @@
 .editorial-list-container .pubs-novel-list__item {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.35rem 0.85rem;
+  gap: 0.25rem 0.65rem;
   align-items: start;
   width: 100%;
-  margin: 0 0 0.7rem;
-  padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem);
+  margin: 0 0 0.45rem;
+  padding: 0.65rem 0.75rem;
   border: 1px solid var(--border-subtle);
   border-radius: var(--mobile-card-radius, 1rem);
   background: color-mix(in srgb, var(--canvas) 72%, transparent);
@@ -101,18 +101,20 @@
   hyphens: none;
 }
 
-/* Novel: title + status pill as a contained unit */
+/* Novel: title + status pill as a content-sized unit */
 .editorial-list-container .pubs-novel-list__item {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.55rem 0.75rem;
+  gap: 0.4rem 0.55rem;
+  width: auto;
+  max-width: 100%;
 }
 
 .editorial-list-container .pubs-novel-list__item .editorial-row-list__title {
-  flex: 1 1 auto;
-  min-width: min(100%, 12rem);
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .editorial-list-container .pubs-novel-list__status {
@@ -134,7 +136,7 @@
 .editorial-list-block {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.45rem;
   min-width: 0;
 }
 
@@ -151,8 +153,8 @@
 .editorial-list-blocks {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.75rem, 4vh, 2.5rem);
-  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+  gap: clamp(1.1rem, 3vh, 1.5rem);
+  margin-top: clamp(1rem, 3vh, 1.5rem);
 }
 
 /*
@@ -212,7 +214,29 @@
 /* Publications page shell: header/intro stay outside the section cards */
 .pubs-overlap__content:has(.editorial-list-blocks) .pubs-editorial__masthead {
   border-bottom: none;
-  padding-bottom: clamp(0.5rem, 1.5vh, 0.85rem);
+  padding-bottom: clamp(0.35rem, 1.25vh, 0.65rem);
+  margin-bottom: 0;
+}
+
+/* Publications mobile density — match Press entry/container scale, no extra shell pad */
+@media (max-width: 767px) {
+  .pubs-overlap__content:has(.editorial-list-blocks) {
+    padding-block: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  .pubs-overlap .editorial-list-container {
+    padding: 0.65rem 0.7rem !important;
+  }
+
+  .pubs-overlap .editorial-list-blocks {
+    gap: 1.15rem;
+    margin-top: 1rem;
+  }
+
+  .pubs-overlap .editorial-list-block {
+    gap: 0.4rem;
+  }
 }
 
 /* Beat legacy pubs mobile card overrides so shared container wins */
@@ -221,11 +245,11 @@
 .pubs-overlap .editorial-list-container .pubs-novel-list__item {
   display: grid !important;
   grid-template-columns: auto 1fr !important;
-  gap: 0.35rem 0.85rem !important;
+  gap: 0.25rem 0.65rem !important;
   align-items: start !important;
   width: 100% !important;
-  margin: 0 0 0.7rem !important;
-  padding: 0.9rem var(--mobile-card-pad-inline, 1.15rem) !important;
+  margin: 0 0 0.45rem !important;
+  padding: 0.65rem 0.75rem !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--mobile-card-radius, 1rem) !important;
   background: color-mix(in srgb, var(--canvas) 72%, transparent) !important;
@@ -243,11 +267,18 @@
 }
 
 .pubs-overlap .editorial-list-container .pubs-novel-list__item {
-  display: flex !important;
+  display: inline-flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
   align-items: center !important;
-  gap: 0.55rem 0.75rem !important;
+  gap: 0.4rem 0.55rem !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+.pubs-overlap .editorial-list-container .pubs-novel-list__item .editorial-row-list__title {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
 }
 
 .pubs-overlap .editorial-list-container .pubs-novel-list__status {
@@ -255,7 +286,7 @@
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  padding: 0.28rem 0.5rem !important;
+  padding: 0.22rem 0.45rem !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: 999px !important;
   background: color-mix(in srgb, var(--ink) 4%, transparent) !important;

@@ -1761,11 +1761,31 @@ select,
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    padding-inline: var(--mobile-page-pad) !important;
+    padding-block: 0 !important;
+    padding-inline: 0 !important;
   }
 
   .pubs-overlap__content:has(.editorial-list-blocks) .editorial-list-container {
     margin-inline: 0;
+    padding: 0.65rem 0.7rem !important;
+  }
+
+  .pubs-overlap__content:has(.editorial-list-blocks) .editorial-list-blocks {
+    gap: 1.15rem;
+    margin-top: 1rem;
+  }
+
+  .pubs-overlap .editorial-list-container .editorial-row-list__item,
+  .pubs-overlap .editorial-list-container .pubs-novel-list__item {
+    margin-bottom: 0.45rem !important;
+    padding: 0.65rem 0.75rem !important;
+  }
+
+  .pubs-overlap .editorial-list-container .pubs-novel-list__item {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    width: auto !important;
+    max-width: 100% !important;
   }
 }
 
