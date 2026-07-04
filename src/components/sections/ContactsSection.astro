@@ -59,7 +59,7 @@ const l = t[locale];
       </div>
 
       <div class="scroll-reveal">
-        <form class="contacts-chaos__form space-y-10" onsubmit="event.preventDefault(); alert('Sent (demo)');">
+        <form class="contacts-chaos__form space-y-10" data-sent-message={l.messageSentDemo} onsubmit="event.preventDefault(); alert(this.dataset.sentMessage);">
           <div>
             <span class="section-eyebrow block mb-3">{l.nameLabel}</span>
             <input type="text" placeholder={l.namePlaceholder} class="contacts-chaos__input" />

@@ -47,10 +47,11 @@ const l = t[locale];
           <div class={`scroll-reveal min-w-0 art-wall-label ${i % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
             <h3 class="type-subheading text-2xl md:text-3xl lg:text-[2rem] text-ink mb-3">{p.title}</h3>
             <p class="type-subheading text-lg md:text-xl text-ink-65 mb-2">{p.dimensions}</p>
-            <p class="type-body text-ink-60 text-sm mb-8">By Artist NANA (Anna Dauyl Rockswell)</p>
+            <p class="type-body text-ink-60 text-sm mb-8">{l.artistCredit}</p>
 
             <div class="art-wall-label__block">
-              <p class="type-heading text-[0.6875rem] text-ink-50 mb-4">About</p>
+              {/* Artwork titles + wall-label body copy: authored English (proper nouns / source text) */}
+              <p class="type-heading text-[0.6875rem] text-ink-50 mb-4">{l.wallAboutLabel}</p>
               <div class="hidden md:block space-y-4">
                 {p.aboutParagraphs.map((para) => (
                   <p class="content-prose text-ink-75 max-w-[58ch] text-justify">{para}</p>

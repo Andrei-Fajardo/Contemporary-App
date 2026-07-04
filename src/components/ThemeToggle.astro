@@ -1,19 +1,27 @@
 ---
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
 ---
 
 <div class="theme-toggle">
-  <span class="theme-toggle__label">Light</span>
+  <span class="theme-toggle__label">{l.themeLight}</span>
   <button
     type="button"
     class="theme-switch"
     data-theme-switch
     role="switch"
     aria-checked="true"
-    aria-label="Toggle between light and dark mode"
+    aria-label={l.themeToggleAria}
   >
     <span class="theme-switch__track" aria-hidden="true">
       <span class="theme-switch__thumb"></span>
     </span>
   </button>
-  <span class="theme-toggle__label">Dark</span>
+  <span class="theme-toggle__label">{l.themeDark}</span>
 </div>

@@ -1,13 +1,17 @@
 ---
 import type { ExhibitionEntry } from '../data/content';
 import { formatExhibitionDisplay } from '../data/exhibition-display';
+import { t, type LocaleKey } from '../data/translations';
 
 interface Props {
   entries: ExhibitionEntry[];
   expandLabel?: string;
+  locale?: LocaleKey;
 }
 
-const { entries, expandLabel = 'View materials' } = Astro.props;
+const { entries, expandLabel, locale = 'en' } = Astro.props;
+const l = t[locale];
+const expand = expandLabel ?? l.viewMore;
 
 const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
 ---
@@ -27,17 +31,17 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
 
     return (
     <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
-      <summary class="exhibition-accordion__summary" aria-label={`${display.heading} — ${display.subheading} — ${expandLabel}`}>
+      <summary class="exhibition-accordion__summary" aria-label={`${display.heading} — ${display.subheading} — ${expand}`}>
         <span class="exhibition-accordion__year">{entry.year}</span>
         <span class="exhibition-accordion__heading">
           <span class="exhibition-accordion__title">{display.heading}</span>
           {entry.kind === 'museum' && (
-            <span class="exhibition-accordion__badge">Museum</span>
+            <span class="exhibition-accordion__badge">{l.museumBadge}</span>
           )}
         </span>
         <span class="exhibition-accordion__meta">{display.subheading}</span>
         <span class="exhibition-accordion__action" aria-hidden="true">
-          <span class="exhibition-accordion__action-label">{expandLabel}</span>
+          <span class="exhibition-accordion__action-label">{expand}</span>
           <span class="exhibition-accordion__action-icon exhibition-accordion__action-icon--arrow">
             <svg class="exhibition-accordion__icon-svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M2 6h7.5M6.5 3.5 10 6 6.5 8.5" />
@@ -56,7 +60,7 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
           <dl class="exhibition-accordion__links">
             {entry.links.website && (
               <div class="exhibition-accordion__link-row">
-                <dt>Website</dt>
+                <dt>{l.linkWebsite}</dt>
                 <dd>
                   <a href={entry.links.website} target="_blank" rel="noopener noreferrer" class="exhibition-accordion__link">
                     {entry.links.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
@@ -66,7 +70,7 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
             )}
             {(entry.links.magazine || entry.links.magazineLabel) && (
               <div class="exhibition-accordion__link-row">
-                <dt>Magazine</dt>
+                <dt>{l.linkMagazine}</dt>
                 <dd>
                   {entry.links.magazine ? (
                     <a href={entry.links.magazine} target="_blank" rel="noopener noreferrer" class="exhibition-accordion__link">
@@ -80,13 +84,13 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
             )}
             {entry.links.issue && entry.category !== 'magazine' && (
               <div class="exhibition-accordion__link-row">
-                <dt>Issue</dt>
+                <dt>{l.linkIssue}</dt>
                 <dd><span class="content-prose text-ink-75">{entry.links.issue}</span></dd>
               </div>
             )}
             {entry.links.artwork && (
               <div class="exhibition-accordion__link-row">
-                <dt>Artwork</dt>
+                <dt>{l.linkArtwork}</dt>
                 <dd><span class="content-prose text-ink-75">{entry.links.artwork}</span></dd>
               </div>
             )}
@@ -109,8 +113,8 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
                   data-gallery-index={i}
                   {...(isViewAllCell ? { 'data-gallery-open': true } : { 'data-gallery-preview': true })}
                   aria-label={isViewAllCell
-                    ? `View all photos for ${entry.title}`
-                    : `View ${entry.title} image ${i + 1}`}
+                    ? `${l.viewAllPhotosFor} ${entry.title}`
+                    : `${l.viewImageN} ${i + 1}: ${entry.title}`}
                 >
                   {/* Skeleton shimmer shown while image loads */}
                   <span class="exg-thumb-strip__skeleton" aria-hidden="true"></span>
@@ -137,7 +141,7 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
         {allGalleryImages.length > 0 && (
           <div class="exg-thumb-strip__footer">
             <span class="exg-thumb-strip__total">
-              {allGalleryImages.length} item{allGalleryImages.length !== 1 ? 's' : ''}
+              {allGalleryImages.length} {allGalleryImages.length !== 1 ? l.itemsLabel : l.itemLabel}
             </span>
                 <button
                   type="button"
@@ -146,9 +150,9 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
                   data-gallery-images={imagesEncoded}
                   data-gallery-title={entry.title}
                   data-gallery-place={entry.place}
-                  aria-label={`View all ${total} photos for ${entry.title}`}
+                  aria-label={`${l.viewAllPhotosFor} ${entry.title}`}
                 >
-                  View all
+                  {l.viewAll}
                   <svg class="exg-thumb-strip__view-all-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <polyline points="4 2 8 6 4 10"/>
                   </svg>
@@ -159,7 +163,9 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
         )}
 
         {entry.kind && entry.category !== 'magazine' && (
-          <span class="exhibition-accordion__kind">{entry.kind}</span>
+          <span class="exhibition-accordion__kind">
+            {entry.kind === 'museum' ? l.museumBadge : entry.kind === 'solo' ? l.soloExhibitions : l.groupExhibitions}
+          </span>
         )}
       </div>
     </details>

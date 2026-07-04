@@ -38,8 +38,9 @@ const l = t[locale];
         {l.nav.press}
       </h2>
     </div>
+    {/* Press headlines are published titles — kept as authored English */}
     <EditorialListContainer class="scroll-reveal">
-      <EditorialLinkList items={pressLinks} />
+      <EditorialLinkList items={pressLinks} emptyMessage={l.listForthcoming} />
     </EditorialListContainer>
   </div>
 

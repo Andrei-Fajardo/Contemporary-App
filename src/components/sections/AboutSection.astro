@@ -1,6 +1,5 @@
 ---
 import { t, type LocaleKey } from '../../data/translations';
-import { siteCopy } from '../../data/site-copy';
 
 interface Props {
   locale?: LocaleKey;
@@ -26,7 +25,7 @@ const l = t[locale];
         <div class="about-chaos__meta-block">
           <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
           <ul class="about-chaos__list">
-            {siteCopy.about.interests.map((item) => (
+            {l.interests.map((item) => (
               <li>{item}</li>
             ))}
           </ul>
@@ -35,7 +34,7 @@ const l = t[locale];
         <div class="about-chaos__meta-block">
           <p class="section-eyebrow mb-3">{l.influencesLabel}</p>
           <ul class="about-chaos__list">
-            {siteCopy.about.mentalCatharsis.map((item) => (
+            {l.influences.map((item) => (
               <li>{item}</li>
             ))}
           </ul>

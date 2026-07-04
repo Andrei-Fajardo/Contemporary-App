@@ -58,8 +58,9 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
     <div class="editorial-list-blocks scroll-reveal">
       <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
+        {/* Publication titles are proper nouns / published names — kept as authored English */}
         <EditorialListContainer>
-          <EditorialLinkList items={publicationLinks} showYear={false} />
+          <EditorialLinkList items={publicationLinks} showYear={false} emptyMessage={l.listForthcoming} />
         </EditorialListContainer>
       </div>
 
@@ -70,7 +71,7 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
             <ul class="pubs-novel-list">
               {novels.map((novel) => (
                 <li class="pubs-novel-list__item">
-                  <span class="editorial-row-list__title">{novel.title}</span>
+                  <span class="editorial-row-list__title">{novel.title === 'Untitled Novel' ? l.untitledNovel : novel.title}</span>
                   {novel.status === 'coming-soon' && (
                     <span class="pubs-novel-list__status">{l.comingSoon}</span>
                   )}

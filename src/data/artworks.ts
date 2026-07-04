@@ -1,3 +1,10 @@
+/**
+ * Artwork catalog.
+ * PROPER NOUNS / authored English kept as-is across locales:
+ * - `title` (e.g. "The Fish")
+ * - `aboutParagraphs` / `aboutMobile` wall-label body copy (TODO: dedicated translations)
+ * UI chrome around artworks (artist credit, About label) lives in translations.ts.
+ */
 export interface Artwork {
   slug: string;
   title: string;

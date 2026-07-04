@@ -30,7 +30,7 @@ const filters = [
       {l.exhibitionsIntro}
     </p>
 
-    <div class="exhibition-filters scroll-reveal" role="tablist" aria-label="Exhibition categories">
+    <div class="exhibition-filters scroll-reveal" role="tablist" aria-label={l.exhibitionCategoriesAria}>
       {filters.map((filter, index) => (
         <button
           type="button"
@@ -44,12 +44,13 @@ const filters = [
       ))}
     </div>
 
-    <ExhibitionAccordion entries={sortedExhibitions} expandLabel={l.viewMore} />
+    {/* Exhibition titles, venues, and places are proper nouns — not translated */}
+    <ExhibitionAccordion entries={sortedExhibitions} expandLabel={l.viewMore} locale={locale} />
   </div>
 </section>
 
 {/* Gallery overlay — rendered once, shown/hidden via JS */}
-<ExhibitionGalleryOverlay />
+<ExhibitionGalleryOverlay locale={locale} />
 
 <script>
   import { initExhibitionFilter } from "../../scripts/exhibition-filter";

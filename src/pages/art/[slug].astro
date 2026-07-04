@@ -48,10 +48,11 @@ const additionalMedia: Record<string, string[]> = {
       <div class="art-detail-bleed__caption art-wall-label">
         <h1 class="art-detail-bleed__title">{painting.title}</h1>
         <p class="art-detail-bleed__meta">{painting.dimensions}</p>
-        <p class="art-detail-bleed__artist">By Artist NANA (Anna Dauyl Rockswell)</p>
+        <p class="art-detail-bleed__artist">{l.artistCredit}</p>
 
         <div>
-          <p class="art-detail-bleed__about-label">About</p>
+          {/* Artwork title + wall-label body copy: authored English (proper nouns / source text) */}
+          <p class="art-detail-bleed__about-label">{l.wallAboutLabel}</p>
           <div class="hidden md:block">
             <div class="art-detail-bleed__prose content-prose text-ink-65">
               <p>{leadParagraph}</p>

@@ -27,7 +27,7 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
           />
           <img
             src="/media/anna header 3.png"
-            alt="Anna Dauyl Rockswell"
+            alt={l.siteTitle}
             class="hero-about-layer__art-img"
             loading="eager"
             decoding="async"
@@ -36,7 +36,7 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
           />
         </picture>
         <div class="hero-profile-overlay grain-noise" aria-hidden="true">
-          <p class="hero-profile-overlay__meta">Portfolio · 2026</p>
+          <p class="hero-profile-overlay__meta">{l.portfolioMeta}</p>
           <p class="hero-profile-overlay__tagline">{l.heroTagline}</p>
         </div>
       </div>

@@ -11,9 +11,9 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 
 const tabs = [
-  { id: 'academic', label: 'Academic' },
-  { id: 'igaming',  label: 'iGaming Portfolio' },
-  { id: 'uplatform', label: 'Uplatform' },
+  { id: 'academic', label: l.researchTabAcademic },
+  { id: 'igaming',  label: l.researchTabIgaming },
+  { id: 'uplatform', label: l.researchTabUplatform },
 ] as const;
 ---
 
@@ -28,7 +28,7 @@ const tabs = [
     </div>
 
     <!-- Tab filters — same pattern as exhibition filters -->
-    <div class="exhibition-filters research-filters scroll-reveal" role="tablist" aria-label="Research categories">
+    <div class="exhibition-filters research-filters scroll-reveal" role="tablist" aria-label={l.researchCategoriesAria}>
       {tabs.map((tab, i) => (
         <button
           type="button"
@@ -50,7 +50,8 @@ const tabs = [
       data-research-panel="academic"
       role="tabpanel"
     >
-      <EditorialLinkList items={researchLinks} />
+      {/* Link titles are proper nouns / published headlines — kept as authored English */}
+      <EditorialLinkList items={researchLinks} emptyMessage={l.listForthcoming} />
     </div>
 
     <div
@@ -61,7 +62,7 @@ const tabs = [
       hidden
       aria-hidden="true"
     >
-      <EditorialLinkList items={igamingLinks} showYear={false} />
+      <EditorialLinkList items={igamingLinks} showYear={false} emptyMessage={l.listForthcoming} />
     </div>
 
     <div
@@ -73,12 +74,12 @@ const tabs = [
       aria-hidden="true"
     >
       <div class="editorial-index__group">
-        <h3 class="editorial-index__label">Blog</h3>
-        <EditorialLinkList items={uplatformBlogLinks} showYear={false} />
+        <h3 class="editorial-index__label">{l.researchBlogLabel}</h3>
+        <EditorialLinkList items={uplatformBlogLinks} showYear={false} emptyMessage={l.listForthcoming} />
       </div>
       <div class="editorial-index__group">
-        <h3 class="editorial-index__label">Press Releases & Website Text</h3>
-        <EditorialLinkList items={uplatformPressLinks} showYear={false} />
+        <h3 class="editorial-index__label">{l.researchPressLabel}</h3>
+        <EditorialLinkList items={uplatformPressLinks} showYear={false} emptyMessage={l.listForthcoming} />
       </div>
     </div>
   </div>

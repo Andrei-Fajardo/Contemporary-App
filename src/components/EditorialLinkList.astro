@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { items, emptyMessage = 'List forthcoming', showYear = true } = Astro.props;
+// Prefer callers passing `emptyMessage` from `t[locale].listForthcoming`.
 const listClass = showYear ? 'editorial-link-list editorial-row-list scroll-reveal' : 'editorial-link-list editorial-row-list editorial-row-list--no-year scroll-reveal';
 ---
 

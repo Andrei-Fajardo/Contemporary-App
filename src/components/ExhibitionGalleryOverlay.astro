@@ -5,6 +5,14 @@
  * Rendered once in the DOM, populated dynamically via JS.
  * Activated by exhibition-gallery.ts when user clicks "View All".
  */
+import { t, type LocaleKey } from '../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
 ---
 
 <div
@@ -12,7 +20,7 @@
   class="exg-overlay"
   role="dialog"
   aria-modal="true"
-  aria-label="Exhibition gallery"
+  aria-label={l.exhibitionGalleryAria}
   aria-hidden="true"
   hidden
 >
@@ -33,7 +41,7 @@
           type="button"
           class="exg-overlay__close"
           id="exg-close"
-          aria-label="Close gallery"
+          aria-label={l.closeGalleryAria}
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
             <line x1="4" y1="4" x2="16" y2="16"/>
@@ -63,7 +71,7 @@
   <div class="exg-lightbox" id="exg-lightbox" aria-hidden="true" hidden>
     <div class="exg-lightbox__backdrop" id="exg-lightbox-backdrop"></div>
     <div class="exg-lightbox__stage">
-      <button type="button" class="exg-lightbox__nav exg-lightbox__nav--prev" id="exg-lb-prev" aria-label="Previous">
+      <button type="button" class="exg-lightbox__nav exg-lightbox__nav--prev" id="exg-lb-prev" aria-label={l.previousAria}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="13 4 7 10 13 16"/>
         </svg>
@@ -79,12 +87,12 @@
           hidden
         ></video>
       </div>
-      <button type="button" class="exg-lightbox__nav exg-lightbox__nav--next" id="exg-lb-next" aria-label="Next">
+      <button type="button" class="exg-lightbox__nav exg-lightbox__nav--next" id="exg-lb-next" aria-label={l.nextAria}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="7 4 13 10 7 16"/>
         </svg>
       </button>
-      <button type="button" class="exg-lightbox__close" id="exg-lb-close" aria-label="Close">
+      <button type="button" class="exg-lightbox__close" id="exg-lb-close" aria-label={l.closeAria}>
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/>
         </svg>

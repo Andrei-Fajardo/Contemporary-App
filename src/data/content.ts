@@ -1,3 +1,10 @@
+/**
+ * Content catalogs (exhibitions, press, publications, research links).
+ * PROPER NOUNS / published titles intentionally not i18n-wrapped:
+ * exhibition titles, gallery/venue names, places; press & publication headlines;
+ * research article titles; magazine names. UI chrome (filters, badges, labels)
+ * is translated via translations.ts.
+ */
 export type ExhibitionCategory = 'physical' | 'digital' | 'magazine';
 
 export interface ExhibitionLinks {
