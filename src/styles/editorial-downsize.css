@@ -166,30 +166,15 @@
   padding-top: clamp(0.5rem, 2vh, 1.5rem);
 }
 
-/* — Hero portrait: larger, less padding — */
-.hero-about-layer__inner {
-  padding-top: clamp(1.5rem, 3vh, 2.5rem);
-  padding-bottom: clamp(0.75rem, 2vh, 1.5rem);
-}
-
-.hero-about-layer__art {
-  width: clamp(32rem, 58vw, 52rem);
-}
-
-@media (max-width: 639px) {
-  .hero-about-layer__cluster {
-    transform: none;
-    gap: 0;
+/* — Hero portrait: larger, less padding (desktop / tablet only) — */
+@media (min-width: 640px) {
+  .hero-about-layer__inner {
+    padding-top: clamp(1.5rem, 3vh, 2.5rem);
+    padding-bottom: clamp(0.75rem, 2vh, 1.5rem);
   }
 
   .hero-about-layer__art {
-    width: min(88vw, 22rem);
-    margin-inline: auto;
-  }
-
-  .hero-about-layer__inner {
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
+    width: clamp(32rem, 58vw, 52rem);
   }
 }
 

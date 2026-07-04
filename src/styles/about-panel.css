@@ -271,29 +271,29 @@
   }
 }
 
-/* ?? Mobile (<640px) — name-first sketch layout ????????????????????? */
+/* ?? Mobile (<640px) — bold editorial portrait + script overlap ???? */
 @media (max-width: 639px) {
   .hero-about-layer__cluster {
     position: relative;
-    display: grid;
-    grid-template-columns: clamp(11rem, 40vw, 12rem) minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    align-items: end;
-    gap: 0.25rem 0.65rem;
+    display: block;
     transform: none;
-    padding-inline: clamp(0.875rem, 4vw, 1.35rem);
+    padding-inline: clamp(0.75rem, 4vw, 1.25rem);
+    padding-bottom: clamp(1.25rem, 4vw, 1.75rem);
+    min-height: 72vw;
+    overflow: visible;
   }
 
   .hero-about-layer__art {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    width: clamp(11rem, 40vw, 12rem);
-    height: clamp(11rem, 40vw, 12rem);
-    max-width: 12rem;
-    max-height: 12rem;
-    align-self: start;
-    z-index: 1;
-    margin-bottom: -1.5rem;
+    position: relative;
+    z-index: 0;
+    display: block;
+    width: 70vw;
+    height: 70vw;
+    max-width: none;
+    max-height: none;
+    margin-inline: auto;
+    margin-left: 4vw;
+    margin-bottom: 0;
   }
 
   .hero-about-layer__art-img {
@@ -304,17 +304,22 @@
     margin-bottom: 0;
     opacity: 1;
     border-radius: 0;
+    object-fit: cover;
+    object-position: center top;
   }
 
   .hero-about-layer__name {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: end;
+    position: absolute;
+    z-index: 10;
+    top: 6%;
+    right: -0.15rem;
+    left: auto;
+    width: min(58vw, 14rem);
     min-width: 0;
-    padding-top: 0;
-    padding-left: 0.35rem;
-    padding-bottom: 0.35rem;
-    z-index: 2;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    pointer-events: none;
   }
 
   .hero-name__last {
@@ -324,35 +329,38 @@
   .hero-name__first {
     display: flex;
     flex-direction: column;
-    gap: 0.02em;
+    align-items: flex-end;
+    gap: 0;
   }
 
   .hero-name__line {
     display: block;
-    line-height: 0.88;
+    line-height: 0.82;
   }
 
   .hero-name__last-mobile {
     display: block;
-    grid-column: 1 / -1;
-    grid-row: 2;
-    position: relative;
-    z-index: 2;
+    position: absolute;
+    z-index: 10;
+    left: -0.35rem;
+    right: 0.25rem;
+    bottom: 2%;
+    width: auto;
+    margin: 0;
+    padding: 0;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(4.5rem, 21.5vw, 6.875rem);
-    line-height: 0.86;
+    font-size: clamp(4.25rem, 20vw, 6.5rem);
+    line-height: 0.82;
     color: var(--ink);
     hyphens: none;
     -webkit-hyphens: none;
     word-break: keep-all;
-    width: 100%;
-    padding-inline: 0;
-    margin-top: 0.15rem;
     text-align: left;
+    pointer-events: none;
   }
 
   .hero-about-layer__inner {
-    padding-top: clamp(1.25rem, 3.5vh, 2rem);
+    padding-top: clamp(1rem, 3vh, 1.5rem);
     padding-bottom: clamp(0.5rem, 1.25vh, 1rem);
     padding-inline: 0;
     justify-content: flex-start;
@@ -362,8 +370,8 @@
   .hero-about-layer__heading {
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     font-weight: 400;
-    font-size: clamp(3rem, 15vw, 5.25rem);
-    line-height: 0.86;
+    font-size: clamp(3.25rem, 16vw, 5.5rem);
+    line-height: 0.82;
     hyphens: none;
     -webkit-hyphens: none;
     overflow-wrap: normal;
