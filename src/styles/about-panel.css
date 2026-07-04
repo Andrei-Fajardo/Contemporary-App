@@ -400,7 +400,9 @@
   /*
     Rockswell — natural-width, left-aligned block.
     Left edge matches page content margin (--mobile-page-pad / ABOUT card).
-    Font clamp sized so rendered width stays inside content area at 375–414px.
+    vw doubled from 16vw→32vw (~2x intent); max-bound capped so text width
+    stays inside content area at 375–414px (full 2x overflows safe margins).
+    Min kept at 3rem so clamp(min, val, max) stays valid (min ≤ max).
   */
   .hero-name__last-mobile {
     display: block;
@@ -409,14 +411,14 @@
     width: fit-content;
     max-width: calc(100% - (2 * var(--mobile-page-pad, 1rem)));
     box-sizing: border-box;
-    margin-top: clamp(1.35rem, 4.5vw, 1.75rem);
-    margin-bottom: clamp(0.4rem, 1.5vw, 0.65rem);
+    margin-top: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: clamp(0.55rem, 2vw, 0.85rem);
     margin-left: var(--mobile-page-pad, 1rem);
     margin-right: auto;
     padding: 0;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    /* 16vw @ 375px ≈ 60px; natural "Rockswell" width stays under ~343px content area */
-    font-size: clamp(3rem, 16vw, 4.5rem);
+    /* 32vw @ 375px = 120px ideal 2x; max 5.25rem (84px) is overflow-safe ceiling */
+    font-size: clamp(3rem, 32vw, 5.25rem);
     font-weight: 400;
     line-height: 0.84;
     letter-spacing: -0.02em;
@@ -453,7 +455,7 @@
   }
 
   .about-panel-stack__content {
-    padding-top: clamp(1.75rem, 5vh, 2.5rem);
+    padding-top: clamp(2rem, 5.5vh, 2.75rem);
     margin-top: 0;
   }
 
