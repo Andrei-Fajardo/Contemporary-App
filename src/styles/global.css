@@ -1782,15 +1782,12 @@ select,
 
   .pubs-overlap .editorial-list-container .editorial-row-list__item,
   .pubs-overlap .editorial-list-container .pubs-novel-list__item {
-    margin-bottom: 0.45rem !important;
-    padding: 0.65rem 0.75rem !important;
-  }
-
-  .pubs-overlap .editorial-list-container .pubs-novel-list__item {
-    display: inline-flex !important;
+    display: flex !important;
     flex-direction: row !important;
-    width: auto !important;
+    width: 100% !important;
     max-width: 100% !important;
+    margin-bottom: 0.45rem !important;
+    padding: 0.85rem 1rem !important;
   }
 }
 
