@@ -184,8 +184,8 @@
   opacity: 0.85;
 }
 
-@media (max-width: 639px) {
-  /* Mobile hero: name-first layout — hide editorial chrome until integrated later */
+@media (max-width: 767px) {
+  /* Mobile hero: stacked portrait + signature — hide editorial chrome */
   .hero-editorial-only {
     display: none !important;
   }

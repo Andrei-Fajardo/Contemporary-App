@@ -166,8 +166,8 @@
   padding-top: clamp(0.5rem, 2vh, 1.5rem);
 }
 
-/* — Hero portrait: larger, less padding (desktop / tablet only) — */
-@media (min-width: 640px) {
+/* — Hero portrait: larger, less padding (md+ only; mobile stacks in about-panel) — */
+@media (min-width: 768px) {
   .hero-about-layer__inner {
     padding-top: clamp(1.5rem, 3vh, 2.5rem);
     padding-bottom: clamp(0.75rem, 2vh, 1.5rem);

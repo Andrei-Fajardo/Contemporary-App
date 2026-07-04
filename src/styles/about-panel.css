@@ -244,8 +244,8 @@
   display: none;
 }
 
-/* ?? Tablet (768?1023px) ?????????????????????????????????????? */
-@media (max-width: 1023px) {
+/* ?? Tablet (768–1023px) — keep side-by-side cluster, not mobile stack */
+@media (min-width: 768px) and (max-width: 1023px) {
   .hero-about-layer__art {
     width: clamp(22rem, 54vw, 36rem);
   }
@@ -271,15 +271,20 @@
   }
 }
 
-/* ?? Mobile (<640px) — bold editorial portrait + script overlap ???? */
-@media (max-width: 639px) {
+/* ?? Mobile (<768px / below md) — stacked portrait + signature in flow ??
+   Signature is NOT overlaid; desktop flex/overlap layout stays at md+. */
+@media (max-width: 767px) {
   .hero-about-layer__cluster {
-    position: relative;
-    display: block;
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
     transform: none;
-    padding-inline: clamp(0.75rem, 4vw, 1.25rem);
-    padding-bottom: clamp(1.25rem, 4vw, 1.75rem);
-    min-height: 72vw;
+    padding-inline: 0;
+    padding-bottom: 0;
+    min-height: 0;
     overflow: visible;
   }
 
@@ -287,85 +292,77 @@
     position: relative;
     z-index: 0;
     display: block;
-    width: 70vw;
-    height: 70vw;
+    flex: none;
+    width: 100%;
+    height: auto;
     max-width: none;
     max-height: none;
-    margin-inline: auto;
-    margin-left: 4vw;
-    margin-bottom: 0;
+    margin: 0;
+    border-radius: 0;
   }
 
   .hero-about-layer__art-img {
+    display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     aspect-ratio: 1 / 1;
     max-height: none;
-    margin-bottom: 0;
+    margin: 0;
     opacity: 1;
     border-radius: 0;
     object-fit: cover;
     object-position: center top;
   }
 
+  /* Signature wordmark — normal flow below portrait, no absolute overlay */
   .hero-about-layer__name {
-    position: absolute;
-    z-index: 10;
-    top: 6%;
-    right: -0.15rem;
-    left: auto;
-    width: min(58vw, 14rem);
+    position: static;
+    z-index: auto;
+    display: block;
+    flex: none;
+    width: 100%;
+    max-width: 100%;
     min-width: 0;
-    padding: 0;
-    margin: 0;
-    text-align: right;
-    pointer-events: none;
-    color: #f5f2eb;
-    mix-blend-mode: difference;
-  }
-
-  .hero-name__last {
-    display: none;
+    margin: clamp(1rem, 3.5vw, 1.35rem) 0 0;
+    padding-inline: clamp(0.875rem, 4vw, 1.35rem);
+    padding-top: 0;
+    padding-bottom: 0;
+    text-align: left;
+    pointer-events: auto;
+    color: var(--ink);
+    mix-blend-mode: normal;
   }
 
   .hero-name__first {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 0;
   }
 
   .hero-name__line {
     display: block;
-    line-height: 0.82;
+    line-height: 0.88;
+  }
+
+  /* Full name lives in the real h1 on mobile — no duplicate overlay layer */
+  .hero-name__last {
+    display: block;
+    line-height: 0.88;
   }
 
   .hero-name__last-mobile {
-    display: block;
-    position: absolute;
-    z-index: 10;
-    left: -0.35rem;
-    right: 0.25rem;
-    bottom: 2%;
-    width: auto;
-    margin: 0;
-    padding: 0;
-    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(4.25rem, 20vw, 6.5rem);
-    line-height: 0.82;
-    color: #f5f2eb;
-    mix-blend-mode: difference;
-    hyphens: none;
-    -webkit-hyphens: none;
-    word-break: keep-all;
-    text-align: left;
-    pointer-events: none;
+    display: none;
   }
 
-  .hero-about-layer__inner {
-    padding-top: clamp(1rem, 3vh, 1.5rem);
-    padding-bottom: clamp(0.5rem, 1.25vh, 1rem);
-    padding-inline: 0;
+  .hero-about-layer__inner,
+  .hero-about-layer__inner.section-shell,
+  .hero-about-layer__inner.section-shell--wide {
+    padding-top: clamp(0.75rem, 2.5vh, 1.25rem);
+    padding-bottom: clamp(1.25rem, 3.5vh, 2rem);
+    padding-inline: 0 !important;
+    max-width: none;
+    width: 100%;
     justify-content: flex-start;
     align-items: stretch;
   }
@@ -373,9 +370,9 @@
   .hero-about-layer__heading {
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     font-weight: 400;
-    font-size: clamp(3.25rem, 16vw, 5.5rem);
-    line-height: 0.82;
-    color: #f5f2eb;
+    font-size: clamp(2.85rem, 12.5vw, 4.75rem);
+    line-height: 0.9;
+    color: var(--ink);
     hyphens: none;
     -webkit-hyphens: none;
     overflow-wrap: normal;
@@ -383,13 +380,14 @@
     width: 100%;
     max-width: 100%;
     margin: 0;
+    overflow: visible;
   }
 
   .magazine-cover .hero-about-layer__heading {
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     font-weight: 400;
     letter-spacing: 0.01em;
-    color: #f5f2eb;
+    color: var(--ink);
   }
 
   .hero-about-layer__roles {
@@ -397,12 +395,12 @@
   }
 
   .hero-about-layer__rule {
-    margin-top: clamp(0.75rem, 2vh, 1.25rem);
+    margin-top: clamp(1rem, 3vh, 1.5rem);
     margin-inline: clamp(0.875rem, 4vw, 1.35rem);
   }
 
   .about-panel-stack__content {
-    padding-top: clamp(1.25rem, 3vh, 2rem);
+    padding-top: clamp(1.5rem, 4vh, 2.25rem);
     margin-top: 0;
   }
 
