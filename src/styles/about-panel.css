@@ -395,7 +395,7 @@
     border: 0;
   }
 
-  /* Rockswell — spans near-full viewport width below portrait (no blend) */
+  /* Rockswell — large, centered so cursive R flourish stays in-bounds */
   .hero-name__last-mobile {
     display: block;
     position: static;
@@ -404,14 +404,14 @@
     max-width: 100%;
     box-sizing: border-box;
     margin: clamp(1.35rem, 4.5vw, 1.75rem) 0 clamp(0.4rem, 1.5vw, 0.65rem);
-    padding-inline: clamp(0.5rem, 3vw, 0.875rem);
+    padding-inline: clamp(1rem, 5vw, 1.5rem);
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(4.5rem, 28vw, 7.75rem);
+    font-size: clamp(4rem, 24vw, 6.75rem);
     font-weight: 400;
     line-height: 0.84;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
     color: var(--ink);
-    text-align: left;
+    text-align: center;
     hyphens: none;
     -webkit-hyphens: none;
     word-break: keep-all;
