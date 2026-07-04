@@ -389,25 +389,28 @@
     border: 0;
   }
 
-  /* Rockswell — block below portrait, on page canvas (no blend) */
+  /* Rockswell — full content-width scale below portrait (no blend) */
   .hero-name__last-mobile {
     display: block;
     position: static;
     z-index: auto;
     width: auto;
     max-width: 100%;
-    margin: clamp(0.85rem, 3vw, 1.15rem) clamp(0.875rem, 4vw, 1.35rem) 0;
+    box-sizing: border-box;
+    margin: clamp(1.1rem, 3.5vw, 1.5rem) clamp(0.875rem, 4vw, 1.35rem) clamp(0.25rem, 1vw, 0.4rem);
     padding: 0;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(2.5rem, 11.5vw, 3.85rem);
+    font-size: clamp(3rem, 17.5vw, 5.15rem);
     font-weight: 400;
-    line-height: 0.88;
-    letter-spacing: -0.01em;
+    line-height: 0.86;
+    letter-spacing: -0.025em;
     color: var(--ink);
     text-align: left;
     hyphens: none;
     -webkit-hyphens: none;
     word-break: keep-all;
+    overflow-wrap: normal;
+    white-space: nowrap;
     pointer-events: none;
     filter: var(--hero-signature-shadow);
   }
@@ -434,7 +437,7 @@
   }
 
   .about-panel-stack__content {
-    padding-top: clamp(1.25rem, 3.5vh, 1.85rem);
+    padding-top: clamp(1.5rem, 4vh, 2.15rem);
     margin-top: 0;
   }
 
