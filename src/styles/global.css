@@ -299,18 +299,22 @@ html {
   position: absolute;
   top: -2.75rem;
   right: 0;
+  z-index: 2;
   font-size: 2rem;
   line-height: 1;
-  color: var(--ink-70);
+  /* Always white — theme ink is dark in light mode and invisible on the overlay */
+  color: #ffffff;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
-.global-lightbox__close:hover {
-  color: #fff;
+.global-lightbox__close:hover,
+.global-lightbox__close:focus-visible {
+  color: #ffffff;
+  opacity: 0.85;
 }
 
 @keyframes lightbox-scale-in {
