@@ -320,6 +320,8 @@
     margin: 0;
     text-align: right;
     pointer-events: none;
+    color: #f5f2eb;
+    mix-blend-mode: difference;
   }
 
   .hero-name__last {
@@ -351,7 +353,8 @@
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     font-size: clamp(4.25rem, 20vw, 6.5rem);
     line-height: 0.82;
-    color: var(--ink);
+    color: #f5f2eb;
+    mix-blend-mode: difference;
     hyphens: none;
     -webkit-hyphens: none;
     word-break: keep-all;
@@ -372,6 +375,7 @@
     font-weight: 400;
     font-size: clamp(3.25rem, 16vw, 5.5rem);
     line-height: 0.82;
+    color: #f5f2eb;
     hyphens: none;
     -webkit-hyphens: none;
     overflow-wrap: normal;
@@ -385,6 +389,7 @@
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     font-weight: 400;
     letter-spacing: 0.01em;
+    color: #f5f2eb;
   }
 
   .hero-about-layer__roles {
