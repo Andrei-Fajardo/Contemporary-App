@@ -411,14 +411,14 @@
     width: fit-content;
     max-width: calc(100% - (2 * var(--mobile-page-pad, 1rem)));
     box-sizing: border-box;
-    margin-top: clamp(1.5rem, 5vw, 2rem);
-    margin-bottom: clamp(0.55rem, 2vw, 0.85rem);
+    margin-top: clamp(1.65rem, 5.5vw, 2.25rem);
+    margin-bottom: clamp(0.65rem, 2.5vw, 1rem);
     margin-left: var(--mobile-page-pad, 1rem);
     margin-right: auto;
     padding: 0;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    /* 32vw @ 375px = 120px ideal 2x; max 5.25rem (84px) is overflow-safe ceiling */
-    font-size: clamp(3rem, 32vw, 5.25rem);
+    /* Larger fluid scale; max tuned to fill content width without past ABOUT margins */
+    font-size: clamp(4.5rem, 40vw, 8rem);
     font-weight: 400;
     line-height: 0.84;
     letter-spacing: -0.02em;
@@ -455,7 +455,7 @@
   }
 
   .about-panel-stack__content {
-    padding-top: clamp(2rem, 5.5vh, 2.75rem);
+    padding-top: clamp(2.25rem, 6vh, 3rem);
     margin-top: 0;
   }
 
