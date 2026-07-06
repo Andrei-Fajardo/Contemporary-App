@@ -244,11 +244,6 @@
   font-size: clamp(4.25rem, 10vw, 9.25rem);
 }
 
-/* Mobile last-name full-width row — hidden on desktop */
-.hero-name__last-mobile {
-  display: none;
-}
-
 /* ?? Tablet (768–1023px) — keep side-by-side cluster, not mobile stack */
 @media (min-width: 768px) and (max-width: 1023px) {
   .hero-about-layer__art {
@@ -276,15 +271,10 @@
   }
 }
 
-/* ?? Mobile (<768px) — Anna/Dauyl overlays portrait; Rockswell sits below ??
+/* ?? Mobile (<768px) — pre-composed portrait (anna header 4); no text overlay ??
    Mobile-only; desktop flex cluster stays at md+. */
 @media (max-width: 767px) {
   .hero-about-layer__cluster {
-    /* Match ABOUT card / section-shell mobile page margin */
-    --mobile-page-pad: clamp(1rem, 4.5vw, 1.35rem);
-    --hero-signature-shadow:
-      drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18))
-      drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
     position: relative;
     display: block;
     isolation: isolate;
@@ -322,129 +312,6 @@
     object-position: center top;
   }
 
-  /*
-    Anna / Dauyl only — top-right over light background.
-    Light stone + mix-blend-difference for coat/pink legibility.
-  */
-  .hero-about-layer__name {
-    position: absolute;
-    top: 5%;
-    /* Pull left of viewport edge so "Dauyl" clears with a safe margin */
-    right: clamp(1.25rem, 9vw, 2rem);
-    left: auto;
-    bottom: auto;
-    z-index: 10;
-    display: block;
-    width: auto;
-    max-width: 48%;
-    min-width: 0;
-    margin: 0;
-    padding: 0;
-    pointer-events: none;
-    text-align: right;
-    color: #f5f2eb;
-    mix-blend-mode: difference;
-    filter: var(--hero-signature-shadow);
-  }
-
-  .hero-about-layer__heading {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-weight: 400;
-    font-size: clamp(2.15rem, 9.5vw, 3.35rem);
-    line-height: 0.86;
-    letter-spacing: -0.01em;
-    color: #f5f2eb;
-    hyphens: none;
-    -webkit-hyphens: none;
-    overflow-wrap: normal;
-    word-break: keep-all;
-    overflow: visible;
-  }
-
-  .magazine-cover .hero-about-layer__heading {
-    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    color: #f5f2eb;
-  }
-
-  .hero-name__first {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0;
-  }
-
-  .hero-name__line {
-    display: block;
-    line-height: 0.84;
-  }
-
-  /* Surname lives in .hero-name__last-mobile below the image */
-  .hero-name__last {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  /*
-    Rockswell — natural-width, left-aligned block.
-    Left edge matches page content margin (--mobile-page-pad / ABOUT card).
-    vw doubled from 16vw→32vw (~2x intent); max-bound capped so text width
-    stays inside content area at 375–414px (full 2x overflows safe margins).
-    Min kept at 3rem so clamp(min, val, max) stays valid (min ≤ max).
-
-    Script ascenders/loops extend well past a tight line box — use generous
-    line-height + top padding so the border box contains full glyph ink
-    (ancestors with overflow-x: clip/hidden compute overflow-y: auto and clip
-    anything painted outside the element box).
-  */
-  .hero-name__last-mobile {
-    display: block;
-    position: static;
-    z-index: auto;
-    width: max-content;
-    max-width: calc(100% - (2 * var(--mobile-page-pad, 1rem)) - 1.9rem);
-    box-sizing: border-box;
-    height: auto;
-    min-height: 0;
-    margin-top: clamp(1.65rem, 5.5vw, 2.25rem);
-    margin-bottom: clamp(0.65rem, 2.5vw, 1rem);
-    margin-left: var(--mobile-page-pad, 1rem);
-    margin-right: auto;
-    padding: clamp(0.75rem, 3vw, 1.25rem) 1.1rem clamp(0.25rem, 1vw, 0.5rem) 0.35rem;
-    font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    /*
-      Real iPhone widths render this script slightly wider than DevTools emulation.
-      Keep extra inline-end breathing room for the R/ll flourishes so the surname
-      never kisses the viewport edge at 375, 390, 393, 414, or 428 px widths.
-    */
-    font-size: clamp(3.55rem, 27.5vw, 5.55rem);
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    text-align: left;
-    hyphens: none;
-    -webkit-hyphens: none;
-    word-break: keep-all;
-    overflow-wrap: normal;
-    white-space: nowrap;
-    overflow: visible;
-    pointer-events: none;
-    filter: var(--hero-signature-shadow);
-  }
-
   .hero-about-layer__inner,
   .hero-about-layer__inner.section-shell,
   .hero-about-layer__inner.section-shell--wide {
@@ -456,10 +323,6 @@
     width: 100%;
     justify-content: flex-start;
     align-items: stretch;
-  }
-
-  .hero-about-layer__roles {
-    display: none;
   }
 
   .hero-about-layer__rule {

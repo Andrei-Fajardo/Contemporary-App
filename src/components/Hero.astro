@@ -23,10 +23,10 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
         <picture>
           <source
             media="(min-width: 768px)"
-            srcset="/media/anna header 2.png"
+            srcset="/media/anna%20header%202.png"
           />
           <img
-            src="/media/anna header 3.png"
+            src="/media/anna%20header%204.png"
             alt={l.siteTitle}
             class="hero-about-layer__art-img"
             loading="eager"
@@ -41,7 +41,7 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
         </div>
       </div>
 
-      <div class="hero-editorial__copy hero-about-layer__name">
+      <div class="hero-editorial__copy hero-about-layer__name hero-editorial-only">
         <h1 class="hero-about-layer__heading scroll-reveal">
           <span class="hero-name__first">
             <span class="hero-name__line">{heroGivenName}</span>
@@ -53,8 +53,6 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
         <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
         <p class="magazine-cover__motto scroll-reveal hero-editorial-only">{l.heroMotto}</p>
       </div>
-
-      <div class="hero-name__last-mobile" aria-hidden="true">{l.heroLastName}</div>
     </div>
   </div>
 
