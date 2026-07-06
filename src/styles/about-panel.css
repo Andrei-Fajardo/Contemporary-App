@@ -408,18 +408,21 @@
     display: block;
     position: static;
     z-index: auto;
-    width: fit-content;
-    max-width: calc(100% - (2 * var(--mobile-page-pad, 1rem)));
+    width: max-content;
+    max-width: calc(100% - (2 * var(--mobile-page-pad, 1rem)) - 1.9rem);
     box-sizing: border-box;
     margin-top: clamp(1.65rem, 5.5vw, 2.25rem);
     margin-bottom: clamp(0.65rem, 2.5vw, 1rem);
     margin-left: var(--mobile-page-pad, 1rem);
     margin-right: auto;
-    padding: 0;
-    padding-left: 0.5rem;
+    padding: 0 1.1rem 0 0.35rem;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
-    /* Slightly under full-bleed max so the trailing flourish keeps a safe right margin */
-    font-size: clamp(4rem, 36vw, 7rem);
+    /*
+      Real iPhone widths render this script slightly wider than DevTools emulation.
+      Keep extra inline-end breathing room for the R/ll flourishes so the surname
+      never kisses the viewport edge at 375, 390, 393, 414, or 428 px widths.
+    */
+    font-size: clamp(3.55rem, 27.5vw, 5.55rem);
     font-weight: 400;
     line-height: 0.84;
     letter-spacing: -0.02em;
@@ -430,6 +433,7 @@
     word-break: keep-all;
     overflow-wrap: normal;
     white-space: nowrap;
+    overflow: visible;
     pointer-events: none;
     filter: var(--hero-signature-shadow);
   }

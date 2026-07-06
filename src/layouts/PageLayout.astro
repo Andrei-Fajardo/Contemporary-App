@@ -38,20 +38,29 @@ const menuItems: { key: string; href: string }[] = [
 ---
 
 <!doctype html>
-<html lang={l.lang}>
+<html lang={l.lang} data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#F0EEE9" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <script is:inline>
       (function () {
         try {
           var theme = localStorage.getItem('site-theme');
-          document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+          var resolvedTheme = theme === 'dark' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', resolvedTheme);
+          var colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
+          if (colorSchemeMeta) {
+            colorSchemeMeta.setAttribute('content', resolvedTheme);
+          }
         } catch (e) {
           document.documentElement.setAttribute('data-theme', 'light');
+          var colorSchemeMeta = document.querySelector('meta[name="color-scheme"]');
+          if (colorSchemeMeta) {
+            colorSchemeMeta.setAttribute('content', 'light');
+          }
         }
       })();
     </script>

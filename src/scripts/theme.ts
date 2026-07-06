@@ -13,6 +13,9 @@ export function applyTheme(theme: SiteTheme) {
   const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
   if (meta) meta.content = theme === 'light' ? '#F0EEE9' : '#141414';
 
+  const colorSchemeMeta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
+  if (colorSchemeMeta) colorSchemeMeta.content = theme;
+
   document.querySelectorAll<HTMLButtonElement>('[data-theme-switch]').forEach((btn) => {
     btn.setAttribute('aria-checked', theme === 'dark' ? 'true' : 'false');
   });

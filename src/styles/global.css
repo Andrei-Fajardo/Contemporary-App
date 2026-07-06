@@ -38,60 +38,8 @@
   --desktop-sidebar-width: 18.75rem;
 }
 
-/* Dark mode — dark canvas, light ink */
-:root,
-[data-theme="dark"] {
-  color-scheme: dark;
-
-  --canvas: #141414;
-  --ink: #F0EEE9;
-  --ink-muted: #AAAAAA;
-  --ink-tertiary: #777777;
-  --ink-inverse: #141414;
-  --ink-90: rgba(240, 238, 233, 0.9);
-  --ink-75: rgba(240, 238, 233, 0.75);
-  --ink-70: rgba(240, 238, 233, 0.7);
-  --ink-60: rgba(240, 238, 233, 0.6);
-  --ink-55: rgba(240, 238, 233, 0.55);
-  --ink-65: rgba(240, 238, 233, 0.65);
-  --ink-50: rgba(240, 238, 233, 0.5);
-  --ink-45: rgba(240, 238, 233, 0.45);
-  --ink-35: rgba(240, 238, 233, 0.35);
-  --ink-25: rgba(240, 238, 233, 0.25);
-
-  --border-subtle: rgba(240, 238, 233, 0.12);
-  --border-section: rgba(240, 238, 233, 0.22);
-  --border-sidebar: rgba(240, 238, 233, 0.08);
-  --surface-placeholder: rgba(240, 238, 233, 0.05);
-  --surface-hero-frame: rgba(240, 238, 233, 0.04);
-  --surface-hover: rgba(240, 238, 233, 0.06);
-  --surface-panel: rgba(20, 20, 20, 0.88);
-  --sidebar-nav-ink: #fafafa;
-  --sidebar-nav-ink-muted: #d4d4d4;
-  --sidebar-nav-surface-active: rgba(255, 255, 255, 0.1);
-  --sidebar-nav-surface-hover: rgba(255, 255, 255, 0.06);
-  --sidebar-nav-indicator: #f0eee9;
-  --surface-lang-toggle: rgba(20, 20, 20, 0.88);
-  --surface-lang-toggle-drawer: rgba(20, 20, 20, 0.92);
-  --lang-toggle-border: rgba(240, 238, 233, 0.18);
-  --scrollbar-thumb: rgba(240, 238, 233, 0.25);
-
-  /* Editorial accent — opposite theme canvas (light bg on dark site, etc.) */
-  --accent-canvas: #F0EEE9;
-  --accent-canvas-deep: color-mix(in srgb, var(--accent-canvas) 75%, transparent);
-  --accent-canvas-muted: color-mix(in srgb, var(--accent-canvas) 55%, transparent);
-  --accent-canvas-ghost: color-mix(in srgb, var(--accent-canvas) 12%, transparent);
-  --accent-canvas-ink: color-mix(in srgb, var(--accent-canvas) 25%, transparent);
-
-  --accent-red: var(--accent-canvas-muted);
-  --accent-red-bright: var(--accent-canvas-deep);
-  --accent-red-ghost: color-mix(in srgb, var(--accent-canvas) 5%, transparent);
-  --accent-red-ink: var(--accent-canvas-ink);
-  --accent-red-label: color-mix(in srgb, var(--accent-canvas) 45%, transparent);
-}
-
 /* Light mode — light canvas, dark ink */
-[data-theme="light"] {
+:root {
   color-scheme: light;
 
   --canvas: #F0EEE9;
@@ -128,6 +76,56 @@
   --scrollbar-thumb: rgba(20, 20, 20, 0.25);
 
   --accent-canvas: #141414;
+  --accent-canvas-deep: color-mix(in srgb, var(--accent-canvas) 75%, transparent);
+  --accent-canvas-muted: color-mix(in srgb, var(--accent-canvas) 55%, transparent);
+  --accent-canvas-ghost: color-mix(in srgb, var(--accent-canvas) 12%, transparent);
+  --accent-canvas-ink: color-mix(in srgb, var(--accent-canvas) 25%, transparent);
+
+  --accent-red: var(--accent-canvas-muted);
+  --accent-red-bright: var(--accent-canvas-deep);
+  --accent-red-ghost: color-mix(in srgb, var(--accent-canvas) 5%, transparent);
+  --accent-red-ink: var(--accent-canvas-ink);
+  --accent-red-label: color-mix(in srgb, var(--accent-canvas) 45%, transparent);
+}
+
+/* Dark mode — dark canvas, light ink */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #141414;
+  --ink: #F0EEE9;
+  --ink-muted: #AAAAAA;
+  --ink-tertiary: #777777;
+  --ink-inverse: #141414;
+  --ink-90: rgba(240, 238, 233, 0.9);
+  --ink-75: rgba(240, 238, 233, 0.75);
+  --ink-70: rgba(240, 238, 233, 0.7);
+  --ink-60: rgba(240, 238, 233, 0.6);
+  --ink-55: rgba(240, 238, 233, 0.55);
+  --ink-65: rgba(240, 238, 233, 0.65);
+  --ink-50: rgba(240, 238, 233, 0.5);
+  --ink-45: rgba(240, 238, 233, 0.45);
+  --ink-35: rgba(240, 238, 233, 0.35);
+  --ink-25: rgba(240, 238, 233, 0.25);
+
+  --border-subtle: rgba(240, 238, 233, 0.12);
+  --border-section: rgba(240, 238, 233, 0.22);
+  --border-sidebar: rgba(240, 238, 233, 0.08);
+  --surface-placeholder: rgba(240, 238, 233, 0.05);
+  --surface-hero-frame: rgba(240, 238, 233, 0.04);
+  --surface-hover: rgba(240, 238, 233, 0.06);
+  --surface-panel: rgba(20, 20, 20, 0.88);
+  --sidebar-nav-ink: #fafafa;
+  --sidebar-nav-ink-muted: #d4d4d4;
+  --sidebar-nav-surface-active: rgba(255, 255, 255, 0.1);
+  --sidebar-nav-surface-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-nav-indicator: #f0eee9;
+  --surface-lang-toggle: rgba(20, 20, 20, 0.88);
+  --surface-lang-toggle-drawer: rgba(20, 20, 20, 0.92);
+  --lang-toggle-border: rgba(240, 238, 233, 0.18);
+  --scrollbar-thumb: rgba(240, 238, 233, 0.25);
+
+  --accent-canvas: #F0EEE9;
   --accent-canvas-deep: color-mix(in srgb, var(--accent-canvas) 75%, transparent);
   --accent-canvas-muted: color-mix(in srgb, var(--accent-canvas) 55%, transparent);
   --accent-canvas-ghost: color-mix(in srgb, var(--accent-canvas) 12%, transparent);
