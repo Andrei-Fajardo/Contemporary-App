@@ -403,6 +403,11 @@
     vw doubled from 16vw→32vw (~2x intent); max-bound capped so text width
     stays inside content area at 375–414px (full 2x overflows safe margins).
     Min kept at 3rem so clamp(min, val, max) stays valid (min ≤ max).
+
+    Script ascenders/loops extend well past a tight line box — use generous
+    line-height + top padding so the border box contains full glyph ink
+    (ancestors with overflow-x: clip/hidden compute overflow-y: auto and clip
+    anything painted outside the element box).
   */
   .hero-name__last-mobile {
     display: block;
@@ -411,11 +416,13 @@
     width: max-content;
     max-width: calc(100% - (2 * var(--mobile-page-pad, 1rem)) - 1.9rem);
     box-sizing: border-box;
+    height: auto;
+    min-height: 0;
     margin-top: clamp(1.65rem, 5.5vw, 2.25rem);
     margin-bottom: clamp(0.65rem, 2.5vw, 1rem);
     margin-left: var(--mobile-page-pad, 1rem);
     margin-right: auto;
-    padding: 0 1.1rem 0 0.35rem;
+    padding: clamp(0.75rem, 3vw, 1.25rem) 1.1rem clamp(0.25rem, 1vw, 0.5rem) 0.35rem;
     font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
     /*
       Real iPhone widths render this script slightly wider than DevTools emulation.
@@ -424,7 +431,7 @@
     */
     font-size: clamp(3.55rem, 27.5vw, 5.55rem);
     font-weight: 400;
-    line-height: 0.84;
+    line-height: 1.5;
     letter-spacing: -0.02em;
     color: var(--ink);
     text-align: left;
@@ -441,6 +448,7 @@
   .hero-about-layer__inner,
   .hero-about-layer__inner.section-shell,
   .hero-about-layer__inner.section-shell--wide {
+    overflow: visible;
     padding-top: clamp(0.75rem, 2.5vh, 1.25rem);
     padding-bottom: clamp(0.85rem, 2.25vh, 1.25rem);
     padding-inline: 0 !important;
