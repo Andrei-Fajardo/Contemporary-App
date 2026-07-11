@@ -23,6 +23,6 @@
 - Default slot for main content; z-index utilities keep text above the image layer.
 
 # Token Efficiency Protocol (CRITICAL)
-- Branch Management: All work is to be performed in `feature/downsize`.
+- Branch Management: All work is to be performed in `feature/improve-look`.
 - Usage: Use "Standard Chat" for all design, logic, and aesthetic brainstorming. Only invoke "Composer" (Agent) when ready to commit code changes.
 - Context: Never use @Codebase. Explicitly tag only relevant files (e.g., @Portfolio.astro).

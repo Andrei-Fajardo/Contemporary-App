@@ -96,6 +96,7 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
     }
 
     document.dispatchEvent(new CustomEvent("tabular:change", { detail: { tab } }));
+    syncSeoForTab(tab);
   };
 
   if (outgoing) {
@@ -104,6 +105,22 @@ export function activateTab(tab: TabId, options: { updateHash?: boolean } = {}):
     setTimeout(doSwap, FADE_MS);
   } else {
     doSwap();
+  }
+}
+
+/** Client-side title/description sync for hash tabs (server meta stays on the home document). */
+function syncSeoForTab(tab: TabId): void {
+  const el = document.getElementById("seo-meta-by-tab");
+  if (!el?.textContent) return;
+  try {
+    const map = JSON.parse(el.textContent) as Record<string, { title?: string; description?: string }>;
+    const meta = map[tab] ?? map.about ?? map.home;
+    if (!meta) return;
+    if (meta.title) document.title = meta.title;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc && meta.description) desc.setAttribute("content", meta.description);
+  } catch {
+    /* ignore malformed island */
   }
 }
 

@@ -548,9 +548,19 @@
   max-width: 95vw;
 }
 
+/* Covers / forced single-page: keep the mobile flipbook chrome on all breakpoints */
 .manuscript-book--layout-single .manuscript-book__chrome--desktop {
+  display: none;
   width: min(100%, var(--manuscript-w, 93vw));
   max-width: 95vw;
+}
+
+.manuscript-book--layout-single .manuscript-book__mobile-nav {
+  display: flex;
+}
+
+.manuscript-book--layout-single .manuscript-book__nav--side {
+  display: none;
 }
 
 @media (max-width: 767px) {
@@ -633,6 +643,17 @@
   margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
+}
+
+.pubs-section__covers-hint {
+  margin: 0.75rem 0 0;
+  max-width: 42ch;
+  font-size: clamp(0.75rem, 0.85vw, 0.8125rem);
+  line-height: 1.45;
+}
+
+.pubs-manuscript-btn--pending {
+  opacity: 0.92;
 }
 
 .pubs-manuscript-btn {

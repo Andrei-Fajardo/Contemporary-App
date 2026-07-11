@@ -7,40 +7,28 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-const heroNameParts = l.heroFirstName.trim().split(/\s+/);
-const heroGivenName = heroNameParts[0] ?? l.heroFirstName;
-const heroMiddleName = heroNameParts.slice(1).join(' ');
 ---
 
 <section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
   <div class="hero-about-layer__inner section-shell section-shell--wide">
     <div class="hero-about-layer__cluster relative">
       <div class="hero-about-layer__art" data-headshot>
-        <picture>
-          <source
-            media="(min-width: 768px)"
-            srcset="/media/anna%20header%202.png"
-          />
-          <img
-            src="/media/anna%20header%204.png"
-            alt={l.siteTitle}
-            class="hero-about-layer__art-img"
-            loading="eager"
-            decoding="async"
-            draggable="false"
-            data-lightbox-ignore
-          />
-        </picture>
+        <img
+          src="/media/anna%20header%202.png"
+          alt={l.siteTitle}
+          class="hero-about-layer__art-img"
+          loading="eager"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
       </div>
 
       <div class="hero-editorial__copy hero-about-layer__name">
-        <h1 class="hero-about-layer__heading scroll-reveal">
-          <span class="hero-name__first">
-            <span class="hero-name__line">{heroGivenName}</span>
-            {heroMiddleName && <span class="hero-name__line">{heroMiddleName}</span>}
-          </span>
+        <h2 class="hero-about-layer__heading scroll-reveal">
+          <span class="hero-name__first">{l.heroFirstName}</span>
           <span class="hero-name__last">{l.heroLastName}</span>
-        </h1>
+        </h2>
 
         <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
         <p class="hero-about-layer__intro scroll-reveal">{l.heroBasedIn}</p>

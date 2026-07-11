@@ -2,6 +2,7 @@
 import EditorialLinkList from '../EditorialLinkList.astro';
 import EditorialListContainer from '../EditorialListContainer.astro';
 import ManuscriptModal from '../ManuscriptModal.astro';
+import { hasManuscriptCovers } from '../../data/manuscript';
 import { magazineFeatures, publicationLinks, sortByYearDesc } from '../../data/content';
 import { siteCopy } from '../../data/site-copy';
 import { t, type LocaleKey } from '../../data/translations';
@@ -49,6 +50,27 @@ const sortedPublicationLinks = sortByYearDesc(publicationLinks);
 
     <div class="editorial-list-blocks scroll-reveal">
       <div class="editorial-list-block">
+        <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
+        <EditorialListContainer>
+          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+            {/* Pulse + rounded CTA preserved; opens single-page book with front/back covers only. */}
+            <button
+              type="button"
+              class="pubs-manuscript-btn animate-pulse-cta"
+              data-manuscript-open
+            >
+              {l.manuscriptCoversBtn}
+            </button>
+            {!hasManuscriptCovers && (
+              <p class="pubs-section__covers-hint content-prose text-ink-55">
+                {l.manuscriptCoversPending}
+              </p>
+            )}
+          </div>
+        </EditorialListContainer>
+      </div>
+
+      <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.magazinesLabel}</h3>
         <EditorialListContainer>
           <ul class="pubs-magazine-list editorial-row-list editorial-row-list--no-year">
@@ -71,19 +93,7 @@ const sortedPublicationLinks = sortByYearDesc(publicationLinks);
       </div>
 
       <div class="editorial-list-block">
-        <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
-        <EditorialListContainer>
-          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
-            <button type="button" class="pubs-manuscript-btn animate-pulse-cta" data-manuscript-open>
-              {l.manuscriptReadBtn}
-            </button>
-          </div>
-        </EditorialListContainer>
-      </div>
-
-      <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
-        {/* Publication titles are proper nouns / published names — kept as authored English */}
         <EditorialListContainer>
           <EditorialLinkList items={sortedPublicationLinks} showYear={false} emptyMessage={l.listForthcoming} />
         </EditorialListContainer>

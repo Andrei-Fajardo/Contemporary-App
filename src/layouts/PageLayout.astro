@@ -1,19 +1,39 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import SEO from '../components/SEO.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { t, langLabels, type LocaleKey, type Lang } from '../data/translations';
+import type { SeoPageKey } from '../data/seo';
+import type { Artwork } from '../data/artworks';
+import { imageSeoSlots } from '../data/image-seo-slots';
+import { seoCopy } from '../data/seo-copy';
 
 export interface Props {
   title: string;
   activeSection?: string;
   locale?: LocaleKey;
+  /** SEO logical page — drives meta + JSON-LD. Defaults to home. */
+  seoPage?: SeoPageKey;
+  seoDescription?: string;
+  /** TODO(client-images): pending final image approval */
+  ogImage?: string | null;
+  artwork?: Artwork;
 }
 
-const { title, activeSection = '', locale = 'en' } = Astro.props;
+const {
+  title,
+  activeSection = '',
+  locale = 'en',
+  seoPage = 'home',
+  seoDescription,
+  ogImage = imageSeoSlots.defaultOgImage,
+  artwork,
+} = Astro.props;
 const l = t[locale];
 const langList: Lang[] = ['en', 'kr', 'kk', 'zh', 'ru'];
+const tabSeoIsland = seoPage === 'home' || seoPage === 'about' ? seoCopy[locale] : null;
 
 // Derive active language from URL pathname — reliable across all routes and ClientRouter
 const pathSeg = Astro.url.pathname.split('/')[1];
@@ -65,7 +85,17 @@ const menuItems: { key: string; href: string }[] = [
       })();
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} — {l.siteTitle}</title>
+    <SEO
+      locale={locale}
+      page={seoPage}
+      title={seoPage === 'artwork' ? title : undefined}
+      description={seoDescription}
+      ogImage={ogImage}
+      artwork={artwork}
+    />
+    {tabSeoIsland && (
+      <script type="application/json" id="seo-meta-by-tab" set:html={JSON.stringify(tabSeoIsland)} />
+    )}
     <!-- tabular-v1: sidebar tabs, instant panel swap -->
     <ClientRouter />
     <script is:inline>

@@ -185,14 +185,14 @@
 }
 
 @media (max-width: 767px) {
-  /* Mobile hero: stacked portrait + signature — hide editorial chrome */
+  /* Mobile hero: full-bleed portrait + h2 name — hide editorial chrome */
   .hero-editorial-only {
     display: none !important;
   }
 
   .magazine-cover {
     padding-top: 0;
-    overflow: visible;
+    overflow-x: hidden;
   }
 
   .magazine-cover__motto {
@@ -201,6 +201,12 @@
 
   .magazine-rule-crimson {
     display: none !important;
+  }
+
+  .magazine-cover .hero-about-layer__heading {
+    font-family: var(--font-heading, "Cormorant Garamond", Georgia, serif);
+    font-style: normal;
+    letter-spacing: -0.01em;
   }
 }
 

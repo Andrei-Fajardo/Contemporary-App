@@ -44,7 +44,21 @@ const STAGE_EDGE_INSET = 12;
 const NAV_BOOK_GAP = 14;
 
 /** Turn.js page index (1-based) where spread 0001.jpg first appears as a full spread */
-const FIRST_CONTENT_PAGE = 2;
+/** Turn.js page index where content starts (1 when no blank hard cover). */
+const FIRST_CONTENT_PAGE_WITH_BLANK = 2;
+const FIRST_CONTENT_PAGE_PLAIN = 1;
+
+function isCoversViewer(root: HTMLElement): boolean {
+  return root.dataset.coversViewer === 'true';
+}
+
+function hasBlankCover(root: HTMLElement): boolean {
+  return root.dataset.blankCover !== 'false';
+}
+
+function firstContentPage(root: HTMLElement): number {
+  return hasBlankCover(root) ? FIRST_CONTENT_PAGE_WITH_BLANK : FIRST_CONTENT_PAGE_PLAIN;
+}
 
 /** Corner peel demo duration (ms) */
 const PEEL_HINT_MS = 1500;
@@ -108,7 +122,8 @@ function getViewport(root: HTMLElement): HTMLElement | null {
   return root.querySelector<HTMLElement>('[data-manuscript-viewport]');
 }
 
-function getDisplayMode(): 'single' | 'double' {
+function getDisplayMode(root?: HTMLElement): 'single' | 'double' {
+  if (root?.dataset.forceSingle === 'true') return 'single';
   return window.innerWidth < MOBILE_BREAKPOINT ? 'single' : 'double';
 }
 
@@ -123,7 +138,7 @@ function measureBook(root: HTMLElement): {
   height: number;
   displayMode: 'single' | 'double';
 } {
-  const displayMode = getDisplayMode();
+  const displayMode = getDisplayMode(root);
   const mobile = displayMode === 'single';
   const stage = root.querySelector<HTMLElement>('[data-manuscript-stage]');
   const modal = root.closest<HTMLElement>('.manuscript-modal');
@@ -138,8 +153,11 @@ function measureBook(root: HTMLElement): {
   );
 
   if (mobile) {
-    const maxW = Math.round(Math.max(260, window.innerWidth * MOBILE_VW_FILL));
-    const maxH = Math.round(availableH * 0.94);
+    const forceSingleDesktop = root.dataset.forceSingle === 'true' && window.innerWidth >= MOBILE_BREAKPOINT;
+    const maxW = forceSingleDesktop
+      ? Math.round(Math.min(stageW * 0.52, 26 * 16))
+      : Math.round(Math.max(260, window.innerWidth * MOBILE_VW_FILL));
+    const maxH = Math.round(availableH * (forceSingleDesktop ? 0.88 : 0.94));
 
     let width = maxW;
     let height = Math.round(width / PAGE_HALF_ASPECT);
@@ -219,12 +237,15 @@ function scheduleResize(root: HTMLElement) {
   }, RESIZE_DEBOUNCE_MS);
 }
 
-function lastContentTurnPage(contentPages: number): number {
+function lastContentTurnPage(root: HTMLElement, contentPages: number): number {
+  // Covers viewer: data-page-count is the leaf count (no blank cover math).
+  if (isCoversViewer(root)) return contentPages;
   return contentPages * 2;
 }
 
-function totalTurnPages(contentPages: number): number {
-  return contentPages * 2 + 1;
+function totalTurnPages(root: HTMLElement, contentPages: number): number {
+  if (isCoversViewer(root)) return contentPages;
+  return contentPages * 2 + (hasBlankCover(root) ? 1 : 0);
 }
 
 function turnPageToSpreadIndex(turnPage: number, contentPages: number): number {
@@ -239,8 +260,8 @@ function updateIndicator(
   displayMode: 'single' | 'double' = 'double',
 ): void {
   const text =
-    displayMode === 'single'
-      ? `${turnPage} / ${totalTurnPages(contentPages)}`
+    displayMode === 'single' || isCoversViewer(root)
+      ? `${turnPage} / ${totalTurnPages(root, contentPages)}`
       : `${turnPageToSpreadIndex(turnPage, contentPages)} / ${contentPages}`;
 
   root.querySelectorAll<HTMLElement>('[data-manuscript-indicator]').forEach((indicator) => {
@@ -447,10 +468,11 @@ export function resetManuscriptBook(root: HTMLElement): void {
   if (!state?.flipbook) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const startPage = firstContentPage(root);
 
-  state.currentPage = FIRST_CONTENT_PAGE;
-  state.flipbook.turn('page', FIRST_CONTENT_PAGE);
-  updateIndicator(root, FIRST_CONTENT_PAGE, state.contentPages, state.displayMode);
+  state.currentPage = startPage;
+  state.flipbook.turn('page', startPage);
+  updateIndicator(root, startPage, state.contentPages, state.displayMode);
   resizeManuscriptBook(root, { immediate: true });
   scheduleDragHint(root, state, reducedMotion);
 }
@@ -466,7 +488,7 @@ export function goManuscriptNext(root: HTMLElement): void {
   const state = books.get(root);
   if (!state?.flipbook) return;
 
-  const maxPage = lastContentTurnPage(state.contentPages);
+  const maxPage = lastContentTurnPage(root, state.contentPages);
   if (state.currentPage >= maxPage) return;
   dismissDragHint(root, state);
   state.flipbook.turn('next');
@@ -488,10 +510,11 @@ export function initManuscriptBook(root: HTMLElement): void {
   if (!contentPages) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const startPage = firstContentPage(root);
 
   const state: BookState = {
     flipbook: null,
-    currentPage: FIRST_CONTENT_PAGE,
+    currentPage: startPage,
     contentPages,
     onResize: null,
     peelTimeout: null,
@@ -501,7 +524,7 @@ export function initManuscriptBook(root: HTMLElement): void {
     resizePending: false,
     lastWidth: 0,
     lastHeight: 0,
-    displayMode: getDisplayMode(),
+    displayMode: getDisplayMode(root),
     peelHintActive: false,
   };
   books.set(root, state);
@@ -520,7 +543,7 @@ export function initManuscriptBook(root: HTMLElement): void {
       state.flipbook.turn({
         width,
         height,
-        page: FIRST_CONTENT_PAGE,
+        page: startPage,
         autoCenter: true,
         display: displayMode,
         acceleration: true,
@@ -542,9 +565,9 @@ export function initManuscriptBook(root: HTMLElement): void {
       state.displayMode = displayMode;
       state.lastWidth = width;
       state.lastHeight = height;
-      state.flipbook.turn('page', FIRST_CONTENT_PAGE);
+      state.flipbook.turn('page', startPage);
       flipbookEl.classList.add('manuscript-flipbook--ready');
-      updateIndicator(root, FIRST_CONTENT_PAGE, contentPages, displayMode);
+      updateIndicator(root, startPage, contentPages, displayMode);
 
       bindDragHintDismiss(root, flipbookEl, state);
       scheduleDragHint(root, state, reducedMotion);

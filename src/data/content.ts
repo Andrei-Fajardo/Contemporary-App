@@ -476,38 +476,59 @@ export interface PublicationItem {
 export const publications: PublicationItem[] = [];
 
 export interface LinkItem {
+  /** Article / mention title only — do not embed platform in this string. */
   title: string;
-  href: string;
+  /** Article-specific URL when known. Omit when missing — never invent. */
+  href?: string;
+  /** Always-visible platform / publication name. */
+  platform: string;
+  /**
+   * Platform homepage / root. Omit when platform is ambiguous
+   * (see TODO(confirm-platform) on the entry) — never invent.
+   */
+  platformHref?: string;
   year?: string;
+  draft?: boolean;
 }
 
 /** Publications & writing — external links. */
 export const publicationLinks: LinkItem[] = [
+  // TODO(confirm-platform): only Instagram URL in repo — confirm real site/root if one exists
   {
     title: 'Aetherium Literary Blog — Magazine',
     href: 'https://www.instagram.com/aetheriumliterary/',
+    platform: 'Aetherium',
+    platformHref: 'https://www.instagram.com/aetheriumliterary/',
   },
   {
     title: 'Seventeenth Edition of Otherwise Engaged Literature and Arts Journal',
     href: 'https://www.marziadessi.com/otherwise-engaged',
+    platform: 'Otherwise Engaged',
+    platformHref: 'https://www.marziadessi.com/',
   },
 ];
 
 /** External press coverage and exhibition listings. */
 export const pressLinks: LinkItem[] = [
   {
-    title: 'HCMY — In the Press',
+    title: 'In the Press',
     href: 'https://www.hcmy.org/press',
+    platform: 'HCMY',
+    platformHref: 'https://www.hcmy.org/',
     year: '2025',
   },
   {
-    title: 'Light that Remains — Verger Gallery',
+    title: 'Light that Remains',
     href: 'https://www.vergerartgallery.com/25/?bmode=view&idx=163639384',
+    platform: 'Verger Gallery',
+    platformHref: 'https://www.vergerartgallery.com/',
     year: '2025',
   },
   {
-    title: 'Itaewon Film Festival Challenges Boundaries That Define, Divide Us — The Korea Times',
+    title: 'Itaewon Film Festival Challenges Boundaries That Define, Divide Us',
     href: 'https://www.koreatimes.co.kr/southkorea/globalcommunity/20251031/itaewon-film-festival-challenges-boundaries-that-define-divide-us',
+    platform: 'The Korea Times',
+    platformHref: 'https://www.koreatimes.co.kr/',
     year: '2025',
   },
 ];
@@ -515,63 +536,87 @@ export const pressLinks: LinkItem[] = [
 /** Published articles and commentary — PR & academic research links. */
 export const researchLinks: LinkItem[] = [
   {
-    title: 'Micro-Influencer Marketing Guide: Benefits and Steps — Influencer Marketing Hub',
+    title: 'Micro-Influencer Marketing Guide: Benefits and Steps',
     href: 'https://influencermarketinghub.com/micro-influencer-marketing-guide/#toc-6',
+    platform: 'Influencer Marketing Hub',
+    platformHref: 'https://influencermarketinghub.com/',
     year: '2024',
   },
   {
-    title: 'How do you incorporate storytelling into your advertising strategies, and why do you believe it is important for connecting with customers? Share an example of a successful storytelling campaign. — Grit Daily',
+    title: 'How do you incorporate storytelling into your advertising strategies, and why do you believe it is important for connecting with customers? Share an example of a successful storytelling campaign.',
     href: 'https://gritdaily.com/the-role-of-storytelling-in-advertising/',
+    platform: 'Grit Daily',
+    platformHref: 'https://gritdaily.com/',
     year: '2024',
   },
+  // TODO(confirm-platform): title ends "— FC"; do not assume Forbes Councils — confirm with client
   {
-    title: 'What is one trend in B2C e-commerce marketing that has really taken off recently, and what can marketers do to leverage this? — FC',
+    title: 'What is one trend in B2C e-commerce marketing that has really taken off recently, and what can marketers do to leverage this?',
     href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/10/01/10-emerging-trends-in-b2c-e-commerce-marketers-can-leverage/',
+    platform: 'FC',
     year: '2024',
   },
   {
-    title: 'Influencer Marketing Trends Predictions Through The End Of 2024 — Forbes',
+    title: 'Influencer Marketing Trends Predictions Through The End Of 2024',
     href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/09/17/influencer-marketing-trends-predictions-through-the-end-of-2024/',
+    platform: 'Forbes',
+    platformHref: 'https://www.forbes.com/',
     year: '2024',
   },
   {
-    title: 'De-Influencing Trends: How Brands Can Maintain Consumer Trust — Net Influencer',
+    title: 'De-Influencing Trends: How Brands Can Maintain Consumer Trust',
     href: 'https://www.netinfluencer.com/the-rise-of-de-influencing-how-brands-can-maintain-consumer-trust/',
+    platform: 'Net Influencer',
+    platformHref: 'https://www.netinfluencer.com/',
     year: '2024',
   },
+  // TODO(confirm-platform): title said Forbes but href is prthrive.com — confirm platform with client before showing a label
   {
-    title: 'What Tools or Platforms Are Indispensable for PR and Communications? — Forbes',
+    title: 'What Tools or Platforms Are Indispensable for PR and Communications?',
     href: 'https://prthrive.com/qa/what-tools-or-platforms-are-indispensable-for-pr-and-communications/',
+    platform: '',
     year: '2024',
   },
   {
-    title: 'What To Know About Generation Alpha And Influencer Marketing — Forbes',
+    title: 'What To Know About Generation Alpha And Influencer Marketing',
     href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/06/17/what-to-know-about-generation-alpha-and-influencer-marketing/',
+    platform: 'Forbes',
+    platformHref: 'https://www.forbes.com/',
     year: '2024',
   },
   {
-    title: 'How To Successfully Enter A New Market With Influencer Marketing — Forbes',
+    title: 'How To Successfully Enter A New Market With Influencer Marketing',
     href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/04/22/how-to-successfully-enter-a-new-market-with-influencer-marketing/',
+    platform: 'Forbes',
+    platformHref: 'https://www.forbes.com/',
     year: '2024',
   },
   {
-    title: 'The Power Of Influencer Marketing: Your Strategic Investment For Success — Forbes',
+    title: 'The Power Of Influencer Marketing: Your Strategic Investment For Success',
     href: 'https://www.forbes.com/councils/forbesagencycouncil/2024/01/05/the-power-of-influencer-marketing-your-strategic-investment-for-success/',
+    platform: 'Forbes',
+    platformHref: 'https://www.forbes.com/',
     year: '2024',
   },
   {
-    title: 'The Power Of Livestream Social Commerce — Forbes',
+    title: 'The Power Of Livestream Social Commerce',
     href: 'https://www.forbes.com/councils/forbesagencycouncil/2023/07/14/the-power-of-livestream-social-commerce/',
+    platform: 'Forbes',
+    platformHref: 'https://www.forbes.com/',
     year: '2023',
   },
   {
-    title: 'Social Responsibility And Ethics In Influencer Marketing — Forbes',
+    title: 'Social Responsibility And Ethics In Influencer Marketing',
     href: 'https://www.forbes.com/councils/forbesagencycouncil/2023/01/30/social-responsibility-and-ethics-in-influencer-marketing/',
+    platform: 'Forbes',
+    platformHref: 'https://www.forbes.com/',
     year: '2023',
   },
   {
-    title: 'The Hype Factory And Breakthrough Innovations: This Week In Tech History — Forbes',
+    title: 'The Hype Factory And Breakthrough Innovations: This Week In Tech History',
     href: 'https://www.forbes.com/sites/gilpress/2016/07/24/the-hype-factory-and-breakthrough-innovations-this-week-in-tech-history/?ctpv=searchpage',
+    platform: 'Forbes',
+    platformHref: 'https://www.forbes.com/',
     year: '2016',
   },
 ];

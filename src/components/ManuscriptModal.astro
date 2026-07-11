@@ -1,5 +1,5 @@
 ---
-import { manuscriptPages, manuscriptMeta } from '../data/manuscript';
+import { manuscriptViewerPages, manuscriptMeta, hasManuscriptCovers } from '../data/manuscript';
 import { t, type LocaleKey } from '../data/translations';
 
 interface Props {
@@ -8,9 +8,46 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-const pageCount = manuscriptPages.length;
+const pageCount = manuscriptViewerPages.length;
+/**
+ * Covers viewer leaves (no blank hard cover, no empty final half-page):
+ * front left, front right, back left → 3 pages (1 / 3 … 3 / 3).
+ */
+const leafCount = pageCount > 0 ? pageCount * 2 - 1 : 0;
+const pageLabels = [l.manuscriptCoverFront, l.manuscriptCoverBack];
+
+function coversLeaves() {
+  const leaves: { src: string; label: string; side: 'left' | 'right'; spreadIndex: number }[] = [];
+  manuscriptViewerPages.forEach((src, index) => {
+    const isLast = index === manuscriptViewerPages.length - 1;
+    leaves.push({
+      src,
+      label: pageLabels[index] ?? `page ${index + 1}`,
+      side: 'left',
+      spreadIndex: index,
+    });
+    // Skip empty/irrelevant right half of the final spread (was 5 / 5).
+    if (!isLast) {
+      leaves.push({
+        src,
+        label: pageLabels[index] ?? `page ${index + 1}`,
+        side: 'right',
+        spreadIndex: index,
+      });
+    }
+  });
+  return leaves;
+}
+
+const leaves = coversLeaves();
 ---
 
+{
+  /*
+    Covers-only From Utero book: three single-page leaves (front L/R + back L).
+    Blank hard cover and empty final half-page are omitted.
+  */
+}
 <div
   class="manuscript-modal"
   id="manuscript-modal"
@@ -30,95 +67,22 @@ const pageCount = manuscriptPages.length;
       <p class="manuscript-modal__eyebrow" id="manuscript-modal-title">{l.manuscriptHeading}</p>
     </header>
 
-    <div
-      class="manuscript-book manuscript-book--modal"
-      data-manuscript-book
-      data-page-count={pageCount}
-      data-manuscript-layout="double"
-    >
-      <div class="manuscript-modal__stage" data-manuscript-stage>
-        <button
-          type="button"
-          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev"
-          data-manuscript-prev
-          data-manuscript-nav="side"
-          aria-label={l.manuscriptPrev}
-        >
-          <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-
-        <div class="manuscript-book__stage-body">
-          <div class="manuscript-book__viewport" data-manuscript-viewport>
-            <div class="manuscript-book__drag-hints" aria-hidden="true">
-              <span class="manuscript-book__drag-hint manuscript-book__drag-hint--tr"></span>
-              <span class="manuscript-book__drag-hint manuscript-book__drag-hint--br"></span>
-            </div>
-            <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
-              <div class="hard manuscript-book__cover manuscript-book__cover--blank" aria-hidden="true"></div>
-              {manuscriptPages.flatMap((src, index) => [
-                <div
-                  class="manuscript-book__page manuscript-book__page--half manuscript-book__page--left"
-                  data-spread-index={index}
-                >
-                  <img
-                    src={src}
-                    alt={`${manuscriptMeta.title} — spread ${index + 1}`}
-                    class="manuscript-book__spread-img manuscript-book__spread-img--left"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    fetchpriority={index === 0 ? 'high' : 'auto'}
-                    decoding="async"
-                    draggable="false"
-                    data-lightbox-ignore
-                  />
-                </div>,
-                <div
-                  class="manuscript-book__page manuscript-book__page--half manuscript-book__page--right"
-                  aria-hidden="true"
-                >
-                  <img
-                    src={src}
-                    alt=""
-                    class="manuscript-book__spread-img manuscript-book__spread-img--right"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    draggable="false"
-                    data-lightbox-ignore
-                  />
-                </div>,
-              ])}
-            </div>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next"
-          data-manuscript-next
-          data-manuscript-nav="side"
-          aria-label={l.manuscriptNext}
-        >
-          <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-
-        <div class="manuscript-book__chrome manuscript-book__chrome--desktop" aria-live="polite">
-          <span class="manuscript-book__indicator manuscript-book__indicator--desktop" data-manuscript-indicator>
-            1 / {pageCount}
-          </span>
-        </div>
-
-        <nav
-          class="manuscript-book__mobile-nav"
-          aria-label={l.manuscriptHeading}
-        >
+    {hasManuscriptCovers && leafCount > 0 ? (
+      <div
+        class="manuscript-book manuscript-book--modal manuscript-book--layout-single"
+        data-manuscript-book
+        data-page-count={leafCount}
+        data-manuscript-layout="single"
+        data-force-single="true"
+        data-covers-viewer="true"
+        data-blank-cover="false"
+      >
+        <div class="manuscript-modal__stage" data-manuscript-stage>
           <button
             type="button"
-            class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--prev"
+            class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--prev"
             data-manuscript-prev
-            data-manuscript-nav="mobile"
+            data-manuscript-nav="side"
             aria-label={l.manuscriptPrev}
           >
             <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -126,24 +90,99 @@ const pageCount = manuscriptPages.length;
             </svg>
           </button>
 
-          <span class="manuscript-book__indicator manuscript-book__indicator--mobile" data-manuscript-indicator aria-live="polite">
-            1 / {pageCount}
-          </span>
+          <div class="manuscript-book__stage-body">
+            <div class="manuscript-book__viewport" data-manuscript-viewport>
+              <div class="manuscript-book__drag-hints" aria-hidden="true">
+                <span class="manuscript-book__drag-hint manuscript-book__drag-hint--tr"></span>
+                <span class="manuscript-book__drag-hint manuscript-book__drag-hint--br"></span>
+              </div>
+              <div class="manuscript-flipbook flipbook" data-manuscript-flipbook>
+                {leaves.map((leaf, leafIndex) => (
+                  <div
+                    class:list={[
+                      'manuscript-book__page',
+                      'manuscript-book__page--half',
+                      leaf.side === 'left' ? 'manuscript-book__page--left' : 'manuscript-book__page--right',
+                    ]}
+                    data-spread-index={leaf.spreadIndex}
+                    aria-hidden={leaf.side === 'right' ? 'true' : undefined}
+                  >
+                    <img
+                      src={leaf.src}
+                      alt={leaf.side === 'left' ? `${manuscriptMeta.title} — ${leaf.label}` : ''}
+                      class:list={[
+                        'manuscript-book__spread-img',
+                        leaf.side === 'left'
+                          ? 'manuscript-book__spread-img--left'
+                          : 'manuscript-book__spread-img--right',
+                      ]}
+                      loading={leafIndex === 0 ? 'eager' : 'lazy'}
+                      fetchpriority={leafIndex === 0 ? 'high' : 'auto'}
+                      decoding="async"
+                      draggable="false"
+                      data-lightbox-ignore
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
           <button
             type="button"
-            class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--next"
+            class="manuscript-book__nav manuscript-book__nav--side manuscript-book__nav--next"
             data-manuscript-next
-            data-manuscript-nav="mobile"
+            data-manuscript-nav="side"
             aria-label={l.manuscriptNext}
           >
             <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-        </nav>
+
+          <div class="manuscript-book__chrome manuscript-book__chrome--desktop" aria-live="polite">
+            <span class="manuscript-book__indicator manuscript-book__indicator--desktop" data-manuscript-indicator>
+              1 / {leafCount}
+            </span>
+          </div>
+
+          <nav
+            class="manuscript-book__mobile-nav"
+            aria-label={l.manuscriptHeading}
+          >
+            <button
+              type="button"
+              class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--prev"
+              data-manuscript-prev
+              data-manuscript-nav="mobile"
+              aria-label={l.manuscriptPrev}
+            >
+              <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <span class="manuscript-book__indicator manuscript-book__indicator--mobile" data-manuscript-indicator aria-live="polite">
+              1 / {leafCount}
+            </span>
+
+            <button
+              type="button"
+              class="manuscript-book__nav manuscript-book__nav--mobile manuscript-book__nav--next"
+              data-manuscript-next
+              data-manuscript-nav="mobile"
+              aria-label={l.manuscriptNext}
+            >
+              <svg class="manuscript-book__nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </nav>
+        </div>
       </div>
-    </div>
+    ) : (
+      <p class="manuscript-modal__pending content-prose text-ink-70 px-6 pb-8">{l.manuscriptCoversPending}</p>
+    )}
   </div>
 
   <div class="manuscript-modal__chrome" aria-hidden="false">

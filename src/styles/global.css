@@ -677,6 +677,7 @@ select,
   color: var(--ink);
   line-height: 1.35;
   text-decoration: none;
+  display: block;
   /* Prevent hyphenation and justification inherited from body */
   text-align: left;
   hyphens: none;
@@ -684,6 +685,37 @@ select,
   word-break: normal;
   overflow-wrap: break-word;
   transition: color 0.3s var(--ease-editorial, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.editorial-row-list__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.editorial-row-list__platform {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 0.85vw, 0.875rem);
+  font-style: italic;
+  color: var(--ink-55);
+  line-height: 1.4;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.2s var(--ease-editorial, ease),
+    border-color 0.2s var(--ease-editorial, ease);
+}
+
+a.editorial-row-list__platform:hover {
+  color: var(--ink-75);
+  border-bottom-color: var(--ink-35);
+}
+
+.editorial-row-list__platform--plain {
+  border-bottom: none;
+  cursor: default;
 }
 
 .editorial-row-list .editorial-row-list__item:hover .editorial-row-list__title {

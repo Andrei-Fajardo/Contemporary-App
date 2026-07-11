@@ -3,6 +3,7 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import { t, type LocaleKey } from '../../data/translations';
 import { artworks } from '../../data/artworks';
 import { holyParisJournal } from '../../data/content';
+import { imageSeoSlots } from '../../data/image-seo-slots';
 
 export interface Props {
   locale?: LocaleKey;
@@ -30,9 +31,22 @@ const additionalMedia: Record<string, string[]> = {
   "the-fish": ["/media/exhibitions/senses/senses-1.jpg", "/media/feature/itaewon-1.jpg"],
   "the-souls-of-leavings": ["/media/exhibitions/kinship/kinship-1.jpg", holyParisJournal(3)],
 };
+
+const artworkImageSlot = imageSeoSlots.artworks[painting.slug];
+// TODO(client-images): pending final image approval — alt/og remain empty until client provides copy
+const artworkAlt = artworkImageSlot?.alt ?? '';
+const artworkOg = artworkImageSlot?.ogImage ?? '';
 ---
 
-<PageLayout title={`${painting.title} — ${l.siteTitle}`} activeSection="art" locale={locale}>
+<PageLayout
+  title={`${painting.title} — ${l.siteTitle}`}
+  activeSection="art"
+  locale={locale}
+  seoPage="artwork"
+  seoDescription={painting.aboutMobile || leadParagraph}
+  ogImage={artworkOg}
+  artwork={painting}
+>
   <div slot="content" class="art-detail-bleed">
     <div class="pt-12 md:pt-16 pb-2">
       <a href={locale === "en" ? "/" : `/${locale}`} class="art-detail-bleed__back">
@@ -42,7 +56,7 @@ const additionalMedia: Record<string, string[]> = {
 
     <div class="art-detail-bleed__grid">
       <div class="art-detail-bleed__image-wrap interactive-image-container">
-        <img src={painting.image} alt={painting.title} loading="eager" />
+        <img src={painting.image} alt={artworkAlt} loading="eager" />
       </div>
 
       <div class="art-detail-bleed__caption art-wall-label">
@@ -100,9 +114,10 @@ const additionalMedia: Record<string, string[]> = {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-px border border-[var(--border-subtle)] bg-[var(--border-subtle)]">
         {(additionalMedia[painting.slug] ?? []).map((media) => (
           <div class="interactive-image-container aspect-video bg-[var(--canvas)]">
+            {/* TODO(client-images): pending final image approval — alt from imageSeoSlots */}
             <img
               src={media}
-              alt={`${painting.title} — detail`}
+              alt={artworkAlt || ''}
               loading="lazy"
               class="opacity-0 translate-y-4 animate-fade-up"
             />
