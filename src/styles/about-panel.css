@@ -264,7 +264,8 @@
     max-width: 100%;
     height: auto;
     aspect-ratio: 2 / 3;
-    max-height: min(72vh, 36rem);
+    /* Leave vertical room for oversized name so roles sit below the fold */
+    max-height: min(52vh, 28rem);
     margin: 0;
     opacity: 1;
     border-radius: 0;

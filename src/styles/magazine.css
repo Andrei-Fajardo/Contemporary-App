@@ -389,24 +389,46 @@
 /*
   Mobile hero name hierarchy — must live AFTER .magazine-cover heading rules
   so cascade wins over about-panel + unscoped Jellyka block above.
+
+  Sized so Anna Dauyl + Rockswell fill the first viewport and push
+  the roles / based-in lines below the fold — without horizontal overflow.
 */
 @media (max-width: 767px) {
+  .magazine-cover .hero-about-layer__name {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-bottom: clamp(1.5rem, 6vh, 3rem);
+  }
+
+  .magazine-cover .hero-about-layer__heading {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+  }
+
   .magazine-cover .hero-about-layer__heading .hero-name__first,
   .magazine-cover .hero-about-layer__heading .hero-name__last {
     display: block;
+    width: 100%;
+    max-width: 100%;
     font-family: inherit;
+    overflow: hidden;
   }
 
-  /* Row 1: Anna Dauyl */
+  /* Row 1: Anna Dauyl — large, still smaller than Rockswell */
   .magazine-cover .hero-about-layer__heading .hero-name__first {
-    font-size: clamp(2.75rem, 12vw, 3.75rem) !important;
-    line-height: 1.05;
+    font-size: clamp(3.25rem, 15vw, 5.5rem) !important;
+    line-height: 0.95;
+    white-space: nowrap;
   }
 
-  /* Row 2: Rockswell — clearly larger than Anna Dauyl */
+  /* Row 2: Rockswell — dominant; fills most of the row width */
   .magazine-cover .hero-about-layer__heading .hero-name__last {
-    font-size: clamp(4.25rem, 18vw, 6rem) !important;
-    line-height: 0.92;
-    margin-top: 0.04em;
+    font-size: clamp(5rem, 24vw, 8.5rem) !important;
+    line-height: 0.88;
+    margin-top: 0.02em;
+    white-space: nowrap;
   }
 }
