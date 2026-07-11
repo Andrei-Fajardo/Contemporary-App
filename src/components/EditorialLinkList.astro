@@ -1,13 +1,16 @@
 ---
 import type { LinkItem } from '../data/content';
+import { t, type LocaleKey } from '../data/translations';
 
 interface Props {
   items: LinkItem[];
   emptyMessage?: string;
   showYear?: boolean;
+  locale?: LocaleKey;
 }
 
-const { items, emptyMessage = 'List forthcoming', showYear = true } = Astro.props;
+const { items, emptyMessage = 'List forthcoming', showYear = true, locale = 'en' } = Astro.props;
+const l = t[locale];
 // Prefer callers passing `emptyMessage` from `t[locale].listForthcoming`.
 const listClass = showYear ? 'editorial-link-list editorial-row-list scroll-reveal' : 'editorial-link-list editorial-row-list editorial-row-list--no-year scroll-reveal';
 ---
@@ -15,10 +18,13 @@ const listClass = showYear ? 'editorial-link-list editorial-row-list scroll-reve
 {items.length > 0 ? (
   <ul class={listClass}>
     {items.map((item) => (
-      <li class="editorial-row-list__item hover-row">
+      <li class:list={['editorial-row-list__item', 'hover-row', item.draft && 'editorial-row-list__item--draft']}>
         {showYear && <span class="editorial-row-list__year">{item.year ?? ''}</span>}
         <a href={item.href} target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
           {item.title}
+          {item.draft && (
+            <span class="editorial-draft-badge">{l.draftBadge}</span>
+          )}
         </a>
       </li>
     ))}

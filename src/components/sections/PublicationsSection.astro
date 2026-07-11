@@ -1,8 +1,8 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import EditorialListContainer from '../EditorialListContainer.astro';
 import ManuscriptModal from '../ManuscriptModal.astro';
-import { publicationLinks } from '../../data/content';
+// TODO(confirm-magazines): HARD BLOCKER — draft list only until Cherry confirms
+import { DRAFT_FEATURED_PUBLICATIONS } from '../../data/content';
 import { siteCopy } from '../../data/site-copy';
 import { t, type LocaleKey } from '../../data/translations';
 
@@ -17,7 +17,7 @@ const pubsHeadingParts = l.publicationsHeading.split(/\s*&\s*/);
 const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
 ---
 
-<section id="publications" class="scroll-section section-gap pubs-overlap magazine-torn">
+<section id="publications" class="scroll-section section-gap pubs-overlap editorial-panel pubs-overlap--empty">
 
   <div class="pubs-overlap__frame" aria-hidden="true">
     <img
@@ -35,61 +35,54 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
   </div>
 
   <div class="pubs-overlap__content section-shell section-shell--wide">
-    <header class="pubs-editorial__masthead scroll-reveal">
-      <div class="magazine-chapter">
-        <p class="section-eyebrow">{l.publicationsTag}</p>
-        <h2 class="magazine-chapter__title pubs-overlap__heading">
-          {pubsHeadingHasAmp ? (
-            <>
-              <span class="pubs-heading__part">{pubsHeadingParts[0]}</span>
-              <span class="pubs-heading__amp">&amp;</span>
-              <span class="pubs-heading__part">{pubsHeadingParts[1]}</span>
-            </>
-          ) : (
-            l.publicationsHeading
-          )}
-        </h2>
-      </div>
-      <p class="content-prose text-ink-60 pubs-section__intro">
+    <header class="editorial-panel__masthead pubs-editorial__masthead scroll-reveal">
+      <p class="editorial-panel__eyebrow">{l.publicationsTag}</p>
+      <h2 class="editorial-panel__title pubs-overlap__heading">
+        {pubsHeadingHasAmp ? (
+          <>
+            <span class="pubs-heading__part">{pubsHeadingParts[0]}</span>
+            <span class="pubs-heading__amp">&amp;</span>
+            <span class="pubs-heading__part">{pubsHeadingParts[1]}</span>
+          </>
+        ) : (
+          l.publicationsHeading
+        )}
+      </h2>
+      <p class="editorial-panel__intro content-prose text-ink-60">
         {l.publicationsIntro}
       </p>
     </header>
 
-    <div class="editorial-list-blocks scroll-reveal">
-      <div class="editorial-list-block">
+    <div class="editorial-list-blocks editorial-list-blocks--stagger scroll-reveal">
+      <div class="editorial-list-block editorial-list-block--chapbook">
         <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
-        <EditorialListContainer>
-          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
-            <button type="button" class="pubs-manuscript-btn animate-pulse-cta" data-manuscript-open>
-              {l.manuscriptReadBtn}
-            </button>
-          </div>
-        </EditorialListContainer>
+        <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+          <button type="button" class="pubs-manuscript-btn animate-pulse-cta" data-manuscript-open>
+            {l.manuscriptReadBtn}
+          </button>
+        </div>
       </div>
 
       <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
-        {/* Publication titles are proper nouns / published names — kept as authored English */}
-        <EditorialListContainer>
-          <EditorialLinkList items={publicationLinks} showYear={false} emptyMessage={l.listForthcoming} />
-        </EditorialListContainer>
+        {/* TODO(confirm-magazines): DRAFT entries — do not remove draft flags until Cherry confirms */}
+        <p class="editorial-draft-note" role="note">{l.draftConfirmNote}</p>
+        <EditorialLinkList items={DRAFT_FEATURED_PUBLICATIONS} showYear={false} emptyMessage={l.listForthcoming} locale={locale} />
       </div>
 
       {novels.length > 0 && (
         <div class="editorial-list-block">
           <h3 class="editorial-list-block__label">{l.novelsLabel}</h3>
-          <EditorialListContainer>
-            <ul class="pubs-novel-list">
-              {novels.map((novel) => (
-                <li class="pubs-novel-list__item">
-                  <span class="editorial-row-list__title">{novel.title === 'Untitled Novel' ? l.untitledNovel : novel.title}</span>
-                  {novel.status === 'coming-soon' && (
-                    <span class="pubs-novel-list__status">{l.comingSoon}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </EditorialListContainer>
+          <ul class="pubs-novel-list editorial-row-list editorial-row-list--no-year">
+            {novels.map((novel) => (
+              <li class="pubs-novel-list__item">
+                <span class="editorial-row-list__title">{novel.title === 'Untitled Novel' ? l.untitledNovel : novel.title}</span>
+                {novel.status === 'coming-soon' && (
+                  <span class="pubs-novel-list__status">{l.comingSoon}</span>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>

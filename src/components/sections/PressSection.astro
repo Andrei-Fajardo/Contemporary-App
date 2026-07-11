@@ -1,6 +1,5 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import EditorialListContainer from '../EditorialListContainer.astro';
 import { pressLinks } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
@@ -12,9 +11,8 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="press" class="scroll-section section-gap press-overlap">
+<section id="press" class="scroll-section section-gap press-overlap editorial-panel">
 
-  <!-- ── Image layer — anna sample 6, decorative ───────────── -->
   <div class="press-overlap__frame" aria-hidden="true">
     <img
       src="/media/anna sample 6.png"
@@ -30,18 +28,15 @@ const l = t[locale];
     />
   </div>
 
-  <!-- ── Text content — header above list container ─────────── -->
   <div class="press-overlap__content section-shell section-shell--wide">
-    <div class="magazine-chapter">
-      <p class="scroll-reveal section-eyebrow">{l.pressTag}</p>
-      <h2 class="scroll-reveal magazine-chapter__title press-overlap__heading">
-        {l.nav.press}
-      </h2>
-    </div>
+    <header class="editorial-panel__masthead scroll-reveal">
+      <p class="editorial-panel__eyebrow">{l.pressTag}</p>
+      <h2 class="editorial-panel__title">{l.nav.press}</h2>
+    </header>
     {/* Press headlines are published titles — kept as authored English */}
-    <EditorialListContainer class="scroll-reveal">
-      <EditorialLinkList items={pressLinks} emptyMessage={l.listForthcoming} />
-    </EditorialListContainer>
+    <div class="editorial-index editorial-index--stagger">
+      <EditorialLinkList items={pressLinks} emptyMessage={l.listForthcoming} locale={locale} />
+    </div>
   </div>
 
 </section>

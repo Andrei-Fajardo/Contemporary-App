@@ -11,38 +11,20 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-const sortedExhibitions = sortExhibitionEntries(exhibitionEntries);
-
-const filters = [
-  { id: 'physical', label: l.physical },
-  { id: 'digital', label: l.digitalFilter },
-  { id: 'magazine', label: l.magazineFilter },
-] as const;
+// Magazines belong in Publications — one flat exhibitions list, no category UI
+const showEntries = exhibitionEntries.filter((entry) => entry.category !== 'magazine');
+const sortedExhibitions = sortExhibitionEntries(showEntries);
 ---
 
-<section id="exhibitions" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide magazine-chapter" data-exhibition-filter-root>
-    <p class="scroll-reveal section-eyebrow">{l.exhibitionsTag}</p>
-    <h2 class="scroll-reveal magazine-chapter__title text-3xl md:text-5xl lg:text-6xl text-ink mb-3" set:html={l.exhibitionHistory}></h2>
-    <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal mb-4" />
-
-    <p class="scroll-reveal content-prose text-ink-60 exhibitions-section__intro mb-2 max-w-[42ch]">
-      {l.exhibitionsIntro}
-    </p>
-
-    <div class="exhibition-filters scroll-reveal" role="tablist" aria-label={l.exhibitionCategoriesAria}>
-      {filters.map((filter, index) => (
-        <button
-          type="button"
-          class:list={["exhibition-filter", index === 0 && "is-active"]}
-          data-exhibition-filter={filter.id}
-          role="tab"
-          aria-selected={index === 0 ? "true" : "false"}
-        >
-          {filter.label}
-        </button>
-      ))}
-    </div>
+<section id="exhibitions" class="scroll-section section-gap editorial-panel">
+  <div class="section-shell section-shell--wide magazine-chapter">
+    <header class="editorial-panel__masthead scroll-reveal">
+      <p class="editorial-panel__eyebrow">{l.exhibitionsTag}</p>
+      <h2 class="editorial-panel__title" set:html={l.exhibitionHistory}></h2>
+      <p class="editorial-panel__intro content-prose text-ink-60">
+        {l.exhibitionsIntro}
+      </p>
+    </header>
 
     {/* Exhibition titles, venues, and places are proper nouns — not translated */}
     <ExhibitionAccordion entries={sortedExhibitions} expandLabel={l.viewMore} locale={locale} />
@@ -51,9 +33,3 @@ const filters = [
 
 {/* Gallery overlay — rendered once, shown/hidden via JS */}
 <ExhibitionGalleryOverlay locale={locale} />
-
-<script>
-  import { initExhibitionFilter } from "../../scripts/exhibition-filter";
-  initExhibitionFilter();
-  document.addEventListener("astro:page-load", initExhibitionFilter);
-</script>

@@ -7,39 +7,33 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+const interestsInfluences = [...l.interests, ...l.influences];
 ---
 
-<section id="about" class="scroll-section about-chaos about-panel-stack__content magazine-torn">
-  <div class="section-shell section-shell--wide about-panel-stack__content-inner">
-    <div class="magazine-spread about-chaos__body">
-      <div class="magazine-spread__page scroll-reveal about-chaos__intro">
-        <p class="pubs-editorial__label about-chaos__label">{l.aboutTag}</p>
-        <p class="content-prose text-ink-70 mb-2 about-chaos__subtitle">{l.heroBasedIn}</p>
-        <h2 class="type-magazine-display text-2xl md:text-4xl lg:text-[2.75rem] text-ink mb-4 leading-[1.05]">
-          {l.heroIntroBefore}<span class="about-chaos__city" tabindex="0">{l.heroIntroCity}</span>{l.heroIntroAfter}
-        </h2>
-        <p class="content-prose text-ink-75 magazine-dropcap max-w-[72ch]">{l.bio}</p>
-      </div>
+<section id="about" class="scroll-section about-chaos about-panel-stack__content">
+  <div class="section-shell section-shell--wide about-panel-stack__content-inner editorial-about">
+    <header class="editorial-about__masthead scroll-reveal">
+      <p class="editorial-about__label">{l.aboutTag}</p>
+      <p class="editorial-about__based">{l.heroBasedIn}</p>
+    </header>
 
-      <div class="magazine-spread__page scroll-reveal about-chaos__meta magazine-meta-grid">
-        <div class="about-chaos__meta-block">
-          <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
-          <ul class="about-chaos__list">
-            {l.interests.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
+    <div class="editorial-about__body">
+      <h2 class="editorial-about__lead scroll-reveal">
+        {l.heroIntroBefore}<span class="about-chaos__city" tabindex="0">{l.heroIntroCity}</span>{l.heroIntroAfter}
+      </h2>
 
-        <div class="about-chaos__meta-block">
-          <p class="section-eyebrow mb-3">{l.influencesLabel}</p>
-          <ul class="about-chaos__list">
-            {l.influences.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
+      <p class="editorial-about__bio content-prose scroll-reveal">{l.bio}</p>
+      {/* TODO(confirm-bio): do not invent additional biographical claims */}
+      <p class="editorial-about__bio-note scroll-reveal">{l.aboutBioNote}</p>
+
+      {interestsInfluences.length > 0 && (
+        <div class="editorial-about__meta scroll-reveal">
+          <p class="editorial-about__meta-label">{l.interestsInfluencesLabel}</p>
+          <p class="editorial-about__meta-text">
+            {interestsInfluences.join(' · ')}
+          </p>
         </div>
-      </div>
+      )}
     </div>
   </div>
 </section>

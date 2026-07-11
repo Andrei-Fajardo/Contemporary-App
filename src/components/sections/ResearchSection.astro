@@ -1,6 +1,6 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import { researchLinks, igamingLinks, uplatformBlogLinks, uplatformPressLinks } from '../../data/content';
+import { researchLinks } from '../../data/content';
 import { t, type LocaleKey } from '../../data/translations';
 
 interface Props {
@@ -9,124 +9,18 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-
-const tabs = [
-  { id: 'academic', label: l.researchTabAcademic },
-  { id: 'igaming',  label: l.researchTabIgaming },
-  { id: 'uplatform', label: l.researchTabUplatform },
-] as const;
 ---
 
-<section id="research" class="scroll-section section-gap research-section magazine-torn">
+<section id="research" class="scroll-section section-gap research-section editorial-panel">
   <div class="section-shell section-shell--wide">
-    <div class="magazine-chapter scroll-reveal">
-      <p class="section-eyebrow">{l.academicTag}</p>
-      <h2 class="magazine-chapter__title text-2xl md:text-5xl lg:text-6xl text-ink mb-3">
-        {l.academicHeading}
-      </h2>
-      <hr class="magazine-rule-crimson magazine-rule-crimson--short" />
-    </div>
+    <header class="editorial-panel__masthead scroll-reveal">
+      <p class="editorial-panel__eyebrow">{l.academicTag}</p>
+      <h2 class="editorial-panel__title">{l.academicHeading}</h2>
+    </header>
 
-    <!-- Tab filters — same pattern as exhibition filters -->
-    <div class="exhibition-filters research-filters scroll-reveal" role="tablist" aria-label={l.researchCategoriesAria}>
-      {tabs.map((tab, i) => (
-        <button
-          type="button"
-          class:list={["exhibition-filter research-tab-btn", i === 0 && "is-active"]}
-          data-research-tab={tab.id}
-          role="tab"
-          aria-selected={i === 0 ? "true" : "false"}
-          aria-controls={`research-panel-${tab.id}`}
-        >
-          {tab.label}
-        </button>
-      ))}
-    </div>
-
-    <!-- Tab panels -->
-    <div
-      id="research-panel-academic"
-      class="research-tab-panel editorial-index"
-      data-research-panel="academic"
-      role="tabpanel"
-    >
+    <div class="editorial-index editorial-index--stagger">
       {/* Link titles are proper nouns / published headlines — kept as authored English */}
-      <EditorialLinkList items={researchLinks} emptyMessage={l.listForthcoming} />
-    </div>
-
-    <div
-      id="research-panel-igaming"
-      class="research-tab-panel editorial-index"
-      data-research-panel="igaming"
-      role="tabpanel"
-      hidden
-      aria-hidden="true"
-    >
-      <EditorialLinkList items={igamingLinks} showYear={false} emptyMessage={l.listForthcoming} />
-    </div>
-
-    <div
-      id="research-panel-uplatform"
-      class="research-tab-panel editorial-index"
-      data-research-panel="uplatform"
-      role="tabpanel"
-      hidden
-      aria-hidden="true"
-    >
-      <div class="editorial-index__group">
-        <h3 class="editorial-index__label">{l.researchBlogLabel}</h3>
-        <EditorialLinkList items={uplatformBlogLinks} showYear={false} emptyMessage={l.listForthcoming} />
-      </div>
-      <div class="editorial-index__group">
-        <h3 class="editorial-index__label">{l.researchPressLabel}</h3>
-        <EditorialLinkList items={uplatformPressLinks} showYear={false} emptyMessage={l.listForthcoming} />
-      </div>
+      <EditorialLinkList items={researchLinks} emptyMessage={l.listForthcoming} locale={locale} />
     </div>
   </div>
 </section>
-
-<script>
-  function initResearchTabs() {
-    const btns = document.querySelectorAll<HTMLButtonElement>('[data-research-tab]');
-    const panels = document.querySelectorAll<HTMLElement>('[data-research-panel]');
-    if (!btns.length) return;
-
-    btns.forEach((btn) => {
-      if (btn.dataset.researchBound === 'true') return;
-      btn.dataset.researchBound = 'true';
-
-      btn.addEventListener('click', () => {
-        const target = btn.dataset.researchTab;
-
-        btns.forEach((b) => {
-          const on = b.dataset.researchTab === target;
-          b.classList.toggle('is-active', on);
-          b.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-
-        panels.forEach((panel) => {
-          const on = panel.dataset.researchPanel === target;
-          panel.hidden = !on;
-          panel.setAttribute('aria-hidden', on ? 'false' : 'true');
-
-          if (on) {
-            panel.style.opacity = '0';
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                panel.style.transition = 'opacity 80ms ease';
-                panel.style.opacity = '1';
-                setTimeout(() => {
-                  panel.style.transition = '';
-                  panel.style.opacity = '';
-                }, 100);
-              });
-            });
-          }
-        });
-      });
-    });
-  }
-
-  initResearchTabs();
-  document.addEventListener('astro:page-load', initResearchTabs);
-</script>
