@@ -39,3 +39,43 @@ const l = t[locale];
   <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal hero-editorial-only" />
   <hr class="hero-about-layer__rule scroll-reveal" />
 </section>
+
+<script>
+  /**
+   * Shrink each hero name row until it fits the full-width title track.
+   * Starts from the CSS size (already large) and only scales down if needed.
+   */
+  function fitHeroNameRows() {
+    const heading = document.querySelector(".hero-about-layer__heading");
+    if (!heading || window.innerWidth >= 768) return;
+
+    const rows = heading.querySelectorAll(".hero-name__first, .hero-name__last");
+    const trackWidth = heading.clientWidth;
+    if (!trackWidth) return;
+
+    rows.forEach((row) => {
+      if (!(row instanceof HTMLElement)) return;
+      row.style.fontSize = "";
+      let size = parseFloat(window.getComputedStyle(row).fontSize);
+      for (let i = 0; i < 80 && row.scrollWidth > trackWidth && size > 16; i += 1) {
+        size -= 1;
+        row.style.fontSize = `${size}px`;
+      }
+    });
+  }
+
+  function bootHeroNameFit() {
+    fitHeroNameRows();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => fitHeroNameRows());
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", bootHeroNameFit);
+  document.addEventListener("astro:page-load", bootHeroNameFit);
+  window.addEventListener("resize", () => {
+    window.requestAnimationFrame(fitHeroNameRows);
+  });
+
+  if (document.readyState !== "loading") bootHeroNameFit();
+</script>

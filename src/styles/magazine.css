@@ -387,30 +387,31 @@
 }
 
 /*
-  Mobile hero name hierarchy — must live AFTER .magazine-cover heading rules
-  so cascade wins over about-panel + unscoped Jellyka block above.
-
-  Sized so Anna Dauyl + Rockswell fill the first viewport and push
-  the roles / based-in lines below the fold — without horizontal overflow.
-  Extra line-box + padding so Jellyka ascenders/descenders are not clipped.
+  Mobile hero name — full-width title track.
+  Font size is derived from the title container width (cqw) so glyphs
+  fit inside the widened div instead of overflowing a padded inset.
 */
 @media (max-width: 767px) {
   .magazine-cover .hero-about-layer__name {
+    width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
-    overflow-y: visible;
-    padding-top: clamp(0.35rem, 1.5vh, 0.75rem);
+    margin-inline: 0;
+    padding-inline: 0.15rem;
+    padding-top: clamp(0.5rem, 2vh, 1rem);
     padding-bottom: clamp(2rem, 8vh, 3.5rem);
+    min-height: 38vh;
+    box-sizing: border-box;
+    overflow: visible;
   }
 
   .magazine-cover .hero-about-layer__heading {
     display: block;
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
-    overflow-y: visible;
     margin: 0;
-    padding-block: 0.2em 0.35em;
+    padding-block: 0.25em 0.4em;
+    overflow: visible;
+    box-sizing: border-box;
   }
 
   .magazine-cover .hero-about-layer__heading .hero-name__first,
@@ -418,24 +419,29 @@
     display: block;
     width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
     font-family: inherit;
     overflow: visible;
+    /* Keep on one line; size is tuned to the full-width track */
+    white-space: nowrap;
   }
 
-  /* Row 1: Anna Dauyl — large, still smaller than Rockswell */
+  /* Row 1: Anna Dauyl — sized to the full title track */
   .magazine-cover .hero-about-layer__heading .hero-name__first {
-    font-size: clamp(3.25rem, 15vw, 5.5rem) !important;
-    line-height: 1.2;
-    padding-block: 0.08em 0.12em;
-    white-space: nowrap;
+    font-size: clamp(2.75rem, 14vw, 5rem) !important;
+    font-size: clamp(2.75rem, 14cqw, 5rem) !important;
+    line-height: 1.25;
+    padding-block: 0.12em 0.18em;
+    padding-inline: 0.08em;
   }
 
-  /* Row 2: Rockswell — dominant; room for descenders */
+  /* Row 2: Rockswell — larger than row 1, still within the same full-width track */
   .magazine-cover .hero-about-layer__heading .hero-name__last {
-    font-size: clamp(5rem, 24vw, 8.5rem) !important;
-    line-height: 1.15;
-    margin-top: 0.08em;
-    padding-block: 0.1em 0.22em;
-    white-space: nowrap;
+    font-size: clamp(3.75rem, 20vw, 7.25rem) !important;
+    font-size: clamp(3.75rem, 20cqw, 7.25rem) !important;
+    line-height: 1.2;
+    margin-top: 0.1em;
+    padding-block: 0.14em 0.28em;
+    padding-inline: 0.06em;
   }
 }

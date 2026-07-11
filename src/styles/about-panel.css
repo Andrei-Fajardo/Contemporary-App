@@ -225,7 +225,7 @@
 @media (max-width: 767px) {
   .hero-about-layer.magazine-cover,
   .hero-about-layer {
-    overflow-x: hidden;
+    overflow: visible;
   }
 
   .hero-about-layer__cluster {
@@ -240,10 +240,8 @@
     min-height: 0;
     width: 100%;
     max-width: 100%;
-    /* Allow script descenders to paint; clip only sideways bleed */
-    overflow-x: hidden;
-    overflow-y: visible;
-    gap: clamp(1rem, 3vh, 1.5rem);
+    overflow: visible;
+    gap: clamp(0.75rem, 2vh, 1.25rem);
   }
 
   .hero-about-layer__art {
@@ -275,22 +273,29 @@
     object-position: center top;
   }
 
+  /*
+    Title track uses the full content width — no side padding —
+    so the script has the entire horizontal space of the page.
+  */
   .hero-about-layer__name {
-    padding-inline: clamp(0.875rem, 4vw, 1.35rem);
+    container-type: inline-size;
+    container-name: hero-name;
+    width: 100%;
     max-width: 100%;
-    overflow-wrap: break-word;
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
   }
 
-  /* Clean editorial h2 — sizes forced in magazine.css (loads later) */
   .hero-about-layer__heading,
   .editorial-dense .hero-about-layer__heading,
   .magazine-cover .hero-about-layer__heading {
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0.01em;
+    width: 100%;
     max-width: 100%;
-    overflow-wrap: break-word;
-    word-break: normal;
+    overflow: visible;
   }
 
   .hero-about-layer__heading .hero-name__first,
@@ -298,10 +303,15 @@
     display: block;
   }
 
+  .hero-about-layer__roles,
+  .hero-about-layer__intro {
+    padding-inline: clamp(0.875rem, 4vw, 1.35rem);
+  }
+
   .hero-about-layer__inner,
   .hero-about-layer__inner.section-shell,
   .hero-about-layer__inner.section-shell--wide {
-    overflow-x: hidden;
+    overflow: visible;
     padding-top: clamp(0.75rem, 2.5vh, 1.25rem);
     padding-bottom: clamp(0.85rem, 2.25vh, 1.25rem);
     padding-inline: 0 !important;
