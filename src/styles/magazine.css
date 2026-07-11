@@ -396,10 +396,10 @@
     width: 100%;
     max-width: 100%;
     margin-inline: 0;
-    padding-inline: 0.15rem;
-    padding-top: clamp(0.5rem, 2vh, 1rem);
-    padding-bottom: clamp(2rem, 8vh, 3.5rem);
-    min-height: 38vh;
+    padding-inline: 0;
+    padding-top: clamp(0.25rem, 1vh, 0.5rem);
+    padding-bottom: clamp(1.5rem, 5vh, 2.5rem);
+    min-height: 0;
     box-sizing: border-box;
     overflow: visible;
   }
@@ -409,7 +409,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0;
-    padding-block: 0.25em 0.4em;
+    padding-block: 0;
     overflow: visible;
     box-sizing: border-box;
   }
@@ -422,26 +422,26 @@
     box-sizing: border-box;
     font-family: inherit;
     overflow: visible;
-    /* Keep on one line; size is tuned to the full-width track */
     white-space: nowrap;
   }
 
-  /* Row 1: Anna Dauyl — sized to the full title track */
+  /* Row 1: Anna Dauyl */
   .magazine-cover .hero-about-layer__heading .hero-name__first {
-    font-size: clamp(2.75rem, 14vw, 5rem) !important;
-    font-size: clamp(2.75rem, 14cqw, 5rem) !important;
-    line-height: 1.25;
-    padding-block: 0.12em 0.18em;
-    padding-inline: 0.08em;
+    font-size: clamp(3.25rem, 17vw, 6rem) !important;
+    font-size: clamp(3.25rem, 17cqw, 6rem) !important;
+    line-height: 0.92;
+    padding-block: 0.04em 0;
+    padding-inline: 0;
+    margin: 0;
   }
 
-  /* Row 2: Rockswell — larger than row 1, still within the same full-width track */
+  /* Row 2: Rockswell — larger, tight under Anna Dauyl */
   .magazine-cover .hero-about-layer__heading .hero-name__last {
-    font-size: clamp(3.75rem, 20vw, 7.25rem) !important;
-    font-size: clamp(3.75rem, 20cqw, 7.25rem) !important;
-    line-height: 1.2;
-    margin-top: 0.1em;
-    padding-block: 0.14em 0.28em;
-    padding-inline: 0.06em;
+    font-size: clamp(4.5rem, 24vw, 8.5rem) !important;
+    font-size: clamp(4.5rem, 24cqw, 8.5rem) !important;
+    line-height: 0.9;
+    margin-top: -0.08em;
+    padding-block: 0 0.12em;
+    padding-inline: 0;
   }
 }

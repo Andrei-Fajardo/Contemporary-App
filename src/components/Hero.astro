@@ -42,8 +42,9 @@ const l = t[locale];
 
 <script>
   /**
-   * Shrink each hero name row until it fits the full-width title track.
-   * Starts from the CSS size (already large) and only scales down if needed.
+   * Fit each name row to the title track, then nudge larger.
+   * Allows a small flourish overrun so the type can read bigger
+   * without leaving a wide gap between Anna Dauyl and Rockswell.
    */
   function fitHeroNameRows() {
     const heading = document.querySelector(".hero-about-layer__heading");
@@ -53,11 +54,20 @@ const l = t[locale];
     const trackWidth = heading.clientWidth;
     if (!trackWidth) return;
 
+    // Allow ~3% overrun for script flourishes so fitted size stays larger
+    const maxWidth = trackWidth * 1.03;
+
     rows.forEach((row) => {
       if (!(row instanceof HTMLElement)) return;
       row.style.fontSize = "";
       let size = parseFloat(window.getComputedStyle(row).fontSize);
-      for (let i = 0; i < 80 && row.scrollWidth > trackWidth && size > 16; i += 1) {
+      // Grow first if CSS size still leaves unused width
+      for (let i = 0; i < 60 && row.scrollWidth < trackWidth * 0.94 && size < 200; i += 1) {
+        size += 1;
+        row.style.fontSize = `${size}px`;
+      }
+      // Then shrink only if clearly overflowing the track
+      for (let i = 0; i < 80 && row.scrollWidth > maxWidth && size > 16; i += 1) {
         size -= 1;
         row.style.fontSize = `${size}px`;
       }
