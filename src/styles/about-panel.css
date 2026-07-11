@@ -278,16 +278,13 @@
     overflow-wrap: break-word;
   }
 
-  /* Clean editorial h2 — not the overflowing script signature */
+  /* Clean editorial h2 — sizes forced in magazine.css (loads later) */
   .hero-about-layer__heading,
   .editorial-dense .hero-about-layer__heading,
   .magazine-cover .hero-about-layer__heading {
-    font-family: var(--font-heading, "Cormorant Garamond", Georgia, serif);
-    font-size: clamp(2.5rem, 10vw, 3.5rem);
     font-weight: 400;
     font-style: normal;
-    line-height: 1.02;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.01em;
     max-width: 100%;
     overflow-wrap: break-word;
     word-break: normal;
@@ -296,19 +293,6 @@
   .hero-about-layer__heading .hero-name__first,
   .hero-about-layer__heading .hero-name__last {
     display: block;
-  }
-
-  /* Row 1: Anna Dauyl — larger than before */
-  .hero-about-layer__heading .hero-name__first {
-    font-size: clamp(2.5rem, 10vw, 3.5rem);
-    line-height: 1.02;
-  }
-
-  /* Row 2: Rockswell — bigger than the first row */
-  .hero-about-layer__heading .hero-name__last {
-    font-size: clamp(3.25rem, 13vw, 4.75rem);
-    line-height: 0.95;
-    margin-top: 0.02em;
   }
 
   .hero-about-layer__inner,

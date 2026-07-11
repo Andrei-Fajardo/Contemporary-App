@@ -204,9 +204,9 @@
   }
 
   .magazine-cover .hero-about-layer__heading {
-    font-family: var(--font-heading, "Cormorant Garamond", Georgia, serif);
+    /* Keep Jellyka script — size hierarchy is set at end of this file */
     font-style: normal;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.01em;
   }
 }
 
@@ -384,4 +384,29 @@
 
 .magazine-cover:hover .hero-about-layer__art-img {
   transform: scale(1.02);
+}
+
+/*
+  Mobile hero name hierarchy — must live AFTER .magazine-cover heading rules
+  so cascade wins over about-panel + unscoped Jellyka block above.
+*/
+@media (max-width: 767px) {
+  .magazine-cover .hero-about-layer__heading .hero-name__first,
+  .magazine-cover .hero-about-layer__heading .hero-name__last {
+    display: block;
+    font-family: inherit;
+  }
+
+  /* Row 1: Anna Dauyl */
+  .magazine-cover .hero-about-layer__heading .hero-name__first {
+    font-size: clamp(2.75rem, 12vw, 3.75rem) !important;
+    line-height: 1.05;
+  }
+
+  /* Row 2: Rockswell — clearly larger than Anna Dauyl */
+  .magazine-cover .hero-about-layer__heading .hero-name__last {
+    font-size: clamp(4.25rem, 18vw, 6rem) !important;
+    line-height: 0.92;
+    margin-top: 0.04em;
+  }
 }
