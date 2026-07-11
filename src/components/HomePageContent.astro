@@ -1,6 +1,5 @@
 ---
 import AboutPanelStack from './AboutPanelStack.astro';
-import ArtSection from './sections/ArtSection.astro';
 import ExhibitionsSection from './sections/ExhibitionsSection.astro';
 import PublicationsSection from './sections/PublicationsSection.astro';
 import ResearchSection from './sections/ResearchSection.astro';
@@ -23,67 +22,30 @@ const { locale } = Astro.props;
       <AboutPanelStack locale={locale} />
     </div>
 
-    <!-- ── ART ────────────────────────────────────────────── -->
-    <div class="tabular-panel" data-tab-panel="art" id="panel-art" role="tabpanel" hidden aria-hidden="true">
-      <ArtSection locale={locale} />
-    </div>
+    <!-- Art panel hidden for now (copyright / selection TBD) — assets kept -->
 
     <!-- ── EXHIBITIONS ────────────────────────────────────── -->
     <div class="tabular-panel exhibitions-panel" data-tab-panel="exhibitions" id="panel-exhibitions" role="tabpanel" hidden aria-hidden="true">
       <ExhibitionsSection locale={locale} />
     </div>
 
-    <!-- ── PUBLICATIONS — editorial overlap layout inside section ─ -->
+    <!-- ── PUBLICATIONS ───────────────────────────────────── -->
     <div class="tabular-panel publications-panel" data-tab-panel="publications" id="panel-publications" role="tabpanel" hidden aria-hidden="true">
       <PublicationsSection locale={locale} />
     </div>
 
-    <!-- ── RESEARCH — anna-sample-4: leaf+body collage ────────
-         Positioned bottom-right, bleeding off the right and
-         bottom edges. Slightly transparent, large presence.
-    ──────────────────────────────────────────────────────── -->
+    <!-- ── RESEARCH ───────────────────────────────────────── -->
     <div class="tabular-panel research-panel" data-tab-panel="research" id="panel-research" role="tabpanel" hidden aria-hidden="true">
-      <div class="research-panel__art" aria-hidden="true">
-        <img
-          src="/media/anna-sample-4.png"
-          alt=""
-          class="research-panel__art-img"
-          loading="lazy"
-          decoding="async"
-          draggable="false"
-          data-lightbox-ignore
-          data-artwork-parallax
-          data-artwork-strength="0.03"
-          data-artwork-max="15"
-        />
-      </div>
       <ResearchSection locale={locale} />
     </div>
 
-    <!-- ── PRESS — editorial overlap layout inside section ────── -->
+    <!-- ── PRESS ──────────────────────────────────────────── -->
     <div class="tabular-panel press-panel" data-tab-panel="press" id="panel-press" role="tabpanel" hidden aria-hidden="true">
       <PressSection locale={locale} />
     </div>
 
-    <!-- ── CONTACTS — anna-sample-7: lower-left, over footer ──
-         Large figure sits bottom-left, bleeds off the left and
-         bottom edges, overlapping the footer from above.
-    ──────────────────────────────────────────────────────── -->
+    <!-- ── CONTACTS ───────────────────────────────────────── -->
     <div class="tabular-panel contacts-panel" data-tab-panel="contacts" id="panel-contacts" role="tabpanel" hidden aria-hidden="true">
-      <div class="contacts-panel__art" aria-hidden="true">
-        <img
-          src="/media/anna sample 7.png"
-          alt=""
-          class="contacts-panel__art-img"
-          loading="lazy"
-          decoding="async"
-          draggable="false"
-          data-lightbox-ignore
-          data-artwork-parallax
-          data-artwork-strength="0.04"
-          data-artwork-max="20"
-        />
-      </div>
       <ContactsSection locale={locale} />
     </div>
 

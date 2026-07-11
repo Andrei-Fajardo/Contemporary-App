@@ -32,7 +32,6 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
     return (
     <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
       <summary class="exhibition-accordion__summary hover-row" aria-label={`${display.heading} — ${display.subheading} — ${expand}`}>
-        <span class="exhibition-accordion__year">{entry.year}</span>
         <span class="exhibition-accordion__heading">
           <span class="exhibition-accordion__title">{display.heading}</span>
           {entry.kind === 'museum' && (

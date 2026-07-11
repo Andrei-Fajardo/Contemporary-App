@@ -185,11 +185,6 @@
 }
 
 @media (max-width: 767px) {
-  /* Mobile hero: stacked portrait + signature — hide editorial chrome */
-  .hero-editorial-only {
-    display: none !important;
-  }
-
   .magazine-cover {
     padding-top: 0;
     overflow: visible;

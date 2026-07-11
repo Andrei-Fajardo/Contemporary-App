@@ -1,0 +1,212 @@
+/*
+  Editorial layout pass (Fesan vibe)
+  Style constraint: asymmetric, staggered, generous negative space —
+  avoid centered card grids and pill/tag stacks.
+  Covers: About, Exhibitions, Publications, Research, Press.
+*/
+
+/* —— Shared panel mastheads —— */
+.editorial-panel__masthead {
+  max-width: min(42rem, 100%);
+  margin-bottom: clamp(2rem, 6vh, 4rem);
+}
+
+.editorial-panel__eyebrow {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.editorial-panel__title {
+  margin: 0 0 clamp(0.85rem, 2vh, 1.25rem);
+  font-family: var(--font-subheading, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.editorial-panel__intro {
+  margin: 0;
+  max-width: 36ch;
+}
+
+/* Stagger list blocks — uneven left offsets, not equal stacked cards */
+.editorial-list-blocks--stagger {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 7vh, 4.5rem);
+}
+
+.editorial-list-blocks--stagger .editorial-list-block:nth-child(2) {
+  margin-left: clamp(0rem, 8vw, 5rem);
+  max-width: 52rem;
+}
+
+.editorial-list-blocks--stagger .editorial-list-block:nth-child(3) {
+  margin-left: clamp(0rem, 3vw, 2rem);
+  max-width: 40rem;
+}
+
+@media (max-width: 767px) {
+  .editorial-list-blocks--stagger .editorial-list-block:nth-child(2),
+  .editorial-list-blocks--stagger .editorial-list-block:nth-child(3) {
+    margin-left: 0;
+    max-width: none;
+  }
+}
+
+/* —— About: asymmetric column, prose meta (no pills) —— */
+.editorial-about {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+  padding-block: clamp(0.5rem, 2vh, 1.5rem);
+}
+
+.editorial-about__masthead {
+  position: sticky;
+  top: 6rem;
+}
+
+.editorial-about__label {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.editorial-about__based {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  line-height: 1.45;
+  color: var(--ink-60);
+  max-width: 18ch;
+}
+
+.editorial-about__lead {
+  margin: 0 0 clamp(1.25rem, 3vh, 2rem);
+  font-family: var(--font-subheading, "Cormorant Garamond", Georgia, serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.35rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  max-width: 28ch;
+}
+
+.editorial-about__bio {
+  margin: 0 0 clamp(2rem, 5vh, 3rem);
+  max-width: 58ch;
+}
+
+.editorial-about__meta {
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+  padding-top: clamp(1.25rem, 3vh, 1.75rem);
+  border-top: 1px solid var(--border-subtle);
+  max-width: 48ch;
+}
+
+.editorial-about__meta-label {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+}
+
+.editorial-about__meta-text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 0.9vw, 1rem);
+  line-height: 1.65;
+  color: var(--ink-70);
+}
+
+@media (max-width: 767px) {
+  .editorial-about {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vh, 2rem);
+  }
+
+  .editorial-about__masthead {
+    position: static;
+  }
+
+  .editorial-about__based {
+    max-width: none;
+  }
+}
+
+/* —— Exhibitions: no year column; staggered rows —— */
+.exhibition-accordion__year {
+  display: none !important;
+}
+
+.editorial-dense .exhibition-accordion__summary,
+.exhibition-accordion__summary {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+}
+
+.editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n + 2) .exhibition-accordion__summary {
+  padding-left: clamp(0.5rem, 3vw, 2rem);
+}
+
+.editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n + 3) .exhibition-accordion__summary {
+  padding-left: clamp(1rem, 6vw, 4rem);
+}
+
+.editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n) .exhibition-accordion__summary {
+  padding-left: clamp(0.25rem, 2vw, 1.25rem);
+}
+
+@media (max-width: 767px) {
+  .editorial-index.exhibition-accordion .exhibition-accordion__item .exhibition-accordion__summary {
+    padding-left: 0.75rem !important;
+  }
+
+  .editorial-dense .exhibition-accordion__summary,
+  .exhibition-accordion__summary {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* —— Research / Press / Publications: open index, less chrome —— */
+.editorial-index--stagger .editorial-row-list__item:nth-child(odd) {
+  padding-left: 0;
+}
+
+.editorial-index--stagger .editorial-row-list__item:nth-child(even) {
+  padding-left: clamp(0rem, 4vw, 2.5rem);
+}
+
+#publications .pubs-overlap__frame,
+#press .press-overlap__frame {
+  display: none !important;
+}
+
+#publications .pubs-overlap__content,
+#press .press-overlap__content {
+  position: relative;
+  left: auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding-top: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+/* Override prior “large square hero” downsize that fought tall portrait */
+@media (min-width: 768px) {
+  .hero-about-layer__art {
+    width: clamp(16rem, 32vw, 26rem) !important;
+  }
+}

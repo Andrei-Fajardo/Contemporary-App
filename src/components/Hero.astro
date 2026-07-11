@@ -10,38 +10,28 @@ const l = t[locale];
 const heroNameParts = l.heroFirstName.trim().split(/\s+/);
 const heroGivenName = heroNameParts[0] ?? l.heroFirstName;
 const heroMiddleName = heroNameParts.slice(1).join(' ');
+// heroAside: editable 1–2 lines beside the portrait — Cherry writes final copy in translations.ts
 ---
 
 <section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
   <div class="hero-about-layer__inner section-shell section-shell--wide">
     <div class="hero-about-layer__cluster relative">
       <div
-        class="hero-about-layer__art group relative overflow-hidden cursor-pointer max-sm:cursor-default"
+        class="hero-about-layer__art relative"
         data-headshot
-        tabindex="0"
       >
-        <picture>
-          <source
-            media="(min-width: 768px)"
-            srcset="/media/anna%20header%202.png"
-          />
-          <img
-            src="/media/anna%20header%204.png"
-            alt={l.siteTitle}
-            class="hero-about-layer__art-img"
-            loading="eager"
-            decoding="async"
-            draggable="false"
-            data-lightbox-ignore
-          />
-        </picture>
-        <div class="hero-profile-overlay grain-noise" aria-hidden="true">
-          <p class="hero-profile-overlay__meta">{l.portfolioMeta}</p>
-          <p class="hero-profile-overlay__tagline">{l.heroTagline}</p>
-        </div>
+        <img
+          src="/media/anna%20header%202.png"
+          alt={l.siteTitle}
+          class="hero-about-layer__art-img"
+          loading="eager"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
       </div>
 
-      <div class="hero-editorial__copy hero-about-layer__name hero-editorial-only">
+      <div class="hero-editorial__copy hero-about-layer__name">
         <h1 class="hero-about-layer__heading scroll-reveal">
           <span class="hero-name__first">
             <span class="hero-name__line">{heroGivenName}</span>
@@ -50,12 +40,13 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
           <span class="hero-name__last">{l.heroLastName}</span>
         </h1>
 
-        <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
-        <p class="magazine-cover__motto scroll-reveal hero-editorial-only">{l.heroMotto}</p>
+        {/* EDITABLE: replace t[locale].heroAside in translations.ts — do not invent final copy */}
+        {l.heroAside && (
+          <p class="hero-about-layer__aside scroll-reveal">{l.heroAside}</p>
+        )}
       </div>
     </div>
   </div>
 
-  <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal hero-editorial-only" />
   <hr class="hero-about-layer__rule scroll-reveal" />
 </section>

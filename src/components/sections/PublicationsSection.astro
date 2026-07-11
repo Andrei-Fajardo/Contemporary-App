@@ -2,7 +2,8 @@
 import EditorialLinkList from '../EditorialLinkList.astro';
 import EditorialListContainer from '../EditorialListContainer.astro';
 import ManuscriptModal from '../ManuscriptModal.astro';
-import { publicationLinks } from '../../data/content';
+// TODO(confirm-magazines): HARD BLOCKER — draft list only until Cherry confirms
+import { DRAFT_FEATURED_PUBLICATIONS } from '../../data/content';
 import { siteCopy } from '../../data/site-copy';
 import { t, type LocaleKey } from '../../data/translations';
 
@@ -17,45 +18,28 @@ const pubsHeadingParts = l.publicationsHeading.split(/\s*&\s*/);
 const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
 ---
 
-<section id="publications" class="scroll-section section-gap pubs-overlap magazine-torn">
-
-  <div class="pubs-overlap__frame" aria-hidden="true">
-    <img
-      src="/media/anan sample 2.png"
-      alt=""
-      class="pubs-overlap__img"
-      loading="lazy"
-      decoding="async"
-      draggable="false"
-      data-lightbox-ignore
-      data-artwork-parallax
-      data-artwork-strength="0.035"
-      data-artwork-max="18"
-    />
-  </div>
+<section id="publications" class="scroll-section section-gap pubs-overlap editorial-panel">
 
   <div class="pubs-overlap__content section-shell section-shell--wide">
-    <header class="pubs-editorial__masthead scroll-reveal">
-      <div class="magazine-chapter">
-        <p class="section-eyebrow">{l.publicationsTag}</p>
-        <h2 class="magazine-chapter__title pubs-overlap__heading">
-          {pubsHeadingHasAmp ? (
-            <>
-              <span class="pubs-heading__part">{pubsHeadingParts[0]}</span>
-              <span class="pubs-heading__amp">&amp;</span>
-              <span class="pubs-heading__part">{pubsHeadingParts[1]}</span>
-            </>
-          ) : (
-            l.publicationsHeading
-          )}
-        </h2>
-      </div>
-      <p class="content-prose text-ink-60 pubs-section__intro">
+    <header class="editorial-panel__masthead pubs-editorial__masthead scroll-reveal">
+      <p class="editorial-panel__eyebrow">{l.publicationsTag}</p>
+      <h2 class="editorial-panel__title pubs-overlap__heading">
+        {pubsHeadingHasAmp ? (
+          <>
+            <span class="pubs-heading__part">{pubsHeadingParts[0]}</span>
+            <span class="pubs-heading__amp">&amp;</span>
+            <span class="pubs-heading__part">{pubsHeadingParts[1]}</span>
+          </>
+        ) : (
+          l.publicationsHeading
+        )}
+      </h2>
+      <p class="editorial-panel__intro content-prose text-ink-60">
         {l.publicationsIntro}
       </p>
     </header>
 
-    <div class="editorial-list-blocks scroll-reveal">
+    <div class="editorial-list-blocks editorial-list-blocks--stagger scroll-reveal">
       <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
         <EditorialListContainer>
@@ -69,9 +53,9 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
 
       <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
-        {/* Publication titles are proper nouns / published names — kept as authored English */}
+        {/* TODO(confirm-magazines): DRAFT entries — do not remove draft flags until Cherry confirms */}
         <EditorialListContainer>
-          <EditorialLinkList items={publicationLinks} showYear={false} emptyMessage={l.listForthcoming} />
+          <EditorialLinkList items={DRAFT_FEATURED_PUBLICATIONS} showYear={false} emptyMessage={l.listForthcoming} />
         </EditorialListContainer>
       </div>
 
