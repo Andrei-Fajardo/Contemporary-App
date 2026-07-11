@@ -1,6 +1,5 @@
 ---
 import EditorialLinkList from '../EditorialLinkList.astro';
-import EditorialListContainer from '../EditorialListContainer.astro';
 import ManuscriptModal from '../ManuscriptModal.astro';
 // TODO(confirm-magazines): HARD BLOCKER — draft list only until Cherry confirms
 import { DRAFT_FEATURED_PUBLICATIONS } from '../../data/content';
@@ -18,7 +17,7 @@ const pubsHeadingParts = l.publicationsHeading.split(/\s*&\s*/);
 const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
 ---
 
-<section id="publications" class="scroll-section section-gap pubs-overlap editorial-panel">
+<section id="publications" class="scroll-section section-gap pubs-overlap editorial-panel pubs-overlap--empty">
 
   <div class="pubs-overlap__frame" aria-hidden="true">
     <img
@@ -55,40 +54,34 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
     </header>
 
     <div class="editorial-list-blocks editorial-list-blocks--stagger scroll-reveal">
-      <div class="editorial-list-block">
+      <div class="editorial-list-block editorial-list-block--chapbook">
         <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
-        <EditorialListContainer>
-          <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
-            <button type="button" class="pubs-manuscript-btn animate-pulse-cta" data-manuscript-open>
-              {l.manuscriptReadBtn}
-            </button>
-          </div>
-        </EditorialListContainer>
+        <div class="pubs-section__manuscript-actions" role="group" aria-label={l.manuscriptHeading}>
+          <button type="button" class="pubs-manuscript-btn animate-pulse-cta" data-manuscript-open>
+            {l.manuscriptReadBtn}
+          </button>
+        </div>
       </div>
 
       <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
         {/* TODO(confirm-magazines): DRAFT entries — do not remove draft flags until Cherry confirms */}
-        <EditorialListContainer>
-          <EditorialLinkList items={DRAFT_FEATURED_PUBLICATIONS} showYear={false} emptyMessage={l.listForthcoming} />
-        </EditorialListContainer>
+        <EditorialLinkList items={DRAFT_FEATURED_PUBLICATIONS} showYear={false} emptyMessage={l.listForthcoming} />
       </div>
 
       {novels.length > 0 && (
         <div class="editorial-list-block">
           <h3 class="editorial-list-block__label">{l.novelsLabel}</h3>
-          <EditorialListContainer>
-            <ul class="pubs-novel-list">
-              {novels.map((novel) => (
-                <li class="pubs-novel-list__item">
-                  <span class="editorial-row-list__title">{novel.title === 'Untitled Novel' ? l.untitledNovel : novel.title}</span>
-                  {novel.status === 'coming-soon' && (
-                    <span class="pubs-novel-list__status">{l.comingSoon}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </EditorialListContainer>
+          <ul class="pubs-novel-list editorial-row-list editorial-row-list--no-year">
+            {novels.map((novel) => (
+              <li class="pubs-novel-list__item">
+                <span class="editorial-row-list__title">{novel.title === 'Untitled Novel' ? l.untitledNovel : novel.title}</span>
+                {novel.status === 'coming-soon' && (
+                  <span class="pubs-novel-list__status">{l.comingSoon}</span>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>

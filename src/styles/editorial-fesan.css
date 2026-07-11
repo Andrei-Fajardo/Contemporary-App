@@ -53,11 +53,11 @@
   }
 }
 
-/* Stagger list blocks — uneven left offsets, not equal stacked cards */
+/* Stagger list blocks — shared left edge; space via vertical rhythm only */
 .editorial-list-blocks--stagger {
   display: flex;
   flex-direction: column;
-  gap: clamp(3rem, 8vh, 5rem);
+  gap: clamp(3.5rem, 9vh, 6rem);
 }
 
 .editorial-list-blocks--stagger .editorial-list-block {
@@ -66,26 +66,12 @@
   border-radius: 0;
   box-shadow: none;
   padding: 0;
-}
-
-.editorial-list-blocks--stagger .editorial-list-block:nth-child(1) {
-  max-width: 36rem;
-}
-
-.editorial-list-blocks--stagger .editorial-list-block:nth-child(2) {
-  margin-left: clamp(0rem, 10vw, 6rem);
-  max-width: 48rem;
-}
-
-.editorial-list-blocks--stagger .editorial-list-block:nth-child(3) {
-  margin-left: clamp(0rem, 4vw, 2.5rem);
-  max-width: 34rem;
+  margin-left: 0;
+  max-width: min(42rem, 100%);
 }
 
 @media (max-width: 767px) {
-  .editorial-list-blocks--stagger .editorial-list-block:nth-child(2),
-  .editorial-list-blocks--stagger .editorial-list-block:nth-child(3) {
-    margin-left: 0;
+  .editorial-list-blocks--stagger .editorial-list-block {
     max-width: none;
   }
 }
@@ -190,7 +176,7 @@
   }
 }
 
-/* —— Exhibitions: no year column; staggered rows —— */
+/* —— Exhibitions: consistent left edge (no zigzag / alternating offsets) —— */
 .exhibition-accordion__year {
   display: none !important;
 }
@@ -201,38 +187,56 @@
   background: transparent !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  text-align: left !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
 }
 
-.editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n + 2) .exhibition-accordion__summary {
-  padding-left: clamp(0.75rem, 4vw, 2.5rem);
+.editorial-index.exhibition-accordion .exhibition-accordion__heading,
+.editorial-index.exhibition-accordion .exhibition-accordion__title,
+.editorial-index.exhibition-accordion .exhibition-accordion__meta {
+  grid-column: 1 !important;
+  justify-self: start !important;
+  text-align: left !important;
 }
 
-.editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n + 3) .exhibition-accordion__summary {
-  padding-left: clamp(1.5rem, 8vw, 5rem);
+.editorial-index.exhibition-accordion .exhibition-accordion__item,
+.editorial-index.exhibition-accordion .exhibition-accordion__summary {
+  text-align: left !important;
 }
 
-.editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n) .exhibition-accordion__summary {
-  padding-left: clamp(0.35rem, 2.5vw, 1.5rem);
+/* Kill any prior nth-child horizontal stagger that read as right-aligned zigzag */
+.editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(n) .exhibition-accordion__summary {
+  padding-left: 0 !important;
+  padding-right: 0;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+}
+
+/* VIEW MORE stays at the row end — only right-aligned element */
+.editorial-index.exhibition-accordion .exhibition-accordion__action {
+  grid-column: 2 !important;
+  justify-self: end;
+  text-align: right;
 }
 
 @media (max-width: 767px) {
-  .editorial-index.exhibition-accordion .exhibition-accordion__item .exhibition-accordion__summary {
-    padding-left: 0.75rem !important;
-  }
-
   .editorial-dense .exhibition-accordion__summary,
   .exhibition-accordion__summary {
     grid-template-columns: 1fr !important;
   }
+
+  .editorial-index.exhibition-accordion .exhibition-accordion__action {
+    grid-column: 1 !important;
+    justify-self: start;
+    text-align: left;
+  }
 }
 
-/* —— Research / Press list stagger —— */
-.editorial-index--stagger .editorial-row-list__item:nth-child(odd) {
-  padding-left: 0;
-}
-
-.editorial-index--stagger .editorial-row-list__item:nth-child(even) {
-  padding-left: clamp(0rem, 5vw, 3rem);
+/* —— Research / Press list: clean left edge (no alternating indent) —— */
+.editorial-index--stagger .editorial-row-list__item {
+  padding-left: 0 !important;
 }
 
 /* Pubs / Press: keep overlap frames visible; content left-weighted */
@@ -245,9 +249,221 @@
 #press.editorial-panel,
 #research.editorial-panel,
 #exhibitions.editorial-panel {
-  /* No contained card shell around panel content */
   border: 0;
   box-shadow: none;
+}
+
+/* ============================================================
+   Publications — confidence in emptiness
+   Unbox lists, enlarge margins, give ghost image its own air
+   ============================================================ */
+@media (min-width: 768px) {
+  #publications.pubs-overlap,
+  #publications.pubs-overlap--empty {
+    min-height: clamp(40rem, 78vh, 60rem);
+    padding-top: clamp(3.5rem, 9vh, 6rem);
+    padding-bottom: clamp(5rem, 12vh, 8rem);
+    padding-right: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Ghost image: lower-left watermark with empty canvas around it */
+  #publications .pubs-overlap__frame {
+    top: auto !important;
+    bottom: clamp(2rem, 6vh, 5rem) !important;
+    left: clamp(0.5rem, 3vw, 2.5rem) !important;
+    width: clamp(16rem, 28vw, 24rem) !important;
+    height: clamp(20rem, 42vh, 32rem) !important;
+    opacity: 1;
+  }
+
+  #publications .pubs-overlap__img {
+    opacity: 0.22 !important;
+    object-position: left bottom;
+    mix-blend-mode: multiply;
+  }
+
+  /* Content: right-weighted column — large top/right margins, no overlap glue */
+  #publications .pubs-overlap__content {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    width: min(36rem, 48%) !important;
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: clamp(4rem, 10vw, 9rem);
+    padding: clamp(0.5rem, 2vh, 1.25rem) 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  #publications .editorial-panel__masthead {
+    max-width: 26rem;
+    margin-bottom: clamp(4rem, 11vh, 6.5rem);
+  }
+}
+
+/* Unbox Featured / Novels / Chapbook — thin rules + whitespace, no cards */
+#publications .editorial-list-container,
+#publications .editorial-row-list,
+#publications .pubs-novel-list,
+#publications .editorial-list-block {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+#publications .editorial-list-container {
+  padding: 0 !important;
+}
+
+#publications .editorial-row-list__item,
+#publications .editorial-list-container .editorial-row-list__item,
+#publications .editorial-list-container .editorial-row-list--no-year .editorial-row-list__item,
+#publications .pubs-novel-list__item,
+#publications .editorial-list-container .pubs-novel-list__item {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  margin-inline: 0 !important;
+  padding: clamp(1.25rem, 3vh, 1.75rem) 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  grid-template-columns: unset !important;
+  transform: none !important;
+}
+
+#publications .editorial-row-list__item::after,
+#publications .pubs-novel-list__item::after {
+  display: none !important;
+}
+
+#publications .editorial-row-list__item:last-child,
+#publications .pubs-novel-list__item:last-child,
+#publications .editorial-list-container .editorial-row-list__item:last-child,
+#publications .editorial-list-container .pubs-novel-list__item:last-child {
+  border-bottom: 0 !important;
+}
+
+#publications .pubs-novel-list__status,
+#publications .editorial-list-container .pubs-novel-list__status {
+  display: inline-block;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-55);
+}
+
+/* Soften hover so rows don't flash into card-like fills */
+@media (hover: hover) and (pointer: fine) {
+  #publications .editorial-row-list__item:hover,
+  #publications .pubs-novel-list__item:hover,
+  #publications .hover-row:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  #publications .editorial-row-list__item:hover .editorial-row-list__title {
+    color: var(--ink-75);
+  }
+}
+
+/* Chapbook CTA — isolated moment with generous air; not full-bleed packed */
+#publications .pubs-section__manuscript-actions {
+  margin: clamp(2rem, 5vh, 3.25rem) 0 clamp(4rem, 10vh, 6.5rem) !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+#publications .pubs-manuscript-btn {
+  width: auto;
+  min-width: min(100%, 16rem);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#publications .editorial-list-block:first-child {
+  margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+#publications .editorial-list-blocks--stagger {
+  gap: clamp(4.5rem, 12vh, 8rem);
+}
+
+#publications .editorial-list-block__label {
+  margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  letter-spacing: 0.22em;
+}
+
+@media (max-width: 767px) {
+  #publications .pubs-overlap__content {
+    width: 100% !important;
+    max-width: none;
+    margin-right: 0;
+    margin-left: 0;
+    padding-inline: 0 !important;
+    background: transparent !important;
+  }
+
+  #publications .pubs-section__manuscript-actions {
+    margin: 1.5rem 0 3rem !important;
+  }
+
+  #publications .pubs-manuscript-btn {
+    width: 100%;
+  }
+
+  #publications .editorial-list-blocks--stagger {
+    gap: clamp(2.5rem, 7vh, 4rem);
+  }
+}
+
+/* Academic Research — ensure anna-sample-4 stays a subtle bottom-right ghost */
+@media (min-width: 1024px) {
+  .research-panel {
+    position: relative;
+    overflow: visible;
+    min-height: min(100%, 70vh);
+  }
+
+  .research-panel__art {
+    display: block !important;
+    position: absolute;
+    right: clamp(-1.5rem, -3vw, 0rem);
+    bottom: clamp(1.5rem, 5vh, 4rem);
+    left: auto;
+    width: clamp(20rem, 32vw, 36rem);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .research-panel__art-img {
+    opacity: 0.32;
+    filter: grayscale(1) contrast(1.05) brightness(0.97);
+  }
+
+  .research-panel .research-section {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 /* Kill leftover pill chrome if any about-chaos list still renders */

@@ -1653,7 +1653,7 @@ select,
     border-radius: 0.85rem;
   }
 
-  /* Exhibition summaries read as compact mobile cards. */
+  /* Exhibition summaries — left-aligned rows (no empty year column) */
   .exhibition-accordion__item {
     margin-bottom: 0.75rem;
     border: 1px solid var(--border-subtle);
@@ -1663,14 +1663,16 @@ select,
   }
 
   .exhibition-accordion__summary {
-    grid-template-columns: 3.1rem minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.35rem 0.85rem;
     padding: 0.95rem;
+    text-align: left;
   }
 
-  .exhibition-accordion__year {
-    grid-row: 1 / span 2;
-    font-size: 0.68rem;
+  .exhibition-accordion__heading,
+  .exhibition-accordion__meta {
+    grid-column: 1;
+    min-width: 0;
   }
 
   .exhibition-accordion__title {
@@ -1680,8 +1682,11 @@ select,
     overflow-wrap: break-word;
   }
 
-  .exhibition-accordion__meta,
-  .exhibition-accordion__badge,
+  .exhibition-accordion__badge {
+    grid-column: 1;
+    min-width: 0;
+  }
+
   .exhibition-accordion__action {
     grid-column: 2;
     min-width: 0;
@@ -1757,6 +1762,17 @@ select,
     border-bottom: 1px solid var(--border-subtle);
     border-radius: 0.5rem;
     background: transparent;
+    grid-template-columns: minmax(0, 1fr) auto;
+    text-align: left;
+  }
+
+  .editorial-index.exhibition-accordion .exhibition-accordion__heading,
+  .editorial-index.exhibition-accordion .exhibition-accordion__meta {
+    grid-column: 1;
+  }
+
+  .editorial-index.exhibition-accordion .exhibition-accordion__action {
+    grid-column: 2;
   }
 
   .editorial-index.exhibition-accordion > .exhibition-accordion__item + .exhibition-accordion__item {
