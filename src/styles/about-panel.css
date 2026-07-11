@@ -240,7 +240,9 @@
     min-height: 0;
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
+    /* Allow script descenders to paint; clip only sideways bleed */
+    overflow-x: hidden;
+    overflow-y: visible;
     gap: clamp(1rem, 3vh, 1.5rem);
   }
 
