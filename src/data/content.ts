@@ -349,73 +349,80 @@ export const exhibitionEntries: ExhibitionEntry[] = [
     category: 'digital',
     images: ['/media/virtual/the-atrium.jpg'],
   },
+];
+
+/** Magazine features for Publishings — append new entries here once client confirms the list. */
+export interface MagazineFeature {
+  id: string;
+  /** Sort key only — not displayed. Use YYYY or YYYY-MM; undated → omit or '0'. */
+  year: string;
+  title: string;
+  issue: string;
+  feature: string;
+  href?: string;
+  image?: string;
+}
+
+export const magazineFeatures: MagazineFeature[] = [
   {
-    id: 'wildscape',
-    year: 'Ongoing',
-    title: 'Wildscape Literary Journal',
-    gallery: 'Wildscape Literary Journal',
-    place: 'Ongoing',
-    category: 'magazine',
-    images: ['/media/the-fish.png'],
-    links: {
-      website: 'https://wildscapelit.com/',
-      magazineLabel: 'Ongoing',
-      artwork: 'The Fish',
-    },
+    id: 'spellbinder',
+    year: '2026',
+    title: 'Spellbinder Magazine',
+    issue: 'Spring 2026',
+    feature: 'Souls of Leavings',
+    href: 'https://www.spellbindermag.com/issues/spring-2026/',
+    image: '/media/souls-and-leavings.jpg',
   },
   {
     id: 'astraeazine',
     year: '2025',
     title: 'Astraeazine',
-    gallery: 'Issue Eight — Dreamscape',
-    place: 'Astraea Zine',
-    category: 'magazine',
-    images: ['/media/the-fish.png', '/media/souls-and-leavings.jpg'],
-    links: {
-      website: 'https://www.instagram.com/astraeazine/',
-      magazine: 'https://www.astraeazine.com/issue-eight',
-      issue: 'Issue Eight — Dreamscape',
-      artwork: 'The Fish and Souls of Leavings',
-    },
+    issue: 'Issue Eight — Dreamscape',
+    feature: 'The Fish and Souls of Leavings',
+    href: 'https://www.astraeazine.com/issue-eight',
+    image: '/media/the-fish.png',
   },
   {
     id: 'hush-magazine',
     year: '2025',
     title: 'Hush Magazine',
-    gallery: 'Hush Magazine',
-    place: 'Issue 001 — LOST//FOUND',
-    category: 'magazine',
-    images: ['/media/souls-and-leavings.jpg'],
-    links: {
-      website: 'https://hushmag.co.uk/',
-      magazine: 'https://hushmag.co.uk/collections/all',
-      issue: 'ISSUE 001 LOST//FOUND SUBMISSION',
-      artwork: 'Souls of Leavings',
-    },
+    issue: 'Issue 001 — LOST//FOUND',
+    feature: 'Souls of Leavings',
+    href: 'https://hushmag.co.uk/collections/all',
+    image: '/media/souls-and-leavings.jpg',
   },
   {
-    id: 'spellbinder',
-    year: '2026',
-    title: 'Spellbinder Magazine',
-    gallery: 'Spellbinder Magazine',
-    place: 'Spring 2026',
-    category: 'magazine',
-    images: ['/media/souls-and-leavings.jpg'],
-    links: {
-      website: 'https://www.spellbindermag.com/',
-      magazine: 'https://www.spellbindermag.com/issues/spring-2026/',
-      issue: 'Spring Issue',
-      artwork: 'Souls of Leavings',
-    },
+    id: 'wildscape',
+    year: '0',
+    title: 'Wildscape Literary Journal',
+    issue: 'Ongoing',
+    feature: 'The Fish',
+    href: 'https://wildscapelit.com/',
+    image: '/media/the-fish.png',
   },
 ];
 
-export const magazines = [
-  { title: 'Wildscape Literary Journal', issue: 'Ongoing', feature: 'The Fish', image: '/media/the-fish.png' },
-  { title: 'Astraeazine', issue: 'Issue Eight — Dreamscape', feature: 'The Fish and Souls of Leavings', image: '/media/the-fish.png' },
-  { title: 'Hush Magazine', issue: 'Issue 001 — LOST//FOUND', feature: 'Souls of Leavings', image: '/media/souls-and-leavings.jpg' },
-  { title: 'Spellbinder Magazine', issue: 'Spring 2026', feature: 'Souls of Leavings', image: '/media/souls-and-leavings.jpg' },
-];
+/** @deprecated Prefer magazineFeatures — kept for legacy magazine pages. */
+export const magazines = magazineFeatures.map((m) => ({
+  title: m.title,
+  issue: m.issue,
+  feature: m.feature,
+  image: m.image ?? '',
+}));
+
+/** Reverse-chronological sort for link lists (year desc; undated last). */
+export function sortByYearDesc<T extends { year?: string }>(items: T[]): T[] {
+  return [...items].sort((a, b) => {
+    const ya = Number.parseInt(a.year ?? '', 10);
+    const yb = Number.parseInt(b.year ?? '', 10);
+    const aOk = Number.isFinite(ya) && ya > 0;
+    const bOk = Number.isFinite(yb) && yb > 0;
+    if (aOk && bOk) return yb - ya;
+    if (aOk) return -1;
+    if (bOk) return 1;
+    return 0;
+  });
+}
 
 export const iiif = (id: string) => `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`;
 
@@ -580,61 +587,3 @@ export const researchPapers: ResearchItem[] = [];
 export const grantsAndFellowships: { title: string; year: string; description: string }[] = [];
 
 export const residencies: { title: string; location: string; year: string }[] = [];
-
-export const igamingLinks: LinkItem[] = [
-  { title: 'Betting Basics: History and Theory of Sports Betting For Beginners', href: 'https://docs.google.com/document/d/1lX8PlTWeCRW1mXVMHVvkxxXFwTrU4TcU5JPrIECcf1M/edit?usp=sharing', year: 'SEO' },
-  { title: 'Promo Codes from Betting Brokerages: How to Get Free Money?', href: 'https://docs.google.com/document/d/1s71koJKWq0a__3JTJqUG9LsEPRIap_PNZl2ZJNm3Lpw/edit?usp=sharing', year: 'Promo' },
-  { title: 'How To Use Sportcashback', href: 'https://docs.google.com/document/d/1Zi61E_JhREK7-DDiGQpzCDa2Xn5TYDSfZqSN771ZTdc/edit?usp=sharing', year: 'Cashback' },
-  { title: 'Choosing the Best Bookmaker: Analysis and Benefits of Comparison Table', href: 'https://docs.google.com/document/d/1_sQCEh6cIEaP_kPl6ILQ2UVGhgGvekeE246hXlGezXI/edit?usp=sharing', year: 'Tools' },
-  { title: 'MyBookie Vs. BetOBet: Who Has the Top Sports Betting Odds and Casino?', href: 'https://docs.google.com/document/d/1JVgunzzBYBhWnOC6kL3EBh9LVRDJuTddMLub05n-NTs/edit?usp=sharing', year: 'Tools' },
-  { title: 'Basketball NBA HG — Best Stat Lines from NBA 2022 Summer League', href: 'https://docs.google.com/document/d/1q4EHhQuHNMChzfx_hjsUTnMKhOb94Bur9uwzDRIFv68/edit?usp=sharing', year: 'HG' },
-  { title: "Basketball NBA HG — Net's Best Free-Agent Signings in the NBA", href: 'https://docs.google.com/document/d/1af0S2XxW_cvl9shVUntWB55WLiEmb-7uZjcyVxN3ffo/edit?usp=sharing', year: 'HG' },
-  { title: 'The NFL Lists the Big Events for 2022 Game Season', href: 'https://docs.google.com/document/d/1sSMm8hp_oT7KV0KA2biBPxWJsHk5yNRnEyTWXlA9crw/edit?usp=sharing', year: 'HG' },
-  { title: 'REVIEW: Savaspin Casino Login — Play At Sava Spin Casino Website', href: 'https://docs.google.com/document/d/1zgsVYiKp5V_d1BApWaUJSL0FjEBYEJPyJZtxpuqLJDc/edit?usp=sharing', year: 'Review' },
-  { title: 'Oscarspin Casino — The Best Online Casino in IT', href: 'https://docs.google.com/document/d/17e3fVwwZ8C8IUNllF7OlDbclYBoT9gR93fD4hO3vaCk/edit?usp=sharing', year: 'Review' },
-  { title: 'Bet365: Your Ultimate Destination for Online Betting', href: 'https://docs.google.com/document/d/17e3fVwwZ8C8IUNllF7OlDbclYBoT9gR93fD4hO3vaCk/edit?usp=sharing', year: 'Review' },
-  { title: 'Review of the SportyBet', href: 'https://docs.google.com/document/d/1-ES3clhGMYXupBIdOxCEfCzM7d8qFlNlHx2HnuqU7PQ/edit?usp=sharing', year: 'Review' },
-  { title: 'Bet365 vs 1xbet', href: 'https://docs.google.com/document/d/1qf9mrZveax5ddn8GQmWhUQuYI6tupqwpIRgsOreyykQ/edit?usp=sharing', year: 'Review' },
-];
-
-export const uplatformBlogLinks: LinkItem[] = [
-  { title: 'The Gen Z Effect: The Fall of Traditional iGaming Funnels', href: 'https://uplatform.com/news/the-gen-z-effect-the-fall-of-traditional-igaming-funnels' },
-  { title: 'Mastering Esports Betting: Crafting Your Winning Website', href: 'https://uplatform.com/news/mastering-esports-betting-crafting-your-winning-website' },
-  { title: 'Stop Guessing, Start Mapping: Customer Journey Map (CJM) is the Key', href: 'https://uplatform.com/news/stop-guessing-start-mapping-customer-journey-map-cjm-is-the-key' },
-  { title: "Level Up in Romania: The Operator's Ultimate Market Entry Guide", href: 'https://uplatform.com/news/igaming-business-in-romania-the-operator-s-ultimate-market-entry-guide' },
-  { title: 'Mastering Customer Journey Mapping: 4 Pitfalls to Avoid', href: 'https://uplatform.com/news/mastering-customer-journey-mapping-4-pitfalls-to-avoid' },
-  { title: 'The Future of Personalization: Crafting Player-Centric Experiences in iGaming', href: 'https://uplatform.com/news/the-future-of-personalization-player-centric-experiences-in-igaming' },
-  { title: 'How Seamless Onboarding Can Turbocharge Your Conversion Rates', href: 'https://uplatform.com/news/how-seamless-onboarding-can-turbocharge-your-conversion-rates' },
-  { title: "Swipe Right on Profits: Why Operators Shouldn't Ignore Valentine's Day", href: 'https://uplatform.com/news/swipe-right-on-profits-why-operators-shouldn-t-ignore-valentine-s-day' },
-  { title: "Unleash Data's Power: The Smart Operator's Guide", href: 'https://uplatform.com/news/unleash-data-s-power-the-smart-operator-s-guide' },
-  { title: 'The Impact of Music in Casino Games: Shaping the Player Experience', href: 'https://uplatform.com/news/the-impact-of-music-in-casino-games-shaping-the-player-experience' },
-  { title: 'Nostalgia in Marketing: Why Retro Appeals Work in iGaming', href: 'https://uplatform.com/news/nostalgia-in-marketing-why-retro-appeals-work-in-igaming' },
-  { title: 'The Thrill of the Game: The Growing Value of In-Play (Live) Betting', href: 'https://uplatform.com/news/the-growing-value-of-in-play-betting' },
-  { title: "Lunar New Year Marketing Secrets: Unlocking the Snake's Power", href: 'https://uplatform.com/news/lunar-new-year-marketing-secrets-unlocking-the-snake-s-power' },
-  { title: "The Uplatform Gift Guide: Ho-Ho-Holiday Bonuses and Promotions Galore!", href: 'https://uplatform.com/news/ho-ho-holiday-bonuses-and-promotions-galore' },
-  { title: "Love is in the Reels: The Top Valentine's Day Slots to Fall For", href: 'https://uplatform.com/news/love-is-in-the-reels-the-top-valentine-s-day-slots-to-fall-for' },
-  { title: 'iGaming Assemble: Mastering the Infinity Quest of Hyper-Localization in a Scalable Universe', href: 'https://uplatform.com/news/igaming-localization-assemble-your-powers-for-the-infinity-quest' },
-  { title: 'How to Cross-Sell Successfully: Sportsbook in Casino Operations', href: 'https://uplatform.com/news/how-to-cross-sell-successfully-sportsbook-in-casino-operations' },
-  { title: "Santa's Workshop Secrets: Unwrapping Uplatform's Team Magic for Client Success", href: 'https://uplatform.com/news/santas-workshop-secrets' },
-  { title: 'The Ultimate iGaming Playlist for B2B Success', href: 'https://uplatform.com/news/the-ultimate-igaming-playlist-for-b2b-success' },
-  { title: 'Cracking the Code: A Guide to Understanding Sports Betting Views', href: 'https://uplatform.com/news/cracking-the-code-a-guide-to-understanding-sports-betting-views' },
-  { title: "SMS & Telegram Betting: iGaming's Hidden Goldmine", href: 'https://uplatform.com/news/sms-telegram-betting-igaming-s-hidden-goldmine' },
-];
-
-export const uplatformPressLinks: LinkItem[] = [
-  { title: 'Ready for a Blooming Surprise at ICE Barcelona 2026?', href: 'https://uplatform.com/news/ready-for-a-blooming-surprise-at-ice-barcelona-2026' },
-  { title: 'Celebrate the Season with Us!', href: 'https://uplatform.com/news/celebrate-the-season-with-us' },
-  { title: "Find Your Inner Football Star: Kick Off with Uplatform's UEFA 2024 Quiz!", href: 'https://uplatform.com/news/find-your-inner-football-star-kick-off-2024-quiz' },
-  { title: 'Unlocking the Thrills: U_Lead Our Odyssey at SiGMA Asia 2024', href: 'https://uplatform.com/news/unlocking-the-thrills-ulead-our-odyssey-at-sigma-asia-2024' },
-  { title: 'U_Lead the Game! Uplatform Takes Center Stage at SiGMA Asia 2024', href: 'https://uplatform.com/news/ulead-the-game-uplatform-takes-center-stage-at-sigma-asia-2024' },
-  { title: "Let's Make U_Shine with Uplatform at SiGMA Europe 2024", href: 'https://docs.google.com/document/d/1AvI5mOsgNWE6rW_MMw3geSuofXXNfyxuVIqq0tmqr1Q/edit?usp=sharing' },
-  { title: "Uplatform's Latvian iGaming License Acquisition Journey", href: 'https://docs.google.com/document/d/1Mkz1IGtHvCaG7JpigsymQOAFbXLEa1lSQ4A0wrpn_Nk/edit?usp=sharing' },
-  { title: 'U_Rule with Uplatform at iGB L!VE 2024', href: 'https://docs.google.com/document/d/1-sFDsVcayzcRtTanr89GCwClbH7mSe27MWKEHzoywdo/edit?usp=sharing' },
-  { title: 'Join Uplatform at G2E Asia 2024 to See How U_Profit in Asia!', href: 'https://docs.google.com/document/d/1KjKtRPW8lNQA3ZpeReSSwF1fFNwytM8MpclbpGzi8so/edit?usp=sharing' },
-  { title: 'Supercharge Your Gains: Discover How U_Profit with Uplatform at G2E Asia 2024!', href: 'https://docs.google.com/document/d/1dYRkAj9DkvezhGhfQbPDDPOuM_VELM3TqRLLXickuc8/edit?usp=sharing' },
-];
-
-export const uplatformLinks: LinkItem[] = [
-  ...uplatformBlogLinks,
-  ...uplatformPressLinks,
-];

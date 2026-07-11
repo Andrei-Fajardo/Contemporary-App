@@ -2,7 +2,7 @@
 import EditorialLinkList from '../EditorialLinkList.astro';
 import EditorialListContainer from '../EditorialListContainer.astro';
 import ManuscriptModal from '../ManuscriptModal.astro';
-import { publicationLinks } from '../../data/content';
+import { magazineFeatures, publicationLinks, sortByYearDesc } from '../../data/content';
 import { siteCopy } from '../../data/site-copy';
 import { t, type LocaleKey } from '../../data/translations';
 
@@ -13,8 +13,8 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
 const novels = siteCopy.publications.novels;
-const pubsHeadingParts = l.publicationsHeading.split(/\s*&\s*/);
-const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
+const sortedMagazines = sortByYearDesc(magazineFeatures);
+const sortedPublicationLinks = sortByYearDesc(publicationLinks);
 ---
 
 <section id="publications" class="scroll-section section-gap pubs-overlap magazine-torn">
@@ -39,15 +39,7 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
       <div class="magazine-chapter">
         <p class="section-eyebrow">{l.publicationsTag}</p>
         <h2 class="magazine-chapter__title pubs-overlap__heading">
-          {pubsHeadingHasAmp ? (
-            <>
-              <span class="pubs-heading__part">{pubsHeadingParts[0]}</span>
-              <span class="pubs-heading__amp">&amp;</span>
-              <span class="pubs-heading__part">{pubsHeadingParts[1]}</span>
-            </>
-          ) : (
-            l.publicationsHeading
-          )}
+          {l.publicationsHeading}
         </h2>
       </div>
       <p class="content-prose text-ink-60 pubs-section__intro">
@@ -56,6 +48,28 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
     </header>
 
     <div class="editorial-list-blocks scroll-reveal">
+      <div class="editorial-list-block">
+        <h3 class="editorial-list-block__label">{l.magazinesLabel}</h3>
+        <EditorialListContainer>
+          <ul class="pubs-magazine-list editorial-row-list editorial-row-list--no-year">
+            {sortedMagazines.map((mag) => (
+              <li class="pubs-magazine-list__item editorial-row-list__item hover-row">
+                {mag.href ? (
+                  <a href={mag.href} target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
+                    {mag.title}
+                  </a>
+                ) : (
+                  <span class="editorial-row-list__title">{mag.title}</span>
+                )}
+                <span class="pubs-magazine-list__meta">
+                  {mag.issue}{mag.feature ? ` · ${mag.feature}` : ''}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </EditorialListContainer>
+      </div>
+
       <div class="editorial-list-block">
         <h3 class="editorial-list-block__label">{l.chapbookLabel}</h3>
         <EditorialListContainer>
@@ -71,7 +85,7 @@ const pubsHeadingHasAmp = pubsHeadingParts.length === 2;
         <h3 class="editorial-list-block__label">{l.publicationsFeaturedLabel}</h3>
         {/* Publication titles are proper nouns / published names — kept as authored English */}
         <EditorialListContainer>
-          <EditorialLinkList items={publicationLinks} showYear={false} emptyMessage={l.listForthcoming} />
+          <EditorialLinkList items={sortedPublicationLinks} showYear={false} emptyMessage={l.listForthcoming} />
         </EditorialListContainer>
       </div>
 
