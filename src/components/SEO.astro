@@ -1,0 +1,120 @@
+---
+/**
+ * Shared document head SEO — titles, description, canonical, hreflang, OG/Twitter, JSON-LD.
+ * Image fields accept empty strings until client approval (do not invent stock URLs).
+ */
+import { getSeoMeta, type SeoMeta } from '../data/seo-copy';
+import {
+  seoDocumentUrl,
+  seoHreflangAlternates,
+  type SeoPageKey,
+} from '../data/seo';
+import { imageSeoSlots } from '../data/image-seo-slots';
+import {
+  buildArtworkSchema,
+  buildHomeJsonLdGraph,
+  jsonLdScript,
+} from '../data/structured-data';
+import { SITE_PERSON } from '../data/site';
+import type { LocaleKey } from '../data/translations';
+import type { Artwork } from '../data/artworks';
+
+interface Props {
+  locale?: LocaleKey;
+  /** Logical page for i18n meta + schema selection. */
+  page?: SeoPageKey;
+  /** Override title (e.g. artwork name). */
+  title?: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  /**
+   * Open Graph image URL (absolute preferred).
+   * TODO(client-images): pending final image approval — keep empty until then.
+   */
+  ogImage?: string | null;
+  ogType?: string;
+  twitterCard?: 'summary' | 'summary_large_image';
+  /** Artwork record when page === 'artwork' */
+  artwork?: Artwork;
+  /** Extra JSON-LD objects merged into @graph when provided as full documents */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
+}
+
+const {
+  locale = 'en',
+  page = 'home',
+  title: titleOverride,
+  description: descriptionOverride,
+  ogTitle: ogTitleOverride,
+  ogDescription: ogDescriptionOverride,
+  ogImage = imageSeoSlots.defaultOgImage,
+  ogType = page === 'artwork' ? 'article' : 'website',
+  twitterCard = 'summary_large_image',
+  artwork,
+  jsonLd: jsonLdProp = null,
+} = Astro.props;
+
+const baseMeta: SeoMeta =
+  page === 'artwork'
+    ? {
+        title: artwork ? `${artwork.title} — ${SITE_PERSON.name}` : SITE_PERSON.name,
+        description: artwork?.aboutMobile || artwork?.aboutParagraphs[0] || '',
+      }
+    : getSeoMeta(locale, page);
+
+const title = titleOverride ?? baseMeta.title;
+const description = descriptionOverride ?? baseMeta.description;
+const ogTitle = ogTitleOverride ?? baseMeta.ogTitle ?? title;
+const ogDescription = ogDescriptionOverride ?? baseMeta.ogDescription ?? description;
+
+const canonical = seoDocumentUrl(locale, page, artwork?.slug);
+const alternates = seoHreflangAlternates(page, artwork?.slug);
+
+// TODO(client-images): ogImage may be '' until client approves — attribute still emitted as empty slot
+const ogImageValue = ogImage ?? '';
+
+let structured: Record<string, unknown> | null = null;
+if (jsonLdProp) {
+  structured = Array.isArray(jsonLdProp)
+    ? { '@context': 'https://schema.org', '@graph': jsonLdProp }
+    : jsonLdProp;
+} else if (page === 'artwork' && artwork) {
+  structured = buildArtworkSchema(artwork);
+} else if (page === 'home' || page === 'about') {
+  structured = buildHomeJsonLdGraph();
+} else {
+  // Section tabs share the home document URL today — still emit Person + section graph
+  structured = buildHomeJsonLdGraph();
+}
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{alternates.map((alt) => (
+  <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+))}
+{page !== 'artwork' && (
+  <link rel="alternate" hreflang="x-default" href={seoDocumentUrl('en', 'home')} />
+)}
+
+<meta property="og:site_name" content={SITE_PERSON.name} />
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={ogDescription} />
+<meta property="og:url" content={canonical} />
+{/* TODO(client-images): pending final image approval */}
+<meta property="og:image" content={ogImageValue} />
+<meta property="og:locale" content={locale === 'kr' ? 'ko_KR' : locale === 'zh' ? 'zh_CN' : locale === 'kk' ? 'kk_KZ' : locale === 'ru' ? 'ru_RU' : 'en_US'} />
+
+<meta name="twitter:card" content={twitterCard} />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={ogDescription} />
+{/* TODO(client-images): pending final image approval */}
+<meta name="twitter:image" content={ogImageValue} />
+
+{structured && (
+  <script type="application/ld+json" set:html={jsonLdScript(structured)} />
+)}

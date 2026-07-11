@@ -9,7 +9,9 @@ interface Props {
 
 const { items, emptyMessage = 'List forthcoming', showYear = true } = Astro.props;
 // Prefer callers passing `emptyMessage` from `t[locale].listForthcoming`.
-const listClass = showYear ? 'editorial-link-list editorial-row-list scroll-reveal' : 'editorial-link-list editorial-row-list editorial-row-list--no-year scroll-reveal';
+const listClass = showYear
+  ? 'editorial-link-list editorial-row-list editorial-row-list--platform scroll-reveal'
+  : 'editorial-link-list editorial-row-list editorial-row-list--no-year editorial-row-list--platform scroll-reveal';
 ---
 
 {items.length > 0 ? (
@@ -17,9 +19,31 @@ const listClass = showYear ? 'editorial-link-list editorial-row-list scroll-reve
     {items.map((item) => (
       <li class="editorial-row-list__item hover-row">
         {showYear && <span class="editorial-row-list__year">{item.year ?? ''}</span>}
-        <a href={item.href} target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
-          {item.title}
-        </a>
+        <div class="editorial-row-list__copy">
+          {item.href ? (
+            <a href={item.href} target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
+              {item.title}
+            </a>
+          ) : (
+            <span class="editorial-row-list__title">{item.title}</span>
+          )}
+          {item.platform && (
+            item.platformHref ? (
+              <a
+                href={item.platformHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="editorial-row-list__platform"
+              >
+                {item.platform}
+              </a>
+            ) : (
+              <span class="editorial-row-list__platform editorial-row-list__platform--plain">
+                {item.platform}
+              </span>
+            )
+          )}
+        </div>
       </li>
     ))}
   </ul>

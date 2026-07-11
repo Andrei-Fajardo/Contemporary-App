@@ -7,51 +7,31 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
-const heroNameParts = l.heroFirstName.trim().split(/\s+/);
-const heroGivenName = heroNameParts[0] ?? l.heroFirstName;
-const heroMiddleName = heroNameParts.slice(1).join(' ');
 ---
 
 <section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
   <div class="hero-about-layer__inner section-shell section-shell--wide">
     <div class="hero-about-layer__cluster relative">
-      <div
-        class="hero-about-layer__art group relative overflow-hidden cursor-pointer max-sm:cursor-default"
-        data-headshot
-        tabindex="0"
-      >
-        <picture>
-          <source
-            media="(min-width: 768px)"
-            srcset="/media/anna%20header%202.png"
-          />
-          <img
-            src="/media/anna%20header%204.png"
-            alt={l.siteTitle}
-            class="hero-about-layer__art-img"
-            loading="eager"
-            decoding="async"
-            draggable="false"
-            data-lightbox-ignore
-          />
-        </picture>
-        <div class="hero-profile-overlay grain-noise" aria-hidden="true">
-          <p class="hero-profile-overlay__meta">{l.portfolioMeta}</p>
-          <p class="hero-profile-overlay__tagline">{l.heroTagline}</p>
-        </div>
+      <div class="hero-about-layer__art" data-headshot>
+        <img
+          src="/media/anna%20header%202.png"
+          alt={l.siteTitle}
+          class="hero-about-layer__art-img"
+          loading="eager"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+        />
       </div>
 
-      <div class="hero-editorial__copy hero-about-layer__name hero-editorial-only">
-        <h1 class="hero-about-layer__heading scroll-reveal">
-          <span class="hero-name__first">
-            <span class="hero-name__line">{heroGivenName}</span>
-            {heroMiddleName && <span class="hero-name__line">{heroMiddleName}</span>}
-          </span>
+      <div class="hero-editorial__copy hero-about-layer__name">
+        <h2 class="hero-about-layer__heading scroll-reveal">
+          <span class="hero-name__first">{l.heroFirstName}</span>
           <span class="hero-name__last">{l.heroLastName}</span>
-        </h1>
+        </h2>
 
         <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
-        <p class="magazine-cover__motto scroll-reveal hero-editorial-only">{l.heroMotto}</p>
+        <p class="hero-about-layer__intro scroll-reveal">{l.heroBasedIn}</p>
       </div>
     </div>
   </div>
@@ -59,3 +39,53 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
   <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal hero-editorial-only" />
   <hr class="hero-about-layer__rule scroll-reveal" />
 </section>
+
+<script>
+  /**
+   * Fit each name row to the title track, then nudge larger.
+   * Allows a small flourish overrun so the type can read bigger
+   * without leaving a wide gap between Anna Dauyl and Rockswell.
+   */
+  function fitHeroNameRows() {
+    const heading = document.querySelector(".hero-about-layer__heading");
+    if (!heading || window.innerWidth >= 768) return;
+
+    const rows = heading.querySelectorAll(".hero-name__first, .hero-name__last");
+    const trackWidth = heading.clientWidth;
+    if (!trackWidth) return;
+
+    // Allow ~3% overrun for script flourishes so fitted size stays larger
+    const maxWidth = trackWidth * 1.03;
+
+    rows.forEach((row) => {
+      if (!(row instanceof HTMLElement)) return;
+      row.style.fontSize = "";
+      let size = parseFloat(window.getComputedStyle(row).fontSize);
+      // Grow first if CSS size still leaves unused width
+      for (let i = 0; i < 60 && row.scrollWidth < trackWidth * 0.94 && size < 200; i += 1) {
+        size += 1;
+        row.style.fontSize = `${size}px`;
+      }
+      // Then shrink only if clearly overflowing the track
+      for (let i = 0; i < 80 && row.scrollWidth > maxWidth && size > 16; i += 1) {
+        size -= 1;
+        row.style.fontSize = `${size}px`;
+      }
+    });
+  }
+
+  function bootHeroNameFit() {
+    fitHeroNameRows();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => fitHeroNameRows());
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", bootHeroNameFit);
+  document.addEventListener("astro:page-load", bootHeroNameFit);
+  window.addEventListener("resize", () => {
+    window.requestAnimationFrame(fitHeroNameRows);
+  });
+
+  if (document.readyState !== "loading") bootHeroNameFit();
+</script>

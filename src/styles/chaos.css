@@ -344,12 +344,11 @@ html.motion-reduced .press-chaos__poster {
   }
 }
 
-/* --- Academic Research — anna sample 4 decor, lower-left background only --- */
+/* --- Academic Research — anna-sample-4, bottom-right decorative bleed --- */
 /*
-  The art must be LOWER-LEFT of the panel. The panel uses flex: 1 (from .tabular-panel.is-active),
-  so we use flex + position:relative to give the absolute art a tall enough anchor.
-  The art has z-index:0 so it sits BEHIND the research-section content (z-index:1).
-  It does NOT affect document flow — pointer-events:none, data-lightbox-ignore on the img.
+  Matches fcb98fd placement: absolute lower-right, bleeds off right/bottom.
+  Section background must stay transparent (see global.css) so the ghost
+  is not painted over by an opaque canvas wash. Content stays above via z-index.
 */
 .research-panel {
   position: relative;
@@ -363,12 +362,12 @@ html.motion-reduced .press-chaos__poster {
 
 .research-panel__art {
   position: absolute;
-  right: clamp(-2rem, -4vw, -0.5rem);
-  bottom: clamp(2rem, 8vh, 5rem);
+  /* Bottom-right: bleeds off right and bottom edges */
+  right: clamp(-3rem, -5vw, -1rem);
+  bottom: 0;
   left: auto;
   width: clamp(22rem, 34vw, 38rem);
-  /* Must stay behind section content — never fixed (escapes panel stacking) */
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   user-select: none;
 }
@@ -380,20 +379,21 @@ html.motion-reduced .press-chaos__poster {
   object-fit: contain;
   object-position: right bottom;
   filter: grayscale(1) contrast(1.05) brightness(0.97);
-  opacity: 0.34;
-  mix-blend-mode: normal;
+  opacity: 0.72;
+  mix-blend-mode: multiply;
   cursor: default;
   pointer-events: none;
   will-change: transform;
   transition: transform 0.1s linear;
 }
 
-/* Manuscript reader — keep decor art behind section content */
+/* Content above the decorative layer */
 .research-panel .research-section {
   position: relative;
   z-index: 2;
   flex: 1;
   isolation: isolate;
+  background-color: transparent;
 }
 
 .research-uplatform-group + .research-uplatform-group {
@@ -408,22 +408,22 @@ html.motion-reduced .press-chaos__poster {
 
 @media (max-width: 1023px) {
   .research-panel__art {
-    width: clamp(16rem, 40vw, 28rem);
-    right: -1rem;
-    bottom: 1rem;
+    width: clamp(14rem, 32vw, 20rem);
+    right: clamp(-2rem, -4vw, -0.5rem);
+    bottom: 0;
   }
 }
 
 @media (max-width: 639px) {
   .research-panel__art {
-    right: -0.5rem;
-    bottom: 0.5rem;
-    width: clamp(10rem, 42vw, 16rem);
+    right: -1rem;
+    bottom: 0;
+    width: clamp(10rem, 48vw, 16rem);
     transform: none !important;
   }
 
   .research-panel__art-img {
-    opacity: 0.2;
+    opacity: 0.55;
     will-change: auto;
     transform: none !important;
   }

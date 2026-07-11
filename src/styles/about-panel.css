@@ -13,31 +13,32 @@
   flex-direction: column;
 }
 
-/* Portrait beside name ? centered cluster */
+/* Portrait beside name — editorial side-by-side */
 /*
   z-index stack:
     rule         z-index 1
-    portrait     z-index 2   (behind name)
+    portrait     z-index 2
     name/content z-index 4
     grain        z-index 9999
 */
 .hero-about-layer__cluster {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.875rem, 2vw, 1.5rem);
+  display: grid;
+  grid-template-columns: minmax(14rem, 0.42fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(1.25rem, 3.5vw, 3rem);
   width: 100%;
   max-width: 100%;
-  transform: translateX(clamp(-3.5rem, -6vw, -2rem));
+  transform: none;
 }
 
 .hero-about-layer__art {
-  flex: 0 0 auto;
-  width: clamp(28rem, 52vw, 46rem);
+  flex: none;
+  width: 100%;
+  max-width: min(28rem, 100%);
   z-index: 2;
-  pointer-events: auto;
-  cursor: pointer;
-  border-radius: 0.5rem;
+  pointer-events: none;
+  cursor: default;
+  border-radius: 0;
   user-select: none;
   outline: none;
 }
@@ -50,19 +51,19 @@
 .hero-about-layer__art-img {
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 2 / 3;
+  height: auto;
   object-fit: cover;
   object-position: center top;
   border-radius: 0;
-  /* Subtle inner shadow to give the headshot depth against the canvas */
-  box-shadow: 0 4px 24px rgba(17, 17, 17, 0.14), 0 1px 4px rgba(17, 17, 17, 0.08);
-  filter: contrast(1.04) brightness(0.97);
+  box-shadow: none;
+  filter: contrast(1.03) brightness(0.98);
   opacity: 1;
   cursor: default;
   pointer-events: none;
   animation: hero-portrait-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
   will-change: transform;
-  transition: transform 0.1s linear;
+  transition: none;
 }
 
 @keyframes hero-portrait-in {
@@ -76,14 +77,14 @@
   /* No fixed min-height — let the image dictate the section height */
 }
 
-/* Inner shell: stacks masthead above portrait + name */
+/* Inner shell: editorial left image + right copy */
 .hero-about-layer__inner {
   position: relative;
   z-index: 4;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   padding-top: clamp(2.5rem, 5vh, 4rem);
   padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
   max-width: 100%;
@@ -96,83 +97,12 @@
   text-align: left;
   position: relative;
   z-index: 4;
+  padding-bottom: clamp(0.5rem, 1.5vh, 1.25rem);
 }
 
-/* Profile image overlay card — desktop hover only; hidden on mobile */
+/* Overlay card removed — copy sits beside the image */
 .hero-profile-overlay {
-  display: none;
-}
-
-@media (min-width: 640px) {
-  .hero-profile-overlay {
-    display: block;
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    z-index: 10;
-    max-width: calc(100% - 2rem);
-    padding: 0.65rem 0.85rem 0.7rem;
-    background: color-mix(in srgb, var(--magazine-accent) 94%, transparent);
-    color: var(--canvas);
-    border-radius: 0.2rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(0.5rem);
-    transition:
-      opacity 0.3s ease-out,
-      transform 0.3s ease-out,
-      visibility 0.3s ease-out;
-  }
-}
-
-.hero-profile-overlay__meta {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0.85;
-  line-height: 1.35;
-}
-
-.hero-profile-overlay__tagline {
-  margin: 0.35rem 0 0;
-  font-family: var(--font-body);
-  font-size: clamp(0.5625rem, 0.5vw + 0.45rem, 0.6875rem);
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  line-height: 1.35;
-}
-
-@media (min-width: 640px) and (hover: hover) and (pointer: fine) {
-  .hero-about-layer__art:hover .hero-profile-overlay {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-}
-
-@media (min-width: 640px) {
-  .hero-about-layer__art:focus-within .hero-profile-overlay {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 639px) {
-  .hero-about-layer__art {
-    cursor: default;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-profile-overlay {
-    transition: none;
-  }
+  display: none !important;
 }
 
 /*
@@ -183,8 +113,8 @@
   font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
   font-style: normal;
   font-weight: 400;
-  font-size: clamp(4.75rem, 11vw, 10.5rem);
-  line-height: 0.88;
+  font-size: clamp(3.75rem, 8.5vw, 8.5rem);
+  line-height: 0.9;
   letter-spacing: 0.01em;
   color: var(--ink, #111);
   margin: 0;
@@ -201,8 +131,19 @@
   color: var(--ink-55, rgba(17,17,17,0.55));
   line-height: 1.45;
   margin-top: clamp(0.625rem, 1.5vh, 1rem);
-  /* Indent to align with name's left edge */
   margin-left: 0.1em;
+  max-width: 36ch;
+}
+
+.hero-about-layer__intro {
+  font-family: var(--font-body, "Raleway", sans-serif);
+  font-size: clamp(0.8125rem, 0.85vw, 0.9375rem);
+  font-weight: 400;
+  color: var(--ink-70, rgba(17,17,17,0.7));
+  line-height: 1.5;
+  margin-top: 0.5rem;
+  margin-left: 0.1em;
+  max-width: 38ch;
 }
 
 /* Divider rule — subtle horizontal separator below hero */
@@ -214,7 +155,7 @@
   margin: 0 var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
 }
 
-/* ?? Bio section ?????????????????????????????????????????????? */
+/* Bio section — full editorial width under hero */
 .about-panel-stack__content {
   position: relative;
   z-index: 4;
@@ -224,11 +165,10 @@
   margin-top: 0;
 }
 
-/* Bio text starts to the right of center — aligned with the name column */
 .about-panel-stack__content-inner {
-  margin-left: clamp(32%, 36vw, 40%);
-  max-width: min(62rem, 74vw);
-  padding-right: clamp(1rem, 3vw, 2rem);
+  margin-left: 0;
+  max-width: min(72rem, 100%);
+  padding-right: 0;
 }
 
 .about-panel-stack__content .about-chaos__label {
@@ -239,20 +179,32 @@
   margin-bottom: 0.5rem;
 }
 
-/* ?? editorial-dense overrides ???????????????????????????????? */
-.editorial-dense .hero-about-layer__heading {
-  font-size: clamp(4.25rem, 10vw, 9.25rem);
+.about-editorial-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: start;
 }
 
-/* ?? Tablet (768–1023px) — keep side-by-side cluster, not mobile stack */
+.about-editorial-spread__prose {
+  max-width: 42ch;
+  line-height: 1.65;
+}
+
+/* editorial-dense overrides */
+.editorial-dense .hero-about-layer__heading {
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+}
+
+/* Tablet (768–1023px) — keep side-by-side cluster */
 @media (min-width: 768px) and (max-width: 1023px) {
   .hero-about-layer__art {
-    width: clamp(22rem, 54vw, 36rem);
+    max-width: min(22rem, 100%);
   }
 
   .hero-about-layer__cluster {
-    gap: clamp(0.75rem, 2vw, 1.5rem);
-    transform: translateX(clamp(-2rem, -4vw, -1rem));
+    gap: clamp(1rem, 2.5vw, 2rem);
+    grid-template-columns: minmax(12rem, 0.4fr) minmax(0, 1fr);
   }
 
   .hero-about-layer__inner {
@@ -261,29 +213,35 @@
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(3.5rem, 10vw, 6.75rem);
+    font-size: clamp(3.25rem, 9vw, 6rem);
   }
 
-  .about-panel-stack__content-inner {
-    margin-left: clamp(30%, 34vw, 38%);
-    max-width: none;
-    padding-right: clamp(0.75rem, 2.5vw, 1.5rem);
+  .about-editorial-spread {
+    gap: clamp(1.25rem, 3vw, 2rem);
   }
 }
 
-/* ?? Mobile (<768px) — pre-composed portrait (anna header 4); no text overlay ??
-   Mobile-only; desktop flex cluster stays at md+. */
+/* Mobile (<768px) — full-bleed portrait, contained h2 name, no overflow */
 @media (max-width: 767px) {
+  .hero-about-layer.magazine-cover,
+  .hero-about-layer {
+    overflow: visible;
+  }
+
   .hero-about-layer__cluster {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     isolation: isolate;
     transform: none;
     padding-inline: 0;
     padding-bottom: 0;
     min-height: 0;
     width: 100%;
+    max-width: 100%;
     overflow: visible;
+    gap: clamp(0.75rem, 2vh, 1.25rem);
   }
 
   .hero-about-layer__art {
@@ -291,25 +249,63 @@
     z-index: 0;
     display: block;
     width: 100%;
+    max-width: 100%;
     height: auto;
-    max-width: none;
     max-height: none;
     margin: 0;
     border-radius: 0;
     overflow: hidden;
   }
 
+  .hero-about-layer__art picture,
   .hero-about-layer__art-img {
     display: block;
     width: 100%;
+    max-width: 100%;
     height: auto;
-    aspect-ratio: 1 / 1;
-    max-height: none;
+    aspect-ratio: 2 / 3;
+    /* Leave vertical room for oversized name so roles sit below the fold */
+    max-height: min(52vh, 28rem);
     margin: 0;
     opacity: 1;
     border-radius: 0;
     object-fit: cover;
     object-position: center top;
+  }
+
+  /*
+    Title track uses the full content width — no side padding —
+    so the script has the entire horizontal space of the page.
+  */
+  .hero-about-layer__name {
+    container-type: inline-size;
+    container-name: hero-name;
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+
+  .hero-about-layer__heading,
+  .editorial-dense .hero-about-layer__heading,
+  .magazine-cover .hero-about-layer__heading {
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.01em;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  .hero-about-layer__heading .hero-name__first,
+  .hero-about-layer__heading .hero-name__last {
+    display: block;
+  }
+
+  .hero-about-layer__roles,
+  .hero-about-layer__intro {
+    padding-inline: clamp(0.875rem, 4vw, 1.35rem);
   }
 
   .hero-about-layer__inner,
@@ -341,11 +337,17 @@
     padding-right: 0;
   }
 
+  .about-editorial-spread {
+    grid-template-columns: 1fr;
+    gap: clamp(1.75rem, 5vh, 2.5rem);
+  }
+
   .about-panel-stack__content.magazine-torn::after {
     display: none;
   }
 
-  .about-chaos__intro h2 {
+  .about-chaos__intro h2,
+  .about-editorial-spread__bio h2 {
     font-family: var(--font-subheading);
     font-size: clamp(1.5rem, 6.5vw, 2.125rem);
     font-weight: 400;
@@ -366,7 +368,6 @@
   }
 }
 
-/* ?? Reduced motion ???????????????????????????????????????????? */
 @media (prefers-reduced-motion: reduce) {
   .hero-about-layer__art-img {
     animation: none;

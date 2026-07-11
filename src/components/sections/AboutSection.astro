@@ -11,35 +11,23 @@ const l = t[locale];
 
 <section id="about" class="scroll-section about-chaos about-panel-stack__content magazine-torn">
   <div class="section-shell section-shell--wide about-panel-stack__content-inner">
-    <div class="magazine-spread about-chaos__body">
-      <div class="magazine-spread__page scroll-reveal about-chaos__intro">
-        <p class="pubs-editorial__label about-chaos__label">{l.aboutTag}</p>
+    <p class="pubs-editorial__label about-chaos__label scroll-reveal">{l.aboutTag}</p>
+
+    <div class="about-editorial-spread">
+      <div class="about-editorial-spread__bio scroll-reveal">
         <p class="content-prose text-ink-70 mb-2 about-chaos__subtitle">{l.heroBasedIn}</p>
         <h2 class="type-magazine-display text-2xl md:text-4xl lg:text-[2.75rem] text-ink mb-4 leading-[1.05]">
           {l.heroIntroBefore}<span class="about-chaos__city" tabindex="0">{l.heroIntroCity}</span>{l.heroIntroAfter}
         </h2>
-        <p class="content-prose text-ink-75 magazine-dropcap max-w-[72ch]">{l.bio}</p>
+        <p class="content-prose text-ink-75 magazine-dropcap max-w-[72ch]">{l.bioExpanded}</p>
       </div>
 
-      <div class="magazine-spread__page scroll-reveal about-chaos__meta magazine-meta-grid">
-        <div class="about-chaos__meta-block">
-          <p class="section-eyebrow mb-3">{l.interestsLabel}</p>
-          <ul class="about-chaos__list">
-            {l.interests.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div class="about-chaos__meta-block">
-          <p class="section-eyebrow mb-3">{l.influencesLabel}</p>
-          <ul class="about-chaos__list">
-            {l.influences.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <aside class="about-editorial-spread__aside scroll-reveal">
+        <p class="section-eyebrow mb-3">{l.influencesLabel}</p>
+        <p class="content-prose text-ink-75 about-editorial-spread__prose">{l.aboutInfluencesProse}</p>
+        <p class="section-eyebrow mb-3 mt-8">{l.interestsLabel}</p>
+        <p class="content-prose text-ink-75 about-editorial-spread__prose">{l.aboutInterestsProse}</p>
+      </aside>
     </div>
   </div>
 </section>

@@ -185,14 +185,14 @@
 }
 
 @media (max-width: 767px) {
-  /* Mobile hero: stacked portrait + signature — hide editorial chrome */
+  /* Mobile hero: full-bleed portrait + h2 name — hide editorial chrome */
   .hero-editorial-only {
     display: none !important;
   }
 
   .magazine-cover {
     padding-top: 0;
-    overflow: visible;
+    overflow-x: hidden;
   }
 
   .magazine-cover__motto {
@@ -201,6 +201,12 @@
 
   .magazine-rule-crimson {
     display: none !important;
+  }
+
+  .magazine-cover .hero-about-layer__heading {
+    /* Keep Jellyka script — size hierarchy is set at end of this file */
+    font-style: normal;
+    letter-spacing: 0.01em;
   }
 }
 
@@ -378,4 +384,64 @@
 
 .magazine-cover:hover .hero-about-layer__art-img {
   transform: scale(1.02);
+}
+
+/*
+  Mobile hero name — full-width title track.
+  Font size is derived from the title container width (cqw) so glyphs
+  fit inside the widened div instead of overflowing a padded inset.
+*/
+@media (max-width: 767px) {
+  .magazine-cover .hero-about-layer__name {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
+    padding-top: clamp(0.25rem, 1vh, 0.5rem);
+    padding-bottom: clamp(1.5rem, 5vh, 2.5rem);
+    min-height: 0;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .magazine-cover .hero-about-layer__heading {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding-block: 0;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .magazine-cover .hero-about-layer__heading .hero-name__first,
+  .magazine-cover .hero-about-layer__heading .hero-name__last {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    overflow: visible;
+    white-space: nowrap;
+  }
+
+  /* Row 1: Anna Dauyl */
+  .magazine-cover .hero-about-layer__heading .hero-name__first {
+    font-size: clamp(3.25rem, 17vw, 6rem) !important;
+    font-size: clamp(3.25rem, 17cqw, 6rem) !important;
+    line-height: 0.92;
+    padding-block: 0.04em 0;
+    padding-inline: 0;
+    margin: 0;
+  }
+
+  /* Row 2: Rockswell — larger, tight under Anna Dauyl */
+  .magazine-cover .hero-about-layer__heading .hero-name__last {
+    font-size: clamp(4.5rem, 24vw, 8.5rem) !important;
+    font-size: clamp(4.5rem, 24cqw, 8.5rem) !important;
+    line-height: 0.9;
+    margin-top: -0.08em;
+    padding-block: 0 0.12em;
+    padding-inline: 0;
+  }
 }
