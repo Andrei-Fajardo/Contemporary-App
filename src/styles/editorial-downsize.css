@@ -250,15 +250,11 @@
   }
 }
 
-/* — Hero portrait: larger, less padding (md+ only; mobile stacks in about-panel) — */
+/* — Hero portrait sizing lives in about-panel.css (tall asymmetric) — */
 @media (min-width: 768px) {
   .hero-about-layer__inner {
     padding-top: clamp(1.5rem, 3vh, 2.5rem);
     padding-bottom: clamp(0.75rem, 2vh, 1.5rem);
-  }
-
-  .hero-about-layer__art {
-    width: clamp(32rem, 58vw, 52rem);
   }
 }
 

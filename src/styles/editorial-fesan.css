@@ -5,25 +5,35 @@
   Covers: About, Exhibitions, Publications, Research, Press.
 */
 
-/* —— Shared panel mastheads —— */
+/* —— Shared panel mastheads — unboxed, left-weighted —— */
+.editorial-panel {
+  background: transparent;
+}
+
 .editorial-panel__masthead {
-  max-width: min(42rem, 100%);
-  margin-bottom: clamp(2rem, 6vh, 4rem);
+  max-width: min(36rem, 55%);
+  margin: 0 0 clamp(3rem, 8vh, 5rem);
+  margin-right: auto;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .editorial-panel__eyebrow {
-  margin: 0 0 0.75rem;
-  font-family: var(--font-mono, ui-monospace, monospace);
+  margin: 0 0 0.85rem;
+  font-family: var(--font-body, "Raleway", sans-serif);
   font-size: 0.625rem;
+  font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--ink-45);
 }
 
 .editorial-panel__title {
-  margin: 0 0 clamp(0.85rem, 2vh, 1.25rem);
+  margin: 0 0 clamp(1rem, 2.5vh, 1.5rem);
   font-family: var(--font-subheading, "Cormorant Garamond", Georgia, serif);
-  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-size: clamp(2.5rem, 6.5vw, 4.75rem);
   font-weight: 400;
   line-height: 1.02;
   letter-spacing: -0.01em;
@@ -33,24 +43,43 @@
 
 .editorial-panel__intro {
   margin: 0;
-  max-width: 36ch;
+  max-width: 34ch;
+}
+
+@media (max-width: 767px) {
+  .editorial-panel__masthead {
+    max-width: 100%;
+    margin-bottom: clamp(2rem, 6vh, 3rem);
+  }
 }
 
 /* Stagger list blocks — uneven left offsets, not equal stacked cards */
 .editorial-list-blocks--stagger {
   display: flex;
   flex-direction: column;
-  gap: clamp(2.5rem, 7vh, 4.5rem);
+  gap: clamp(3rem, 8vh, 5rem);
+}
+
+.editorial-list-blocks--stagger .editorial-list-block {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.editorial-list-blocks--stagger .editorial-list-block:nth-child(1) {
+  max-width: 36rem;
 }
 
 .editorial-list-blocks--stagger .editorial-list-block:nth-child(2) {
-  margin-left: clamp(0rem, 8vw, 5rem);
-  max-width: 52rem;
+  margin-left: clamp(0rem, 10vw, 6rem);
+  max-width: 48rem;
 }
 
 .editorial-list-blocks--stagger .editorial-list-block:nth-child(3) {
-  margin-left: clamp(0rem, 3vw, 2rem);
-  max-width: 40rem;
+  margin-left: clamp(0rem, 4vw, 2.5rem);
+  max-width: 34rem;
 }
 
 @media (max-width: 767px) {
@@ -64,21 +93,28 @@
 /* —— About: asymmetric column, prose meta (no pills) —— */
 .editorial-about {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.1fr) minmax(0, 0.55fr);
   gap: clamp(2rem, 6vw, 5rem);
   align-items: start;
-  padding-block: clamp(0.5rem, 2vh, 1.5rem);
+  padding-block: clamp(1rem, 3vh, 2rem);
+  background: transparent;
 }
 
 .editorial-about__masthead {
   position: sticky;
   top: 6rem;
+  grid-column: 1;
+}
+
+.editorial-about__body {
+  grid-column: 2;
 }
 
 .editorial-about__label {
   margin: 0 0 1rem;
-  font-family: var(--font-mono, ui-monospace, monospace);
+  font-family: var(--font-body, "Raleway", sans-serif);
   font-size: 0.625rem;
+  font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--ink-45);
@@ -90,35 +126,37 @@
   font-size: clamp(0.875rem, 1.1vw, 1rem);
   line-height: 1.45;
   color: var(--ink-60);
-  max-width: 18ch;
+  max-width: 16ch;
 }
 
 .editorial-about__lead {
-  margin: 0 0 clamp(1.25rem, 3vh, 2rem);
+  margin: 0 0 clamp(1.5rem, 3.5vh, 2.25rem);
   font-family: var(--font-subheading, "Cormorant Garamond", Georgia, serif);
   font-size: clamp(1.5rem, 3.5vw, 2.35rem);
   font-weight: 400;
   line-height: 1.15;
   color: var(--ink);
-  max-width: 28ch;
+  max-width: 26ch;
 }
 
 .editorial-about__bio {
-  margin: 0 0 clamp(2rem, 5vh, 3rem);
-  max-width: 58ch;
+  margin: 0 0 clamp(2.5rem, 6vh, 3.5rem);
+  max-width: 52ch;
 }
 
 .editorial-about__meta {
-  margin-top: clamp(1.5rem, 4vh, 2.5rem);
-  padding-top: clamp(1.25rem, 3vh, 1.75rem);
-  border-top: 1px solid var(--border-subtle);
-  max-width: 48ch;
+  margin-top: clamp(2rem, 5vh, 3rem);
+  padding-top: clamp(1.5rem, 3.5vh, 2rem);
+  border-top: clamp(0.35rem, 0.7vh, 0.5rem) solid color-mix(in srgb, var(--ink) 88%, transparent);
+  max-width: 42ch;
+  background: transparent;
 }
 
 .editorial-about__meta-label {
   margin: 0 0 0.65rem;
-  font-family: var(--font-mono, ui-monospace, monospace);
+  font-family: var(--font-body, "Raleway", sans-serif);
   font-size: 0.625rem;
+  font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-45);
@@ -135,7 +173,12 @@
 @media (max-width: 767px) {
   .editorial-about {
     grid-template-columns: 1fr;
-    gap: clamp(1.5rem, 4vh, 2rem);
+    gap: clamp(1.75rem, 4vh, 2.25rem);
+  }
+
+  .editorial-about__masthead,
+  .editorial-about__body {
+    grid-column: 1;
   }
 
   .editorial-about__masthead {
@@ -155,18 +198,21 @@
 .editorial-dense .exhibition-accordion__summary,
 .exhibition-accordion__summary {
   grid-template-columns: minmax(0, 1fr) auto !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 .editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n + 2) .exhibition-accordion__summary {
-  padding-left: clamp(0.5rem, 3vw, 2rem);
+  padding-left: clamp(0.75rem, 4vw, 2.5rem);
 }
 
 .editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n + 3) .exhibition-accordion__summary {
-  padding-left: clamp(1rem, 6vw, 4rem);
+  padding-left: clamp(1.5rem, 8vw, 5rem);
 }
 
 .editorial-index.exhibition-accordion .exhibition-accordion__item:nth-child(4n) .exhibition-accordion__summary {
-  padding-left: clamp(0.25rem, 2vw, 1.25rem);
+  padding-left: clamp(0.35rem, 2.5vw, 1.5rem);
 }
 
 @media (max-width: 767px) {
@@ -180,33 +226,34 @@
   }
 }
 
-/* —— Research / Press / Publications: open index, less chrome —— */
+/* —— Research / Press list stagger —— */
 .editorial-index--stagger .editorial-row-list__item:nth-child(odd) {
   padding-left: 0;
 }
 
 .editorial-index--stagger .editorial-row-list__item:nth-child(even) {
-  padding-left: clamp(0rem, 4vw, 2.5rem);
+  padding-left: clamp(0rem, 5vw, 3rem);
 }
 
-#publications .pubs-overlap__frame,
-#press .press-overlap__frame {
-  display: none !important;
-}
-
+/* Pubs / Press: keep overlap frames visible; content left-weighted */
 #publications .pubs-overlap__content,
 #press .press-overlap__content {
-  position: relative;
-  left: auto;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding-top: clamp(1.5rem, 4vh, 2.5rem);
+  background: transparent;
 }
 
-/* Override prior “large square hero” downsize that fought tall portrait */
-@media (min-width: 768px) {
-  .hero-about-layer__art {
-    width: clamp(16rem, 32vw, 26rem) !important;
-  }
+#publications.editorial-panel,
+#press.editorial-panel,
+#research.editorial-panel,
+#exhibitions.editorial-panel {
+  /* No contained card shell around panel content */
+  border: 0;
+  box-shadow: none;
+}
+
+/* Kill leftover pill chrome if any about-chaos list still renders */
+.about-chaos__list li {
+  border-radius: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  padding-inline: 0 !important;
 }

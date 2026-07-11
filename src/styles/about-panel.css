@@ -1,6 +1,6 @@
 /* ============================================================
-   About tab — editorial hero: tall portrait + name beside
-   Style: asymmetric, staggered, generous negative space
+   About tab — Fesan-style hero: tall portrait + unboxed type
+   Asymmetric, off-grid, generous negative space — no content card
    ============================================================ */
 
 .about-panel-stack {
@@ -12,28 +12,62 @@
   flex-direction: column;
 }
 
+.hero-about-layer {
+  position: relative;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  /* Full-bleed stage — not a centered card */
+  width: 100%;
+  min-height: min(88vh, 52rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Escape section-shell containment — type sits on page canvas */
+.hero-about-layer__stage {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding:
+    clamp(3.5rem, 9vh, 6.5rem)
+    clamp(1.25rem, 5vw, 3.5rem)
+    clamp(4rem, 10vh, 7rem);
+  box-sizing: border-box;
+}
+
 /*
-  Desktop: portrait left (own column), name + aside right.
-  Not centered magazine-cover; intentional gap / negative space.
+  Desktop grid: portrait | copy | empty gutter (~35% empty).
+  Content left-anchored; do not center the cluster in the viewport.
 */
 .hero-about-layer__cluster {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  gap: clamp(1.75rem, 5vw, 4.5rem);
+  display: grid;
+  grid-template-columns:
+    minmax(12rem, 28vw)
+    minmax(14rem, 34vw)
+    minmax(0, 1fr);
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: end;
   width: 100%;
-  max-width: 100%;
+  max-width: none;
+  margin: 0;
   transform: none;
+  justify-content: stretch;
 }
 
 .hero-about-layer__art {
-  flex: 0 0 auto;
-  width: clamp(16rem, 32vw, 26rem);
+  grid-column: 1;
+  width: 100%;
+  max-width: 22rem;
   z-index: 2;
   pointer-events: none;
   user-select: none;
   outline: none;
   border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .hero-about-layer__art-img {
@@ -56,38 +90,40 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.hero-about-layer {
-  position: relative;
-}
-
-.hero-about-layer__inner {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  padding-top: clamp(2rem, 5vh, 3.5rem);
-  padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
-  max-width: 100%;
-}
-
-.hero-about-layer__name {
-  flex: 1 1 auto;
+.hero-about-layer__copy {
+  grid-column: 2;
   min-width: 0;
-  max-width: min(28rem, 42vw);
+  max-width: 22rem;
   text-align: left;
   position: relative;
   z-index: 4;
-  padding-bottom: clamp(0.5rem, 2vh, 1.25rem);
+  /* Unboxed — no panel chrome */
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 clamp(0.75rem, 2vh, 1.5rem);
+}
+
+/* Plain small-caps eyebrow on the page — not a bordered strip */
+.hero-about-layer__eyebrow {
+  margin: 0 0 clamp(1rem, 2.5vh, 1.5rem);
+  font-family: var(--font-body, "Raleway", sans-serif);
+  font-size: clamp(0.625rem, 0.55vw + 0.45rem, 0.6875rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-55, rgba(17, 17, 17, 0.55));
+  line-height: 1.4;
+  max-width: 28ch;
 }
 
 .hero-about-layer__heading {
   font-family: "Jellyka Saint Andrew's Queen", var(--font-name-cursive, "Cormorant Garamond", Georgia, serif);
   font-style: normal;
   font-weight: 400;
-  font-size: clamp(3.25rem, 7.5vw, 7.5rem);
-  line-height: 0.9;
+  font-size: clamp(3.5rem, 8vw, 8rem);
+  line-height: 0.88;
   letter-spacing: 0.01em;
   color: var(--ink, #111);
   margin: 0;
@@ -111,27 +147,28 @@
   font-style: normal;
   font-weight: 400;
   color: var(--ink-55, rgba(17, 17, 17, 0.55));
-  line-height: 1.45;
-  letter-spacing: 0.04em;
-  margin-top: clamp(0.85rem, 2vh, 1.35rem);
-  margin-left: 0.05em;
-  max-width: 28ch;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+  max-width: 26ch;
 }
 
-.hero-about-layer__rule {
-  position: relative;
-  z-index: 1;
+/* Full-width solid band divider — not a card border */
+.hero-about-layer__band {
+  width: 100%;
+  height: clamp(0.55rem, 1.1vh, 0.85rem);
+  margin: 0;
   border: 0;
-  border-top: 1px solid var(--border-subtle);
-  margin: 0 var(--shell-pad-inline, clamp(0.75rem, 2vw, 1.5rem));
+  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  flex-shrink: 0;
 }
 
 .about-panel-stack__content {
   position: relative;
   z-index: 4;
   flex: 1 1 auto;
-  padding-top: clamp(2rem, 5vh, 4rem);
-  padding-bottom: clamp(2.5rem, 6vh, 5rem);
+  padding-top: clamp(3rem, 8vh, 5.5rem);
+  padding-bottom: clamp(3rem, 8vh, 5.5rem);
   margin-top: 0;
 }
 
@@ -142,82 +179,63 @@
 }
 
 .editorial-dense .hero-about-layer__heading {
-  font-size: clamp(3rem, 7vw, 6.75rem);
+  font-size: clamp(3.25rem, 7.5vw, 7.25rem);
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .hero-about-layer__art {
-    width: clamp(14rem, 36vw, 22rem);
-  }
-
   .hero-about-layer__cluster {
-    gap: clamp(1.25rem, 4vw, 2.5rem);
-  }
-
-  .hero-about-layer__name {
-    max-width: min(22rem, 48vw);
+    grid-template-columns:
+      minmax(11rem, 32vw)
+      minmax(12rem, 38vw)
+      minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 2.75rem);
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(2.75rem, 8vw, 5rem);
+    font-size: clamp(2.85rem, 7.5vw, 5.25rem);
   }
 }
 
-/* Mobile: tall image full-bleed, name + aside below (not overlaid) */
+/* Mobile: tall image, then unboxed type below — still left-aligned, not centered card */
 @media (max-width: 767px) {
+  .hero-about-layer {
+    min-height: 0;
+  }
+
+  .hero-about-layer__stage {
+    padding:
+      clamp(1rem, 3vh, 1.5rem)
+      0
+      clamp(2.5rem, 6vh, 3.5rem);
+  }
+
   .hero-about-layer__cluster {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: clamp(1.25rem, 4vw, 1.75rem);
-    transform: none;
-    padding-inline: 0;
-    width: 100%;
+    gap: clamp(1.75rem, 5vw, 2.5rem);
   }
 
   .hero-about-layer__art {
-    width: 100%;
     max-width: none;
+    width: 100%;
   }
 
   .hero-about-layer__art-img {
     width: 100%;
     aspect-ratio: 3 / 4;
-    max-height: min(78vh, 36rem);
+    max-height: min(72vh, 34rem);
   }
 
-  .hero-about-layer__name {
+  .hero-about-layer__copy {
     max-width: none;
-    padding-inline: var(--mobile-page-pad, clamp(1rem, 4.5vw, 1.35rem));
-    padding-bottom: 0;
+    padding-inline: clamp(1.25rem, 6vw, 1.75rem);
+    /* Leave empty space on the right — don't stretch type full width */
+    width: min(100%, 22rem);
   }
 
   .hero-about-layer__heading {
-    font-size: clamp(2.5rem, 12vw, 3.75rem);
-  }
-
-  .hero-about-layer__aside {
-    max-width: 34ch;
-  }
-
-  .hero-about-layer__inner,
-  .hero-about-layer__inner.section-shell,
-  .hero-about-layer__inner.section-shell--wide {
-    padding-top: clamp(0.75rem, 2.5vh, 1.25rem);
-    padding-bottom: clamp(0.85rem, 2.25vh, 1.25rem);
-    padding-inline: 0 !important;
-    max-width: none;
-    width: 100%;
-    align-items: stretch;
-  }
-
-  .hero-about-layer__rule {
-    margin-top: clamp(1rem, 3vh, 1.5rem);
-    margin-inline: clamp(0.875rem, 4vw, 1.35rem);
-  }
-
-  .about-panel-stack__content {
-    padding-top: clamp(2rem, 5vh, 3rem);
+    font-size: clamp(2.65rem, 13vw, 3.85rem);
   }
 }
 

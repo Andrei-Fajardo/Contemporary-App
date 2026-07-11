@@ -13,13 +13,10 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
 // heroAside: editable 1–2 lines beside the portrait — Cherry writes final copy in translations.ts
 ---
 
-<section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
-  <div class="hero-about-layer__inner section-shell section-shell--wide">
-    <div class="hero-about-layer__cluster relative">
-      <div
-        class="hero-about-layer__art relative"
-        data-headshot
-      >
+<section id="home" class="hero-section hero-about-layer scroll-section">
+  <div class="hero-about-layer__stage">
+    <div class="hero-about-layer__cluster">
+      <div class="hero-about-layer__art" data-headshot>
         <img
           src="/media/anna%20header%202.png"
           alt={l.siteTitle}
@@ -31,7 +28,12 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
         />
       </div>
 
-      <div class="hero-editorial__copy hero-about-layer__name">
+      <div class="hero-about-layer__copy">
+        {/* Plain small-caps eyebrow — unboxed, sits on page background */}
+        {l.heroTagline && (
+          <p class="hero-about-layer__eyebrow scroll-reveal">{l.heroTagline}</p>
+        )}
+
         <h1 class="hero-about-layer__heading scroll-reveal">
           <span class="hero-name__first">
             <span class="hero-name__line">{heroGivenName}</span>
@@ -48,5 +50,5 @@ const heroMiddleName = heroNameParts.slice(1).join(' ');
     </div>
   </div>
 
-  <hr class="hero-about-layer__rule scroll-reveal" />
+  <div class="hero-about-layer__band" aria-hidden="true"></div>
 </section>

@@ -1,5 +1,6 @@
 ---
 import AboutPanelStack from './AboutPanelStack.astro';
+import ArtSection from './sections/ArtSection.astro';
 import ExhibitionsSection from './sections/ExhibitionsSection.astro';
 import PublicationsSection from './sections/PublicationsSection.astro';
 import ResearchSection from './sections/ResearchSection.astro';
@@ -22,7 +23,10 @@ const { locale } = Astro.props;
       <AboutPanelStack locale={locale} />
     </div>
 
-    <!-- Art panel hidden for now (copyright / selection TBD) — assets kept -->
+    <!-- ── ART ────────────────────────────────────────────── -->
+    <div class="tabular-panel" data-tab-panel="art" id="panel-art" role="tabpanel" hidden aria-hidden="true">
+      <ArtSection locale={locale} />
+    </div>
 
     <!-- ── EXHIBITIONS ────────────────────────────────────── -->
     <div class="tabular-panel exhibitions-panel" data-tab-panel="exhibitions" id="panel-exhibitions" role="tabpanel" hidden aria-hidden="true">
@@ -34,8 +38,22 @@ const { locale } = Astro.props;
       <PublicationsSection locale={locale} />
     </div>
 
-    <!-- ── RESEARCH ───────────────────────────────────────── -->
+    <!-- ── RESEARCH — anna-sample-4 decorative ─────────────── -->
     <div class="tabular-panel research-panel" data-tab-panel="research" id="panel-research" role="tabpanel" hidden aria-hidden="true">
+      <div class="research-panel__art" aria-hidden="true">
+        <img
+          src="/media/anna-sample-4.png"
+          alt=""
+          class="research-panel__art-img"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+          data-artwork-parallax
+          data-artwork-strength="0.03"
+          data-artwork-max="15"
+        />
+      </div>
       <ResearchSection locale={locale} />
     </div>
 
@@ -44,8 +62,22 @@ const { locale } = Astro.props;
       <PressSection locale={locale} />
     </div>
 
-    <!-- ── CONTACTS ───────────────────────────────────────── -->
+    <!-- ── CONTACTS — anna sample 7 decorative ─────────────── -->
     <div class="tabular-panel contacts-panel" data-tab-panel="contacts" id="panel-contacts" role="tabpanel" hidden aria-hidden="true">
+      <div class="contacts-panel__art" aria-hidden="true">
+        <img
+          src="/media/anna sample 7.png"
+          alt=""
+          class="contacts-panel__art-img"
+          loading="lazy"
+          decoding="async"
+          draggable="false"
+          data-lightbox-ignore
+          data-artwork-parallax
+          data-artwork-strength="0.04"
+          data-artwork-max="20"
+        />
+      </div>
       <ContactsSection locale={locale} />
     </div>
 
