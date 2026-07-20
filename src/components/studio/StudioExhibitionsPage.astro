@@ -1,0 +1,33 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import ExhibitionAccordion from '../ExhibitionAccordion.astro';
+import ExhibitionGalleryOverlay from '../ExhibitionGalleryOverlay.astro';
+import { exhibitionEntries } from '../../data/content';
+import { sortExhibitionEntries } from '../../data/exhibition-display';
+import { t, type LocaleKey } from '../../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+const sorted = sortExhibitionEntries(exhibitionEntries);
+---
+
+<StudioLayout title={`${l.nav.exhibitions} — Anna Dauyl Rockswell`} active="exhibitions" seoPage="exhibitions" locale={locale}>
+  <section class="st-page">
+    <div class="st-page-center">
+      <header class="st-page-head st-reveal">
+        <h1 class="st-display">{l.nav.exhibitions}</h1>
+        <p class="st-prose st-page-lede">{l.exhibitionsIntro}</p>
+      </header>
+
+      <div class="st-reveal mt-4 md:mt-6">
+        <ExhibitionAccordion entries={sorted} expandLabel={l.viewMore} locale={locale} />
+      </div>
+    </div>
+  </section>
+
+  <ExhibitionGalleryOverlay locale={locale} />
+</StudioLayout>

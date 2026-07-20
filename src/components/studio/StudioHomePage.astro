@@ -1,0 +1,99 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import { t, type LocaleKey } from '../../data/translations';
+import { artworks } from '../../data/artworks';
+import { exhibitionEntries } from '../../data/content';
+import { localePath, artworkPath } from '../../data/studio-locale';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+const recentExhibitions = exhibitionEntries
+  .filter((e) => e.category === 'physical')
+  .slice(0, 4);
+---
+
+<StudioLayout title={l.siteTitle} active="" seoPage="home" locale={locale}>
+  <section class="st-page">
+    <div class="st-home-hero">
+      <p class="st-kicker st-home-hero__kicker st-reveal">{l.heroTagline}</p>
+      <h1 class="st-display st-home-hero__name st-reveal">
+        {l.heroFirstName}<br />{l.heroLastName}
+      </h1>
+      <p class="st-prose st-home-hero__bio st-reveal">
+        {l.bioExpanded}
+      </p>
+      <div class="st-home-hero__actions st-reveal">
+        <a href={localePath(locale, 'art')} class="st-btn st-btn--accent">{l.viewPaintings}</a>
+        <a href={localePath(locale, 'about')} class="st-btn">{l.nav.about}</a>
+      </div>
+      <div class="st-home-hero__media st-reveal min-w-0">
+        <div class="st-media">
+          <div class="st-frame st-home-hero__frame aspect-[4/5]">
+            <img src="/media/anna%20header%202.png" alt={l.siteTitle} loading="eager" />
+          </div>
+        </div>
+      </div>
+      <div class="st-home-hero__meta st-reveal">
+        <p class="st-caption st-home-hero__roles">
+          <b>{l.heroRoles}</b>
+        </p>
+        <p class="st-home-hero__based">{l.heroBasedIn}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="st-page">
+    <hr class="st-rule" />
+    <p class="st-home-motto st-reveal">
+      <span class="st-serif-em">“{l.heroMotto}”</span>
+    </p>
+    <hr class="st-rule" />
+  </section>
+
+  <section class="st-page st-selected-work pt-16 md:pt-24">
+    <div class="st-reveal flex items-baseline justify-between gap-6 flex-wrap">
+      <h2 class="st-display text-[clamp(1.9rem,4vw,3rem)]">{l.artTag}</h2>
+      <a href={localePath(locale, 'art')} class="text-sm font-medium text-[var(--st-ink-dim)] hover:text-[var(--st-ink)] transition-colors">{l.viewAll}</a>
+    </div>
+    <div class="st-selected-work__grid mt-10 md:mt-12" data-reveal-group>
+      {artworks.map((art) => (
+        <a href={artworkPath(locale, art.slug)} class="st-selected-work__item st-reveal group">
+          <div class="st-media st-media--portrait st-selected-work__media">
+            <div class="st-frame st-frame--portrait st-selected-work__frame">
+              <img src={art.image} alt={art.title} loading="lazy" />
+            </div>
+          </div>
+          <div class="st-selected-work__copy">
+            <p class="st-selected-work__title">{art.title}</p>
+            <p class="st-selected-work__meta">
+              {art.medium.toLowerCase()} · {art.year}
+            </p>
+            <p class="st-selected-work__blurb">{art.aboutMobile}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="st-page pt-20 md:pt-32">
+    <div class="st-reveal">
+      <h2 class="st-display text-[clamp(1.9rem,4vw,3rem)]">{l.exhibitionHistory}</h2>
+    </div>
+    <div class="st-index mt-10" data-reveal-group>
+      {recentExhibitions.map((ex) => (
+        <a href={localePath(locale, 'exhibitions')} class="st-index__row st-reveal">
+          <span class="st-index__meta">{ex.year}</span>
+          <span class="st-index__title">{ex.title}<span class="text-[var(--st-ink-dim)]"> · {ex.gallery}, {ex.place}</span></span>
+          <span class="st-index__arrow" aria-hidden="true">&nearr;</span>
+        </a>
+      ))}
+    </div>
+    <div class="st-reveal mt-10">
+      <a href={localePath(locale, 'exhibitions')} class="st-btn">{l.viewExhibitions}</a>
+    </div>
+  </section>
+</StudioLayout>
