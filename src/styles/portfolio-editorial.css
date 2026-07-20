@@ -1,0 +1,422 @@
+/* ============================================================
+   Portfolio Editorial — layering + negative space system
+   Derived from Jose Andrei Fajardo graphic design portfolio:
+   interlocking type/image planes, framed insets, atmospheric air.
+   Does NOT alter content or --canvas / --ink theming.
+   ============================================================ */
+
+:root,
+[data-theme="dark"],
+[data-theme="light"] {
+  --portfolio-air-y: clamp(3.5rem, 10vh, 7.5rem);
+  --portfolio-air-x: clamp(1.25rem, 4.5vw, 3.5rem);
+  --portfolio-frame: 1px solid var(--border-section);
+  --portfolio-frame-pad: clamp(0.35rem, 0.8vw, 0.55rem);
+  --portfolio-prose-max: 38ch;
+  --portfolio-aside-max: 32ch;
+  --portfolio-grain: 0.045;
+}
+
+/* ── Density dial: replace packed “dense” with gallery air ─── */
+.portfolio-air {
+  --section-gap-y: var(--portfolio-air-y);
+  --shell-pad-inline: var(--portfolio-air-x);
+  --heading-tight: 0.92;
+  --body-tight: 1.65;
+  --spacing-editorial-section: var(--portfolio-air-y);
+  --spacing-editorial-block: clamp(2rem, 4.5vh, 3.25rem);
+  --spacing-editorial-index-row: 1.35rem;
+}
+
+.portfolio-air .section-gap {
+  padding-block: var(--section-gap-y);
+}
+
+.portfolio-air .section-shell,
+.portfolio-air .section-shell--wide {
+  max-width: min(88rem, calc(100% - var(--shell-pad-inline) * 2));
+  padding-inline: var(--shell-pad-inline);
+}
+
+.portfolio-air .section-eyebrow {
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.28em;
+}
+
+.portfolio-air .content-prose {
+  line-height: var(--body-tight);
+  max-width: var(--portfolio-prose-max);
+}
+
+.portfolio-air .magazine-chapter {
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  margin-bottom: clamp(1.75rem, 4vh, 3rem);
+}
+
+.portfolio-air .magazine-chapter::after {
+  width: clamp(2.5rem, 8vw, 4.5rem);
+  margin-top: clamp(1.25rem, 3vh, 2rem);
+  background: var(--ink-35);
+}
+
+.portfolio-air .art-piece .section-shell {
+  padding-block: clamp(2rem, 5vh, 4rem);
+}
+
+.portfolio-air .editorial-row-list .editorial-row-list__item {
+  padding: 1.15rem 0.35rem;
+}
+
+.portfolio-air .exhibition-accordion__summary {
+  padding: 1.15rem 0.35rem;
+}
+
+.portfolio-air .content-prose + .content-prose,
+.portfolio-air p + p {
+  margin-top: 0.85rem;
+}
+
+/* ── Atmospheric grain — portfolio film texture ────────────── */
+.portfolio-air.magazine-canvas {
+  position: relative;
+}
+
+.portfolio-air.magazine-canvas > .tabular-panels::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: var(--portfolio-grain);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+[data-theme="dark"] .portfolio-air.magazine-canvas > .tabular-panels::before {
+  mix-blend-mode: soft-light;
+  opacity: 0.07;
+}
+
+/* Soften center column rule — prefer open field */
+.portfolio-air.magazine-canvas::before {
+  opacity: 0.12;
+}
+
+/* ── Hero: interlocking name + framed portrait ─────────────── */
+@media (min-width: 768px) {
+  .portfolio-air .hero-about-layer__cluster {
+    grid-template-columns: minmax(16rem, 0.46fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 0;
+    column-gap: clamp(0rem, 1vw, 0.5rem);
+  }
+
+  .portfolio-air .hero-about-layer__art {
+    position: relative;
+    z-index: 2;
+    max-width: min(32rem, 100%);
+    padding: var(--portfolio-frame-pad);
+    border: var(--portfolio-frame);
+    margin-right: clamp(-3rem, -5vw, -1.5rem);
+  }
+
+  .portfolio-air .hero-about-layer__art-img {
+    filter: grayscale(0.15) contrast(1.04) brightness(0.97);
+  }
+
+  .portfolio-air .hero-about-layer__name {
+    z-index: 5;
+    padding-left: clamp(0.5rem, 2vw, 1.5rem);
+    padding-bottom: clamp(1.5rem, 4vh, 3rem);
+    /* Pull type over the portrait edge — portfolio interlocking */
+    margin-left: clamp(-2.5rem, -4vw, -0.75rem);
+  }
+
+  .portfolio-air .hero-about-layer__heading {
+    font-size: clamp(4rem, 9.5vw, 9.5rem);
+    text-shadow:
+      0 0 0 transparent,
+      0.5px 0 0 color-mix(in srgb, var(--canvas) 55%, transparent);
+  }
+
+  .portfolio-air .hero-about-layer__roles,
+  .portfolio-air .hero-about-layer__intro {
+    max-width: 28ch;
+    margin-top: clamp(1rem, 2.5vh, 1.75rem);
+  }
+
+  .portfolio-air .hero-about-layer__intro {
+    margin-top: 0.65rem;
+    color: var(--ink-55);
+  }
+
+  .portfolio-air .hero-about-layer__inner {
+    padding-top: clamp(3.5rem, 8vh, 6.5rem);
+    padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+  }
+}
+
+/* Hero rule — thin editorial hairline with breathing room */
+.portfolio-air .hero-about-layer__rule {
+  margin-top: clamp(1.5rem, 4vh, 2.75rem);
+  margin-bottom: 0;
+  border-top-color: var(--border-subtle);
+  opacity: 0.85;
+}
+
+/* ── About spread: asymmetric air ──────────────────────────── */
+.portfolio-air .about-panel-stack__content {
+  padding-top: clamp(3rem, 8vh, 5.5rem);
+  padding-bottom: clamp(4rem, 10vh, 7rem);
+}
+
+.portfolio-air .about-editorial-spread {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.7fr);
+  gap: clamp(3rem, 8vw, 7rem);
+  align-items: start;
+}
+
+.portfolio-air .about-editorial-spread__aside {
+  padding-top: clamp(2.5rem, 6vh, 4.5rem);
+  border-left: 1px solid var(--border-subtle);
+  padding-left: clamp(1.5rem, 3vw, 2.5rem);
+  max-width: calc(var(--portfolio-aside-max) + 3rem);
+}
+
+.portfolio-air .about-editorial-spread__prose {
+  max-width: var(--portfolio-aside-max);
+  line-height: 1.7;
+}
+
+.portfolio-air .about-editorial-spread__bio .content-prose {
+  max-width: min(52ch, 100%);
+}
+
+.portfolio-air .about-editorial-spread__bio h2 {
+  max-width: 18ch;
+  margin-bottom: clamp(1.5rem, 3vh, 2.25rem);
+}
+
+@media (max-width: 767px) {
+  .portfolio-air .about-editorial-spread__aside {
+    border-left: none;
+    padding-left: 0;
+    padding-top: clamp(1.5rem, 4vh, 2.5rem);
+    border-top: 1px solid var(--border-subtle);
+    max-width: none;
+  }
+}
+
+/* ── Art lookbook: framed plates + open field ──────────────── */
+.portfolio-air .magazine-lookbook .art-piece {
+  margin-block: clamp(1rem, 3vh, 2.5rem);
+}
+
+.portfolio-air .magazine-lookbook .media-card {
+  padding: var(--portfolio-frame-pad);
+  border: var(--portfolio-frame);
+  background: color-mix(in srgb, var(--canvas) 94%, var(--ink) 6%);
+}
+
+.portfolio-air .magazine-lookbook .media-card-caption {
+  display: none;
+}
+
+.portfolio-air .magazine-lookbook .art-wall-label {
+  padding-top: clamp(1rem, 3vh, 2.5rem);
+  padding-inline: clamp(0.25rem, 1vw, 1rem);
+}
+
+.portfolio-air .magazine-lookbook .art-wall-label h3 {
+  max-width: 16ch;
+}
+
+.portfolio-air .magazine-lookbook .art-piece-divider {
+  margin: clamp(2.5rem, 7vh, 5rem) 0;
+  opacity: 0.55;
+}
+
+@media (min-width: 768px) {
+  .portfolio-air .magazine-lookbook .art-piece .grid {
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: end;
+  }
+
+  .portfolio-air .magazine-lookbook .art-wall-label {
+    margin-left: clamp(-0.5rem, -1.5vw, 0);
+  }
+}
+
+/* ── Chapter openers: large field, quiet rule ──────────────── */
+.portfolio-air .magazine-chapter__title {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  max-width: 14ch;
+}
+
+.portfolio-air .magazine-rule-crimson {
+  height: 1px;
+  background: var(--ink-35);
+  margin-top: clamp(0.75rem, 2vh, 1.25rem);
+}
+
+.portfolio-air .magazine-rule-crimson--short {
+  width: min(6rem, 22%);
+}
+
+/* ── Exhibitions: open vertical rhythm ─────────────────────── */
+.portfolio-air #exhibitions.section-gap {
+  padding-top: clamp(2.5rem, 7vh, 5rem);
+  padding-bottom: clamp(4rem, 10vh, 7rem);
+}
+
+.portfolio-air .exhibitions-section__intro {
+  margin-bottom: clamp(2rem, 5vh, 3.5rem) !important;
+  max-width: 36ch !important;
+}
+
+/* ── Press / Publications overlap: more translucent layering ─ */
+@media (min-width: 1024px) {
+  .portfolio-air .pubs-overlap,
+  .portfolio-air .press-overlap {
+    min-height: clamp(32rem, 68vh, 56rem);
+  }
+
+  .portfolio-air .pubs-overlap__content,
+  .portfolio-air .press-overlap__content {
+    background: color-mix(in srgb, var(--canvas) 78%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding-block: clamp(2rem, 5vh, 3.5rem);
+    padding-left: clamp(2rem, 4vw, 3.5rem);
+    border-left: 1px solid var(--border-subtle);
+    border-radius: 0;
+  }
+
+  .portfolio-air .pubs-overlap__img,
+  .portfolio-air .press-overlap__img {
+    opacity: 0.42;
+    filter: grayscale(1) contrast(1.08) brightness(0.95);
+  }
+
+  .portfolio-air .pubs-overlap__heading,
+  .portfolio-air .press-overlap__heading {
+    margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  }
+}
+
+/* ── Research / Contacts ghost layers: quieter, more field ─── */
+.portfolio-air .research-panel__art-img {
+  opacity: 0.12;
+}
+
+.portfolio-air .contacts-panel__art-img {
+  opacity: 0.18;
+}
+
+.portfolio-air .research-panel.is-active,
+.portfolio-air .contacts-panel.is-active {
+  padding-block: clamp(1rem, 3vh, 2rem);
+}
+
+/* ── Footer: corner metadata block, lots of air ────────────── */
+.site-footer.portfolio-footer {
+  padding-block: clamp(3.5rem, 9vh, 6.5rem) clamp(2.5rem, 6vh, 4rem);
+  border-top: 1px solid var(--border-subtle);
+  margin-top: clamp(1rem, 3vh, 2rem);
+}
+
+.site-footer.portfolio-footer .portfolio-footer__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 28rem;
+}
+
+@media (min-width: 640px) {
+  .site-footer.portfolio-footer .portfolio-footer__row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    max-width: min(48rem, 100%);
+  }
+}
+
+.site-footer.portfolio-footer .portfolio-footer__copy {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+}
+
+/* ── Index lists: hairline + breathing room ────────────────── */
+.portfolio-air .editorial-index__label {
+  margin-bottom: clamp(1.5rem, 3.5vh, 2.25rem);
+  padding-bottom: 0.75rem;
+}
+
+.portfolio-air .editorial-index .editorial-row-list__item {
+  padding-block: 1.25rem;
+}
+
+/* ── Sidebar: quieter, more margin from content ────────────── */
+@media (min-width: 1024px) {
+  .site-shell:has(.portfolio-air) {
+    --desktop-sidebar-width: 17.5rem;
+  }
+
+  .desktop-sidebar .sidebar-nav-link {
+    padding-block: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
+  .desktop-sidebar__brand {
+    padding-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  }
+
+  .desktop-sidebar__nav {
+    padding-top: 0.5rem;
+  }
+}
+
+/* ── Mobile: keep air without breaking stack ───────────────── */
+@media (max-width: 767px) {
+  .portfolio-air {
+    --section-gap-y: clamp(2.25rem, 7vh, 3.5rem);
+    --shell-pad-inline: clamp(1rem, 5vw, 1.5rem);
+  }
+
+  .portfolio-air .hero-about-layer__art {
+    border: none;
+    padding: 0;
+    margin-right: 0;
+  }
+
+  .portfolio-air .hero-about-layer__name {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .portfolio-air .hero-about-layer__inner {
+    padding-top: clamp(1rem, 3vh, 1.75rem);
+    padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  }
+
+  .portfolio-air .magazine-lookbook .media-card {
+    border-inline: none;
+    border-block: var(--portfolio-frame);
+    padding-inline: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-air .hero-about-layer__art-img {
+    transition: none;
+  }
+}

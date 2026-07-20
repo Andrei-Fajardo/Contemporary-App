@@ -10,46 +10,42 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="contacts" class="scroll-section section-gap contacts-chaos">
-  <div class="section-shell section-shell--wide">
-    <div class="magazine-chapter scroll-reveal">
-      <p class="section-eyebrow">{l.contactTag}</p>
-      <h2 class="magazine-chapter__title text-3xl md:text-5xl lg:text-6xl text-ink mb-3">
-        {l.contactHeading}
-      </h2>
-      <hr class="magazine-rule-crimson magazine-rule-crimson--short" />
-    </div>
+<section id="contacts" class="v2-chapter scroll-section contacts-chaos">
+  <div class="v2-wrap">
+    <header class="v2-art__head">
+      <h2 class="v2-title scroll-reveal">{l.contactHeading}</h2>
+    </header>
 
-    <div class="grid md:grid-cols-2 gap-16 md:gap-24 lg:gap-32">
-      <div class="scroll-reveal space-y-2">
+    <div class="v2-contact__grid" style="margin-top: clamp(2rem, 5vh, 3.5rem);">
+      <div class="scroll-reveal space-y-1">
         <div class="editorial-contact-block">
-          <span class="section-eyebrow block mb-3">{l.email}</span>
-          <a href="mailto:contact@annadauylrockswell.com" class="editorial-row-list__title inline-block underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all">
+          <span class="v2-kicker block mb-3">{l.email}</span>
+          <a href="mailto:contact@annadauylrockswell.com" class="editorial-row-list__title inline-block">
             contact@annadauylrockswell.com
           </a>
-          <a href="mailto:support@annadauylrockswell.com" class="editorial-row-list__title block mt-3 underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all">
+          <a href="mailto:support@annadauylrockswell.com" class="editorial-row-list__title block mt-3">
             support@annadauylrockswell.com
           </a>
         </div>
         <div class="editorial-contact-block">
-          <span class="section-eyebrow block mb-3">{l.basedIn}</span>
+          <span class="v2-kicker block mb-3">{l.basedIn}</span>
           <p class="editorial-row-list__meta">{l.location}</p>
         </div>
         <div class="editorial-contact-block">
-          <span class="section-eyebrow block mb-3">{l.socials}</span>
-          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer" class="editorial-row-list__title underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all">
+          <span class="v2-kicker block mb-3">{l.socials}</span>
+          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer" class="editorial-row-list__title">
             @rockswellnana
           </a>
         </div>
         <div class="editorial-contact-block">
-          <span class="section-eyebrow block mb-3">{l.licenses}</span>
+          <span class="v2-kicker block mb-3">{l.licenses}</span>
           <div class="flex flex-col gap-3">
             {siteCopy.licenses.map((license) => (
               <a
                 href={license.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="editorial-row-list__title underline-offset-4 decoration-black/20 hover:decoration-[var(--ink-45)] transition-all"
+                class="editorial-row-list__title"
               >
                 {license.label}
               </a>
@@ -59,22 +55,27 @@ const l = t[locale];
       </div>
 
       <div class="scroll-reveal">
-        <form class="contacts-chaos__form space-y-10" data-sent-message={l.messageSentDemo} onsubmit="event.preventDefault(); alert(this.dataset.sentMessage);">
+        <form class="contacts-chaos__form space-y-8" data-sent-message={l.messageSentDemo} onsubmit="event.preventDefault(); alert(this.dataset.sentMessage);">
           <div>
-            <span class="section-eyebrow block mb-3">{l.nameLabel}</span>
+            <span class="v2-kicker block mb-3">{l.nameLabel}</span>
             <input type="text" placeholder={l.namePlaceholder} class="contacts-chaos__input" />
           </div>
           <div>
-            <span class="section-eyebrow block mb-3">{l.emailLabel}</span>
+            <span class="v2-kicker block mb-3">{l.emailLabel}</span>
             <input type="email" placeholder={l.emailPlaceholder} class="contacts-chaos__input" />
           </div>
           <div>
-            <span class="section-eyebrow block mb-3">{l.messageLabel}</span>
+            <span class="v2-kicker block mb-3">{l.messageLabel}</span>
             <textarea rows="4" placeholder={l.messagePlaceholder} class="contacts-chaos__input contacts-chaos__input--area resize-none"></textarea>
           </div>
           <div class="pt-2">
-            <button type="submit" class="contacts-chaos__submit">
+            <button type="submit" class="v2-cta">
               {l.sendMessage}
+              <span class="v2-cta__icon" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M7 17L17 7M17 7H9M17 7V15" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </button>
           </div>
         </form>

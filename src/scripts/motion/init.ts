@@ -10,10 +10,12 @@ import { initExhibitionFilter, resetExhibitionFilter } from "../exhibition-filte
 import { initNavHover, resetNavHover } from "./nav-hover";
 import { initGlobalLightbox, resetGlobalLightbox } from "../lightbox";
 import { initCursorTilt, resetCursorTilt, bindCursorTiltTabListener } from "./cursor-tilt";
+import { initScaleMedia, resetScaleMedia } from "./scale-media";
 import { prefersReducedMotion } from "./utils";
 
 function revealAllFallback(): void {
   document.querySelectorAll(".scroll-reveal").forEach((el) => el.classList.add("is-visible"));
+  document.querySelectorAll(".v2-scale-media").forEach((el) => el.classList.add("is-inview"));
   document.querySelectorAll<HTMLImageElement>(".lazy-media img[data-src]").forEach((img) => {
     const src = img.dataset.src;
     if (src) {
@@ -35,8 +37,9 @@ export function initMotion(): void {
   resetNavHover();
   resetGlobalLightbox();
   resetCursorTilt();
+  resetScaleMedia();
 
-  if (prefersReducedMotion() || document.body.dataset.layout === "tabular") {
+  if (prefersReducedMotion()) {
     document.documentElement.classList.add("motion-reduced");
     document.documentElement.classList.remove("motion-live");
     revealAllFallback();
@@ -45,6 +48,7 @@ export function initMotion(): void {
     document.documentElement.classList.remove("motion-reduced");
 
     initScrollReveal();
+    initScaleMedia();
     initLazyMedia();
     initDepthField();
     initParallax();

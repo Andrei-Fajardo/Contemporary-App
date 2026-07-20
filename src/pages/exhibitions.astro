@@ -1,3 +1,28 @@
 ---
-return Astro.redirect('/#exhibitions', 301);
+import StudioLayout from '../layouts/StudioLayout.astro';
+import ExhibitionAccordion from '../components/ExhibitionAccordion.astro';
+import ExhibitionGalleryOverlay from '../components/ExhibitionGalleryOverlay.astro';
+import { exhibitionEntries } from '../data/content';
+import { sortExhibitionEntries } from '../data/exhibition-display';
+import { t } from '../data/translations';
+
+const l = t.en;
+const sorted = sortExhibitionEntries(exhibitionEntries);
 ---
+
+<StudioLayout title="Exhibitions — Anna Dauyl Rockswell" active="exhibitions" seoPage="exhibitions">
+  <section class="st-page">
+    <div class="st-page-center">
+      <header class="st-page-head st-reveal">
+        <h1 class="st-display">Exhibitions</h1>
+        <p class="st-prose st-page-lede">{l.exhibitionsIntro}</p>
+      </header>
+
+      <div class="st-reveal mt-4 md:mt-6">
+        <ExhibitionAccordion entries={sorted} expandLabel={l.viewMore} locale="en" />
+      </div>
+    </div>
+  </section>
+
+  <ExhibitionGalleryOverlay locale="en" />
+</StudioLayout>

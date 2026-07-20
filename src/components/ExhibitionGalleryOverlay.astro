@@ -182,7 +182,9 @@ const l = t[locale];
 }
 
 :global(html.exg-gallery-open .site-topbar),
-:global(html.exg-gallery-open body > header.lg\:hidden) {
+:global(html.exg-gallery-open body > header.lg\:hidden),
+:global(html.exg-gallery-open .st-topbar),
+:global(html.exg-gallery-open .st-drawer) {
   display: none !important;
 }
 
@@ -243,8 +245,8 @@ const l = t[locale];
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: 1px solid rgba(17,17,17,0.14);
   border-radius: 50%;
   background: transparent;
@@ -530,19 +532,20 @@ const l = t[locale];
 
 .exg-lightbox__close {
   position: absolute;
-  top: -3rem;
-  right: 0;
+  top: max(0.5rem, env(safe-area-inset-top, 0px));
+  right: max(0.5rem, env(safe-area-inset-right, 0px));
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   border: 1px solid rgba(240,238,233,0.2);
-  background: transparent;
+  background: rgba(10, 10, 10, 0.45);
   color: rgba(240,238,233,0.7);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
+  z-index: 2;
 }
 
 .exg-lightbox__close:hover {
@@ -550,10 +553,14 @@ const l = t[locale];
   color: #fff;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   .exg-overlay__header { padding: 1rem 1rem 0.75rem; }
   .exg-overlay__body { padding: 0.75rem 0.75rem 1.5rem; }
-  .exg-lightbox__nav { width: 2.5rem; height: 2.5rem; }
+  .exg-lightbox__nav { width: 2.75rem; height: 2.75rem; }
+  .exg-overlay__title {
+    font-size: 1rem;
+    overflow-wrap: anywhere;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

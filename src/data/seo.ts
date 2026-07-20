@@ -37,12 +37,13 @@ export function localeHomePath(locale: LocaleKey): string {
  */
 export function seoCanonicalPath(locale: LocaleKey, page: SeoPageKey, artworkSlug?: string): string {
   const home = localeHomePath(locale);
-  if (page === 'home' || page === 'about') return home === '/' ? '/' : home;
+  if (page === 'home') return home === '/' ? '/' : home;
   if (page === 'artwork' && artworkSlug) {
     // Artwork detail routes are currently EN-only (`/art/[slug]`).
     return `/art/${artworkSlug}`;
   }
-  // Hash anchors for tab panels — canonical tag uses the document URL (home).
+  // EN section pages are real routes (studio shell); locale trees still resolve to home.
+  if (locale === 'en') return `/${page}`;
   return home === '/' ? '/' : home;
 }
 

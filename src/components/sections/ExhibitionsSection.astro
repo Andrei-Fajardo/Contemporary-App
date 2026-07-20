@@ -14,20 +14,17 @@ const l = t[locale];
 const sortedExhibitions = sortExhibitionEntries(exhibitionEntries);
 ---
 
-<section id="exhibitions" class="scroll-section section-gap">
-  <div class="section-shell section-shell--wide magazine-chapter">
-    <p class="scroll-reveal section-eyebrow">{l.exhibitionsTag}</p>
-    <h2 class="scroll-reveal magazine-chapter__title text-3xl md:text-5xl lg:text-6xl text-ink mb-3" set:html={l.exhibitionHistory}></h2>
-    <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal mb-4" />
+<section id="exhibitions" class="v2-chapter scroll-section">
+  <div class="v2-wrap">
+    <header class="v2-art__head">
+      <h2 class="v2-title scroll-reveal" set:html={l.exhibitionHistory} />
+      <p class="v2-lede scroll-reveal">{l.exhibitionsIntro}</p>
+    </header>
 
-    <p class="scroll-reveal content-prose text-ink-60 exhibitions-section__intro mb-2 max-w-[42ch]">
-      {l.exhibitionsIntro}
-    </p>
-
-    {/* Exhibition titles, venues, and places are proper nouns — not translated */}
-    <ExhibitionAccordion entries={sortedExhibitions} expandLabel={l.viewMore} locale={locale} />
+    <div class="scroll-reveal" style="margin-top: clamp(1.5rem, 4vh, 2.75rem);">
+      <ExhibitionAccordion entries={sortedExhibitions} expandLabel={l.viewMore} locale={locale} />
+    </div>
   </div>
 </section>
 
-{/* Gallery overlay — rendered once, shown/hidden via JS */}
 <ExhibitionGalleryOverlay locale={locale} />
