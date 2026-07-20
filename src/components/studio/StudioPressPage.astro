@@ -20,9 +20,8 @@ const l = t[locale];
     <div class="st-index" data-reveal-group>
       {pressLinks.map((item) => (
         <a href={item.href} target="_blank" rel="noopener noreferrer" class="st-index__row st-reveal">
-          <span class="st-index__meta">{[item.platform, item.year].filter(Boolean).join(' · ')}</span>
+          {item.platform ? <span class="st-index__meta">{item.platform}</span> : null}
           <span class="st-index__title">{item.title}</span>
-          <span class="st-index__arrow" aria-hidden="true">&nearr;</span>
         </a>
       ))}
     </div>

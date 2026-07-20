@@ -164,6 +164,8 @@ export function openGalleryPreview(images: string[], startIndex: number, title: 
   r.overlay.classList.add('exg-overlay--preview-only');
   r.overlay.removeAttribute('hidden');
   r.overlay.setAttribute('aria-hidden', 'false');
+  // Hide studio topbar/drawer so they cannot intercept the lightbox close control
+  document.documentElement.classList.add(GALLERY_OPEN_CLASS);
   lockPageScroll();
 
   openLightbox(startIndex);
@@ -317,6 +319,7 @@ function closeLightbox(r: ReturnType<typeof refs>) {
     r.overlay.classList.remove('exg-overlay--preview-only');
     r.overlay.setAttribute('aria-hidden', 'true');
     r.overlay.setAttribute('hidden', '');
+    document.documentElement.classList.remove(GALLERY_OPEN_CLASS);
     unlockPageScroll();
   }
 }
@@ -332,7 +335,11 @@ function bindOverlayEvents(r: ReturnType<typeof refs>) {
 
   // Lightbox nav — backdrop and empty stage area close fullscreen
   r.lbBackdrop.onclick = () => closeLightbox(r);
-  r.lbClose.onclick    = () => closeLightbox(r);
+  r.lbClose.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeLightbox(r);
+  });
   r.lightbox.onclick = (e) => {
     if (e.target === r.lightbox) closeLightbox(r);
   };

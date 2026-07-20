@@ -23,9 +23,17 @@ const l = t[locale];
         <article class="st-art-entry st-reveal">
           <div class="st-art-entry__media">
             <div class="st-media st-media--portrait">
-              <div class="st-frame st-frame--portrait st-art-entry__frame">
+              <button
+                type="button"
+                class="st-frame st-frame--portrait st-art-entry__frame"
+                data-piece-open
+                data-piece-src={art.image}
+                data-piece-alt={art.title}
+                data-piece-title={art.title}
+                aria-label={`View ${art.title} fullscreen`}
+              >
                 <img src={art.image} alt={art.title} loading={i === 0 ? 'eager' : 'lazy'} />
-              </div>
+              </button>
             </div>
           </div>
           <div class="st-art-entry__copy">
