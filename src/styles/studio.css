@@ -457,6 +457,17 @@ html.studio .pubs-manuscript-btn {
 .st-drawer__head .st-wordmark {
   min-width: 0;
   font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+.st-drawer__head .st-burger {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+.st-drawer__head .st-burger svg {
+  stroke: currentColor;
 }
 
 .st-drawer__nav {
@@ -474,10 +485,10 @@ html.studio .pubs-manuscript-btn {
   text-transform: uppercase;
   line-height: 1.15;
   padding-block: 0.2rem;
-  color: var(--st-ink);
+  color: #ffffff;
   text-decoration: none;
   text-align: center;
-  text-shadow: 0 1px 14px color-mix(in srgb, var(--st-bg) 70%, transparent);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 0, 0, 0.35);
   transform: translateY(0.8rem);
   opacity: 0;
   transition: color 0.2s, transform 0.5s var(--st-ease), opacity 0.5s var(--st-ease);
@@ -491,7 +502,8 @@ html.studio .pubs-manuscript-btn {
 
 .st-drawer__nav a[aria-current='page'],
 .st-drawer__nav a:hover {
-  color: var(--st-ink);
+  color: #ffffff;
+  opacity: 0.85;
 }
 
 .st-drawer__foot {
@@ -535,15 +547,23 @@ html.studio .pubs-manuscript-btn {
   min-height: 2.85rem;
   font-size: 0.78rem;
   letter-spacing: 0.08em;
-  /* Solid backing so pills stay readable over the artwork */
-  background: color-mix(in srgb, var(--st-bg) 88%, transparent);
-  border-color: color-mix(in srgb, var(--st-ink) 22%, transparent);
-  color: var(--st-ink);
+  background: transparent;
+  border-color: color-mix(in srgb, #ffffff 55%, transparent);
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.st-drawer__foot .st-langs a:hover {
+  border-color: #ffffff;
+  background: color-mix(in srgb, #ffffff 14%, transparent);
+  color: #ffffff;
 }
 
 .st-drawer__foot .st-langs a.is-active {
-  background: var(--st-ink);
-  color: var(--st-bg);
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--st-ink);
+  text-shadow: none;
 }
 
 .st-drawer__foot > a,
@@ -619,6 +639,12 @@ html.studio .pubs-manuscript-btn {
   margin-inline: auto;
   padding-top: clamp(1rem, 3vh, 1.75rem);
   padding-bottom: clamp(2rem, 5vh, 4rem);
+}
+
+/* Flatten wrappers on mobile so the existing order map still works */
+.st-home-hero__copy,
+.st-home-hero__aside {
+  display: contents;
 }
 
 /* Mobile hierarchy: image → name → roles → advocate → bio → actions */
@@ -699,8 +725,14 @@ html.studio .pubs-manuscript-btn {
   object-position: center top;
 }
 
+.st-home-motto-band .st-page {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .st-home-motto {
-  padding-block: clamp(1.5rem, 3.5vh, 2.5rem);
+  margin: 0;
+  padding-block: 1.5rem;
   text-align: center;
   font-size: clamp(1.05rem, 1.9vw, 1.45rem);
   line-height: 1.3;
@@ -708,18 +740,64 @@ html.studio .pubs-manuscript-btn {
   opacity: 0.85;
 }
 
+.st-selected-work {
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .st-home-motto {
+    padding-block: 2rem;
+  }
+
+  .st-selected-work {
+    padding-top: 4rem;
+  }
+}
+
 @media (min-width: 1024px) {
+  .st-selected-work {
+    padding-top: 7rem;
+  }
+
+  /*
+   * Two real columns — copy stack vs portrait.
+   * Avoid spanning the image across text rows (that was stretching gaps open).
+   */
   .st-home-hero {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    grid-template-areas:
-      "kicker media"
-      "name   media"
-      "bio    media"
-      "actions meta";
     gap: 0 4.5rem;
     align-items: start;
     padding-top: clamp(4rem, 11vh, 8.5rem);
+    padding-bottom: 0.75rem;
+  }
+
+  /* Hero section was inheriting large .st-page bottom padding — pull motto nearer */
+  .st-page:has(> .st-home-hero) {
+    padding-bottom: 1.25rem;
+  }
+
+  .st-home-motto-band .st-page {
+    padding-bottom: 0;
+  }
+
+  .st-home-motto {
+    padding-block: 1.35rem 1.75rem;
+  }
+
+  .st-home-hero__copy,
+  .st-home-hero__aside {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .st-home-hero__copy {
+    gap: 0;
+  }
+
+  .st-home-hero__aside {
+    gap: 0.75rem;
   }
 
   .st-home-hero__kicker,
@@ -731,19 +809,31 @@ html.studio .pubs-manuscript-btn {
     order: initial;
   }
 
-  .st-home-hero__kicker { grid-area: kicker; margin-top: 0; }
-  .st-home-hero__name { grid-area: name; margin-top: 1.85rem; }
-  .st-home-hero__bio { grid-area: bio; margin-top: 2.25rem; }
-  .st-home-hero__actions { grid-area: actions; margin-top: 2.75rem; }
+  .st-home-hero__kicker {
+    margin: 0 0 clamp(3.5rem, 8vh, 6rem);
+  }
+
+  .st-home-hero__name {
+    margin: 0;
+  }
+
+  .st-home-hero__bio {
+    margin: 0.55rem 0 0;
+    max-width: 48ch;
+  }
+
+  .st-home-hero__actions {
+    margin: 0.75rem 0 0;
+  }
+
   .st-home-hero__media {
-    grid-area: media;
     max-width: 42rem;
     margin-inline: 0;
-    justify-self: stretch;
+    width: 100%;
   }
+
   .st-home-hero__meta {
-    grid-area: meta;
-    margin-top: 1rem;
+    margin: 0;
   }
 
   .st-home-hero__frame {
@@ -763,19 +853,20 @@ html.studio .pubs-manuscript-btn {
 }
 
 /*
- * About hero — spans Biography heading through end of Artist Statement.
- * Height follows the text column; width stays a portrait slice of that height.
+ * About — mobile: large centered portrait + drop cap.
+ * Desktop: classic side-by-side (image | biography copy).
  */
 .st-about-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2.5rem;
+  gap: 2rem;
   align-items: start;
 }
 
 .st-about-media {
-  width: 100%;
-  max-width: 22rem;
+  width: 90vw;
+  max-width: 90vw;
+  margin: 0 calc(50% - 45vw);
 }
 
 .st-about-media__frame {
@@ -799,8 +890,37 @@ html.studio .pubs-manuscript-btn {
   min-width: 0;
 }
 
+.st-about-prose {
+  min-width: 0;
+}
+
 .st-about-copy__statement {
   margin-top: 0;
+}
+
+/* Newspaper drop cap */
+.st-dropcap::first-letter {
+  float: left;
+  font-family: var(--st-serif);
+  font-weight: 600;
+  font-size: 4.85em;
+  line-height: 0.78;
+  padding: 0.06em 0.14em 0 0;
+  color: var(--st-ink);
+}
+
+.st-home-hero__bio.st-dropcap::first-letter {
+  font-size: 4.4em;
+}
+
+/* Tighten About page head — less air under mobile topbar */
+.st-page--about .st-page-head {
+  padding-top: clamp(1.25rem, 3.5vh, 2.25rem);
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
+}
+
+.st-page--about .st-page-head .st-page-lede {
+  margin-top: 0.75rem;
 }
 
 @media (min-width: 1024px) {
@@ -811,7 +931,9 @@ html.studio .pubs-manuscript-btn {
   }
 
   .st-about-media {
+    width: auto;
     max-width: none;
+    margin: 0;
     height: 100%;
     min-height: 0;
   }
@@ -819,6 +941,15 @@ html.studio .pubs-manuscript-btn {
   .st-about-media__frame {
     height: 100%;
     aspect-ratio: auto;
+  }
+
+  .st-page--about .st-page-head {
+    padding-top: clamp(2.5rem, 6vh, 4.5rem);
+    padding-bottom: clamp(1.75rem, 4vh, 2.75rem);
+  }
+
+  .st-dropcap::first-letter {
+    font-size: 5.5em;
   }
 }
 
@@ -840,6 +971,23 @@ html.studio .pubs-manuscript-btn {
   }
 }
 
+/* Must follow .st-page padding shorthand — that rule resets padding-top to 0 */
+.st-page.st-selected-work {
+  padding-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .st-page.st-selected-work {
+    padding-top: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .st-page.st-selected-work {
+    padding-top: 7rem;
+  }
+}
+
 .st-page-center {
   width: 100%;
   max-width: 100%;
@@ -858,9 +1006,31 @@ html.studio .pubs-manuscript-btn {
   }
 }
 
+.st-exhibitions-list {
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .st-exhibitions-list {
+    margin-top: 1.5rem;
+  }
+}
+
 .st-page-head {
   padding-top: clamp(3.5rem, 9vh, 7rem);
   padding-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+@media (max-width: 767px) {
+  .st-page-head {
+    padding-top: clamp(1.15rem, 3.2vh, 1.85rem);
+    padding-bottom: clamp(1.1rem, 2.8vh, 1.65rem);
+  }
+
+  .st-page-head .st-page-lede {
+    margin-top: 0.7rem;
+    margin-bottom: 0.25rem;
+  }
 }
 
 .st-page-head h1 {
@@ -1691,6 +1861,7 @@ html.exg-gallery-open .st-sidebar {
   min-height: 11rem;
   padding: 1.4rem 1.35rem;
   border: 1px solid var(--st-line);
+  border-radius: 3px;
   /* Raised fill vs. page canvas so cards read as distinct surfaces */
   background: var(--st-bg-raise);
   box-shadow: 0 1px 0 rgba(20, 20, 20, 0.05);
@@ -1802,6 +1973,19 @@ html.studio .exg-thumb-strip__grid {
 
 html.studio .exg-thumb-strip__cell {
   border-radius: 0.2rem;
+}
+
+html.studio .exhibition-accordion__collapse-all {
+  border-radius: 0;
+  border-color: var(--st-line);
+  color: var(--st-ink-dim);
+  background: transparent;
+}
+
+html.studio .exhibition-accordion__collapse-all:hover:not(:disabled) {
+  color: var(--st-ink);
+  border-color: var(--st-ink);
+  background: var(--st-bg-raise);
 }
 
 html.studio .exhibition-accordion__summary {
@@ -1944,6 +2128,27 @@ html.studio.st-motion .st-reveal {
     padding: 0 1rem 4rem;
   }
 
+  /* Equal exterior air around the motto band — not inside the quote */
+  .st-page:has(> .st-home-hero) {
+    padding-bottom: 4.5rem;
+  }
+
+  .st-home-hero {
+    padding-bottom: 0;
+  }
+
+  .st-home-motto {
+    padding-block: 1.5rem;
+  }
+
+  .st-page.st-selected-work {
+    padding-top: 4.5rem;
+  }
+
+  .st-home-hero__bio {
+    max-width: none;
+  }
+
   .st-page-head h1 {
     font-size: clamp(2.2rem, 12vw, 3.4rem);
     word-break: break-word;
@@ -1993,6 +2198,18 @@ html.studio.st-motion .st-reveal {
 
   .st-pubs-split__chapbook .st-mag-label {
     min-height: 5.5rem;
+  }
+
+  .st-pubs-split.mt-4 {
+    margin-top: 0.65rem;
+  }
+
+  .st-pubs-split .mt-10 {
+    margin-top: 1.15rem;
+  }
+
+  .st-pubs-split--lower .mt-8 {
+    margin-top: 1rem;
   }
 
   /* Literary Publications / In Development rows — tighter, more editorial */

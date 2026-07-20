@@ -12,7 +12,7 @@ const l = t[locale];
 ---
 
 <StudioLayout title={`${l.nav.about} — Anna Dauyl Rockswell`} active="about" seoPage="about" locale={locale}>
-  <section class="st-page">
+  <section class="st-page st-page--about">
     <header class="st-page-head st-reveal">
       <h1 class="st-display">{l.nav.about}</h1>
       <p class="st-prose st-page-lede">{l.aboutLead}</p>
@@ -28,8 +28,8 @@ const l = t[locale];
       <div class="st-about-copy" data-reveal-group>
         <div class="st-reveal">
           <h2 class="st-display text-2xl md:text-3xl mb-6">{l.biography}</h2>
-          <div class="st-prose space-y-5">
-            <p>{l.bioExpanded}</p>
+          <div class="st-prose st-about-prose space-y-5">
+            <p class="st-dropcap">{l.bioExpanded}</p>
             <p>{l.aboutInfluencesProse}</p>
             <p>{l.aboutInterestsProse}</p>
           </div>
