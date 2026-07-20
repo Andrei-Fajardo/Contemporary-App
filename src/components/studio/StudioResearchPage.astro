@@ -35,12 +35,12 @@ const entries = researchLinks.map((item, i) => ({
                   href={item.platformHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="st-research__venue"
+                  class="st-index__meta st-research__venue"
                 >
                   {item.platform}
                 </a>
               ) : (
-                <span class="st-research__venue">{item.platform}</span>
+                <span class="st-index__meta st-research__venue">{item.platform}</span>
               )
             ) : null}
             {item.href ? (
@@ -51,7 +51,6 @@ const entries = researchLinks.map((item, i) => ({
                 class="st-research__title"
               >
                 {item.title}
-                <span class="st-research__ext" aria-hidden="true">↗</span>
               </a>
             ) : (
               <span class="st-research__title st-research__title--plain">{item.title}</span>

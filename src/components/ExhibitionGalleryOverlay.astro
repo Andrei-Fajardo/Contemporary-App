@@ -92,12 +92,12 @@ const l = t[locale];
           <polyline points="7 4 13 10 7 16"/>
         </svg>
       </button>
-      <button type="button" class="exg-lightbox__close" id="exg-lb-close" aria-label={l.closeAria}>
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-          <line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/>
-        </svg>
-      </button>
     </div>
+    <button type="button" class="exg-lightbox__close" id="exg-lb-close" aria-label={l.closeAria}>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/>
+      </svg>
+    </button>
   </div>
 </div>
 
@@ -421,28 +421,26 @@ const l = t[locale];
 }
 
 /* ===== Lightbox =====
-   On mobile the fixed header is 3.5rem (56px) tall.
-   On desktop the topbar is ~3rem. We push inset-top accordingly
-   so the close button and counter never sit behind those bars.
+   Close sits in the lightbox chrome; topbar is hidden via exg-gallery-open.
 */
 .exg-lightbox {
   position: fixed;
   inset: 0;
-  padding-top: 3.5rem;
   z-index: 10200;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-inline: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding:
+    max(1rem, env(safe-area-inset-top, 0px))
+    1.5rem
+    max(1.5rem, env(safe-area-inset-bottom, 0px));
   overflow: hidden;
   overscroll-behavior: none;
 }
 
 @media (min-width: 1024px) {
   .exg-lightbox {
-    /* desktop topbar ~3rem + breathing room */
-    padding-top: 4rem;
+    padding-top: max(1.25rem, env(safe-area-inset-top, 0px));
   }
 }
 
@@ -545,7 +543,10 @@ const l = t[locale];
   color: rgba(240,238,233,0.7);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
-  z-index: 2;
+  z-index: 5;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .exg-lightbox__close:hover {
