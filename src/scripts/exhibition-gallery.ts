@@ -86,6 +86,13 @@ function mediaLabel(count: number): string {
   return `${count} item${count !== 1 ? 's' : ''}`;
 }
 
+/** Keep the overlay above studio chrome (topbar z=50, grain z=9999). */
+function mountOverlayOnBody(overlay: HTMLElement): void {
+  if (overlay.parentElement !== document.body) {
+    document.body.appendChild(overlay);
+  }
+}
+
 // ── DOM refs (resolved once on first open) ──────────────────────────────────
 function refs() {
   return {
@@ -121,6 +128,7 @@ export function openGallery(images: string[], title: string, place: string) {
   previewOnly = false;
   state = { images, title, place, lbIndex: 0 };
   const r = refs();
+  mountOverlayOnBody(r.overlay);
 
   r.overlay.classList.remove('exg-overlay--preview-only');
 
@@ -160,6 +168,7 @@ export function openGalleryPreview(images: string[], startIndex: number, title: 
   previewOnly = true;
   state = { images, title, place, lbIndex: startIndex };
   const r = refs();
+  mountOverlayOnBody(r.overlay);
 
   r.overlay.classList.add('exg-overlay--preview-only');
   r.overlay.removeAttribute('hidden');
@@ -340,8 +349,15 @@ function bindOverlayEvents(r: ReturnType<typeof refs>) {
     e.stopPropagation();
     closeLightbox(r);
   });
+  // iOS Safari occasionally drops click on overlay controls — pointerup is reliable
+  r.lbClose.addEventListener('pointerup', (e) => {
+    if (e.pointerType === 'mouse') return;
+    e.preventDefault();
+    e.stopPropagation();
+    closeLightbox(r);
+  });
   r.lightbox.onclick = (e) => {
-    if (e.target === r.lightbox) closeLightbox(r);
+    if (e.target === r.lightbox || e.target === r.lbBackdrop) closeLightbox(r);
   };
   const stage = r.lightbox.querySelector('.exg-lightbox__stage');
   stage?.addEventListener('click', (e) => {

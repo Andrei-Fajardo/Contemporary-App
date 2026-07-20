@@ -46,11 +46,13 @@ function openPanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLEl
         panel.style.height = "auto";
         panel.style.overflow = "visible";
         animating.delete(item);
+        syncCollapseAllButtons();
       },
     });
   });
 
   rotateChevron(chevron, true);
+  syncCollapseAllButtons();
 }
 
 function closePanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLElement, chevron: HTMLElement | null): void {
@@ -72,6 +74,7 @@ function closePanel(item: HTMLDetailsElement, panel: HTMLElement, summary: HTMLE
       panel.style.overflow = "";
       clearSummaryInlineStyles(summary);
       animating.delete(item);
+      syncCollapseAllButtons();
     },
   });
 
@@ -111,15 +114,51 @@ export function initExhibitionAccordion(): void {
       } else {
         openPanel(item, panel, summary, chevron);
       }
+      syncCollapseAllButtons();
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-exhibition-collapse-all]").forEach((btn) => {
+    if (btn.dataset.collapseBound === "true") return;
+    btn.dataset.collapseBound = "true";
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      collapseAllExhibitions(btn.closest("[data-exhibition-accordion-root]") ?? document);
     });
   });
 
   expandExhibitionFromLocation();
+  syncCollapseAllButtons();
 
   if (!(window as Window & { __exAccordionHashBound?: boolean }).__exAccordionHashBound) {
     (window as Window & { __exAccordionHashBound?: boolean }).__exAccordionHashBound = true;
-    window.addEventListener("hashchange", () => expandExhibitionFromLocation());
+    window.addEventListener("hashchange", () => {
+      expandExhibitionFromLocation();
+      syncCollapseAllButtons();
+    });
   }
+}
+
+function collapseAllExhibitions(scope: ParentNode): void {
+  scope.querySelectorAll<HTMLDetailsElement>(".exhibition-accordion__item[open]").forEach((item) => {
+    const panel = getPanel(item);
+    const summary = item.querySelector<HTMLElement>(".exhibition-accordion__summary");
+    const chevron = item.querySelector<HTMLElement>(".exhibition-accordion__chevron");
+    if (panel && summary) closePanel(item, panel, summary, chevron);
+  });
+  syncCollapseAllButtons();
+}
+
+function syncCollapseAllButtons(): void {
+  document.querySelectorAll<HTMLElement>("[data-exhibition-accordion-root]").forEach((root) => {
+    const btn = root.querySelector<HTMLButtonElement>("[data-exhibition-collapse-all]");
+    if (!btn) return;
+    const openCount = root.querySelectorAll(".exhibition-accordion__item[open]").length;
+    const show = openCount > 0;
+    btn.hidden = !show;
+    btn.disabled = !show;
+    btn.setAttribute("aria-hidden", show ? "false" : "true");
+  });
 }
 
 /** Open accordion matching `#id` or `#exhibition-id` and scroll it into view. */
@@ -178,5 +217,8 @@ export function resetExhibitionAccordion(): void {
   });
   document.querySelectorAll<HTMLDetailsElement>(".exhibition-accordion__item").forEach((item) => {
     item.classList.remove("is-expanded");
+  });
+  document.querySelectorAll<HTMLButtonElement>("[data-exhibition-collapse-all]").forEach((btn) => {
+    delete btn.dataset.collapseBound;
   });
 }

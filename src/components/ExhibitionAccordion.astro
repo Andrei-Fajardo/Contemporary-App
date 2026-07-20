@@ -12,11 +12,25 @@ interface Props {
 const { entries, expandLabel, locale = 'en' } = Astro.props;
 const l = t[locale];
 const expand = expandLabel ?? l.viewMore;
+const collapse = l.collapseAll;
 
 const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
 ---
 
-<div class="exhibition-accordion editorial-index editorial-divider-list">
+<div class="exhibition-accordion-wrap" data-exhibition-accordion-root>
+  <div class="exhibition-accordion__toolbar">
+    <button
+      type="button"
+      class="exhibition-accordion__collapse-all"
+      data-exhibition-collapse-all
+      hidden
+      disabled
+      aria-hidden="true"
+    >
+      {collapse}
+    </button>
+  </div>
+  <div class="exhibition-accordion editorial-index editorial-divider-list">
   {entries.map((entry) => {
     const display  = formatExhibitionDisplay(entry);
     const thumbs   = entry.images.slice(0, THUMB_COUNT);
@@ -176,8 +190,51 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
     );
   })}
 </div>
+</div>
 
 <style>
+  .exhibition-accordion-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .exhibition-accordion__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 0;
+  }
+
+  .exhibition-accordion__toolbar:has([data-exhibition-collapse-all]:not([hidden])) {
+    min-height: 1.75rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .exhibition-accordion__collapse-all {
+    appearance: none;
+    border: 1px solid rgba(17, 17, 17, 0.18);
+    background: transparent;
+    color: rgba(17, 17, 17, 0.55);
+    font: inherit;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.7rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .exhibition-accordion__collapse-all:hover:not(:disabled) {
+    color: rgba(17, 17, 17, 0.9);
+    border-color: rgba(17, 17, 17, 0.4);
+    background: rgba(17, 17, 17, 0.04);
+  }
+
+  .exhibition-accordion__collapse-all[hidden] {
+    display: none;
+  }
+
   .exhibition-accordion__item {
     background: transparent;
     overflow: visible;

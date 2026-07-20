@@ -23,7 +23,7 @@ const sorted = sortExhibitionEntries(exhibitionEntries);
         <p class="st-prose st-page-lede">{l.exhibitionsIntro}</p>
       </header>
 
-      <div class="st-reveal mt-4 md:mt-6">
+      <div class="st-reveal st-exhibitions-list">
         <ExhibitionAccordion entries={sorted} expandLabel={l.viewMore} locale={locale} />
       </div>
     </div>

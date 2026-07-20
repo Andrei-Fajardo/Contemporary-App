@@ -106,7 +106,8 @@ const l = t[locale];
 .exg-overlay {
   position: fixed;
   inset: 0;
-  z-index: 10100;
+  /* Above studio topbar (50), drawer (60), piece lb (120), and grain (9999) */
+  z-index: 11050;
   display: flex;
   align-items: stretch;
   justify-content: flex-end;
@@ -421,17 +422,17 @@ const l = t[locale];
 }
 
 /* ===== Lightbox =====
-   Close sits in the lightbox chrome; topbar is hidden via exg-gallery-open.
+   Close sits below the mobile header band so Menu cannot steal taps.
 */
 .exg-lightbox {
   position: fixed;
   inset: 0;
-  z-index: 10200;
+  z-index: 11100;
   display: flex;
   align-items: center;
   justify-content: center;
   padding:
-    max(1rem, env(safe-area-inset-top, 0px))
+    max(5.5rem, calc(env(safe-area-inset-top, 0px) + 4.5rem))
     1.5rem
     max(1.5rem, env(safe-area-inset-bottom, 0px));
   overflow: hidden;
@@ -481,7 +482,7 @@ const l = t[locale];
 .exg-lightbox__video {
   display: block;
   max-width: min(92vw, 1400px);
-  max-height: min(90dvh, 900px);
+  max-height: min(82dvh, 900px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -530,23 +531,32 @@ const l = t[locale];
 
 .exg-lightbox__close {
   position: absolute;
-  top: max(0.5rem, env(safe-area-inset-top, 0px));
-  right: max(0.5rem, env(safe-area-inset-right, 0px));
+  /* Clear the sticky studio topbar (~3.25–3.75rem) + safe area */
+  top: max(4.25rem, calc(env(safe-area-inset-top, 0px) + 3.5rem));
+  right: max(0.75rem, env(safe-area-inset-right, 0px));
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  border: 1px solid rgba(240,238,233,0.2);
-  background: rgba(10, 10, 10, 0.45);
-  color: rgba(240,238,233,0.7);
+  border: 1px solid rgba(240,238,233,0.35);
+  background: rgba(10, 10, 10, 0.72);
+  color: rgba(240,238,233,0.95);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
-  z-index: 5;
+  z-index: 20;
   pointer-events: auto;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 1024px) {
+  .exg-lightbox__close {
+    top: max(1rem, env(safe-area-inset-top, 0px));
+    width: 2.75rem;
+    height: 2.75rem;
+  }
 }
 
 .exg-lightbox__close:hover {

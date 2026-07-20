@@ -19,42 +19,48 @@ const recentExhibitions = exhibitionEntries
 <StudioLayout title={l.siteTitle} active="" seoPage="home" locale={locale}>
   <section class="st-page">
     <div class="st-home-hero">
-      <p class="st-kicker st-home-hero__kicker st-reveal">{l.heroTagline}</p>
-      <h1 class="st-display st-home-hero__name st-reveal">
-        {l.heroFirstName}<br />{l.heroLastName}
-      </h1>
-      <p class="st-prose st-home-hero__bio st-reveal">
-        {l.bioExpanded}
-      </p>
-      <div class="st-home-hero__actions st-reveal">
-        <a href={localePath(locale, 'art')} class="st-btn st-btn--accent">{l.viewPaintings}</a>
-        <a href={localePath(locale, 'about')} class="st-btn">{l.nav.about}</a>
-      </div>
-      <div class="st-home-hero__media st-reveal min-w-0">
-        <div class="st-media">
-          <div class="st-frame st-home-hero__frame aspect-[4/5]">
-            <img src="/media/anna%20header%202.png" alt={l.siteTitle} loading="eager" />
-          </div>
+      <div class="st-home-hero__copy">
+        <p class="st-kicker st-home-hero__kicker st-reveal">{l.heroTagline}</p>
+        <h1 class="st-display st-home-hero__name st-reveal">
+          {l.heroFirstName}<br />{l.heroLastName}
+        </h1>
+        <p class="st-prose st-home-hero__bio st-dropcap st-reveal">
+          {l.heroBio}
+        </p>
+        <div class="st-home-hero__actions st-reveal">
+          <a href={localePath(locale, 'art')} class="st-btn st-btn--accent">{l.viewPaintings}</a>
+          <a href={localePath(locale, 'about')} class="st-btn">{l.nav.about}</a>
         </div>
       </div>
-      <div class="st-home-hero__meta st-reveal">
-        <p class="st-caption st-home-hero__roles">
-          <b>{l.heroRoles}</b>
-        </p>
-        <p class="st-home-hero__based">{l.heroBasedIn}</p>
+      <div class="st-home-hero__aside">
+        <div class="st-home-hero__media st-reveal min-w-0">
+          <div class="st-media">
+            <div class="st-frame st-home-hero__frame aspect-[4/5]">
+              <img src="/media/anna%20header%202.png" alt={l.siteTitle} loading="eager" />
+            </div>
+          </div>
+        </div>
+        <div class="st-home-hero__meta st-reveal">
+          <p class="st-caption st-home-hero__roles">
+            <b>{l.heroRoles}</b>
+          </p>
+          <p class="st-home-hero__based">{l.heroBasedIn}</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="st-page">
-    <hr class="st-rule" />
-    <p class="st-home-motto st-reveal">
-      <span class="st-serif-em">“{l.heroMotto}”</span>
-    </p>
-    <hr class="st-rule" />
+  <section class="st-home-motto-band">
+    <div class="st-page">
+      <hr class="st-rule" />
+      <p class="st-home-motto st-reveal">
+        <span class="st-serif-em">“{l.heroMotto}”</span>
+      </p>
+      <hr class="st-rule" />
+    </div>
   </section>
 
-  <section class="st-page st-selected-work pt-16 md:pt-24">
+  <section class="st-page st-selected-work">
     <div class="st-reveal flex items-baseline justify-between gap-6 flex-wrap">
       <h2 class="st-display text-[clamp(1.9rem,4vw,3rem)]">{l.artTag}</h2>
       <a href={localePath(locale, 'art')} class="text-sm font-medium text-[var(--st-ink-dim)] hover:text-[var(--st-ink)] transition-colors">{l.viewAll}</a>

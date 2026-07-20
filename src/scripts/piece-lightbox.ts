@@ -21,6 +21,7 @@ export function initPieceLightbox(): void {
     if (titleEl) titleEl.textContent = title;
     lb.removeAttribute('hidden');
     lb.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('exg-gallery-open');
     document.body.style.overflow = 'hidden';
     closeBtn?.focus();
   };
@@ -34,6 +35,7 @@ export function initPieceLightbox(): void {
       img.alt = '';
     }
     if (titleEl) titleEl.textContent = '';
+    document.documentElement.classList.remove('exg-gallery-open');
     document.body.style.overflow = '';
     lastFocus?.focus();
   };
@@ -49,7 +51,16 @@ export function initPieceLightbox(): void {
     );
   });
 
-  closeBtn?.addEventListener('click', close);
+  const onClose = (e: Event) => {
+    e.preventDefault();
+    e.stopPropagation();
+    close();
+  };
+  closeBtn?.addEventListener('click', onClose);
+  closeBtn?.addEventListener('pointerup', (e) => {
+    if ((e as PointerEvent).pointerType === 'mouse') return;
+    onClose(e);
+  });
   lb.querySelector('[data-piece-lb-backdrop]')?.addEventListener('click', close);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isOpen()) {
