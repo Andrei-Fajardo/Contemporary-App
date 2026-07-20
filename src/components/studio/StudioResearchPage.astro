@@ -9,22 +9,56 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+
+const entries = researchLinks.map((item, i) => ({
+  ...item,
+  n: String(i + 1).padStart(2, '0'),
+}));
 ---
 
 <StudioLayout title={`${l.nav.research} — Anna Dauyl Rockswell`} active="research" seoPage="research" locale={locale}>
-  <section class="st-page">
+  <section class="st-page st-page--research">
     <header class="st-page-head st-reveal">
+      <p class="st-kicker">{l.academicTag}</p>
       <h1 class="st-display">{l.nav.research}</h1>
+      <p class="st-prose st-page-lede">{l.researchIntro}</p>
     </header>
 
-    <div class="st-index" data-reveal-group>
-      {researchLinks.map((item) => (
-        <a href={item.href} target="_blank" rel="noopener noreferrer" class="st-index__row st-reveal">
-          <span class="st-index__meta">{[item.platform, item.year].filter(Boolean).join(' · ')}</span>
-          <span class="st-index__title">{item.title}</span>
-          <span class="st-index__arrow" aria-hidden="true">&nearr;</span>
-        </a>
+    <ol class="st-research" data-reveal-group>
+      {entries.map((item) => (
+        <li class="st-research__item st-reveal">
+          <span class="st-research__index" aria-hidden="true">{item.n}</span>
+          <div class="st-research__body">
+            {item.platform ? (
+              item.platformHref ? (
+                <a
+                  href={item.platformHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="st-research__venue"
+                >
+                  {item.platform}
+                </a>
+              ) : (
+                <span class="st-research__venue">{item.platform}</span>
+              )
+            ) : null}
+            {item.href ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="st-research__title"
+              >
+                {item.title}
+                <span class="st-research__ext" aria-hidden="true">↗</span>
+              </a>
+            ) : (
+              <span class="st-research__title st-research__title--plain">{item.title}</span>
+            )}
+          </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </section>
 </StudioLayout>

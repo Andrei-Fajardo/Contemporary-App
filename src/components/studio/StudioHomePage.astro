@@ -85,7 +85,7 @@ const recentExhibitions = exhibitionEntries
     </div>
     <div class="st-index mt-10" data-reveal-group>
       {recentExhibitions.map((ex) => (
-        <a href={localePath(locale, 'exhibitions')} class="st-index__row st-reveal">
+        <a href={`${localePath(locale, 'exhibitions')}#exhibition-${ex.id}`} class="st-index__row st-reveal">
           <span class="st-index__meta">{ex.year}</span>
           <span class="st-index__title">{ex.title}<span class="text-[var(--st-ink-dim)]"> · {ex.gallery}, {ex.place}</span></span>
           <span class="st-index__arrow" aria-hidden="true">&nearr;</span>

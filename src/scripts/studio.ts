@@ -2,7 +2,11 @@
  * Studio shell behaviour: mobile drawer, scroll reveals, restrained parallax,
  * plus exhibition accordion / gallery when those modules are on the page.
  */
-import { initExhibitionAccordion, resetExhibitionAccordion } from './motion/exhibition-accordion';
+import {
+  expandExhibitionFromLocation,
+  initExhibitionAccordion,
+  resetExhibitionAccordion,
+} from './motion/exhibition-accordion';
 import { initExhibitionGallery } from './exhibition-gallery';
 import { initManuscriptModal } from './manuscript-modal';
 import { initPieceLightbox } from './piece-lightbox';
@@ -115,6 +119,10 @@ export function initStudio(): void {
   initParallax();
   resetExhibitionAccordion();
   initExhibitionAccordion();
+  // View Transitions can settle the hash after first paint — retry once.
+  if (window.location.hash) {
+    window.setTimeout(() => expandExhibitionFromLocation(), 120);
+  }
   initExhibitionGallery();
   initManuscriptModal();
   initPieceLightbox();

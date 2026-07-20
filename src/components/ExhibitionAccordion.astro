@@ -30,7 +30,12 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
     const imagesEncoded = allGalleryImages.join('|');
 
     return (
-    <details class="exhibition-accordion__item scroll-reveal group" data-category={entry.category}>
+    <details
+      class="exhibition-accordion__item scroll-reveal group"
+      id={`exhibition-${entry.id}`}
+      data-exhibition-id={entry.id}
+      data-category={entry.category}
+    >
       <summary class="exhibition-accordion__summary hover-row" aria-label={`${display.heading} — ${display.subheading} — ${expand}`}>
         <span class="exhibition-accordion__heading">
           <span class="exhibition-accordion__title">{display.heading}</span>
@@ -177,6 +182,7 @@ const THUMB_COUNT = 4; // thumbnails shown in the accordion strip
     background: transparent;
     overflow: visible;
     margin: 0;
+    scroll-margin-top: 5.5rem;
   }
 
   .exhibition-accordion__panel {

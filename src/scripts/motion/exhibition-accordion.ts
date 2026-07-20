@@ -113,6 +113,59 @@ export function initExhibitionAccordion(): void {
       }
     });
   });
+
+  expandExhibitionFromLocation();
+
+  if (!(window as Window & { __exAccordionHashBound?: boolean }).__exAccordionHashBound) {
+    (window as Window & { __exAccordionHashBound?: boolean }).__exAccordionHashBound = true;
+    window.addEventListener("hashchange", () => expandExhibitionFromLocation());
+  }
+}
+
+/** Open accordion matching `#id` or `#exhibition-id` and scroll it into view. */
+export function expandExhibitionFromLocation(): void {
+  const raw = window.location.hash.replace(/^#/, "").trim();
+  if (!raw) return;
+
+  const id = raw.startsWith("exhibition-") ? raw.slice("exhibition-".length) : raw;
+  const item =
+    document.querySelector<HTMLDetailsElement>(`.exhibition-accordion__item[data-exhibition-id="${CSS.escape(id)}"]`) ||
+    document.querySelector<HTMLDetailsElement>(`#exhibition-${CSS.escape(id)}`);
+
+  if (!item) return;
+
+  // Ensure filtered-out rows are still reachable from deep links
+  item.classList.remove("is-filtered-out");
+  item.style.removeProperty("display");
+
+  const summary = item.querySelector<HTMLElement>(".exhibition-accordion__summary");
+  const panel = getPanel(item);
+  const chevron = item.querySelector<HTMLElement>(".exhibition-accordion__chevron");
+  if (!summary || !panel) return;
+
+  // Close any other open rows so the target is the focus
+  document.querySelectorAll<HTMLDetailsElement>(".exhibition-accordion__item[open]").forEach((other) => {
+    if (other === item) return;
+    const otherPanel = getPanel(other);
+    const otherSummary = other.querySelector<HTMLElement>(".exhibition-accordion__summary");
+    const otherChevron = other.querySelector<HTMLElement>(".exhibition-accordion__chevron");
+    if (otherPanel && otherSummary) closePanel(other, otherPanel, otherSummary, otherChevron);
+  });
+
+  if (!item.open) {
+    openPanel(item, panel, summary, chevron);
+  } else {
+    setOpenState(item, summary, true);
+    panel.style.height = "auto";
+    panel.style.opacity = "1";
+    panel.style.overflow = "visible";
+    rotateChevron(chevron, true);
+  }
+
+  // Defer scroll so sticky header offset + open animation settle
+  window.setTimeout(() => {
+    item.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 80);
 }
 
 export function resetExhibitionAccordion(): void {
