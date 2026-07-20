@@ -1505,13 +1505,13 @@ button.st-btn.st-btn--accent {
 .st-piece-lb {
   position: fixed;
   inset: 0;
-  z-index: 120;
+  z-index: 11050;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding:
-    max(3.5rem, calc(env(safe-area-inset-top, 0px) + 2.75rem))
+    max(5.5rem, calc(env(safe-area-inset-top, 0px) + 4.5rem))
     max(1rem, env(safe-area-inset-right, 0px))
     max(1.5rem, env(safe-area-inset-bottom, 0px))
     max(1rem, env(safe-area-inset-left, 0px));
@@ -1525,6 +1525,14 @@ button.st-btn.st-btn--accent {
 html:has(.st-piece-lb:not([hidden])) .st-topbar,
 html:has(.st-piece-lb:not([hidden])) .st-drawer {
   display: none !important;
+}
+
+/* Exhibition fullscreen: kill header hit-targets even if display:none fails */
+html.exg-gallery-open .st-topbar,
+html.exg-gallery-open .st-drawer,
+html.exg-gallery-open .st-sidebar {
+  display: none !important;
+  pointer-events: none !important;
 }
 
 .st-piece-lb__backdrop {
@@ -1545,11 +1553,17 @@ html:has(.st-piece-lb:not([hidden])) .st-drawer {
   justify-content: space-between;
   gap: 1rem;
   padding:
-    max(0.85rem, env(safe-area-inset-top, 0px))
+    max(4.25rem, calc(env(safe-area-inset-top, 0px) + 3.5rem))
     max(1rem, env(safe-area-inset-right, 0px))
     0.85rem
     max(1rem, env(safe-area-inset-left, 0px));
   pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .st-piece-lb__chrome {
+    padding-top: max(0.85rem, env(safe-area-inset-top, 0px));
+  }
 }
 
 .st-piece-lb__title {
