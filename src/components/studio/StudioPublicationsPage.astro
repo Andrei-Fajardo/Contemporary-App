@@ -1,0 +1,106 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import ManuscriptModal from '../ManuscriptModal.astro';
+import { hasManuscriptCovers } from '../../data/manuscript';
+import { magazineFeatures, publicationLinks, sortByYearDesc } from '../../data/content';
+import { siteCopy } from '../../data/site-copy';
+import { t, type LocaleKey } from '../../data/translations';
+
+interface Props {
+  locale?: LocaleKey;
+}
+
+const { locale = 'en' } = Astro.props;
+const l = t[locale];
+const features = sortByYearDesc(magazineFeatures);
+---
+
+<StudioLayout title={`${l.nav.publications} — Anna Dauyl Rockswell`} active="publications" seoPage="publications" locale={locale}>
+  <section class="st-page">
+    <header class="st-page-head st-reveal">
+      <h1 class="st-display">{l.nav.publications}</h1>
+      <p class="st-prose st-page-lede">{l.publicationsIntro}</p>
+    </header>
+
+    <div class="st-pubs-split mt-4" data-reveal-group>
+      <div class="st-pubs-split__chapbook">
+        <h2 class="st-display st-reveal text-[clamp(1.6rem,3vw,2.4rem)]">{l.chapbookLabel}</h2>
+        <div class="mt-10">
+          <button
+            type="button"
+            class="st-mag-label st-mag-label--chapbook st-reveal text-left"
+            data-manuscript-open
+            aria-label={`${l.manuscriptHeading}. ${l.manuscriptCoversBtn}`}
+          >
+            <span class="st-mag-label__name">{l.manuscriptHeading}</span>
+            <span class="st-mag-label__meta">
+              {hasManuscriptCovers ? l.manuscriptCoversBtn : l.manuscriptCoversPending}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="st-pubs-split__divider" aria-hidden="true"></div>
+
+      <div class="st-pubs-split__magazines">
+        <h2 class="st-display st-reveal text-[clamp(1.6rem,3vw,2.4rem)]">{l.magazinesLabel}</h2>
+        <div class="mt-10 grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-5 md:gap-6">
+          {features.map((mag) => (
+            <a
+              href={mag.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="st-mag-label st-reveal"
+            >
+              <span class="st-mag-label__name">{mag.title}</span>
+              <span class="st-mag-label__meta">
+                {mag.issue}
+                <br />
+                Featuring “{mag.feature}”
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <hr class="st-rule st-pubs-section-rule" />
+
+    <div class="st-pubs-split st-pubs-split--lower">
+      <div class="st-reveal">
+        <h2 class="st-display text-[clamp(1.6rem,3vw,2.4rem)]">{l.publicationsFeaturedLabel}</h2>
+        <div class="st-index mt-8">
+          {publicationLinks.map((pub) => (
+            <a href={pub.href} target="_blank" rel="noopener noreferrer" class="st-index__row">
+              <span class="st-index__meta">{pub.platform}</span>
+              <span class="st-index__title">{pub.title}</span>
+              <span class="st-index__arrow" aria-hidden="true">&nearr;</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="st-pubs-split__divider" aria-hidden="true"></div>
+
+      <div class="st-reveal">
+        <h2 class="st-display text-[clamp(1.6rem,3vw,2.4rem)]">{l.comingSoon}</h2>
+        <div class="st-index mt-8">
+          {siteCopy.publications.novels.map((novel) => (
+            <div class="st-index__row">
+              <span class="st-index__meta">{l.novelsLabel}</span>
+              <span class="st-index__title">{novel.title}<span class="text-[var(--st-ink-dim)]"> · {l.comingSoon}</span></span>
+            </div>
+          ))}
+          {siteCopy.publications.poetry.map((poem) => (
+            <div class="st-index__row">
+              <span class="st-index__meta">{l.poetryLabel}</span>
+              <span class="st-index__title">{poem.title}<span class="text-[var(--st-ink-dim)]"> · {l.comingSoon}</span></span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ManuscriptModal locale={locale} />
+</StudioLayout>

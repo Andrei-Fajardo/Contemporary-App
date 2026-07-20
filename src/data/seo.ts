@@ -31,9 +31,7 @@ export function localeHomePath(locale: LocaleKey): string {
 
 /**
  * Canonical path for a logical page.
- * Section routes currently 301 → hash on the locale home; canonicals point at the
- * home URL with a hash fragment for human clarity. Search engines treat the
- * document URL (without hash) as canonical — we still emit the clean home URL.
+ * EN and locale trees now share the Studio multi-page shell.
  */
 export function seoCanonicalPath(locale: LocaleKey, page: SeoPageKey, artworkSlug?: string): string {
   const home = localeHomePath(locale);
@@ -42,9 +40,8 @@ export function seoCanonicalPath(locale: LocaleKey, page: SeoPageKey, artworkSlu
     // Artwork detail routes are currently EN-only (`/art/[slug]`).
     return `/art/${artworkSlug}`;
   }
-  // EN section pages are real routes (studio shell); locale trees still resolve to home.
-  if (locale === 'en') return `/${page}`;
-  return home === '/' ? '/' : home;
+  const prefix = locale === 'en' ? '' : `/${locale}`;
+  return `${prefix}/${page}`;
 }
 
 export function seoDocumentUrl(locale: LocaleKey, page: SeoPageKey, artworkSlug?: string): string {
@@ -70,7 +67,7 @@ export function seoHreflangAlternates(
   return SEO_LOCALES.map((locale) => ({
     locale,
     hreflang: LOCALE_HREFLANG[locale],
-    href: absoluteUrl(localeHomePath(locale)),
+    href: absoluteUrl(seoCanonicalPath(locale, page, artworkSlug)),
   }));
 }
 

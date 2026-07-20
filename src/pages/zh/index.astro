@@ -1,11 +1,5 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
-import HomePageContent from '../../components/HomePageContent.astro';
-import { t } from '../../data/translations';
-
-const l = t.zh;
+import StudioHomePage from '../../components/studio/StudioHomePage.astro';
 ---
 
-<PageLayout title={l.siteTitle} locale="zh" seoPage="home">
-  <HomePageContent slot="content" locale="zh" />
-</PageLayout>
+<StudioHomePage locale="zh" />
