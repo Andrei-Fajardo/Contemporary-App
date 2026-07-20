@@ -399,7 +399,7 @@ html.studio .pubs-manuscript-btn {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url('/media/art-institute-of-chicago-rwSfOvAVgTc-unsplash.jpg') center / cover no-repeat;
+  background: url('/media/Untitled-2.png') center / cover no-repeat;
   /* Boost contrast — the source is already light/beige, so it washes out under the canvas tint otherwise */
   filter: grayscale(0.25) sepia(0.1) contrast(1.25) saturate(1.1) brightness(0.92);
   opacity: 1;
@@ -950,6 +950,140 @@ a.st-index__row:hover .st-index__arrow {
   transform: translate(4px, -4px);
 }
 
+/* ---------- academic research — formal bibliography ---------------------- */
+
+.st-page--research .st-page-head {
+  max-width: 42rem;
+  padding-bottom: clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.st-page--research .st-page-head .st-kicker {
+  margin-bottom: 0.85rem;
+}
+
+.st-page--research .st-page-lede {
+  max-width: 38rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  text-align: justify;
+}
+
+.st-research {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 52rem;
+  border-top: 1px solid var(--st-line);
+}
+
+.st-research__item {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: 0.85rem 1.15rem;
+  align-items: start;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--st-line-soft);
+}
+
+.st-research__index {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--st-ink-faint);
+  padding-top: 0.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.st-research__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.st-research__venue {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--st-ink-dim);
+  text-decoration: none;
+  width: fit-content;
+}
+
+a.st-research__venue:hover {
+  color: var(--st-accent);
+}
+
+.st-research__title {
+  font-size: clamp(0.98rem, 1.35vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--st-ink);
+  text-decoration: none;
+  text-wrap: pretty;
+}
+
+a.st-research__title {
+  display: inline;
+}
+
+a.st-research__title:hover {
+  color: var(--st-accent-deep);
+}
+
+.st-research__title--plain {
+  color: var(--st-ink);
+}
+
+.st-research__ext {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.78em;
+  color: var(--st-ink-faint);
+  vertical-align: 0.05em;
+  transition: color 0.2s ease, transform 0.25s var(--st-ease);
+}
+
+a.st-research__title:hover .st-research__ext {
+  color: var(--st-accent);
+  transform: translate(1px, -1px);
+}
+
+@media (min-width: 768px) {
+  .st-research__item {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 1rem 1.75rem;
+    padding: 1.55rem 0;
+  }
+
+  .st-research__title {
+    font-size: 1.12rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 767px) {
+  .st-research__item {
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.65rem 0.85rem;
+    padding: 1.15rem 0;
+  }
+
+  .st-research__index {
+    font-size: 0.65rem;
+  }
+
+  .st-research__venue {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  .st-research__title {
+    font-size: 0.95rem;
+    line-height: 1.42;
+  }
+}
+
 /* ---------- media frames -------------------------------------------------- */
 
 .st-frame {
@@ -1201,23 +1335,30 @@ a.st-index__row:hover .st-index__arrow {
   object-position: top center;
 }
 
-/* Desktop — keep current [image | text] [image | text] row */
+/* Desktop — [image | text] | [image | text] with breathing room for copy */
 @media (min-width: 900px) {
   .st-art-editorial {
     flex-direction: row;
     align-items: stretch;
-    gap: 1.5rem 2.25rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    gap: 0;
+    overflow-x: visible;
   }
 
   .st-art-entry {
     flex-direction: row;
     align-items: flex-start;
-    gap: 0.85rem 1.1rem;
-    flex: 0 0 auto;
-    width: max-content;
+    gap: 1rem 1.35rem;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
     max-width: none;
+  }
+
+  /* Clear vertical separator between the two works */
+  .st-art-entry + .st-art-entry {
+    border-left: 1px solid var(--st-line);
+    padding-left: clamp(1.5rem, 3vw, 2.75rem);
+    margin-left: clamp(1.5rem, 3vw, 2.75rem);
   }
 
   .st-art-entry__media,
@@ -1228,10 +1369,20 @@ a.st-index__row:hover .st-index__arrow {
   }
 
   .st-art-entry__copy {
-    flex: 0 0 11rem;
-    width: 11rem;
-    min-width: 11rem;
-    max-width: 11rem;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .st-art-entry__copy h2 {
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem) !important;
+  }
+
+  .st-art-entry__copy .st-prose,
+  .st-art-entry__copy .st-art-entry__prose {
+    font-size: 0.84rem;
+    line-height: 1.5;
   }
 
   .st-frame.st-frame--portrait.st-art-entry__frame {
@@ -1239,28 +1390,36 @@ a.st-index__row:hover .st-index__arrow {
     max-width: 100%;
   }
 
+  /* Prior doubled size + half of that increase */
   .st-frame.st-frame--portrait.st-art-entry__frame img {
     width: auto;
-    max-width: min(84vw, 36rem);
-    max-height: min(90vh, 72rem);
+    max-width: min(55vw, 35rem);
+    max-height: min(90vh, 65rem);
   }
 }
 
 @media (min-width: 1100px) {
-  .st-art-editorial {
-    gap: 1.75rem 2.5rem;
+  .st-art-entry + .st-art-entry {
+    padding-left: 3rem;
+    margin-left: 3rem;
   }
 
-  .st-art-entry__copy {
-    flex-basis: 12.5rem;
-    width: 12.5rem;
-    min-width: 12.5rem;
-    max-width: 12.5rem;
+  .st-art-entry__copy .st-prose,
+  .st-art-entry__copy .st-art-entry__prose {
+    font-size: 0.88rem;
+    line-height: 1.52;
   }
 
   .st-frame.st-frame--portrait.st-art-entry__frame img {
-    max-width: min(48vw, 42rem);
-    max-height: min(90vh, 78rem);
+    max-width: min(45vw, 37.5rem);
+    max-height: min(90vh, 70rem);
+  }
+}
+
+@media (min-width: 1400px) {
+  .st-frame.st-frame--portrait.st-art-entry__frame img {
+    max-width: min(40vw, 40rem);
+    max-height: min(90vh, 75rem);
   }
 }
 
@@ -1634,6 +1793,16 @@ html.studio .exg-thumb-strip__cell {
 
 html.studio .exhibition-accordion__summary {
   border-radius: 0;
+}
+
+html.studio .exhibition-accordion__item {
+  scroll-margin-top: 5.5rem;
+}
+
+@media (min-width: 1024px) {
+  html.studio .exhibition-accordion__item {
+    scroll-margin-top: 1.5rem;
+  }
 }
 
 html.studio .scroll-reveal.is-visible,
