@@ -2130,7 +2130,7 @@ html.studio.st-motion .st-reveal {
 
   /* Equal exterior air around the motto band — not inside the quote */
   .st-page:has(> .st-home-hero) {
-    padding-bottom: 4.5rem;
+    padding-bottom: 5.25rem;
   }
 
   .st-home-hero {
@@ -2138,11 +2138,11 @@ html.studio.st-motion .st-reveal {
   }
 
   .st-home-motto {
-    padding-block: 1.5rem;
+    padding-block: 1.85rem;
   }
 
   .st-page.st-selected-work {
-    padding-top: 4.5rem;
+    padding-top: 5.25rem;
   }
 
   .st-home-hero__bio {
