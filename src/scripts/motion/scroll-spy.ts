@@ -14,6 +14,10 @@ function getSections(): HTMLElement[] {
 }
 
 function getNavLinks(): HTMLElement[] {
+  const island = document.querySelector<HTMLElement>(".v2-nav__links");
+  if (island) {
+    return Array.from(island.querySelectorAll<HTMLElement>("[data-nav-key]"));
+  }
   const nav = document.querySelector<HTMLElement>(".desktop-sidebar .sidebar-nav");
   if (!nav) return [];
   return Array.from(nav.querySelectorAll<HTMLElement>(".sidebar-nav-link[data-nav-key]"));
@@ -176,6 +180,11 @@ export function initAnchorNav(): void {
       const drawer = document.getElementById("mobile-drawer");
       if (drawer && !drawer.classList.contains("translate-x-full")) {
         document.getElementById("hamburger-btn")?.click();
+      }
+
+      const menu = document.getElementById("v2-menu");
+      if (menu?.classList.contains("is-open")) {
+        document.getElementById("v2-menu-btn")?.click();
       }
     });
   });

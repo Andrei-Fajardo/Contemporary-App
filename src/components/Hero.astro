@@ -7,85 +7,66 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const l = t[locale];
+
+const roleBits = l.heroRoles.split(',').map((s) => s.trim()).filter(Boolean);
+const marqueeItems = [...roleBits, ...roleBits];
 ---
 
-<section id="home" class="hero-section hero-about-layer magazine-cover scroll-section">
-  <div class="hero-about-layer__inner section-shell section-shell--wide">
-    <div class="hero-about-layer__cluster relative">
-      <div class="hero-about-layer__art" data-headshot>
-        <img
-          src="/media/anna%20header%202.png"
-          alt={l.siteTitle}
-          class="hero-about-layer__art-img"
-          loading="eager"
-          decoding="async"
-          draggable="false"
-          data-lightbox-ignore
-        />
+<section id="home" class="v2-hero scroll-section">
+  <div class="v2-wrap v2-hero__grid">
+    <div class="v2-hero__copy">
+      <p class="v2-kicker scroll-reveal">{l.heroTagline}</p>
+      <h1 class="v2-hero__name scroll-reveal">
+        <span>{l.heroFirstName}</span>
+        <span>{l.heroLastName}</span>
+      </h1>
+
+      <div class="v2-hero__roles-marquee scroll-reveal" aria-hidden="true">
+        <div class="v2-hero__marquee-track">
+          {marqueeItems.map((role) => (
+            <span class="v2-hero__marquee-item">
+              {role}
+              <span class="v2-hero__marquee-dot">·</span>
+            </span>
+          ))}
+        </div>
       </div>
 
-      <div class="hero-editorial__copy hero-about-layer__name">
-        <h2 class="hero-about-layer__heading scroll-reveal">
-          <span class="hero-name__first">{l.heroFirstName}</span>
-          <span class="hero-name__last">{l.heroLastName}</span>
-        </h2>
+      <p class="v2-hero__lede scroll-reveal">{l.heroBasedIn}</p>
 
-        <p class="hero-about-layer__roles scroll-reveal">{l.heroRoles}</p>
-        <p class="hero-about-layer__intro scroll-reveal">{l.heroBasedIn}</p>
+      <div class="v2-hero__actions scroll-reveal">
+        <a class="v2-cta" href="#art">
+          {l.viewPaintings}
+          <span class="v2-cta__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+        <a class="v2-cta v2-cta--ghost" href="#exhibitions">
+          {l.viewExhibitions}
+          <span class="v2-cta__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="v2-hero__visual scroll-reveal">
+      <div class="v2-bezel v2-scale-media">
+        <div class="v2-bezel__inner">
+          <img
+            src="/media/anna%20header%202.png"
+            alt={l.siteTitle}
+            loading="eager"
+            decoding="async"
+            draggable="false"
+            data-lightbox-ignore
+          />
+        </div>
       </div>
     </div>
   </div>
-
-  <hr class="magazine-rule-crimson magazine-rule-crimson--short scroll-reveal hero-editorial-only" />
-  <hr class="hero-about-layer__rule scroll-reveal" />
 </section>
-
-<script>
-  /**
-   * Fit each name row to the title track, then nudge larger.
-   * Allows a small flourish overrun so the type can read bigger
-   * without leaving a wide gap between Anna Dauyl and Rockswell.
-   */
-  function fitHeroNameRows() {
-    const heading = document.querySelector(".hero-about-layer__heading");
-    if (!heading || window.innerWidth >= 768) return;
-
-    const rows = heading.querySelectorAll(".hero-name__first, .hero-name__last");
-    const trackWidth = heading.clientWidth;
-    if (!trackWidth) return;
-
-    // Allow ~3% overrun for script flourishes so fitted size stays larger
-    const maxWidth = trackWidth * 1.03;
-
-    rows.forEach((row) => {
-      if (!(row instanceof HTMLElement)) return;
-      row.style.fontSize = "";
-      let size = parseFloat(window.getComputedStyle(row).fontSize);
-      // Grow first if CSS size still leaves unused width
-      for (let i = 0; i < 60 && row.scrollWidth < trackWidth * 0.94 && size < 200; i += 1) {
-        size += 1;
-        row.style.fontSize = `${size}px`;
-      }
-      // Then shrink only if clearly overflowing the track
-      for (let i = 0; i < 80 && row.scrollWidth > maxWidth && size > 16; i += 1) {
-        size -= 1;
-        row.style.fontSize = `${size}px`;
-      }
-    });
-  }
-
-  function bootHeroNameFit() {
-    fitHeroNameRows();
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => fitHeroNameRows());
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", bootHeroNameFit);
-  document.addEventListener("astro:page-load", bootHeroNameFit);
-  window.addEventListener("resize", () => {
-    window.requestAnimationFrame(fitHeroNameRows);
-  });
-
-  if (document.readyState !== "loading") bootHeroNameFit();
-</script>

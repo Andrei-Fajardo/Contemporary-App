@@ -1,3 +1,39 @@
 ---
-return Astro.redirect('/#art', 301);
+import StudioLayout from '../layouts/StudioLayout.astro';
+import { artworks } from '../data/artworks';
+import { t } from '../data/translations';
+
+const l = t.en;
 ---
+
+<StudioLayout title="Art — Anna Dauyl Rockswell" active="art" seoPage="art">
+  <section class="st-page st-page--art">
+    <header class="st-page-head st-reveal">
+      <h1 class="st-display">Art</h1>
+      <p class="st-prose st-page-lede">{l.artistCredit}</p>
+    </header>
+
+    <div class="st-art-editorial">
+      {artworks.map((art, i) => (
+        <article class="st-art-entry st-reveal">
+          <div class="st-art-entry__media">
+            <div class="st-media st-media--portrait">
+              <div class="st-frame st-frame--portrait st-art-entry__frame">
+                <img src={art.image} alt={art.title} loading={i === 0 ? 'eager' : 'lazy'} />
+              </div>
+            </div>
+          </div>
+          <div class="st-art-entry__copy">
+            <h2 class="st-display text-[clamp(1.35rem,2.4vw,1.85rem)]">{art.title}</h2>
+            <p class="mt-2 text-sm text-[var(--st-ink-dim)]">
+              {art.medium.toLowerCase()} · {art.dimensions} · {art.year}
+            </p>
+            <div class="st-prose st-art-entry__prose mt-4 space-y-2.5">
+              {art.aboutParagraphs.map((para) => <p>{para}</p>)}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</StudioLayout>

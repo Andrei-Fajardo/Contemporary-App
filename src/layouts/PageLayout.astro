@@ -105,9 +105,102 @@ const menuItems: { key: string; href: string }[] = [
       })();
     </script>
   </head>
-  <body class="font-body antialiased bg-[var(--canvas)] text-[var(--ink)]" data-layout="tabular">
+  <body class="font-body antialiased bg-[var(--canvas)] text-[var(--ink)]" data-layout="scroll">
     <!-- Film grain overlay -->
     <div class="grain-overlay" />
+
+    <!-- Floating island navigation -->
+    <nav class="v2-nav" aria-label={l.siteNavAria}>
+      <div class="v2-nav__island">
+        <a href={`${homePath}#home`} class="v2-nav__brand" data-nav-key="home">{l.siteTitle}</a>
+        <ul class="v2-nav__links">
+          {menuItems.map((item) => {
+            const navKey = item.key as keyof typeof l.nav;
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  data-nav-key={item.key}
+                  id={`nav-${item.key}`}
+                  class="v2-nav__link"
+                  aria-current={item.key === "about" ? "true" : "false"}
+                >
+                  {l.nav[navKey]}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+        <div class="v2-nav__actions">
+          <div id="lang-toggle-desktop" class="lang-toggle lang-toggle--desktop hidden lg:flex">
+            {langList.map((lang) => (
+              <button
+                type="button"
+                class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
+                data-lang={lang}
+                aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
+                aria-label={`${l.switchToLangAria} ${langLabels[lang]}`}
+              >
+                <span class="lang-btn__label">{langLabels[lang]}</span>
+              </button>
+            ))}
+          </div>
+          <div class="hidden lg:block">
+            <ThemeToggle locale={locale} />
+          </div>
+          <button
+            type="button"
+            id="v2-menu-btn"
+            class="v2-nav__menu-btn"
+            aria-label={l.toggleMenuAria}
+            aria-expanded="false"
+            aria-controls="v2-menu"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <path class="ham-open" stroke-linecap="round" d="M4 8h16M4 16h16" />
+              <path class="ham-close hidden" stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div id="v2-menu" class="v2-menu lg:hidden" aria-hidden="true">
+      <ul class="v2-menu__list">
+        {menuItems.map((item) => {
+          const navKey = item.key as keyof typeof l.nav;
+          return (
+            <li>
+              <a href={item.href} data-nav-key={item.key} class="v2-menu__link">
+                {l.nav[navKey]}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="v2-menu__meta">
+        <div class="mb-5">
+          <span class="block mb-2 text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)]">{l.themeLabel}</span>
+          <ThemeToggle locale={locale} />
+        </div>
+        <span class="block mb-1 text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)]">{l.basedIn}</span>
+        <span class="block mb-5">{l.location}</span>
+        <span class="block mb-2 text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)]">{l.languageLabel}</span>
+        <div id="lang-toggle-mobile" class="lang-toggle lang-toggle--drawer">
+          {langList.map((lang) => (
+            <button
+              type="button"
+              class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
+              data-lang={lang}
+              aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
+              aria-label={`${l.switchToLangAria} ${langLabels[lang]}`}
+            >
+              <span class="lang-btn__label">{langLabels[lang]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
 
     <!-- Language switch transition (persists across ClientRouter swaps) -->
     <div id="lang-transition-overlay" class="lang-transition-overlay" transition:persist="lang-overlay" aria-hidden="true" aria-live="polite">
@@ -194,135 +287,9 @@ const menuItems: { key: string; href: string }[] = [
       })();
     </script>
 
-    <!-- Mobile header bar (<1024px) -->
-    <header class="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-[var(--canvas)] border-b border-[var(--border-sidebar)] flex items-center justify-between px-4">
-      <a href={`${homePath}#about`} class="type-subheading text-xl md:text-2xl whitespace-nowrap text-[var(--ink)] hover:opacity-70 transition-opacity text-left" data-nav-key="about">
-        {l.siteTitle}
-      </a>
-      <button
-          id="hamburger-btn"
-          class="w-11 h-11 flex items-center justify-center focus:outline-none active:scale-95 transition-transform"
-          aria-label={l.toggleMenuAria}
-          aria-expanded="false"
-        >
-          <svg class="w-6 h-6 text-[var(--ink)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path class="ham-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            <path class="ham-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-    </header>
-
-    <!-- Mobile drawer backdrop -->
-    <div id="drawer-backdrop" class="lg:hidden fixed inset-0 z-40 bg-black/0 pointer-events-none transition-all duration-[400ms] ease-out" />
-
-    <!-- Mobile slide-out drawer (<1024px) -->
-    <aside
-      id="mobile-drawer"
-      class="lg:hidden fixed top-0 right-0 bottom-0 w-[85vw] max-w-[320px] z-50 bg-[var(--canvas)] border-l border-[var(--border-sidebar)] translate-x-full transition-transform duration-[400ms] ease-out flex flex-col overflow-y-auto"
-    >
-      <nav class="flex-1 pt-20 px-6 overflow-y-auto">
-        <ul class="space-y-0">
-          {menuItems.map((item) => {
-            const navKey = item.key as keyof typeof l.nav;
-            return (
-              <li>
-                <a
-                  href={item.href}
-                  data-nav-key={item.key}
-                  id={`nav-${item.key}-mobile`}
-                  aria-current={item.key === "about" ? "true" : "false"}
-                  class="sidebar-nav-link block type-subheading text-base rounded-md transition-all duration-300"
-                >
-                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-      <div class="mobile-drawer__footer px-5 py-5 border-t border-[var(--border-sidebar)] mt-auto">
-        <div class="mobile-drawer__theme">
-          <span class="font-sans text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)] block mb-3">{l.themeLabel}</span>
-          <ThemeToggle locale={locale} />
-        </div>
-        <span class="font-sans text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)] block mb-2 mt-5">{l.basedIn}</span>
-        <span class="font-sans text-xs text-[var(--ink-muted)] font-medium tracking-wide block mb-5">{l.location}</span>
-        <span class="font-sans text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)] block mb-2">{l.languageLabel}</span>
-        <div id="lang-toggle-mobile" class="lang-toggle lang-toggle--drawer">
-          {langList.map((lang) => (
-            <button
-              type="button"
-              class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
-              data-lang={lang}
-              aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
-              aria-label={`${l.switchToLangAria} ${langLabels[lang]}`}
-            >
-              <span class="lang-btn__label">{langLabels[lang]}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    </aside>
-
-    <!-- Desktop sidebar — always visible -->
-    <aside class="desktop-sidebar magazine-sidebar hidden lg:flex" aria-label={l.siteNavAria}>
-      <div class="desktop-sidebar__inner flex flex-col h-full">
-        <div class="desktop-sidebar__brand p-6 pb-4">
-          <a href={`${homePath}#about`} class="block group" data-nav-key="about">
-            <h1 class="desktop-sidebar__title type-subheading text-2xl text-[var(--ink)] leading-[1.05] transition-opacity duration-300 group-hover:opacity-70">
-              {l.siteTitle}
-            </h1>
-            <span class="desktop-sidebar__subtitle type-heading text-[12px] text-[var(--ink-muted)]/70 mt-2 block" set:html={l.subtitle} />
-          </a>
-        </div>
-        <div class="desktop-sidebar__nav px-6 flex-1">
-          <nav class="sidebar-nav">
-            {menuItems.map((item) => {
-              const navKey = item.key as keyof typeof l.nav;
-              return (
-                <a
-                  href={item.href}
-                  data-nav-key={item.key}
-                  id={`nav-${item.key}`}
-                  aria-current={item.key === "about" ? "true" : "false"}
-                  class="sidebar-nav-link group relative type-subheading text-[17px] block rounded-lg transition-all duration-300"
-                >
-                  <span class="sidebar-nav-label">{l.nav[navKey]}</span>
-                </a>
-              );
-            })}
-          </nav>
-        </div>
-        <div class="desktop-sidebar__theme">
-          <span class="desktop-sidebar__footer-label font-sans text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)]/50 block mb-3">{l.themeLabel}</span>
-          <ThemeToggle locale={locale} />
-        </div>
-        <div class="desktop-sidebar__footer px-5 py-8 mt-auto">
-          <span class="desktop-sidebar__footer-label font-sans text-[11px] uppercase tracking-[0.25em] text-[var(--ink-muted)]/50 block mb-1">{l.basedIn}</span>
-          <span class="desktop-sidebar__footer-text font-sans text-[14px] text-[var(--ink-muted)]/80 font-medium tracking-wide">{l.location}</span>
-        </div>
-      </div>
-    </aside>
-
     <div class="site-shell min-h-screen">
-      <header class="site-topbar hidden lg:flex">
-        <a href={`${homePath}#about`} class="site-topbar__logo type-subheading text-lg text-[var(--ink)]" aria-label={l.siteTitle} data-nav-key="about">A·R</a>
-        <div id="lang-toggle-desktop" class="lang-toggle lang-toggle--desktop site-topbar__langs">
-          {langList.map((lang) => (
-            <button
-              type="button"
-              class:list={["lang-btn", isActiveLang(lang) && "lang-btn--active"]}
-              data-lang={lang}
-              aria-pressed={isActiveLang(lang) ? 'true' : 'false'}
-              aria-label={`${l.switchToLangAria} ${langLabels[lang]}`}
-            >
-              <span class="lang-btn__label">{langLabels[lang]}</span>
-            </button>
-          ))}
-        </div>
-      </header>
-      <div class="site-main-column min-w-0 pt-14 lg:pt-8">
-        <main class="tabular-main motion-main">
+      <div class="site-main-column min-w-0">
+        <main class="motion-main">
           <slot name="content" />
         </main>
         <SiteFooter locale={locale} />
@@ -334,68 +301,44 @@ const menuItems: { key: string; href: string }[] = [
 <script>
   import { initMotion } from "../scripts/motion/init";
   import { initLangSwitch, syncLangHrefs, syncLangToggle, restoreLangScroll } from "../scripts/lang-switch";
-  import { initTabView, resetTabView } from "../scripts/tab-view";
   import { resetGlobalLightbox } from "../scripts/lightbox";
   import { initArtworkParallax } from "../scripts/artwork-parallax";
   import { initThemeToggle } from "../scripts/theme";
 
-  function initDrawer() {
-    const hamburgerBtn = document.getElementById("hamburger-btn");
-    const drawer = document.getElementById("mobile-drawer");
-    const backdrop = document.getElementById("drawer-backdrop");
-    if (!hamburgerBtn || !drawer || hamburgerBtn.dataset.drawerBound === "true") return;
-    hamburgerBtn.dataset.drawerBound = "true";
-    const hamOpen = hamburgerBtn.querySelector(".ham-open");
-    const hamClose = hamburgerBtn.querySelector(".ham-close");
-    let isOpen = false;
+  function initV2Menu() {
+    const btn = document.getElementById("v2-menu-btn");
+    const menu = document.getElementById("v2-menu");
+    if (!btn || !menu || btn.dataset.menuBound === "true") return;
+    btn.dataset.menuBound = "true";
+    const hamOpen = btn.querySelector(".ham-open");
+    const hamClose = btn.querySelector(".ham-close");
+    let open = false;
 
-    const toggleDrawer = (forceClose = false) => {
-      if (forceClose && !isOpen) return;
-      isOpen = forceClose ? false : !isOpen;
-
-      if (isOpen) {
-        drawer?.classList.remove("translate-x-full");
-        drawer?.classList.add("translate-x-0");
-        backdrop?.classList.remove("bg-black/0", "pointer-events-none");
-        backdrop?.classList.add("bg-black/60", "pointer-events-auto");
-        hamOpen?.classList.add("hidden");
-        hamClose?.classList.remove("hidden");
-        hamburgerBtn?.setAttribute("aria-expanded", "true");
-        document.body.style.overflow = "hidden";
-      } else {
-        drawer?.classList.remove("translate-x-0");
-        drawer?.classList.add("translate-x-full");
-        backdrop?.classList.remove("bg-black/60", "pointer-events-auto");
-        backdrop?.classList.add("bg-black/0", "pointer-events-none");
-        hamOpen?.classList.remove("hidden");
-        hamClose?.classList.add("hidden");
-        hamburgerBtn?.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-      }
+    const setOpen = (next: boolean) => {
+      open = next;
+      menu.classList.toggle("is-open", open);
+      menu.setAttribute("aria-hidden", open ? "false" : "true");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      hamOpen?.classList.toggle("hidden", open);
+      hamClose?.classList.toggle("hidden", !open);
+      document.body.style.overflow = open ? "hidden" : "";
     };
 
-    // Close drawer on navigation link click
-    const navLinks = drawer?.querySelectorAll("a");
-    navLinks?.forEach(link => {
-      link.addEventListener("click", () => {
-        setTimeout(() => toggleDrawer(true), 150);
-      });
+    btn.addEventListener("click", () => setOpen(!open));
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
     });
-
-    hamburgerBtn?.addEventListener("click", () => toggleDrawer());
-    backdrop?.addEventListener("click", () => toggleDrawer());
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isOpen) toggleDrawer();
+      if (e.key === "Escape" && open) setOpen(false);
     });
   }
 
   function bootPageScripts() {
     document.documentElement.classList.add("motion-live");
-    initDrawer();
+    initV2Menu();
     syncLangHrefs();
     syncLangToggle();
     initLangSwitch();
-    initTabView();
     initMotion();
     initArtworkParallax();
     initThemeToggle();
@@ -421,8 +364,10 @@ const menuItems: { key: string; href: string }[] = [
     document.querySelectorAll("[data-theme-bound]").forEach((el) => {
       delete (el as HTMLElement).dataset.themeBound;
     });
+    document.querySelectorAll("[data-menu-bound]").forEach((el) => {
+      delete (el as HTMLElement).dataset.menuBound;
+    });
     resetGlobalLightbox();
-    resetTabView();
     bootPageScripts();
   });
 

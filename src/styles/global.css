@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Raleway:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@500;600;700;800&display=swap');
 @import "./fonts.css";
 @import "tailwindcss";
 @import "./motion.css";
@@ -11,15 +11,17 @@
 @import "./editorial-downsize.css";
 @import "./editorial-list-container.css";
 @import "./manuscript-book.css";
+@import "./portfolio-editorial.css";
+@import "./reboot-v2.css";
 
-/* Editorial typography — Cormorant Garamond (heads) + Raleway 300 (body) */
+/* Soft Structuralism reboot — Syne display + Outfit body */
 :root {
-  --font-heading: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
-  --font-subheading: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
-  --font-body: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-subheading: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Outfit", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --font-name-cursive: "Jellyka Saint Andrew's Queen", "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
-  --heading-track: 0.04em;
+  --font-name-cursive: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --heading-track: -0.02em;
 
   /* Legacy aliases */
   --font-forum: var(--font-heading);

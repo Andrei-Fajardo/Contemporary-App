@@ -11,18 +11,13 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="research" class="scroll-section section-gap research-section magazine-torn">
-  <div class="section-shell section-shell--wide">
-    <div class="magazine-chapter scroll-reveal">
-      <p class="section-eyebrow">{l.academicTag}</p>
-      <h2 class="magazine-chapter__title text-2xl md:text-5xl lg:text-6xl text-ink mb-3">
-        {l.academicHeading}
-      </h2>
-      <hr class="magazine-rule-crimson magazine-rule-crimson--short" />
-    </div>
+<section id="research" class="v2-chapter scroll-section research-section">
+  <div class="v2-wrap">
+    <header class="v2-art__head">
+      <h2 class="v2-title scroll-reveal">{l.academicHeading}</h2>
+    </header>
 
-    <div class="editorial-index scroll-reveal">
-      {/* Link titles are proper nouns / published headlines — kept as authored English */}
+    <div class="editorial-index scroll-reveal" style="margin-top: clamp(1.5rem, 4vh, 2.75rem);">
       <EditorialLinkList items={researchLinks} emptyMessage={l.listForthcoming} />
     </div>
   </div>

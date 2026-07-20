@@ -1,3 +1,42 @@
 ---
-return Astro.redirect('/#about', 301);
+import StudioLayout from '../layouts/StudioLayout.astro';
+import { siteCopy } from '../data/site-copy';
+import { t } from '../data/translations';
+
+const l = t.en;
 ---
+
+<StudioLayout title="About — Anna Dauyl Rockswell" active="about" seoPage="about">
+  <section class="st-page">
+    <header class="st-page-head st-reveal">
+      <h1 class="st-display">About</h1>
+      <p class="st-prose st-page-lede">{l.aboutLead}</p>
+    </header>
+
+    <div class="st-about-layout st-reveal">
+      <div class="st-about-media">
+        <div class="st-frame st-about-media__frame">
+          <img src="/media/anna%20header%202.png" alt="Anna Dauyl Rockswell" loading="eager" />
+        </div>
+      </div>
+
+      <div class="st-about-copy" data-reveal-group>
+        <div class="st-reveal">
+          <h2 class="st-display text-2xl md:text-3xl mb-6">Biography</h2>
+          <div class="st-prose space-y-5">
+            <p>{l.bioExpanded}</p>
+            <p>{l.aboutInfluencesProse}</p>
+            <p>{l.aboutInterestsProse}</p>
+          </div>
+        </div>
+
+        <div class="st-reveal st-about-copy__statement">
+          <h2 class="st-display text-2xl md:text-3xl mb-6">Artist Statement</h2>
+          <p class="st-statement text-[clamp(1.1rem,1.8vw,1.4rem)] leading-relaxed max-w-[58ch]">
+            <span class="st-serif-em">{siteCopy.about.statement}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</StudioLayout>

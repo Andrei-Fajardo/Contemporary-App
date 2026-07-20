@@ -1,0 +1,187 @@
+---
+/**
+ * StudioLayout — editorial gallery shell (v3).
+ * Fixed sidebar navigation on desktop, top bar + full-screen drawer on mobile.
+ * Multi-page routes (no single-page scroll). English routes only for now;
+ * locale trees continue to use PageLayout until migrated.
+ */
+import { ClientRouter, fade } from 'astro:transitions';
+import '../styles/studio.css';
+import SEO from '../components/SEO.astro';
+import type { SeoPageKey } from '../data/seo';
+import type { Artwork } from '../data/artworks';
+import { imageSeoSlots } from '../data/image-seo-slots';
+
+const pageFade = fade({ duration: '480ms' });
+
+export interface Props {
+  title: string;
+  active?: string;
+  seoPage?: SeoPageKey;
+  seoDescription?: string;
+  ogImage?: string | null;
+  artwork?: Artwork;
+  /** Hide the large footer mail link (e.g. on /contacts where it is the hero). */
+  hideFooterMail?: boolean;
+}
+
+const {
+  title,
+  active = '',
+  seoPage = 'home',
+  seoDescription,
+  ogImage = imageSeoSlots.defaultOgImage,
+  artwork,
+  hideFooterMail = false,
+} = Astro.props;
+
+const nav = [
+  { key: 'about', label: 'About', href: '/about' },
+  { key: 'art', label: 'Art', href: '/art' },
+  { key: 'exhibitions', label: 'Exhibitions', href: '/exhibitions' },
+  { key: 'publications', label: 'Publishings', href: '/publications' },
+  { key: 'research', label: 'Academic Research', href: '/research' },
+  { key: 'press', label: 'Press', href: '/press' },
+  { key: 'contacts', label: 'Contact', href: '/contacts' },
+];
+---
+
+<!doctype html>
+<html lang="en" class="studio">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#F0EEE9" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEO
+      locale="en"
+      page={seoPage}
+      title={seoPage === 'artwork' ? title : undefined}
+      description={seoDescription}
+      ogImage={ogImage}
+      artwork={artwork}
+    />
+    <ClientRouter />
+    <script is:inline>
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('st-motion');
+      }
+    </script>
+  </head>
+  <body>
+    <div class="grain-overlay" aria-hidden="true" transition:persist="st-grain"></div>
+    <a href="#st-content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[var(--st-ink)] focus:text-[var(--st-bg)] focus:px-4 focus:py-2">Skip to content</a>
+
+    <aside class="st-sidebar" transition:persist="st-sidebar">
+      <div>
+        <a href="/" class="st-wordmark">
+          Anna Dauyl<br />Rockswell
+          <small>Writer &amp; Artist, Seoul · Almaty</small>
+        </a>
+        <nav class="st-nav" data-st-nav aria-label="Site navigation">
+          <span class="st-nav__indicator" data-st-nav-indicator aria-hidden="true"></span>
+          {nav.map((item) => (
+            <a href={item.href} data-nav-key={item.key} aria-current={active === item.key ? 'page' : undefined}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
+      <div class="st-side-meta">
+        <a href="mailto:contact@annadauylrockswell.com">contact@annadauylrockswell.com</a>
+        <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer">@rockswellnana</a>
+        <div class="st-langs">
+          <a href="/" class="is-active">EN</a>
+          <a href="/kr">KR</a>
+          <a href="/kk">KK</a>
+          <a href="/zh">中文</a>
+          <a href="/ru">RU</a>
+        </div>
+      </div>
+    </aside>
+
+    <header class="st-topbar" transition:persist="st-topbar">
+      <a href="/" class="st-wordmark">Anna Dauyl Rockswell</a>
+      <button type="button" class="st-burger" id="st-burger" aria-expanded="false" aria-controls="st-drawer">
+        Menu
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+          <path stroke-linecap="round" d="M4 8h16M4 16h16" />
+        </svg>
+      </button>
+    </header>
+
+    <div id="st-drawer" class="st-drawer" aria-hidden="true" transition:persist="st-drawer">
+      <div class="st-drawer__head">
+        <a href="/" class="st-wordmark">Anna Dauyl Rockswell</a>
+        <button type="button" class="st-burger" id="st-drawer-close">
+          Close
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+      <div class="st-drawer__body">
+        <nav class="st-drawer__nav" aria-label="Site navigation">
+          {nav.map((item, i) => (
+            <a href={item.href} style={`--i:${i}`} aria-current={active === item.key ? 'page' : undefined}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
+      <div class="st-drawer__foot">
+        <a href="mailto:contact@annadauylrockswell.com">contact@annadauylrockswell.com</a>
+        <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer">@rockswellnana</a>
+        <span>Seoul · Almaty</span>
+        <div class="st-langs" aria-label="Languages">
+          <a href="/" class="is-active">EN</a>
+          <a href="/kr">KR</a>
+          <a href="/kk">KK</a>
+          <a href="/zh">中文</a>
+          <a href="/ru">RU</a>
+        </div>
+      </div>
+    </div>
+
+    <main id="st-content" class="st-main" transition:animate={pageFade}>
+      <slot />
+
+      <footer class="st-footer">
+        {!hideFooterMail && (
+          <a href="/contacts" class="st-footer__mail">contact@annadauylrockswell.com</a>
+        )}
+        <div class="st-footer__row">
+          <span>© 2026 Anna Dauyl Rockswell. All rights reserved.</span>
+          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer">Instagram, @rockswellnana</a>
+        </div>
+      </footer>
+    </main>
+
+    <div
+      id="st-piece-lb"
+      class="st-piece-lb"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="st-piece-lb-title"
+      aria-hidden="true"
+      hidden
+      transition:persist="st-piece-lb"
+    >
+      <div class="st-piece-lb__backdrop" data-piece-lb-backdrop tabindex="-1"></div>
+      <header class="st-piece-lb__chrome">
+        <p class="st-piece-lb__title" id="st-piece-lb-title" data-piece-lb-title></p>
+        <button type="button" class="st-piece-lb__close" data-piece-lb-close aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="3" x2="15" y2="15" />
+            <line x1="15" y1="3" x2="3" y2="15" />
+          </svg>
+        </button>
+      </header>
+      <div class="st-piece-lb__stage">
+        <img class="st-piece-lb__img" data-piece-lb-img alt="" />
+      </div>
+    </div>
+
+    <script>
+      import { initStudio } from '../scripts/studio';
+      document.addEventListener('astro:page-load', () => initStudio());
+    </script>
+  </body>
+</html>

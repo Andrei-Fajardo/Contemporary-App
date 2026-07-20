@@ -191,9 +191,13 @@
   line-height: 1.65;
 }
 
-/* editorial-dense overrides */
+/* editorial-dense / portfolio-air heading overrides */
 .editorial-dense .hero-about-layer__heading {
   font-size: clamp(3.5rem, 8vw, 7.5rem);
+}
+
+.portfolio-air .hero-about-layer__heading {
+  font-size: clamp(3.75rem, 9vw, 9rem);
 }
 
 /* Tablet (768–1023px) — keep side-by-side cluster */

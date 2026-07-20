@@ -1,3 +1,22 @@
 ---
-return Astro.redirect('/#press', 301);
+import StudioLayout from '../layouts/StudioLayout.astro';
+import { pressLinks } from '../data/content';
 ---
+
+<StudioLayout title="Press — Anna Dauyl Rockswell" active="press" seoPage="press">
+  <section class="st-page">
+    <header class="st-page-head st-reveal">
+      <h1 class="st-display">Press</h1>
+    </header>
+
+    <div class="st-index" data-reveal-group>
+      {pressLinks.map((item) => (
+        <a href={item.href} target="_blank" rel="noopener noreferrer" class="st-index__row st-reveal">
+          <span class="st-index__meta">{[item.platform, item.year].filter(Boolean).join(' · ')}</span>
+          <span class="st-index__title">{item.title}</span>
+          <span class="st-index__arrow" aria-hidden="true">&nearr;</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</StudioLayout>

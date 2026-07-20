@@ -12,10 +12,8 @@ const { locale = 'en' } = Astro.props;
 const l = t[locale];
 ---
 
-<section id="press" class="scroll-section section-gap press-overlap">
-
-  <!-- ── Image layer — anna sample 6, decorative ───────────── -->
-  <div class="press-overlap__frame" aria-hidden="true">
+<section id="press" class="v2-chapter scroll-section press-overlap">
+  <div class="press-overlap__frame v2-scale-media" aria-hidden="true">
     <img
       src="/media/anna sample 6.png"
       alt=""
@@ -30,18 +28,14 @@ const l = t[locale];
     />
   </div>
 
-  <!-- ── Text content — header above list container ─────────── -->
-  <div class="press-overlap__content section-shell section-shell--wide">
-    <div class="magazine-chapter">
-      <p class="scroll-reveal section-eyebrow">{l.pressTag}</p>
-      <h2 class="scroll-reveal magazine-chapter__title press-overlap__heading">
+  <div class="press-overlap__content">
+    <div class="mb-8 md:mb-10">
+      <h2 class="v2-title scroll-reveal press-overlap__heading">
         {l.nav.press}
       </h2>
     </div>
-    {/* Press headlines are published titles — kept as authored English */}
     <EditorialListContainer class="scroll-reveal">
       <EditorialLinkList items={pressLinks} emptyMessage={l.listForthcoming} />
     </EditorialListContainer>
   </div>
-
 </section>

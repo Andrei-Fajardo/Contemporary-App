@@ -1,3 +1,107 @@
 ---
-return Astro.redirect('/#contacts', 301);
+import StudioLayout from '../layouts/StudioLayout.astro';
+import { siteCopy } from '../data/site-copy';
+import { t } from '../data/translations';
+
+const l = t.en;
 ---
+
+<StudioLayout title="Contact — Anna Dauyl Rockswell" active="contacts" seoPage="contacts" hideFooterMail>
+  <section class="st-page">
+    <header class="st-page-head st-reveal">
+      <h1 class="st-display">{l.contactHeading}</h1>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-16">
+      <div class="lg:col-span-7 st-reveal">
+        <form id="st-contact-form" class="st-form" novalidate>
+          <div class="st-field">
+            <label for="st-name">{l.nameLabel}</label>
+            <input id="st-name" name="name" type="text" autocomplete="name" required placeholder={l.namePlaceholder} />
+          </div>
+          <div class="st-field">
+            <label for="st-email">{l.emailLabel}</label>
+            <input id="st-email" name="email" type="email" inputmode="email" autocomplete="email" required placeholder={l.emailPlaceholder} />
+          </div>
+          <div class="st-field">
+            <label for="st-message">{l.messageLabel}</label>
+            <textarea id="st-message" name="message" rows="6" required placeholder={l.messagePlaceholder}></textarea>
+          </div>
+          <p id="st-form-status" class="st-form__status" role="status" aria-live="polite"></p>
+          <div>
+            <button type="submit" class="st-btn st-btn--accent">{l.sendMessage}</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="lg:col-span-5 space-y-10" data-reveal-group>
+        <div class="st-reveal">
+          <h2 class="st-kicker mb-4">{l.email}</h2>
+          <a href="mailto:contact@annadauylrockswell.com" class="text-lg text-[var(--st-ink)] hover:text-[var(--st-accent)] transition-colors break-all">
+            contact@annadauylrockswell.com
+          </a>
+        </div>
+        <div class="st-reveal">
+          <h2 class="st-kicker mb-4">Based In</h2>
+          <p class="text-lg">{l.location}</p>
+        </div>
+        <div class="st-reveal">
+          <h2 class="st-kicker mb-4">Socials</h2>
+          <a href="https://instagram.com/rockswellnana" target="_blank" rel="noopener noreferrer" class="text-lg text-[var(--st-ink)] hover:text-[var(--st-accent)] transition-colors">
+            @rockswellnana
+          </a>
+        </div>
+        <div class="st-reveal">
+          <h2 class="st-kicker mb-4">Licenses</h2>
+          <ul class="space-y-2">
+            {siteCopy.licenses.map((license) => (
+              <li>
+                <a href={license.href} target="_blank" rel="noopener noreferrer" class="text-lg text-[var(--st-ink)] hover:text-[var(--st-accent)] transition-colors">
+                  {license.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</StudioLayout>
+
+<script>
+  function initContactForm() {
+    const form = document.getElementById('st-contact-form') as HTMLFormElement | null;
+    const status = document.getElementById('st-form-status');
+    if (!form || form.dataset.bound === 'true') return;
+    form.dataset.bound = 'true';
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const name = (form.elements.namedItem('name') as HTMLInputElement)?.value.trim() ?? '';
+      const email = (form.elements.namedItem('email') as HTMLInputElement)?.value.trim() ?? '';
+      const message = (form.elements.namedItem('message') as HTMLTextAreaElement)?.value.trim() ?? '';
+
+      if (!name || !email || !message) {
+        if (status) {
+          status.textContent = 'Please fill in name, email, and message.';
+          status.classList.add('is-error');
+          status.classList.remove('is-ok');
+        }
+        return;
+      }
+
+      const subject = encodeURIComponent(`Inquiry from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.location.href = `mailto:contact@annadauylrockswell.com?subject=${subject}&body=${body}`;
+
+      if (status) {
+        status.textContent = 'Opening your email client…';
+        status.classList.remove('is-error');
+        status.classList.add('is-ok');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initContactForm);
+  if (document.readyState !== 'loading') initContactForm();
+</script>

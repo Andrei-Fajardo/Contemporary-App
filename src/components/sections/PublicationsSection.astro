@@ -18,9 +18,9 @@ const sortedMagazines = sortByYearDesc(magazineFeatures);
 const sortedPublicationLinks = sortByYearDesc(publicationLinks);
 ---
 
-<section id="publications" class="scroll-section section-gap pubs-overlap magazine-torn">
+<section id="publications" class="v2-chapter scroll-section pubs-overlap">
 
-  <div class="pubs-overlap__frame" aria-hidden="true">
+  <div class="pubs-overlap__frame v2-scale-media" aria-hidden="true">
     <img
       src="/media/anan sample 2.png"
       alt=""
@@ -35,15 +35,12 @@ const sortedPublicationLinks = sortByYearDesc(publicationLinks);
     />
   </div>
 
-  <div class="pubs-overlap__content section-shell section-shell--wide">
+  <div class="pubs-overlap__content">
     <header class="pubs-editorial__masthead scroll-reveal">
-      <div class="magazine-chapter">
-        <p class="section-eyebrow">{l.publicationsTag}</p>
-        <h2 class="magazine-chapter__title pubs-overlap__heading">
-          {l.publicationsHeading}
-        </h2>
-      </div>
-      <p class="content-prose text-ink-60 pubs-section__intro">
+      <h2 class="v2-title pubs-overlap__heading">
+        {l.publicationsHeading}
+      </h2>
+      <p class="v2-lede" style="margin-top: 1rem;">
         {l.publicationsIntro}
       </p>
     </header>

@@ -44,16 +44,15 @@ export function formatExhibitionDisplay(entry: ExhibitionEntry): ExhibitionDispl
   return { heading, subheading: `${title} • ${place}` };
 }
 
-/** Reverse chronological by year (most recent first). No year labels in UI — sort only. */
+/**
+ * Museum shows first (MUST Museum is the only museum exhibition),
+ * then alphabetical by gallery name.
+ */
 export function sortExhibitionEntries(entries: ExhibitionEntry[]): ExhibitionEntry[] {
   return [...entries].sort((a, b) => {
-    const ya = Number.parseInt(a.year, 10);
-    const yb = Number.parseInt(b.year, 10);
-    const aOk = Number.isFinite(ya);
-    const bOk = Number.isFinite(yb);
-    if (aOk && bOk && ya !== yb) return yb - ya;
-    if (aOk && !bOk) return -1;
-    if (!aOk && bOk) return 1;
+    const aMuseum = a.kind === 'museum' ? 0 : 1;
+    const bMuseum = b.kind === 'museum' ? 0 : 1;
+    if (aMuseum !== bMuseum) return aMuseum - bMuseum;
     return a.gallery.localeCompare(b.gallery, undefined, { sensitivity: 'base' });
   });
 }

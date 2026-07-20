@@ -153,11 +153,26 @@ function measureBook(root: HTMLElement): {
   );
 
   if (mobile) {
-    const forceSingleDesktop = root.dataset.forceSingle === 'true' && window.innerWidth >= MOBILE_BREAKPOINT;
-    const maxW = forceSingleDesktop
-      ? Math.round(Math.min(stageW * 0.52, 26 * 16))
-      : Math.round(Math.max(260, window.innerWidth * MOBILE_VW_FILL));
-    const maxH = Math.round(availableH * (forceSingleDesktop ? 0.88 : 0.94));
+    const forceSingleDesktop =
+      root.dataset.forceSingle === 'true' && window.innerWidth >= MOBILE_BREAKPOINT;
+
+    // Covers viewer (From Utero): fill most of the stage without overflowing the viewport
+    if (forceSingleDesktop) {
+      const maxH = Math.round(availableH * 0.86);
+      const maxW = Math.round(stageW * 0.58);
+      let height = maxH;
+      let width = Math.round(height * PAGE_HALF_ASPECT);
+
+      if (width > maxW) {
+        width = maxW;
+        height = Math.round(width / PAGE_HALF_ASPECT);
+      }
+
+      return { width: Math.round(width), height: Math.round(height), displayMode };
+    }
+
+    const maxW = Math.round(Math.max(260, window.innerWidth * MOBILE_VW_FILL));
+    const maxH = Math.round(availableH * 0.94);
 
     let width = maxW;
     let height = Math.round(width / PAGE_HALF_ASPECT);
